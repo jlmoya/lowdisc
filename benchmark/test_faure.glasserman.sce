@@ -1,0 +1,23 @@
+// Copyright (C) 2008 - INRIA - Michael Baudin
+
+//
+// Prints the elements of Faure sequence, as presented in the following 
+// reference in dimension 3, p. 299.
+//   Monte-Carlo methods in Financial Engineering, Paul Glasserman
+//
+computed = [
+0 0 0
+1/3 1/3 1/3
+2/3 2/3 2/3
+1/9 4/9 7/9
+4/9 7/9 1/9 
+7/9 1/9 4/9 
+2/9 8/9 5/9
+5/9 2/9 8/9
+8/9 5/9 2/9
+];
+for i = 1:9
+  mprintf ("%8d %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) )
+end
+
+

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ * Ajouter ici d'éventuels commentaires sur le fichier XML
+-->
+<refentry
+  xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook"
+          version="5.0-subset Scilab"
+          xml:lang="fr"
+          xml:id="lowdisc_display">
+  <info>
+    <pubdate>$LastChangedDate: 18-12-2008 $</pubdate>
+  </info>
+  <refnamediv>
+    <refname>lowdisc_display</refname>
+    <refpurpose>  Prints the current object. </refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <title>Calling Sequence</title>
+    <synopsis>lowdisc_display(this)</synopsis>
+  </refsynopsisdiv>
+  <refsection>
+    <title>Parameters</title>
+    <variablelist>
+      <varlistentry>
+        <term>this</term>
+        <listitem>
+          <para>
+            The current object.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsection>
+  <refsection>
+    <title>Description</title>
+    <para>
+      Prints the current object in the console.
+    </para>
+  </refsection>
+  <refsection>
+    <title>See Also</title>
+
+    <simplelist type="inline">
+      <member>
+        <link linkend="lowdisc_new">lowdisc_new</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_cget">lowdisc_cget</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_configure">lowdisc_configure</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_display">lowdisc_display</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_next">lowdisc_next</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_terms">lowdisc_terms</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_destroy">lowdisc_destroy</link>
+      </member>
+    </simplelist>
+  </refsection>
+  <refsection>
+    <title>Authors</title>
+
+    <simplelist type="vert">
+      <member>Michael Baudin</member>
+    </simplelist>
+  </refsection>
+
+  <refsection>
+    <title>TODO</title>
+
+    <para>
+      <itemizedlist>
+
+        <listitem>
+          <para>Add an example.</para>
+        </listitem>
+      </itemizedlist>
+    </para>
+  </refsection>
+
+</refentry>

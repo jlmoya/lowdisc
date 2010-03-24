@@ -1,0 +1,54 @@
+// Scilab ( http://www.scilab.org/ ) - This file is part of Scilab
+// Copyright (C) 2008 - INRIA - Michael Baudin
+// Copyright (C) 2008 - INRIA - Allan CORNET
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution.  The terms
+// are also available at
+// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+
+//
+// randomnumber.start --
+//   Startup macros for the Randomnumber Scilab Toolbox
+//
+
+
+disp('Start Low Discrepancy Toolbox');
+
+etc_tlbx = get_absolute_file_path('lowdiscrepancy.start');
+etc_tlbx = getshortpathname(etc_tlbx);
+
+root_tlbx = strncpy( etc_tlbx, length(etc_tlbx)-length('\etc\') );
+
+pathmacros = pathconvert( root_tlbx ) + 'macros'+ filesep();
+
+// ====================================================================
+disp('Load macros from :');
+disp(pathmacros)
+//Load  functions library
+toolbox_randomnumberlib = lib(pathmacros);
+
+// ====================================================================
+// load gateways
+disp('Load gateways');
+
+// load gateways
+exec( root_tlbx + '/sci_gateway/loader_gateway.sce' );
+
+disp('Load help');
+
+// ====================================================================
+//add help chapter
+path_addchapter = root_tlbx + "/jar/";
+if ( fileinfo(path_addchapter) <> [] ) then
+  add_help_chapter('Random Number Toolbox', path_addchapter, %F);
+  clear add_help_chapter;
+end
+// ====================================================================
+clear path_addchapter;
+clear root_tlbx;
+clear etc_tlbx;
+clear pathmacros;
+// ====================================================================
+

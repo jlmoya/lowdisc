@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ * Ajouter ici d'éventuels commentaires sur le fichier XML
+-->
+<refentry xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook"
+          version="5.0-subset Scilab"
+          xml:lang="fr"
+          xml:id="lowdisc_configure">
+  <info>
+    <pubdate>$LastChangedDate: 18-12-2008 $</pubdate>
+  </info>
+  <refnamediv>
+    <refname>lowdisc_configure</refname>
+    <refpurpose>  Update one option of the current object and returns an updated object.</refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <title>Calling Sequence</title>
+    <synopsis>this = lowdisc_configure(this,key,value)</synopsis>
+  </refsynopsisdiv>
+  <refsection>
+    <title>Parameters</title>
+    <variablelist>
+      <varlistentry>
+        <term>this</term>
+        <listitem>
+          <para>
+            The current Random Number object. At output, the object is updated with the new settings.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>key</term>
+        <listitem>
+          <para>
+            The name of the option to configure. The key can have one of the following values
+            :
+          </para>
+
+          <itemizedlist>
+            <listitem>
+              <para>"-verbose" : configures the verbose (default : 0).</para>
+            </listitem>
+
+            <listitem>
+              <para>
+                "-dimension" : configures the dimension of the space, i.e. the size of the
+                vector returned by the command lowdisc_next
+              </para>
+            </listitem>
+
+            <listitem>
+              <para>"-method" : the random number generator to use (default : "scilabrand").</para>
+              <para>
+                The following sequences are available :
+                <itemizedlist>
+                  <listitem>
+                    <para>"vandercorput" : the Van Der Corput low discrepancy sequence which is based on a script</para>
+                  </listitem>
+                  <listitem>
+                    <para>"halton" : the Halton low discrepancy sequence which is based on a script</para>
+                  </listitem>
+                  <listitem>
+                    <para>"faure" : the Faure low discrepancy sequence which is based on a script</para>
+                  </listitem>
+                </itemizedlist>
+              </para>
+            </listitem>
+
+            <listitem>
+              <para>"-seed" : the value of the seed (default : 123456)</para>
+            </listitem>
+
+            <listitem>
+              <para>
+                "-seedmethod" : the type of computation for the seed (default : "constant").
+                This feature is not available yet.
+              </para>
+            </listitem>
+
+            <listitem>
+              <para>
+                "-vandercorputbasis" : configures the basis used in the Van Der Corput sequence (default : 2).
+                The value is expected to be a positive integer, greater or equal to 2. It should be a prime number, but that
+                is not checked by the configure method.
+              </para>
+            </listitem>
+
+
+            <listitem>
+              <para>
+                "-primeslist" : configures the matrix of prime numbers used in the Halton sequence.
+                The expected matrix must have a 1xn shape, with n an integer greater than 2.
+                The default list is made of the 100 first prime numbers, from 2 to 541.
+                This list of primes is used in the Halton sequence.
+                That default list should enable the user to generate sequences in dimension up to 100.
+                If a larger dimension problem is to process, that feature should enable users to
+                customize the list to meet the required dimension.
+                The user should be warned that the Halton sequence may produce poor convergence
+                rate if the dimension is larger than 15.
+              </para>
+            </listitem>
+
+            <listitem>
+              <para>
+                "-sequenceindex" : the starting index of the low discrepancy sequences.
+                When a Random Number object is created this setting is initialized to 0.
+                Whenever the randonumber_next method is called, the sequence index
+                is updated and incremented with 1. If this option is passed to the lowdisc_cget
+                method, it allows to know the number of vectors which have allready
+                been generated.
+                If this option is set, it allows to modify the behaviour of the low discrepancy
+                sequences, which take into account this index to produce the next element
+                in the sequence.
+                The -sequenceindex should therefore generally not be set, except in specific situations
+                where the user has particular requirements on the low discrepancy
+                sequence to generate.
+                Whatever the value of the -sequenceindex option, it has no effect on the values
+                produced by the pseudo-random number generators.
+              </para>
+            </listitem>
+
+          </itemizedlist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>value</term>
+        <listitem>
+          <para>
+            The value to set.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsection>
+  <refsection>
+    <title>Description</title>
+    <para>
+      This command allows to configure the state of the current Random Number object.
+      It requires to take the current object both as an input
+      and an output argument.
+    </para>
+  </refsection>
+  <refsection>
+    <title>Examples</title>
+    <para>
+      In the following example, one creates a new random number generator
+      and configure it so that a Faure sequence is setup with the value 1 as the seed.
+    </para>
+    <programlisting role="example">
+      rng = lowdisc_new();
+      rng = lowdisc_configure(rng,"-method","faure");
+      rng = lowdisc_configure(rng,"-seed",1);
+    </programlisting>
+  </refsection>
+  <refsection>
+    <title>Example : how to extend the list of primes used in Halton sequence</title>
+    <para>
+      In the following example, one creates a new Halton sequence generator
+      and configure the list of primes with a 200 primes table.
+      These primes are then used to generate a sequence up to the 30-th term.
+      That feature is available because the Halton sequence is a Scilab script.
+      The gslhalton sequence, based on the GSL library does not possess such
+      a feature (but may be faster, because it is based on a compiled C source code).
+    </para>
+    <programlisting role="example">
+      rng = lowdisc_new();
+      rng = lowdisc_configure(rng,"-method","halton");
+      primes = [2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97 101 103 107 ...
+      109 113 127 131 137 139 149 151 157 163 167 173 179 181 191 193 197 199 211 223 227 229 233 ...
+      239 241 251 257 263 269 271 277 281 283 293 307 311 313 317 331 337 347 349 353 359 367 373 ...
+      379 383 389 397 401 409 419 421 431 433 439 443 449 457 461 463 467 479 487 491 499 503 509 ...
+      521 523 541 547 557 563 569 571 577 587 593 599 601 607 613 617 619 631 641 643 647 653 659 ...
+      661 673 677 683 691 701 709 719 727 733 739 743 751 757 761 769 773 787 797 809 811 821 823 ...
+      827 829 839 853 857 859 863 877 881 883 887 907 911 919 929 937 941 947 953 967 971 977 983 ...
+      991 997 1009 1013 1019 1021 1031 1033 1039 1049 1051 1061 1063 1069 1087 1091 1093 1097 1103 ...
+      1109 1117 1123 1129 1151 1153 1163 1171 1181 1187 1193 1201 1213 1217 1223];
+      rng = lowdisc_configure(rng,"-primeslist",primes);
+      rng = lowdisc_configure(rng,"-dimension",200);
+      rng = lowdisc_startup (rng);
+      for i = 1:10
+      [rng,computed] = lowdisc_next (rng);
+      end
+      rng = lowdisc_destroy(rng);
+    </programlisting>
+  </refsection>
+  <refsection>
+    <title>See Also</title>
+
+    <simplelist type="inline">
+      <member>
+        <link linkend="lowdisc_new">lowdisc_new</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_cget">lowdisc_cget</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_configure">lowdisc_configure</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_display">lowdisc_display</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_next">lowdisc_next</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_terms">lowdisc_terms</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_destroy">lowdisc_destroy</link>
+      </member>
+    </simplelist>
+  </refsection>
+  <refsection>
+    <title>Authors</title>
+
+    <simplelist type="vert">
+      <member>Michael Baudin</member>
+    </simplelist>
+  </refsection>
+
+  <refsection>
+    <title>Bibliography</title>
+
+    <para>&lt;no bibliography&gt;</para>
+  </refsection>
+
+  <refsection>
+    <title>Used Functions</title>
+
+    <para>&lt;no used functions&gt;</para>
+  </refsection>
+</refentry>

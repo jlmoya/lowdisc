@@ -1,0 +1,6 @@
+changelog of the Monte-Carlo Scilab Toolbox
+
+montecarlo (0.1)
+    * Initial version
+ -- Michaël Baudin <michael.baudin@scilab.org>  12 Dec 2008
+

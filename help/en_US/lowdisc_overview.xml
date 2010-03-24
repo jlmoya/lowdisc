@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ * Ajouter ici d'Ã©ventuels commentaires sur le fichier XML
+-->
+<refentry version="5.0-subset Scilab" 
+          xml:id="lowdisc_overview" 
+          xml:lang="fr"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns4="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+  <info>
+    <pubdate>$LastChangedDate: 16-12-2008 $</pubdate>
+  </info>
+
+  <refnamediv>
+    <refname>Overview</refname>
+
+    <refpurpose>An overview of the Low Discrepancy toolbox.</refpurpose>
+  </refnamediv>
+
+  <refsection>
+    <title>Purpose</title>
+
+    <para>
+      The goal of this toolbox is to provide a collection of low discrepancy
+      sequences. These random numbers are designed to be used in a Monte-Carlo
+      simulation. For example, low discrepancy sequences provide a higher
+      convergence rate to the Monte-Carlo method when used in numerical
+      integration. The toolbox takes into account the dimension of the problem, i.e.
+      generate vectors with arbitrary size.
+    </para>
+  </refsection>
+
+  <refsection>
+    <title>Design</title>
+
+    <para>
+      Low discrepancy sequences are able to produce real number in the
+      [0,1[^s interval, where s is the dimension of the space
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Features</title>
+
+    <para>
+      The current prototype has the following features :
+      <itemizedlist>
+        <listitem>
+          <para>manage arbitrary number of dimensions</para>
+        </listitem>
+
+        <listitem>
+          <para>skips a given number of elements in the sequence,</para>
+        </listitem>
+
+        <listitem>
+          <para>leaps (i.e. ignores) a given number of elements from call to call</para>
+        </listitem>
+
+      </itemizedlist>
+      The list of available sequences is described in <link linkend="lowdisc_sequences">lowdisc_sequences</link>.
+    </para>
+  </refsection>
+
+  <refsection>
+    <title>TODO</title>
+
+    <para>
+      <itemizedlist>
+
+        <listitem>
+          <para>Add a consistent bibliography</para>
+        </listitem>
+      </itemizedlist>
+    </para>
+  </refsection>
+
+  <refsection>
+    <title>Authors</title>
+
+    <simplelist type="vert">
+      <member>Michaël Baudin</member>
+    </simplelist>
+  </refsection>
+
+  <refsection>
+    <title>See Also</title>
+
+    <simplelist type="inline">
+      <member>
+        <link linkend="lowdisc_sequences">lowdisc_sequences</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_new">lowdisc_new</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_cget">lowdisc_cget</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_configure">lowdisc_configure</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_display">lowdisc_display</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_next">lowdisc_next</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_terms">lowdisc_terms</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_destroy">lowdisc_destroy</link>
+      </member>
+    </simplelist>
+  </refsection>
+
+
+  <refsection>
+    <title>Bibliography</title>
+
+    <para>
+      J H Halton &amp; G B Smith, Algorithm 247: Radical-Inverse
+      Quasi-Random Point Sequence, Communications of the ACM, Volume 7, 1964,
+      pages 701-702.
+    </para>
+  </refsection>
+</refentry>

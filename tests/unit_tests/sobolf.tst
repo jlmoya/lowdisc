@@ -1,0 +1,57 @@
+// Copyright (C) 2008 - INRIA - Michael Baudin
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution.  The terms
+// are also available at
+// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+
+
+
+
+
+//
+// assert_close --
+//   Returns 1 if the two real matrices computed and expected are close,
+//   i.e. if the relative distance between computed and expected is lesser than epsilon.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_close ( computed, expected, epsilon )
+  if expected==0.0 then
+    shift = norm(computed-expected);
+  else
+    shift = norm(computed-expected)/norm(expected);
+  end
+  if shift < epsilon then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then pause,end
+endfunction
+//
+// Check the Fast Sobol sequence
+//
+rng = lowdisc_new();
+rng = lowdisc_configure(rng,"-method","sobolf");
+rng = lowdisc_configure(rng,"-dimension",2);
+rng = lowdisc_startup (rng);
+// Term #1
+[rng,computed] = lowdisc_next (rng);
+expected = [0.5 0.5];
+assert_close ( computed, expected, 10*%eps );
+// Terms #2 to #6
+[rng,computed]=lowdisc_terms(rng,5);
+expected= [
+    3./4. 1./4. 
+    1./4. 3./4.    
+    3./8. 3./8. 
+    7./8. 7./8. 
+    5./8. 1./8. 
+];
+assert_close ( computed, expected, 10*%eps );
+rng = lowdisc_destroy(rng);
+clear rng;
+
