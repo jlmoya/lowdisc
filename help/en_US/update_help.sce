@@ -103,11 +103,7 @@ function helpupdate ( funarray , helpdir , macrosdir , demosdir , modulename )
 endfunction
 
 
-
-
 helpdir = get_absolute_file_path('update_help.sce');
-// Build the help from the sources.
-//help_from_sci(help_dir+"../../macros",help_dir)
 funarray = [
   "lowdisc_cget"
   "lowdisc_configure"
@@ -119,8 +115,8 @@ funarray = [
   "lowdisc_startup"
   "lowdisc_terms"
   ];
-macrosdir = help_dir+"../../macros";
-demosdir = help_dir+"../../demos";
+macrosdir = helpdir +"../../macros";
+demosdir = helpdir +"../../demos";
 modulename = "lowdisc";
 helpupdate ( funarray , helpdir , macrosdir , demosdir , modulename )
 
