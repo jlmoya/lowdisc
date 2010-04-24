@@ -49,21 +49,54 @@ endfunction
 // Check the configure/cget methods.
 //
 rng = lowdisc_new();
+//
 rng = lowdisc_configure(rng,"-dimension",12);
 nbdim = lowdisc_cget(rng,"-dimension");
 assert_equal ( nbdim , 12 );
+//
 i = lowdisc_cget(rng,"-sequenceindex");
 assert_equal ( i , 0 );
+//
 verbose = lowdisc_cget(rng,"-verbose");
 assert_equal ( verbose , 0 );
-// Exercize cget but do not check the result (which are default values)
-seed = lowdisc_cget(rng,"-seed");
-seedmethod = lowdisc_cget(rng,"-seedmethod");
-
-// Exercize configure, but do not check the result
+//
+sequencearray = [
+  "vandercorput"
+  "halton"
+  "faure"
+  "reversehalton"
+  "sobol"
+  "niederreiter-base-2"
+  "reversehaltonf"
+  "niederreiter-base-2f"
+  "sobolf"
+  "fauref"
+  "haltonf"
+];
+for sequencename = sequencearray'
+  rng = lowdisc_configure(rng,"-method", sequencename );
+  method = lowdisc_cget(rng,"-method");
+  assert_equal ( method , sequencename );
+end
+//
+rng = lowdisc_configure(rng,"-skip",12);
+skip = lowdisc_cget(rng,"-skip");
+assert_equal ( skip , 12 );
+//
+rng = lowdisc_configure(rng,"-leap",12);
+leap = lowdisc_cget(rng,"-leap");
+assert_equal ( leap , leap );
+//
 rng = lowdisc_configure(rng,"-vandercorputbasis",3);
+vandercorputbasis = lowdisc_cget(rng,"-vandercorputbasis");
+assert_equal ( vandercorputbasis , 3 );
+//
 rng = lowdisc_configure(rng,"-primeslist",[2 3 5]);
-lowdisc_display (rng);
+primeslist = lowdisc_cget(rng,"-primeslist");
+assert_equal ( primeslist , [2 3 5] );
+//
+// Test printing system
+string(rng)
+rng
 rng = lowdisc_destroy(rng);
-clear rng;
 

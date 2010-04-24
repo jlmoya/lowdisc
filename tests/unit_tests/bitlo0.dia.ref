@@ -5,8 +5,6 @@
 // you should have received as part of this distribution.  The terms
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
-
-
 //
 // assert_close --
 //   Returns 1 if the two real matrices computed and expected are close,
@@ -26,7 +24,7 @@ function flag = assert_close ( computed, expected, epsilon )
   else
     flag = 0;
   end
-  if flag <> 1 then pause,end
+  if flag <> 1 then bugmes();quit;end
 endfunction
 //
 // assert_equal --
@@ -36,38 +34,55 @@ endfunction
 //   epsilon : a small number
 //
 function flag = assert_equal ( computed , expected )
-  if ( and ( computed==expected ) ) then
+  if computed==expected then
     flag = 1;
   else
     flag = 0;
   end
-  if flag <> 1 then pause,end
+  if flag <> 1 then bugmes();quit;end
 endfunction
 //
-// Test the lowdisc_binomial library command
+// Check the bithi1 function
 //
-// Check that integer inputs produce integer output
-c = lowdisc_binomial ( 4 , 1 );
-assert_equal ( c , 4 );
-c = lowdisc_binomial ( 5 , 0 );
-assert_equal ( c , 1  );
-c = lowdisc_binomial ( 5 , 1 );
-assert_equal ( c , 5  );
-c = lowdisc_binomial ( 5 , 2 );
-assert_equal ( c , 10  );
-c = lowdisc_binomial ( 5 , 3 );
-assert_equal ( c , 10  );
-c = lowdisc_binomial ( 5 , 4 );
-assert_equal ( c , 5  );
-c = lowdisc_binomial ( 5 , 5 );
-assert_equal ( c , 1  );
-c = lowdisc_binomial ( 17 , 18 );
-assert_equal ( c , 0  );
-c = lowdisc_binomial ( 17 , -1 );
-assert_equal ( c , 0  );
-// Real (i.e. floating point) inputs
-c = lowdisc_binomial ( 1.5 , 0.5 );
-assert_close ( c , 1.5 , 10 * %eps );
-c = lowdisc_binomial ( 10000 , 134 );
-assert_close ( c , 2.050083865024873735e307 , 1.e5 * %eps );
-
+computed = [];
+ilist =  [
+    22      
+    96     
+    83      
+    56      
+    41      
+     6     
+    26      
+    11      
+     4      
+    64      
+]
+ ilist  =
+ 
+    22.  
+    96.  
+    83.  
+    56.  
+    41.  
+    6.   
+    26.  
+    11.  
+    4.   
+    64.  
+expected =  [
+  1
+  1
+  3
+  1
+  2
+  1
+  1
+  3
+  1
+  1
+];
+for i = 1:size(ilist,"*")
+  j = ilist(i);
+  computed($+1) = lowdisc_bitlo0 ( j );
+end
+assert_equal ( computed , expected );

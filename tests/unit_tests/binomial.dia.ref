@@ -27,25 +27,44 @@ function flag = assert_close ( computed, expected, epsilon )
   if flag <> 1 then bugmes();quit;end
 endfunction
 //
+// assert_equal --
+//   Returns 1 if the two real matrices computed and expected are equal.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_equal ( computed , expected )
+  if ( and ( computed==expected ) ) then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then bugmes();quit;end
+endfunction
+//
 // Test the lowdisc_binomial library command
 //
+// Check that integer inputs produce integer output
+c = lowdisc_binomial ( 4 , 1 );
+assert_equal ( c , 4 );
 c = lowdisc_binomial ( 5 , 0 );
-assert_close ( c , 1 , 10 * %eps );
+assert_equal ( c , 1  );
 c = lowdisc_binomial ( 5 , 1 );
-assert_close ( c , 5 , 10 * %eps );
+assert_equal ( c , 5  );
 c = lowdisc_binomial ( 5 , 2 );
-assert_close ( c , 10 , 10 * %eps );
+assert_equal ( c , 10  );
 c = lowdisc_binomial ( 5 , 3 );
-assert_close ( c , 10 , 10 * %eps );
+assert_equal ( c , 10  );
 c = lowdisc_binomial ( 5 , 4 );
-assert_close ( c , 5 , 10 * %eps );
+assert_equal ( c , 5  );
 c = lowdisc_binomial ( 5 , 5 );
-assert_close ( c , 1 , 10 * %eps );
+assert_equal ( c , 1  );
 c = lowdisc_binomial ( 17 , 18 );
-assert_close ( c , 0 , 10 * %eps );
+assert_equal ( c , 0  );
 c = lowdisc_binomial ( 17 , -1 );
-assert_close ( c , 0 , 10 * %eps );
+assert_equal ( c , 0  );
+// Real (i.e. floating point) inputs
 c = lowdisc_binomial ( 1.5 , 0.5 );
 assert_close ( c , 1.5 , 10 * %eps );
 c = lowdisc_binomial ( 10000 , 134 );
-assert_close ( c , 2.050083865024873735e307 , 10 * %eps );
+assert_close ( c , 2.050083865024873735e307 , 1.e5 * %eps );
