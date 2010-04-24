@@ -5,8 +5,6 @@
 // you should have received as part of this distribution.  The terms
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
-
-
 //
 // assert_close --
 //   Returns 1 if the two real matrices computed and expected are close,
@@ -26,7 +24,7 @@ function flag = assert_close ( computed, expected, epsilon )
   else
     flag = 0;
   end
-  if flag <> 1 then pause,end
+  if flag <> 1 then bugmes();quit;end
 endfunction
 //
 // assert_equal --
@@ -41,7 +39,7 @@ function flag = assert_equal ( computed , expected )
   else
     flag = 0;
   end
-  if flag <> 1 then pause,end
+  if flag <> 1 then bugmes();quit;end
 endfunction
 //
 // Test the lowdisc_faure library command
