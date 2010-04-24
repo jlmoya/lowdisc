@@ -1,4 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
@@ -6,11 +7,33 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
-//
-// lowdisc_cget --
-//   Quiery one configurable field.
-//
 function value = lowdisc_cget (this,key)
+  // Returns the value associated with the given key.
+  //
+  // Calling Sequence
+  //   value = lowdisc_cget (this,key)
+  //
+  // Parameters
+  //   this: the current object
+  //   key: a string. The name of the option to get. All options which can be set with lowdisc_configure can be get with lowdisc_cget.
+  //   value: the value associated with the key.
+  //
+  // Description
+  //   This command allows to get the current state of the object,
+  //   which has been configured with the lowdisc_configure command.
+  //
+  // Examples
+  //   rng = lowdisc_new();
+  //   rng = lowdisc_configure(rng,"-method","faure");
+  //   rng = lowdisc_configure(rng,"-dimension",3);
+  //   method = lowdisc_cget(rng,"-method")
+  //   nbdim = lowdisc_cget(rng,"-dimension")
+  //   i = lowdisc_cget(rng,"-sequenceindex")
+  //   verbose = lowdisc_cget(rng,"-verbose")
+  //
+  // Authors
+  //   Michael Baudin - 2010 - DIGITEO
+
   select key
   case "-verbose" then
     value = this.verbose;
