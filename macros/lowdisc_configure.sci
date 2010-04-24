@@ -75,7 +75,33 @@ function this = lowdisc_configure (this,key,value)
   //     discarded. This option allows to generate alternative 
   //     sequences based on the same basic generator.</listitem>
   //  </itemizedlist>
-  //  TODO : describe the list of possible values for "-method".
+  //  The following is the list of possible values for "-method".
+  //  <itemizedlist>
+  //  <listitem>"vandercorput" : the Van Der Corput low 
+  //    discrepancy sequence which is a macro-based algorithm.</listitem>
+  //  <listitem>"halton" : the Halton low discrepancy sequence 
+  //    which is a macro-based algorithm.</listitem>
+  //  <listitem>"faure" : the Faure low discrepancy sequence. 
+  //    This is a macro-based algorithm.</listitem>
+  //  <listitem>"faure" : the Faure low discrepancy sequence. 
+  //    This is a macro-based algorithm.</listitem>
+  //  <listitem>"reversehalton" : the Reverse Halton sequence of Vandewoestyne and Cools.
+  //    This is a macro-based algorithm. </listitem>
+  //  <listitem>"sobol" : the Sobol sequence. 
+  //    This is a macro-based algorithm. </listitem>
+  //  <listitem>"niederreiter-base-2" : The Niederreiter Base 2 sequence. 
+  //    This is a macro-based algorithm. </listitem>
+  //  <listitem>"reversehaltonf" : the Reverse Halton sequence of Vandewoestyne and Cools.
+  //    This fast algorithm is based on a compiled C source code. </listitem>
+  //  <listitem>"niederreiter-base-2f" : The Niederreiter Base 2 sequence. 
+  //    This fast algorithm is based on a compiled C source code. </listitem>
+  //  <listitem>"sobolf" : the Sobol sequence. 
+  //    This fast algorithm is based on a compiled C source code. </listitem>
+  //  <listitem>"fauref" : the Faure sequence.
+  //    This fast algorithm is based on a compiled C source code. </listitem>
+  //  <listitem>"haltonf" : the Halton sequence. 
+  //    This fast algorithm is based on a compiled C source code. </listitem>
+  //  </itemizedlist>
   //
   // Examples
   //   rng = lowdisc_new();
