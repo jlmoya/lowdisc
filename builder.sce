@@ -13,7 +13,8 @@
 //
 mode(-1);
 lines(0);
-setenv('DEBUG_SCILAB_DYNAMIC_LINK','YES')
+// Uncomment this line to make a debug version of the Toolbox
+//setenv('DEBUG_SCILAB_DYNAMIC_LINK','YES')
 try
  getversion('scilab');
 catch
@@ -30,8 +31,10 @@ TOOLBOX_TITLE = 'Low Discrepancy Toolbox';
 toolbox_dir = get_absolute_file_path('builder.sce');
 
 tbx_builder_macros(toolbox_dir);
+if ( %f ) then
 tbx_builder_src(toolbox_dir);
 tbx_builder_gateway(toolbox_dir);
+end
 tbx_builder_help(toolbox_dir);
 tbx_build_loader(TOOLBOX_NAME, toolbox_dir);
 
