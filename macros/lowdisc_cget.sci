@@ -30,6 +30,8 @@ function value = lowdisc_cget (this,key)
   //   nbdim = lowdisc_cget(rng,"-dimension")
   //   i = lowdisc_cget(rng,"-sequenceindex")
   //   verbose = lowdisc_cget(rng,"-verbose")
+  //   rng
+  //   rng = lowdisc_destroy(rng);
   //
   // Authors
   //   Michael Baudin - 2010 - DIGITEO

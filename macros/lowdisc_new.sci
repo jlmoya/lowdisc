@@ -38,7 +38,7 @@ function newrng = lowdisc_new ()
     ])
   //
   // Configurable options
-  newrng.verbose=0
+  newrng.verbose=%f
   newrng.dimension=1
   newrng.method="halton"
   newrng.sequenceindex=0

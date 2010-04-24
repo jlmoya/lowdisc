@@ -16,6 +16,9 @@ function this = lowdisc_startup (this)
     errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "lowdisc_startup" );
     error(errmsg);
   end
+  if (this.verbose<>0) then
+    mprintf( "Starting up the sequence." );
+  end
   this.startedup = 1;
   //
   // Create the sequence
