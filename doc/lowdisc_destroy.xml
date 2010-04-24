@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ * Ajouter ici d'éventuels commentaires sur le fichier XML
+-->
+<refentry
+  xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:mml="http://www.w3.org/1998/Math/MathML"
+  xmlns:db="http://docbook.org/ns/docbook"
+  version="5.0-subset Scilab"
+  xml:lang="fr"
+  xml:id="lowdisc_configure">
+  <info>
+    <pubdate>$LastChangedDate: 18-12-2008 $</pubdate>
+  </info>
+  <refnamediv>
+    <refname>lowdisc_destroy</refname>
+    <refpurpose>  Destroy the current object and returns an updated object.</refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <title>Calling Sequence</title>
+    <synopsis>this = lowdisc_destroy(this)</synopsis>
+  </refsynopsisdiv>
+  <refsection>
+    <title>Parameters</title>
+    <variablelist>
+      <varlistentry>
+        <term>this</term>
+        <listitem>
+          <para>
+            The current Random Number object. At output, the object is updated with the new settings.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsection>
+  <refsection>
+    <title>Description</title>
+    <para>
+      This command allows to configure the state of the current object.
+      It requires to take the current object both as an input
+      and an output argument.
+    </para>
+  </refsection>
+  <refsection>
+    <title>Examples</title>
+    In the following example, we create an 
+    object and immediately destroys it. One finally clears the variable
+    which holds the object.
+    <programlisting role="example">
+      rng = lowdisc_new();
+      rng = lowdisc_destroy(rng);
+      clear rng;
+    </programlisting>
+  </refsection>
+  <refsection>
+    <title>See Also</title>
+
+    <simplelist type="inline">
+      <member>
+        <link linkend="lowdisc_new">lowdisc_new</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_cget">lowdisc_cget</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_configure">lowdisc_configure</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_display">lowdisc_display</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_next">lowdisc_next</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_terms">lowdisc_terms</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_destroy">lowdisc_destroy</link>
+      </member>
+    </simplelist>
+  </refsection>
+  <refsection>
+    <title>Authors</title>
+
+    <simplelist type="vert">
+      <member>Michael Baudin</member>
+    </simplelist>
+  </refsection>
+
+  <refsection>
+    <title>Bibliography</title>
+
+    <para>&lt;no bibliography&gt;</para>
+  </refsection>
+
+  <refsection>
+    <title>Used Functions</title>
+
+    <para>&lt;no used functions&gt;</para>
+  </refsection>
+</refentry>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ * Ajouter ici d'éventuels commentaires sur le fichier XML
+-->
+<refentry
+  xmlns="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:mml="http://www.w3.org/1998/Math/MathML"
+  xmlns:db="http://docbook.org/ns/docbook"
+  version="5.0-subset Scilab"
+  xml:lang="fr"
+  xml:id="lowdisc_terms">
+  <info>
+    <pubdate>$LastChangedDate: 18-12-2008 $</pubdate>
+  </info>
+  <refnamediv>
+    <refname>lowdisc_terms</refname>
+    <refpurpose>  Returns several terms of the sequence.</refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <title>Calling Sequence</title>
+    <synopsis>[this,result] = lowdisc_terms(this,imax)</synopsis>
+  </refsynopsisdiv>
+  <refsection>
+    <title>Parameters</title>
+    <variablelist>
+      <varlistentry>
+        <term>this</term>
+        <listitem>
+          <para>The current object.</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>imax</term>
+        <listitem>
+          <para>
+            The number of terms to produce in the sequence. The produced vectors have
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>result</term>
+        <listitem>
+          <para>
+            The matrix containing imax terms of the sequence, from 1 up to imax. The matrix is organized as follows.
+            <itemizedlist>
+              <listitem>
+                <para>result(1,1:dimension) is the term #1</para>
+              </listitem>
+              <listitem>
+                <para>result(i,1:dimension) is the term #i</para>
+              </listitem>
+              <listitem>
+                <para>result(imax,1:dimension) is the term #imax</para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsection>
+  <refsection>
+    <title>Description</title>
+    <para>
+      This command allows to get several elements in the sequence in one call, while
+      lowdisc_next produces one element at a time.
+    </para>
+  </refsection>
+  <refsection>
+    <title>Examples</title>
+    <para>
+      In the following script, one uses a Halton sequence in dimension 2.
+      One uses the lowdisc_terms method to produce the element from #1 to #5
+      in only one call.
+    </para>
+    <programlisting role="example">
+      rng = lowdisc_new();
+      rng = lowdisc_configure(rng,"-method","halton");
+      rng = lowdisc_configure(rng,"-dimension",2);
+      rng = lowdisc_startup (rng);
+      [rng,computed]=lowdisc_terms(rng,5);
+    </programlisting>
+    <para>
+      The result is the following matrix, where each line is an element in the sequence.
+    </para>
+    <programlisting role="example">
+      expected= [...
+      1./4. 2./3. ;...
+      3./4. 1./9. ;...
+      1./8. 4./9. ;...
+      5./8. 7./9. ;...
+      3./8. 2./9. ];
+    </programlisting>
+  </refsection>
+  <refsection>
+    <title>See Also</title>
+
+    <simplelist type="inline">
+      <member>
+        <link linkend="lowdisc_new">lowdisc_new</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_cget">lowdisc_cget</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_configure">lowdisc_configure</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_display">lowdisc_display</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_next">lowdisc_next</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_terms">lowdisc_terms</link>
+      </member>
+      <member>
+        <link linkend="lowdisc_destroy">lowdisc_destroy</link>
+      </member>
+    </simplelist>
+  </refsection>
+  <refsection>
+    <title>Authors</title>
+
+    <simplelist type="vert">
+      <member>Michael Baudin</member>
+    </simplelist>
+  </refsection>
+
+</refentry>
