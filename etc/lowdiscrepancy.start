@@ -25,7 +25,7 @@ clear pathmacros;
 // load gateways
 // =============================================================================
 
-if ( %t ) then
+if ( %f ) then
   mprintf("\tLoad gateways\n");
   ilib_verbose(0);
   exec( pathconvert(root_tlbx+"/sci_gateway/loader_gateway.sce",%f));
@@ -46,11 +46,11 @@ end
 // add demos
 // =============================================================================
 
-if ( %f ) then
+if ( %t ) then
 if or(getscilabmode() == ["NW";"STD"]) then
     mprintf("\tLoad demos\n");
-    pathdemos = pathconvert(root_tlbx+"/demos/number.dem.gateway.sce",%f,%t);
-    add_demo("Number",pathdemos);
+    pathdemos = pathconvert(root_tlbx+"/demos/lowdisc.dem.gateway.sce",%f,%t);
+    add_demo("Low Discrepancy",pathdemos);
     clear pathdemos ;
 end
 end
