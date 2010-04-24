@@ -26,7 +26,7 @@
 //   To do this, it suffices to pass the basis to the fauremat
 //   function and to use binomialmod instead of binomial.
 //
-function v = lowdisc_faure ( k , basis , dimension )
+function vk = lowdisc_faure ( k , basis , dimension )
   digits = lowdisc_bary ( k , basis , "bigendian" )
   digits = digits'
   r = size ( digits , 1 )
@@ -42,7 +42,7 @@ function v = lowdisc_faure ( k , basis , dimension )
     y = ci * digits
     ymodb = modulo ( y , basis )
     // Compute the component #idim of sequence
-    v(1,idim) = ymodb' * bpwrs
+    vk(1,idim) = ymodb' * bpwrs
   end
 endfunction
 
