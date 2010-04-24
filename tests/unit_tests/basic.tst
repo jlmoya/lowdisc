@@ -58,7 +58,7 @@ i = lowdisc_cget(rng,"-sequenceindex");
 assert_equal ( i , 0 );
 //
 verbose = lowdisc_cget(rng,"-verbose");
-assert_equal ( verbose , 0 );
+assert_equal ( verbose , %f );
 //
 sequencearray = [
   "vandercorput"
