@@ -2,9 +2,7 @@
 <!--
  * Ajouter ici d'éventuels commentaires sur le fichier XML
 -->
-<refentry version="5.0-subset Scilab" 
-          xml:id="lowdisc_sequences" 
-          xml:lang="fr"
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_sequences" xml:lang="fr"
           xmlns="http://docbook.org/ns/docbook"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           xmlns:svg="http://www.w3.org/2000/svg"
@@ -16,159 +14,135 @@
   </info>
 
   <refnamediv>
-    <refname>sequences</refname>
+    <refname>Sequences</refname>
 
-    <refpurpose>The sequences available in the Low Discrepancy toolbox.</refpurpose>
+    <refpurpose>The sequences available in the Low Discrepancy
+    toolbox.</refpurpose>
   </refnamediv>
 
   <refsection>
     <title>Sequences</title>
 
-    <para>
-      Several sequences are available in the Low Discrepancy toolbox.
-      Each number sequence has its own properties, this is why the goal of
-      this page is to detail the properties of these sequences.
-      Each sequence can be configured with the -method option.
-    </para>
+    <para>Several sequences are available in the Low Discrepancy toolbox. Each
+    number sequence has its own properties, this is why the goal of this page
+    is to detail the properties of these sequences. Each sequence can be
+    configured with the -method option.</para>
   </refsection>
 
   <refsection>
     <title>Classes of sequence</title>
-    <para>
-      All Low Discrepancy sequences are designed to be able to produce real values uniform in the [0,1[^s interval, where s is the dimension of the space.
-    </para>
 
-    <para>
-            The generators in this class tries to produces numbers which
-            favor the convergence of a Monte-Carlo simulation by reducing the
-            discrepancy. These generators may be used, for example, in the
-            Monte-Carlo based numerical integration of a function.
-          </para>
-          <para>
-            The list of generators available in this toolbox and producing low discrepancy
-            sequences is the following : vandercorput, halton, faure, gslhalton, gslreversehalton,
-            gslsobol, gslniederreiter-base-2.
-          </para>
+    <para>All Low Discrepancy sequences are designed to be able to produce
+    real values uniform in the [0,1[^s interval, where s is the dimension of
+    the space.</para>
 
+    <para>The generators in this class tries to produces numbers which favor
+    the convergence of a Monte-Carlo simulation by reducing the discrepancy.
+    These generators may be used, for example, in the Monte-Carlo based
+    numerical integration of a function.</para>
+
+    <para>The list of generators available in this toolbox and producing low
+    discrepancy sequences is the following : vandercorput, halton, faure,
+    gslhalton, gslreversehalton, gslsobol, gslniederreiter-base-2.</para>
   </refsection>
 
   <refsection>
     <title>Sources of Sequences</title>
-    <para>
-      Although the random number toolbox provides the same interface for all
-      generators, what happens behind the scenes is not the same, depending
-      on the sequence. Two main sources are used in this toolbox.
-    </para>
-    <itemizedlist>
 
+    <para>Although the random number toolbox provides the same interface for
+    all generators, what happens behind the scenes is not the same, depending
+    on the sequence. Two main sources are used in this toolbox.</para>
+
+    <itemizedlist>
       <listitem>
         <para>Scripts</para>
-        <para>
-          Scripts are provided with this toolbox to implement both
-          low-discrepancy sequences (such as
-          Halton for instance).
-          These sequences may be slow if a large number of data is to be
-          generated, but may provide greater flexibility for some users.
-        </para>
+
+        <para>Scripts are provided with this toolbox to implement both
+        low-discrepancy sequences (such as Halton for instance). These
+        sequences may be slow if a large number of data is to be generated,
+        but may provide greater flexibility for some users.</para>
       </listitem>
 
       <listitem>
         <para>C++ source codes</para>
-        <para>
-          These sequences are based on compiled C source code
-          and should be as fast as possible.
-        </para>
+
+        <para>These sequences are based on compiled C source code and should
+        be as fast as possible.</para>
       </listitem>
     </itemizedlist>
   </refsection>
 
   <refsection>
     <title>Overview of sequences</title>
-    <para>
-      In this section, we detail the sequences which are provided.
-    </para>
 
-    <para>
-      <itemizedlist>
+    <para>In this section, we detail the sequences which are provided.</para>
 
+    <para><itemizedlist>
         <listitem>
           <para>"vandercorput"</para>
-          <para>
-            The Van Der Corput sequence is a low discrepancy sequence.
-            It is available only in 1 dimension (i.e. the -dimension option must be set to 1, the default).
-            It uses the basis which is associated with the -vandercorputbasis option (default : 2).
-            This sequence is based on a script.
-          </para>
+
+          <para>The Van Der Corput sequence is a low discrepancy sequence. It
+          is available only in 1 dimension (i.e. the -dimension option must be
+          set to 1, the default). It uses the basis which is associated with
+          the -vandercorputbasis option (default : 2). This sequence is based
+          on a script.</para>
         </listitem>
 
         <listitem>
           <para>"halton"</para>
-          <para>
-            The Halton sequence is a low discrepancy sequence.
-            It is available for dimensions up to 100 dimensions.
-            It uses the list of prime numbers which is associated with the -primeslist option.
-            The -primeslist option may be used is the required dimension of the problem is
-            larger than the default.
-            This sequence is based on a script, which might be slow if a large number of
-            data is to be generated. If performance is a problem, the gslhalton sequence
-            should be prefered.
-          </para>
+
+          <para>The Halton sequence is a low discrepancy sequence. It is
+          available for dimensions up to 100 dimensions. It uses the list of
+          prime numbers which is associated with the -primeslist option. The
+          -primeslist option may be used is the required dimension of the
+          problem is larger than the default. This sequence is based on a
+          script, which might be slow if a large number of data is to be
+          generated. If performance is a problem, the gslhalton sequence
+          should be prefered.</para>
         </listitem>
 
         <listitem>
           <para>"faure"</para>
-          <para>
-            The Faure sequence is a low discrepancy sequence.
-            It is available for dimensions up to 50 dimensions.
-            This sequence is based on a script, which might be slow if a large number of
-            data is to be generated.
-          </para>
-        </listitem>
 
-      </itemizedlist>
-    </para>
+          <para>The Faure sequence is a low discrepancy sequence. It is
+          available for dimensions up to 50 dimensions. This sequence is based
+          on a script, which might be slow if a large number of data is to be
+          generated.</para>
+        </listitem>
+      </itemizedlist></para>
   </refsection>
+
   <refsection>
     <title>TODO</title>
 
-    <para>
-      <itemizedlist>
-
+    <para><itemizedlist>
         <listitem>
           <para>Add missing sequences in this page.</para>
         </listitem>
-      </itemizedlist>
-    </para>
+      </itemizedlist></para>
   </refsection>
+
   <refsection>
     <title>See Also</title>
 
     <simplelist type="inline">
-      <member>
-        <link linkend="lowdisc_overview">lowdisc_overview</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_new">lowdisc_new</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_cget">lowdisc_cget</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_configure">lowdisc_configure</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_display">lowdisc_display</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_next">lowdisc_next</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_terms">lowdisc_terms</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_destroy">lowdisc_destroy</link>
-      </member>
+      <member><link
+      linkend="lowdisc_overview">lowdisc_overview</link></member>
+
+      <member><link linkend="lowdisc_new">lowdisc_new</link></member>
+
+      <member><link linkend="lowdisc_cget">lowdisc_cget</link></member>
+
+      <member><link
+      linkend="lowdisc_configure">lowdisc_configure</link></member>
+
+      <member><link linkend="lowdisc_display">lowdisc_display</link></member>
+
+      <member><link linkend="lowdisc_next">lowdisc_next</link></member>
+
+      <member><link linkend="lowdisc_terms">lowdisc_terms</link></member>
+
+      <member><link linkend="lowdisc_destroy">lowdisc_destroy</link></member>
     </simplelist>
   </refsection>
-
 </refentry>
