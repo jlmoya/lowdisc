@@ -43,7 +43,7 @@ expected = 0.5;
 shift = norm(computed-expected)/norm(expected);
 if shift > 1.e-6 then pause,end
 // Terms #2 to #6
-[rng,computed]=lowdisc_terms(rng,5);
+[rng,computed]=lowdisc_next(rng,5);
 expected= [
     0.25 
     0.75    
@@ -67,7 +67,7 @@ rng = lowdisc_startup (rng);
 expected = [0.5 1.0/3.0];
 assert_close ( computed, expected, %eps );
 // Terms #2 to #6
-[rng,computed]=lowdisc_terms(rng,5);
+[rng,computed]=lowdisc_next(rng,5);
 expected= [
     1./4. 2./3. 
     3./4. 1./9.    

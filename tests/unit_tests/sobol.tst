@@ -43,7 +43,7 @@ rng = lowdisc_startup (rng);
 expected = [0.5 0.5];
 assert_close ( computed, expected, 10*%eps );
 // Terms #2 to #6
-[rng,computed]=lowdisc_terms(rng,5);
+[rng,computed]=lowdisc_next(rng,5);
 expected= [
     3./4. 1./4. 
     1./4. 3./4. 
@@ -63,7 +63,7 @@ rng = lowdisc_configure(rng,"-method","sobol");
 rng = lowdisc_configure(rng,"-dimension",4);
 rng = lowdisc_startup (rng);
 // Terms #1 to #11
-[rng,computed]=lowdisc_terms(rng,11);
+[rng,computed]=lowdisc_next(rng,11);
 expected= [
    0.500000    0.500000    0.500000    0.500000  
    0.750000    0.250000    0.750000    0.250000  
@@ -79,9 +79,9 @@ expected= [
 ];
 assert_close ( computed, expected, 1.e-5 );
 // Drop terms 12-94
-[rng,computed]=lowdisc_terms(rng,94-12+1);
+[rng,computed]=lowdisc_next(rng,94-12+1);
 // Terms #95-110
-[rng,computed]=lowdisc_terms(rng,110-95+1);
+[rng,computed]=lowdisc_next(rng,110-95+1);
 expected= [
    0.054688    0.929688    0.101562    0.960938  
    0.039062    0.132812    0.929688    0.351562  

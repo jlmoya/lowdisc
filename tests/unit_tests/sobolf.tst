@@ -43,7 +43,7 @@ rng = lowdisc_startup (rng);
 expected = [0.5 0.5];
 assert_close ( computed, expected, 10*%eps );
 // Terms #2 to #6
-[rng,computed]=lowdisc_terms(rng,5);
+[rng,computed]=lowdisc_next(rng,5);
 expected= [
     3./4. 1./4. 
     1./4. 3./4.    
