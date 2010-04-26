@@ -6,11 +6,29 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
-//
-// lowdisc_destroy --
-//   Destroy a new random number object.
-//
 function this = lowdisc_destroy (this)
+  // Destroy the current object.
+  //
+  // Calling Sequence
+  //   this = lowdisc_destroy (this)
+  //
+  // Parameters
+  //   this: the current object
+  //
+  // Description
+  //   This function requires to take the current object both as an input
+  //   and an output argument.
+  //
+  // Examples
+  //   rng = lowdisc_new();
+  //   rng = lowdisc_configure(rng,"-method","faure");
+  //   rng
+  //   rng = lowdisc_destroy(rng);
+  //
+  // Authors
+  //   Michael Baudin - 2008-2009 - INRIA
+  //   Michael Baudin - 2010 - DIGITEO
+
   select this.method
   case "vandercorput" then
     // Nothing to do

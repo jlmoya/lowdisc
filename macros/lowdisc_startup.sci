@@ -6,12 +6,47 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
-//
-// lowdisc_startup --
-//   Startup the random number generator.
-//   This command can only be executed once in the lifetime of the object.
-//
 function this = lowdisc_startup (this)
+  // Startup the sequence.
+  //
+  // Calling Sequence
+  //   this = lowdisc_startup (this)
+  //
+  // Parameters
+  //   this: the current object
+  //
+  // Description
+  //   This command can only be executed once in the lifetime of the object.
+  //   This function is sensitive to the "-skip" option.
+  //
+  // Examples
+  //   rng = lowdisc_new();
+  //   rng = lowdisc_configure(rng,"-method","halton");
+  //   rng = lowdisc_startup (rng);
+  //   // Term #1
+  //   [rng,computed] = lowdisc_next (rng);
+  //   // Term #2
+  //   [rng,computed] = lowdisc_next (rng);
+  //   rng
+  //   rng = lowdisc_destroy(rng);
+  //
+  //   // See the -skip option in action
+  //   rng = lowdisc_new();
+  //   rng = lowdisc_configure(rng,"-method","halton");
+  //   rng = lowdisc_configure(rng,"-skip",12);
+  //   rng = lowdisc_startup (rng);
+  //   // Term #13
+  //   [rng,computed] = lowdisc_next (rng);
+  //   // Term #14
+  //   [rng,computed] = lowdisc_next (rng);
+  //   rng
+  //   rng = lowdisc_destroy(rng);
+  //
+  // Authors
+  //   Michael Baudin - 2008-2009 - INRIA
+  //   Michael Baudin - 2010 - DIGITEO
+  //
+
   if (this.startedup<>0) then
     errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "lowdisc_startup" );
     error(errmsg);

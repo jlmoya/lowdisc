@@ -13,60 +13,128 @@
 // Good permutations for deterministic scrambled Halton
 // sequences in terms of L2-discrepancy, Computational and Applied
 // Mathematics 189, 2006
-// See also O. Teytaud, 2007, Gnu Scientific Library
+// See also 
 //
 
 
-//
-// lowdisc_next --
-//   Returns the next term of the sequence, that is,
-//   returns a matrix of values with shape 1 x s, where s is the
-//   dimension of the space.
-// Arguments
-//   next : the next vector in the sequence
-// Caution !
-//   The current object is updated after the call to next :
-//   both this and next are mandatory output arguments.
-//
-function [this,next] = lowdisc_next (this)
-  this.sequenceindex = this.sequenceindex + 1;
+function [this,next] = lowdisc_next ( varargin )
+  // Returns the next term of the sequence
   //
-  // Compute vector
+  // Calling Sequence
+  //   [this,next] = lowdisc_next ( this )
+  //   [this,next] = lowdisc_next ( this , imax )
   //
-  select this.method
-  case "vandercorput" then
-    next = _next_vandercorput (this);
-  case "halton" then
-    next = _next_halton (this);
-  case "faure" then
-    next = _next_faure (this);
-  case "reversehalton" then
-    [this,next] = _next_reversehalton (this);
-  case "sobol" then
-    [ this , next ] = lowdisc_sobol ( this );
-  case "niederreiter-base-2" then
-    [ this , next ] = lowdisc_nieder2 ( this );
-//
-// Fast sequences based on primitives
-//
-  case "haltonf" then
-    [ this , next ] = _next_haltonf (this);
-  case "reversehaltonf" then
-    [ this , next ] = _next_reversehaltonf (this);
-  case "niederreiter-base-2f" then
-    [ this , next ] = _next_nieder2f (this);
-  case "sobolf" then
-    [ this , next ] = _next_sobolf (this);
-  case "fauref" then
-    [ this , next ] = _next_fauref (this);
-  else
-    errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , ...
-      "lowdisc_next" , this.method);
-    error(errmsg);
+  // Parameters
+  //   this: the current object
+  //   imax: the number of terms to retrieve (default = 1)
+  //   next : a matrix of size imax x s, the next vector in the sequence
+  //
+  // Description
+  //   Returns a matrix of values with shape 1 x s, where s is the
+  //   dimension of the space.
+  //   The current object is updated after the call to next :
+  //   both this and next are mandatory output arguments.
+  //   This function is sensitive to the "-leap" option.
+  //
+  // Examples
+  //   rng = lowdisc_new();
+  //   rng = lowdisc_configure(rng,"-method","halton");
+  //   rng = lowdisc_startup (rng);
+  //   // Term #1
+  //   [rng,computed] = lowdisc_next (rng);
+  //   // Term #2
+  //   [rng,computed] = lowdisc_next (rng);
+  //   // Term #3, etc...
+  //   [rng,computed] = lowdisc_next (rng);
+  //   rng
+  //   rng = lowdisc_destroy(rng);
+  //
+  //   // See the imax parameter in action
+  //   rng = lowdisc_new();
+  //   rng = lowdisc_configure(rng,"-method","halton");
+  //   rng = lowdisc_startup (rng);
+  //   // Term #1 to 100
+  //   [rng,computed] = lowdisc_next (rng,100);
+  //   // Term #101 to 201
+  //   [rng,computed] = lowdisc_next (rng,100);
+  //   rng
+  //   rng = lowdisc_destroy(rng);
+  //
+  //   // See the -leap option in action
+  //   rng = lowdisc_new();
+  //   rng = lowdisc_configure(rng,"-method","halton");
+  //   rng = lowdisc_configure(rng,"-leap",10);
+  //   rng = lowdisc_startup (rng);
+  //   // Term #1
+  //   [rng,computed] = lowdisc_next (rng);
+  //   // Term #11
+  //   [rng,computed] = lowdisc_next (rng);
+  //   // Term #21
+  //   [rng,computed] = lowdisc_next (rng);
+  //   rng
+  //   rng = lowdisc_destroy(rng);
+  //
+  // Authors
+  //   Michael Baudin - 2008-2009 - INRIA
+  //   Michael Baudin - 2010 - DIGITEO
+  //
+  
+  [lhs,rhs]=argn();
+  if ( rhs > 2 ) then
+    errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "lowdisc_next", rhs);
+    error(errmsg)
   end
-  // Leap over (i.e. ignore) as many elements as required
-  if ( this.leap > 0 ) then
-    [ this , result ] = lowdisc_terms ( this , this.leap )
+  
+  this = varargin(1)
+  if ( rhs < 2 ) then
+    imax = 1
+  else
+    imax = varargin(2)
+  end
+  
+  result=zeros(imax,this.dimension)
+  
+  for i=1:imax
+    this.sequenceindex = this.sequenceindex + 1;
+    //
+    // Compute vector
+    //
+    select this.method
+    case "vandercorput" then
+      next = _next_vandercorput (this);
+    case "halton" then
+      next = _next_halton (this);
+    case "faure" then
+      next = _next_faure (this);
+    case "reversehalton" then
+      [this,next] = _next_reversehalton (this);
+    case "sobol" then
+      [ this , next ] = lowdisc_sobol ( this );
+    case "niederreiter-base-2" then
+      [ this , next ] = lowdisc_nieder2 ( this );
+      //
+      // Fast sequences based on primitives
+      //
+    case "haltonf" then
+      [ this , next ] = _next_haltonf (this);
+    case "reversehaltonf" then
+      [ this , next ] = _next_reversehaltonf (this);
+    case "niederreiter-base-2f" then
+      [ this , next ] = _next_nieder2f (this);
+    case "sobolf" then
+      [ this , next ] = _next_sobolf (this);
+    case "fauref" then
+      [ this , next ] = _next_fauref (this);
+    else
+      errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , ...
+      "lowdisc_next" , this.method);
+      error(errmsg);
+    end
+    // Leap over (i.e. ignore) as many elements as required
+    if ( this.leap > 0 ) then
+      [ this , result ] = lowdisc_terms ( this , this.leap )
+    end
+    result(i,1:this.dimension) = next
   end
 endfunction
 //

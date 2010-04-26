@@ -34,11 +34,10 @@ function this = lowdisc_configure (this,key,value)
   //     The value is expected to be . It should be a prime number, but that
   //     is not checked by the configure method.</listitem>
   //   <listitem>"-primeslist" : a row array of positive floating point integers, 
-  //     the matrix of prime numbers used in the Halton sequence.
+  //     at matrix of prime numbers used in the several low discrepancy sequences.
   //     The expected matrix must have a 1xn shape, with n an integer greater than 2.
-  //     The default list is made of the 100 first prime numbers, from 2 to 541.
-  //     This list of primes is used in the Halton sequence.
-  //     That default list should enable the user to generate sequences in dimension up to 100.
+  //     The default list is made of the 100 first prime numbers, from 2 to 541, which
+  //     enables the user to generate sequences up to 100 dimensions.
   //     If a larger dimension problem is to process, that feature should enable users to
   //     customize the list to meet the required dimension.
   //     The user should be warned that the Halton sequence may produce poor convergence
@@ -78,14 +77,19 @@ function this = lowdisc_configure (this,key,value)
   //  The following is the list of possible values for "-method".
   //  <itemizedlist>
   //  <listitem>"vandercorput" : the Van Der Corput low 
-  //    discrepancy sequence which is a macro-based algorithm.</listitem>
-  //  <listitem>"halton" : the Halton low discrepancy sequence 
-  //    which is a macro-based algorithm.</listitem>
-  //  <listitem>"faure" : the Faure low discrepancy sequence. 
+  //    discrepancy sequence. 
+  //    It is available only in 1 dimension (i.e. the -dimension option must be
+  //    set to 1, the default). It uses the basis which is associated with
+  //    the "-vandercorputbasis" option.
+  //    This is a macro-based algorithm.</listitem>
+  //  <listitem>"halton" : the Halton low discrepancy sequence.
+  //    This sequence is sensitive to the "-primeslist" option.
   //    This is a macro-based algorithm.</listitem>
   //  <listitem>"faure" : the Faure low discrepancy sequence. 
+  //    This sequence is sensitive to the "-primeslist" option.
   //    This is a macro-based algorithm.</listitem>
   //  <listitem>"reversehalton" : the Reverse Halton sequence of Vandewoestyne and Cools.
+  //    This sequence is sensitive to the "-primeslist" option.
   //    This is a macro-based algorithm. </listitem>
   //  <listitem>"sobol" : the Sobol sequence. 
   //    This is a macro-based algorithm. </listitem>
@@ -115,6 +119,7 @@ function this = lowdisc_configure (this,key,value)
   //   rng = lowdisc_destroy(rng);
   //
   // Authors
+  //   Michael Baudin - 2008-2009 - INRIA
   //   Michael Baudin - 2010 - DIGITEO
 
   select key
