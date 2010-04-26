@@ -106,6 +106,7 @@ endfunction
 helpdir = get_absolute_file_path('update_help.sce');
 funarray = [
   "lowdisc_cget"
+  "lowdisc_get"
   "lowdisc_configure"
   "lowdisc_destroy"
   "lowdisc_new"

@@ -120,9 +120,16 @@ This is a macro-based algorithm.</listitem>
 This sequence is sensitive to the "-primeslist" option.
 This is a macro-based algorithm. </listitem>
 <listitem>"sobol" : the Sobol sequence.
-This is a macro-based algorithm. </listitem>
+This sequence is available for problems where the dimension is lower than 40.
+This is a macro-based algorithm.
+The current implementation is a Scilab port of the source code in Matlab
+by John Burkardt. The original source code was created by Bennett Fox in Fortran.
+</listitem>
 <listitem>"niederreiter-base-2" : The Niederreiter Base 2 sequence.
-This is a macro-based algorithm. </listitem>
+This is a macro-based algorithm.
+The implementation is a Scilab port of the Matlab source code by John Burkardt.
+Original Fortran 77 version by Paul Bratley, Bennett Fox, Harald Niederreiter.
+</listitem>
 <listitem>"reversehaltonf" : the Reverse Halton sequence of Vandewoestyne and Cools.
 This fast algorithm is based on a compiled C source code. </listitem>
 <listitem>"niederreiter-base-2f" : The Niederreiter Base 2 sequence.

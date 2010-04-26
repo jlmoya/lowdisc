@@ -23,14 +23,18 @@
     <title>Purpose</title>
 
     <para>The goal of this toolbox is to provide a collection of low
-    discrepancy sequences. These random numbers are designed to be used in a
+    discrepancy sequences. These sequences try to produce numbers which favor
+    the convergence of a Monte-Carlo simulation by reducing the discrepancy. 
+    These random numbers are designed to be used in a
     Monte-Carlo simulation. For example, low discrepancy sequences provide a
     higher convergence rate to the Monte-Carlo method when used in numerical
     integration. The toolbox takes into account the dimension of the problem,
     i.e. generate vectors with arbitrary size.</para>
 
-    <para>Low discrepancy sequences are able to produce real number in the
-    [0,1[^s interval, where s is the dimension of the space</para>
+    <para>Low Discrepancy sequences are designed to be able to produce
+    real values uniform in the [0,1[^s interval, where s is the dimension of
+    the space.</para>
+
   </refsection>
 
   <refsection>
@@ -51,28 +55,6 @@
         </listitem>
       </itemizedlist> 
     </para>
-  </refsection>
-
-  <refsection>
-    <title>Sequences</title>
-
-    <para>Several sequences are available in the Low Discrepancy toolbox. Each
-    number sequence has its own properties, this is why the goal of this page
-    is to detail the properties of these sequences. Each sequence can be
-    configured with the -method option.</para>
-  </refsection>
-
-  <refsection>
-    <title>Classes of sequence</title>
-
-    <para>All Low Discrepancy sequences are designed to be able to produce
-    real values uniform in the [0,1[^s interval, where s is the dimension of
-    the space.</para>
-
-    <para>The generators in this class tries to produces numbers which favor
-    the convergence of a Monte-Carlo simulation by reducing the discrepancy.
-    These sequences may be used, for example, in the Monte-Carlo based
-    numerical integration of a function.</para>
 
   </refsection>
 

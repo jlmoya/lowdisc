@@ -2,11 +2,11 @@
 
 <!--
  * 
- * This help file was generated from lowdisc_next.sci using help_from_sci().
+ * This help file was generated from lowdisc_get.sci using help_from_sci().
  * 
  -->
 
-<refentry version="5.0-subset Scilab" xml:id="lowdisc_next" xml:lang="en"
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_get" xml:lang="en"
           xmlns="http://docbook.org/ns/docbook"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           xmlns:svg="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@
   </info>
 
   <refnamediv>
-    <refname>lowdisc_next</refname><refpurpose>Returns the next term of the sequence</refpurpose>
+    <refname>lowdisc_get</refname><refpurpose>Quiery one not-configurable field.</refpurpose>
   </refnamediv>
 
 
@@ -27,8 +27,7 @@
 <refsynopsisdiv>
    <title>Calling Sequence</title>
    <synopsis>
-   [this,next] = lowdisc_next ( this )
-   [this,next] = lowdisc_next ( this , imax )
+   value = lowdisc_get (this,key)
    
    </synopsis>
 </refsynopsisdiv>
@@ -38,21 +37,22 @@
    <variablelist>
    <varlistentry><term>this:</term>
       <listitem><para> the current object</para></listitem></varlistentry>
-   <varlistentry><term>imax:</term>
-      <listitem><para> the number of terms to retrieve (default = 1)</para></listitem></varlistentry>
-   <varlistentry><term>next :</term>
-      <listitem><para> a matrix of size imax x s, the next vector in the sequence</para></listitem></varlistentry>
+   <varlistentry><term>key:</term>
+      <listitem><para> a string. The name of the option to get. The available options are presented below.</para></listitem></varlistentry>
+   <varlistentry><term>value:</term>
+      <listitem><para> the value associated with the key.</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
 <refsection>
    <title>Description</title>
    <para>
-Returns a matrix of values with shape 1 x s, where s is the
-dimension of the space.
-The current object is updated after the call to next :
-both this and next are mandatory output arguments.
-This function is sensitive to the "-leap" option.
+Returns the option of the given key.
+The following keys are available.
+<itemizedlist>
+<listitem>"-faureprime" : a floating point integer, the prime integer used in the Faure sequence.</listitem>
+<listitem>"-faurefprime" : a floating point integer, the prime integer used in the Faure fast sequence.</listitem>
+</itemizedlist>
    </para>
    <para>
 </para>
@@ -61,44 +61,23 @@ This function is sensitive to the "-leap" option.
 <refsection>
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
+
 rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","halton");
-rng = lowdisc_startup (rng);
-// Term #1
-[rng,computed] = lowdisc_next (rng);
-// Term #2
-[rng,computed] = lowdisc_next (rng);
-// Term #3, etc...
-[rng,computed] = lowdisc_next (rng);
+rng = lowdisc_configure(rng,"-method","faure");
+rng = lowdisc_configure(rng,"-dimension",4);
+// Skip qs^4 - 1 terms, as in TOMS implementation
+qs = lowdisc_get ( rng , "-faureprime" );
+rng = lowdisc_configure(rng,"-skip", qs^4 - 2);
 rng
+rng = lowdisc_startup (rng);
+// Terms #1 to #100
+[rng,computed]=lowdisc_terms(rng,100);
+for i = 1:100
+mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
+end
 rng = lowdisc_destroy(rng);
 
-// See the imax parameter in action
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","halton");
-rng = lowdisc_startup (rng);
-// Term #1 to 100
-[rng,computed] = lowdisc_next (rng,100);
-// Term #101 to 201
-[rng,computed] = lowdisc_next (rng,100);
-rng
-rng = lowdisc_destroy(rng);
-
-// See the -leap option in action
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","halton");
-rng = lowdisc_configure(rng,"-leap",10);
-rng = lowdisc_startup (rng);
-// Term #1
-[rng,computed] = lowdisc_next (rng);
-// Term #11
-[rng,computed] = lowdisc_next (rng);
-// Term #21
-[rng,computed] = lowdisc_next (rng);
-rng
-rng = lowdisc_destroy(rng);
-
-// See the -skip option in action.
+// See the -skip option in action in the Faure fast sequence.
 rng = lowdisc_new();
 rng = lowdisc_configure(rng,"-method","fauref");
 rng = lowdisc_configure(rng,"-dimension",4);
