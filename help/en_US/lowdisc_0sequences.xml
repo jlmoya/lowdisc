@@ -75,40 +75,33 @@
   <refsection>
     <title>Overview of sequences</title>
 
-    <para>In this section, we detail the sequences which are provided.</para>
+    <para>In this section, we git the list of sequences which are provided in this component.</para>
 
     <para><itemizedlist>
         <listitem>
-          <para>"vandercorput"</para>
-
-          <para>The Van Der Corput sequence is a low discrepancy sequence. It
-          is available only in 1 dimension (i.e. the -dimension option must be
-          set to 1, the default). It uses the basis which is associated with
-          the -vandercorputbasis option (default : 2). This sequence is based
-          on a script.</para>
+          <para>The Van Der Corput sequence. </para>
         </listitem>
 
         <listitem>
-          <para>"halton"</para>
-
-          <para>The Halton sequence is a low discrepancy sequence. It is
-          available for dimensions up to 100 dimensions. It uses the list of
-          prime numbers which is associated with the -primeslist option. The
-          -primeslist option may be used is the required dimension of the
-          problem is larger than the default. This sequence is based on a
-          script, which might be slow if a large number of data is to be
-          generated. If performance is a problem, the gslhalton sequence
-          should be prefered.</para>
+          <para>The Halton sequence.</para>
         </listitem>
 
         <listitem>
-          <para>"faure"</para>
-
-          <para>The Faure sequence is a low discrepancy sequence. It is
-          available for dimensions up to 50 dimensions. This sequence is based
-          on a script, which might be slow if a large number of data is to be
-          generated.</para>
+          <para>The Faure sequence.</para>
         </listitem>
+
+        <listitem>
+          <para>The Reverse Halton sequence of Vandewoestyne and Cools.</para>
+        </listitem>
+
+        <listitem>
+          <para>The Sobol sequence. </para>
+        </listitem>
+
+        <listitem>
+          <para>The Niederreiter Base 2 sequence. </para>
+        </listitem>
+
       </itemizedlist></para>
   </refsection>
 

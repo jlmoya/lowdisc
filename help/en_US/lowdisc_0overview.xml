@@ -153,5 +153,7 @@
     <para>"Computational investigations of low-discrepancy sequences", Kocis,
     L. and Whiten, W. J. 1997. ACM Trans. Math. Softw. 23, 2 (Jun. 1997),
     266-294.</para>
+
+    <para>"Gnu Scientific Library - The Reverse Halton Sequence", Olivier Teytaud, 2007</para>
   </refsection>
 </refentry>

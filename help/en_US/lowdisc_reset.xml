@@ -1,105 +1,81 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <!--
- * Ajouter ici d'éventuels commentaires sur le fichier XML
--->
-<refentry
-  xmlns="http://docbook.org/ns/docbook"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:svg="http://www.w3.org/2000/svg"
-  xmlns:mml="http://www.w3.org/1998/Math/MathML"
-  xmlns:db="http://docbook.org/ns/docbook"
-  version="5.0-subset Scilab"
-  xml:lang="fr"
-  xml:id="lowdisc_startup">
+ * 
+ * This help file was generated from lowdisc_reset.sci using help_from_sci().
+ * 
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_reset" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
   <info>
-    <pubdate>$LastChangedDate: 18-12-2008 $</pubdate>
+    <pubdate>$LastChangedDate: 26-Avr-2010 $</pubdate>
   </info>
+
   <refnamediv>
-    <refname>lowdisc_reset</refname>
-    <refpurpose>  Reset the sequence. </refpurpose>
+    <refname>lowdisc_reset</refname><refpurpose>Reset the sequence.</refpurpose>
   </refnamediv>
-  <refsynopsisdiv>
-    <title>Calling Sequence</title>
-    <synopsis>this = lowdisc_reset(this)</synopsis>
-  </refsynopsisdiv>
-  <refsection>
-    <title>Parameters</title>
-    <variablelist>
-      <varlistentry>
-        <term>this</term>
-        <listitem>
-          <para>
-            The current object. At output, the object is updated with the new settings.
-          </para>
-        </listitem>
-      </varlistentry>
-    </variablelist>
-  </refsection>
-  <refsection>
-    <title>Description</title>
-    <para>
-      This command can be used to re-initialize the sequence.
-      It can be executed several times in the lifetime of the object (but lowdisc_startup
-      can only be executed once).
-      The same sequence is generated, as if the object had just been created.
-    </para>
-  </refsection>
-  <refsection>
-    <title>Examples</title>
-    <para>
-      In the following example, one creates a Halton sequence in dimension 3.
-      After some vectors have been generated, a reset is performed so that the
-      same sequence is generated again, without creating a new random number object.
-    </para>
-    <programlisting role="example">
-      rng = lowdisc_new();
-      rng = lowdisc_configure(rng,"-method","halton");
-      rng = lowdisc_configure(rng,"-dimension",3);
-      rng = lowdisc_startup (rng);
-      [rng,computed] = lowdisc_next (rng);
-      [rng,computed] = lowdisc_next (rng);
-      [rng,computed] = lowdisc_next (rng);
-      [rng,computed] = lowdisc_next (rng);
-      rng = lowdisc_reset (rng);
-      [rng,computed] = lowdisc_next (rng);
-      [rng,computed] = lowdisc_next (rng);
-      [rng,computed] = lowdisc_next (rng);
-      [rng,computed] = lowdisc_next (rng);
-      rng = lowdisc_destroy(rng);
-    </programlisting>
-  </refsection>
-  <refsection>
-    <title>See Also</title>
 
-    <simplelist type="inline">
-      <member>
-        <link linkend="lowdisc_new">lowdisc_new</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_cget">lowdisc_cget</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_configure">lowdisc_configure</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_display">lowdisc_display</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_next">lowdisc_next</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_terms">lowdisc_terms</link>
-      </member>
-      <member>
-        <link linkend="lowdisc_destroy">lowdisc_destroy</link>
-      </member>
-    </simplelist>
-  </refsection>
-  <refsection>
-    <title>Authors</title>
 
-    <simplelist type="vert">
-      <member>Michael Baudin</member>
-    </simplelist>
-  </refsection>
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   this = lowdisc_reset (this)
+   
+   </synopsis>
+</refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>this:</term>
+      <listitem><para> the current object</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+This command may be executed several times in the lifetime of the object.
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+rng = lowdisc_new();
+rng = lowdisc_configure(rng,"-method","halton");
+rng = lowdisc_startup (rng);
+// Term #1
+[rng,computed] = lowdisc_next (rng);
+// Term #2
+[rng,computed] = lowdisc_next (rng);
+// Reset the sequence
+this = lowdisc_reset (this);
+// Term #1,
+[rng,computed] = lowdisc_next (rng);
+// Term #2
+[rng,computed] = lowdisc_next (rng);
+rng
+rng = lowdisc_destroy(rng);
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>Michael Baudin - 2008-2009 - INRIA</member>
+   <member>Michael Baudin - 2010 - DIGITEO</member>
+   </simplelist>
+</refsection>
 </refentry>

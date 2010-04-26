@@ -108,12 +108,10 @@ funarray = [
   "lowdisc_cget"
   "lowdisc_configure"
   "lowdisc_destroy"
-  "lowdisc_display"
   "lowdisc_new"
   "lowdisc_next"
   "lowdisc_reset"
   "lowdisc_startup"
-  "lowdisc_terms"
   ];
 macrosdir = helpdir +"../../macros";
 demosdir = helpdir +"../../demos";
