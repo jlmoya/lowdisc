@@ -49,8 +49,90 @@
           <para>leaps (i.e. ignores) a given number of elements from call to
           call</para>
         </listitem>
-      </itemizedlist> The list of available sequences is described in <link
-    linkend="lowdisc_sequences">lowdisc_sequences</link>.</para>
+      </itemizedlist> 
+    </para>
+  </refsection>
+
+  <refsection>
+    <title>Sequences</title>
+
+    <para>Several sequences are available in the Low Discrepancy toolbox. Each
+    number sequence has its own properties, this is why the goal of this page
+    is to detail the properties of these sequences. Each sequence can be
+    configured with the -method option.</para>
+  </refsection>
+
+  <refsection>
+    <title>Classes of sequence</title>
+
+    <para>All Low Discrepancy sequences are designed to be able to produce
+    real values uniform in the [0,1[^s interval, where s is the dimension of
+    the space.</para>
+
+    <para>The generators in this class tries to produces numbers which favor
+    the convergence of a Monte-Carlo simulation by reducing the discrepancy.
+    These sequences may be used, for example, in the Monte-Carlo based
+    numerical integration of a function.</para>
+
+  </refsection>
+
+  <refsection>
+    <title>Sources of Sequences</title>
+
+    <para>Although the random number toolbox provides the same interface for
+    all generators, what happens behind the scenes is not the same, depending
+    on the sequence. Two main sources are used in this toolbox.</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Scripts</para>
+
+        <para>Scripts are provided with this toolbox to implement both
+        low-discrepancy sequences (such as Halton for instance). These
+        sequences may be slow if a large number of data is to be generated,
+        but may provide greater flexibility for some users.</para>
+      </listitem>
+
+      <listitem>
+        <para>C++ source codes</para>
+
+        <para>These sequences are based on compiled C source code and should
+        be as fast as possible.</para>
+      </listitem>
+    </itemizedlist>
+  </refsection>
+
+  <refsection>
+    <title>Overview of sequences</title>
+
+    <para>In this section, we git the list of sequences which are provided in this component.</para>
+
+    <para><itemizedlist>
+        <listitem>
+          <para>The Van Der Corput sequence. </para>
+        </listitem>
+
+        <listitem>
+          <para>The Halton sequence.</para>
+        </listitem>
+
+        <listitem>
+          <para>The Faure sequence.</para>
+        </listitem>
+
+        <listitem>
+          <para>The Reverse Halton sequence of Vandewoestyne and Cools.</para>
+        </listitem>
+
+        <listitem>
+          <para>The Sobol sequence. </para>
+        </listitem>
+
+        <listitem>
+          <para>The Niederreiter Base 2 sequence. </para>
+        </listitem>
+
+      </itemizedlist></para>
   </refsection>
 
   <refsection>
