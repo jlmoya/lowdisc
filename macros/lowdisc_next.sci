@@ -185,7 +185,13 @@ endfunction
 //   Returns the next term of the Faure sequence
 //
 function next = _next_faure (this)
-  basis = this.fauredim2prime(this.dimension);
+  k = find(this.primeslist>this.dimension,1)
+  if (k == []) then
+    errmsg = sprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
+      "_next_faure" , this.dimension);
+    error(errmsg);
+  end
+  basis  = this.primeslist ( k )
   if (basis < this.dimension) then
     errmsg = sprintf( gettext ( "%s: Internal error : the current basis %d is lower than the current dimension %d, which is not consistent with the Faure sequence." ) , ...
       "_next_faure" , basis , this.dimension);

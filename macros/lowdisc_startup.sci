@@ -62,15 +62,16 @@ function this = lowdisc_startup (this)
   case "vandercorput" then
     // Nothing to do
   case "halton" then
-    if this.dimension > this.primessize then
+    if ( this.dimension > this.primessize ) then
       errmsg = sprintf( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes" ),...
         "lowdisc_startup" , this.method,this.dimension,this.primessize);
       error(errmsg);
     end
   case "faure" then
-    if (this.dimension>this.fauredimmax) then
-      errmsg = sprintf ( gettext ( "%s: The dimension of the problem is %d, which is not available with Faure sequence (maximum is %d)."),...
-        "lowdisc_startup" , this.dimension,this.fauredimmax);
+    k = find(this.primeslist>this.dimension,1)
+    if (k == []) then
+      errmsg = sprintf( gettext ( "%s: Faure sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
+        "lowdisc_startup" , this.dimension);
       error(errmsg);
     end
   case "reversehalton" then
@@ -107,6 +108,7 @@ function this = lowdisc_startup (this)
     // Nothing to do
   case "fauref" then
     // Nothing to do
+    // TODO : allow to configure the basis, based on the primeslist
   else
     errmsg = sprintf(gettext ( "%s: Unknown method %s" ) , ...
       "lowdisc_startup" , this.method);
