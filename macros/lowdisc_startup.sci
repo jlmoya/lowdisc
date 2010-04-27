@@ -51,7 +51,7 @@ function this = lowdisc_startup (this)
     errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "lowdisc_startup" );
     error(errmsg);
   end
-  if (this.verbose<>0) then
+  if (this.verbose) then
     mprintf( "Starting up the sequence." );
   end
   this.startedup = 1;
@@ -117,6 +117,6 @@ function this = lowdisc_startup (this)
   // Skip (i.e. ignore) as many elements as required
   // TODO : skip directly when sequence authorizes it.
   if ( this.skip > 0 ) then
-    [ this , result ] = lowdisc_terms ( this , this.skip )
+    [ this , result ] = lowdisc_next ( this , this.skip )
   end
 endfunction

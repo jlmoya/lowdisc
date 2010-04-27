@@ -95,7 +95,7 @@ function [this,next] = lowdisc_next ( varargin )
   //   Michael Baudin - 2008-2009 - INRIA
   //   Michael Baudin - 2010 - DIGITEO
   //
-  
+
   [lhs,rhs]=argn();
   if ( rhs > 2 ) then
     errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "lowdisc_next", rhs);
@@ -109,7 +109,7 @@ function [this,next] = lowdisc_next ( varargin )
     imax = varargin(2)
   end
   
-  result=zeros(imax,this.dimension)
+  next = zeros(imax,this.dimension)
   
   for i=1:imax
     this.sequenceindex = this.sequenceindex + 1;
@@ -118,40 +118,40 @@ function [this,next] = lowdisc_next ( varargin )
     //
     select this.method
     case "vandercorput" then
-      next = _next_vandercorput (this);
+      onevector = _next_vandercorput (this);
     case "halton" then
-      next = _next_halton (this);
+      onevector = _next_halton (this);
     case "faure" then
-      next = _next_faure (this);
+      onevector = _next_faure (this);
     case "reversehalton" then
-      [this,next] = _next_reversehalton (this);
+      [this,onevector] = _next_reversehalton (this);
     case "sobol" then
-      [ this , next ] = lowdisc_sobol ( this );
+      [ this , onevector ] = lowdisc_sobol ( this );
     case "niederreiter-base-2" then
-      [ this , next ] = lowdisc_nieder2 ( this );
+      [ this , onevector ] = lowdisc_nieder2 ( this );
       //
       // Fast sequences based on primitives
       //
     case "haltonf" then
-      [ this , next ] = _next_haltonf (this);
+      [ this , onevector ] = _next_haltonf (this);
     case "reversehaltonf" then
-      [ this , next ] = _next_reversehaltonf (this);
+      [ this , onevector ] = _next_reversehaltonf (this);
     case "niederreiter-base-2f" then
-      [ this , next ] = _next_nieder2f (this);
+      [ this , onevector ] = _next_nieder2f (this);
     case "sobolf" then
-      [ this , next ] = _next_sobolf (this);
+      [ this , onevector ] = _next_sobolf (this);
     case "fauref" then
-      [ this , next ] = _next_fauref (this);
+      [ this , onevector ] = _next_fauref (this);
     else
       errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , ...
       "lowdisc_next" , this.method);
       error(errmsg);
     end
+    next(i,1:this.dimension) = onevector
     // Leap over (i.e. ignore) as many elements as required
     if ( this.leap > 0 ) then
-      [ this , result ] = lowdisc_terms ( this , this.leap )
+      [ this , ignored ] = lowdisc_terms ( this , this.leap )
     end
-    result(i,1:this.dimension) = next
   end
 endfunction
 //
