@@ -21,12 +21,12 @@ function m = lowdisc_primes10000 ( )
   //   we can use a low discrepancy sequence in higher dimensions.
   //
   // Examples
-  //   prarray = lowdisc_primes10000 ( )
+  //   prarray = lowdisc_primes10000 ( );
   //   size(prarray)
   //
   //   rng = lowdisc_new();
   //   rng = lowdisc_configure(rng,"-method","faure");
-  //   prarray = lowdisc_primes10000 ( )
+  //   prarray = lowdisc_primes10000 ( );
   //   rng = lowdisc_configure(rng,"-primeslist",prarray);
   //   rng = lowdisc_configure(rng,"-dimension",1500);
   //   [this,next] = lowdisc_next ( this );
@@ -1041,6 +1041,6 @@ function m = lowdisc_primes10000 ( )
   104549    104551    104561    104579    104593    104597    104623    104639    104651    104659    
   104677    104681    104683    104693    104701    104707    104711    104717    104723    104729    
   ]
-  m = matrix(m,1,10000)
+  m = matrix(m',1,10000)
 endfunction
 
