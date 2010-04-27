@@ -47,4 +47,7 @@ endfunction
 prarray = lowdisc_primes1000 ( );
 prsize = size(prarray);
 assert_equal ( prsize , [1 1000] );
+expected10 = [2      3      5      7     11     13     17     19     23     29];
+assert_equal ( prarray(1:10) , expected10 );
+
 
