@@ -216,3 +216,13 @@ expected = [
 assert_close ( computed , expected , 1.e-5 );
 rng = lowdisc_destroy(rng);
 
+// Configure a list of primes and use it
+rng = lowdisc_new();
+rng = lowdisc_configure(rng,"-method","halton");
+prarray = lowdisc_primes1000 ( );
+rng = lowdisc_configure(rng,"-primeslist",prarray);
+rng = lowdisc_configure(rng,"-dimension",150);
+[rng,next] = lowdisc_next ( rng , 10 );
+assert_equal ( size(next) , [10 150] );
+rng = lowdisc_destroy(rng);
+
