@@ -41,6 +41,35 @@
 </refsection>
 
 <refsection>
+   <title>Description</title>
+   <para>
+This function allows to update the table of
+primes associated to the "-primeslist" option, so that
+we can use a low discrepancy sequence in higher dimensions.
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+prarray = lowdisc_primes1000 ( );
+size(prarray)
+
+rng = lowdisc_new();
+rng = lowdisc_configure(rng,"-method","faure");
+prarray = lowdisc_primes1000 ( );
+rng = lowdisc_configure(rng,"-primeslist",prarray);
+rng = lowdisc_configure(rng,"-dimension",150);
+[rng,next] = lowdisc_next ( rng );
+next
+rng = lowdisc_destroy(rng);
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
    <title>Bibliography</title>
    <para>http://primes.utm.edu/</para>
 </refsection>
