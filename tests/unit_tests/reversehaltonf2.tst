@@ -53,7 +53,7 @@ assert_close ( computed, [3.0/4.0 2.0/9.0], 1.e-3 );
 [rng,computed] = lowdisc_next (rng);
 assert_close ( computed, [1.0/8.0 8.0/9.0], 1.e-3 );
 rng = lowdisc_destroy(rng);
-clear rng;
+
 
 // test in dimension 3 */
 rng = lowdisc_new();
@@ -74,5 +74,5 @@ assert_close ( computed, [0.75 2.0/9.0 0.4], 1.e-3 );
 [rng,computed] = lowdisc_next (rng);
 assert_close ( computed, [0.125 8.0/9.0 0.2], 1e-3 );
 rng = lowdisc_destroy(rng);
-clear rng;
+
 

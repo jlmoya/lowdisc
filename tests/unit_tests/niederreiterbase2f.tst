@@ -52,4 +52,4 @@ expected= [...
     7./8. 7./8. ];
 assert_close ( computed, expected , 10 * %eps );
 rng = lowdisc_destroy(rng);
-clear rng;
+

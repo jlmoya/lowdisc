@@ -34,11 +34,9 @@ rng = lowdisc_configure(rng,"-method","halton");
 rng = lowdisc_startup (rng);
 // Term #1
 [rng,computed] = lowdisc_next (rng);
-expected = 0.5;
-shift = norm(computed-expected)/norm(expected);
-if shift > 1.e-6 then bugmes();quit;end
+assert_close ( computed , 0.5 , %eps );
 // Terms #2 to #6
-[rng,computed]=lowdisc_terms(rng,5);
+[rng,computed]=lowdisc_next(rng,5);
 expected= [
     0.25 
     0.75    
@@ -48,7 +46,6 @@ expected= [
 ];
 assert_close ( computed, expected, %eps );
 rng = lowdisc_destroy(rng);
-clear rng;
 //
 // Check the Halton sequence in dimension 2
 //
@@ -61,7 +58,7 @@ rng = lowdisc_startup (rng);
 expected = [0.5 1.0/3.0];
 assert_close ( computed, expected, %eps );
 // Terms #2 to #6
-[rng,computed]=lowdisc_terms(rng,5);
+[rng,computed]=lowdisc_next(rng,5);
 expected= [
     1./4. 2./3. 
     3./4. 1./9.    
@@ -71,7 +68,6 @@ expected= [
 ];
 assert_close ( computed, expected, %eps );
 rng = lowdisc_destroy(rng);
-clear rng;
 //
 // Try an extended list of primes, so that one can manage problems up to 200 dimensions
 //
@@ -95,4 +91,3 @@ for i = 1:10
   [rng,computed] = lowdisc_next (rng);
 end
 rng = lowdisc_destroy(rng);
-clear rng;

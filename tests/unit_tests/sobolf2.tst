@@ -47,7 +47,7 @@ assert_close ( computed, expected, 10*%eps );
 expected = [0.375 0.375];
 assert_close ( computed, expected, 10*%eps );
 rng = lowdisc_destroy(rng);
-clear rng;
+
 
 // test in dimension 3
 rng = lowdisc_new();
@@ -72,5 +72,5 @@ assert_close ( computed, expected, 10*%eps );
 expected = [0.375 0.375 0.625];
 assert_close ( computed, expected, 10*%eps );
 rng = lowdisc_destroy(rng);
-clear rng;
+
 

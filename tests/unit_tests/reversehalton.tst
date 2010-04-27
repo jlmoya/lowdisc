@@ -8,7 +8,27 @@
 
 
 
-
+//
+// assert_close --
+//   Returns 1 if the two real matrices computed and expected are close,
+//   i.e. if the relative distance between computed and expected is lesser than epsilon.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_close ( computed, expected, epsilon )
+  if expected==0.0 then
+    shift = norm(computed-expected);
+  else
+    shift = norm(computed-expected)/norm(expected);
+  end
+  if shift < epsilon then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then pause,end
+endfunction
 
 //
 // Check the Reverse Halton sequence
@@ -19,9 +39,7 @@ rng = lowdisc_configure(rng,"-dimension",2);
 rng = lowdisc_startup (rng);
 // Term #1
 [rng,computed] = lowdisc_next (rng);
-expected = [0.5 2./3.];
-shift = norm(computed-expected)/norm(expected);
-if shift > 1.e-6 then pause,end
+assert_close ( computed , [0.5 2./3.] , %eps );
 // Terms #2 to #6
 [rng,computed]=lowdisc_next(rng,5);
 expected= [
@@ -31,8 +49,6 @@ expected= [
     5./8. 5./9.
     3./8. 1./9. 
 ];
-shift = norm(computed-expected)/norm(expected);
-if shift > 1.e-6 then pause,end
+assert_close ( computed , expected , %eps );
 rng = lowdisc_destroy(rng);
-clear rng;
 

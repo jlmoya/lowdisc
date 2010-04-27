@@ -54,9 +54,7 @@ rng = lowdisc_configure(rng,"-method","vandercorput");
 rng = lowdisc_startup (rng);
 // Term #1
 [rng,computed] = lowdisc_next (rng);
-expected = 0.5;
-shift = norm(computed-expected)/norm(expected);
-if shift > 1.e-6 then pause,end
+assert_close ( computed , 0.5 , %eps );
 // Terms #2 to #6
 [rng,computed]=lowdisc_next(rng,5);
 expected= [...
@@ -65,8 +63,6 @@ expected= [...
     0.125   ;...
     0.625   ;...
     0.375  ];
-shift = norm(computed-expected)/norm(expected);
-if shift > 1.e-6 then pause,end
+assert_close ( computed , expected , %eps );
 rng = lowdisc_destroy(rng);
-clear rng;
 
