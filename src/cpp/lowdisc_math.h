@@ -1,4 +1,10 @@
-// 2009 - INRIA - Michael Baudin
+// Copyright (C) 2006-2009 - CEA - Jean-Marc Martinez
+// Copyright (C) 2009 - INRIA - Michael Baudin
+// Copyright (C) 2009-2010 - Digiteo - Michael Baudin
+//
+// This file must be used under the terms of the GNU Lesser General Public License license
+// http://www.gnu.org/copyleft/lesser.html
+
 #ifndef _LOWDISC_MATH_H_
 #define _LOWDISC_MATH_H_
 

@@ -1,3 +1,9 @@
+// Copyright (C) 2005-2007 - John Burkardt
+// Copyright (C) 2009-2010 - Digiteo - Michael Baudin
+//
+// This file must be used under the terms of the GNU Lesser General Public License license
+// http://www.gnu.org/copyleft/lesser.html
+
 # include <cstdlib>
 # include <iostream>
 # include <iomanip>
@@ -14,7 +20,6 @@ void calcc ( void );
 void calcv ( int px[], int b[], int v[], int v_max );
 void golo ( double quasi[] );
 int i4_characteristic ( int q );
-int i4_power ( int i, int j );
 void inlo ( int dim, int base, int skip );
 int *plymul ( int pa[], int pb[] );
 void setfld ( int q );

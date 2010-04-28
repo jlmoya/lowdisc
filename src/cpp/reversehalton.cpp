@@ -1,3 +1,9 @@
+// Copyright (C) 2005-2007 - John Burkardt
+// Copyright (C) 2009-2010 - Digiteo - Michael Baudin
+//
+// This file must be used under the terms of the GNU Lesser General Public License license
+// http://www.gnu.org/copyleft/lesser.html
+
 # include <cstdlib>
 # include <cmath>
 # include <ctime>

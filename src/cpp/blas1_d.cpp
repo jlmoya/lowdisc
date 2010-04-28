@@ -1,3 +1,9 @@
+// Copyright (C) 2005-2007 - John Burkardt
+// Copyright (C) 2009-2010 - Digiteo - Michael Baudin
+//
+// This file must be used under the terms of the GNU Lesser General Public License license
+// http://www.gnu.org/copyleft/lesser.html
+
 // 
 // BLAS1_D
 // Basic Linear Algebra Subprograms
@@ -5,11 +11,7 @@
 // Double Precision Real Arithmetic 
 //
 // http://people.sc.fsu.edu/~burkardt/cpp_src/blas1_d/blas1_d.C
-//
-//  Author:
-//    John Burkardt
 
-// 2009 - INRIA - Michael Baudin
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
