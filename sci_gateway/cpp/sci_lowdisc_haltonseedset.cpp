@@ -15,24 +15,21 @@ extern "C" {
 #include "lowdisc_math.h" 
 #include "halton.h" 
 
-// _lowdisc_haltonseedset ( dim , seed )
+// _lowdisc_haltonseedset ( seed )
 //   Set the seed of the Halton sequence.
 // Arguments
-//   dim : the number of variables
-//   seed : a row matrix of positive integers
 int sci_lowdisc_haltonseedset (char *fname) {
 	int * seed = NULL;
 	int nRows, nCols;
 	double * valueVector = NULL;
 	int dim;
 	
-	CheckRhs(2,2) ;
+	CheckRhs(1,1) ;
 	CheckLhs(1,1) ;
-	lowdisc_GetOneInteger ( fname , 1 , &dim );
 	lowdisc_AssertVarType ( fname , 2 , sci_matrix );
 	GetRhsVarMatrixDouble ( 2 , &nRows, &nCols, &valueVector);
 	lowdisc_AssertNumberOfRows ( fname , 2 , 1 , nRows );
-	lowdisc_AssertNumberOfColumns ( fname , 2 , dim , nCols );
+	dim = nCols;
 	// Transfer the double array into an array of integers
 	seed = ivector ( dim );
 	for(int k = 0; k < dim; k++) {

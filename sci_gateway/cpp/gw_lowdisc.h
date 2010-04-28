@@ -21,6 +21,7 @@ extern "C" {
 	int sci_lowdisc_faureprimege (char *fname);
 	int sci_lowdisc_fauref (char *fname);
 	int sci_lowdisc_startup (char *fname);
+	int sci_lowdisc_shutdown (char *fname);
 //	int sci_lowdisc_reversehaltonf (char *fname);
 //	int sci_lowdisc_niederf (char *fname);
 }
