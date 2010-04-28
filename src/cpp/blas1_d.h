@@ -34,13 +34,8 @@ LOWDISC_IMPORTEXPORT void drot ( int n, double x[], int incx, double y[], int in
 LOWDISC_IMPORTEXPORT void drotg ( double *sa, double *sb, double *c, double *s );
 LOWDISC_IMPORTEXPORT void dscal ( int n, double sa, double x[], int incx );
 LOWDISC_IMPORTEXPORT void dswap ( int n, double x[], int incx, double y[], int incy );
-LOWDISC_IMPORTEXPORT int i4_max ( int i1, int i2 );
-LOWDISC_IMPORTEXPORT int i4_min ( int i1, int i2 );
 LOWDISC_IMPORTEXPORT int idamax ( int n, double dx[], int incx );
 LOWDISC_IMPORTEXPORT bool lsame ( char ca, char cb );
-LOWDISC_IMPORTEXPORT double r8_abs ( double x );
-LOWDISC_IMPORTEXPORT double r8_max ( double x, double y );
-LOWDISC_IMPORTEXPORT double r8_sign ( double x );
 LOWDISC_IMPORTEXPORT void xerbla ( char *srname, int info );
 
 __END_DECLS

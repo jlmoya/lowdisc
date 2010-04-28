@@ -8,6 +8,17 @@
 using namespace std;
 
 #include "niederreiter.h"
+#include "lowdisc_shared.h"
+
+void calcc ( void );
+void calcv ( int px[], int b[], int v[], int v_max );
+void golo ( double quasi[] );
+int i4_characteristic ( int q );
+int i4_power ( int i, int j );
+void inlo ( int dim, int base, int skip );
+int *plymul ( int pa[], int pb[] );
+void setfld ( int q );
+
 
 //
 //  GLOBAL DATA "/FIELD/"
@@ -140,121 +151,121 @@ void calcc ( void )
 //    Local, int NPOLS, the number of precalculated irreducible polynomials.
 //
 {
-  const int maxe = 5;
-  const int v_max = FIG_MAX + maxe;
+	const int maxe = 5;
+	const int v_max = FIG_MAX + maxe;
 
-  int b[DEG_MAX+2];
-  int e;
-  ifstream input;
-  char *input_filename = "gfplys.txt";
-  int i;
-  int j;
-  int k;
-  const int npols = 25;
-  int px[maxe+2];
-  int r;
-  int u;
-  int v[v_max+1];
-//
-//  Read the irreducible polynomials.
-//
-  input.open ( input_filename );
+	int b[DEG_MAX+2];
+	int e;
+	ifstream input;
+	char *input_filename = "gfplys.txt";
+	int i;
+	int j;
+	int k;
+	const int npols = 25;
+	int px[maxe+2];
+	int r;
+	int u;
+	int v[v_max+1];
+	//
+	//  Read the irreducible polynomials.
+	//
+	input.open ( input_filename );
 
-  for ( ; ; )
-  {
-    input >> i;
+	for ( ; ; )
+	{
+		input >> i;
 
-    if ( input.eof ( ) )
-    {
-      cout << "\n";
-      cout << "CALCC - Fatal error!\n"; 
-      cout << "  Could not find tables for Q = " << Q << "\n";
-      exit ( 1 );
-    }
+		if ( input.eof ( ) )
+		{
+			cout << "\n";
+			cout << "CALCC - Fatal error!\n"; 
+			cout << "  Could not find tables for Q = " << Q << "\n";
+			exit ( 1 );
+		}
 
-    if ( i == Q )
-    {
-      break;
-    }
+		if ( i == Q )
+		{
+			break;
+		}
 
-    for ( j = 1; j <= npols; j++ )
-    {
-      input >> e;
-      for ( k = 0; k <= e; k++ )
-      {
-        input >> px[k+1];
+		for ( j = 1; j <= npols; j++ )
+		{
+			input >> e;
+			for ( k = 0; k <= e; k++ )
+			{
+				input >> px[k+1];
+			}
+		}
 	}
-    }
-  }
 
-  for ( i = 0; i < DIMEN; i++ )
-  {
-//
-//  For each dimension, we need to calculate powers of an
-//  appropriate irreducible polynomial.  See Niederreiter
-//  page 65, just below equation (19).
-//
-//  Read the appropriate irreducible polynomial into PX,
-//  and its degree into E.  Set polynomial B = PX^0 = 1.
-//  M is the degree of B.  Subsequently B will hold higher
-//  powers of PX.
-//
-//  The polynomial PX is stored in 'gfplys.txt' in the format
-//
-//    n  a0  a1  a2  ... an
-//
-//  where n is the degree of the polynomial and the ai are
-//  its coefficients.
-//
-    input >> e;
-    for ( k = 0; k <= e; k++ )
-    {
-      input >> px[k+1];
-    }
+	for ( i = 0; i < DIMEN; i++ )
+	{
+		//
+		//  For each dimension, we need to calculate powers of an
+		//  appropriate irreducible polynomial.  See Niederreiter
+		//  page 65, just below equation (19).
+		//
+		//  Read the appropriate irreducible polynomial into PX,
+		//  and its degree into E.  Set polynomial B = PX^0 = 1.
+		//  M is the degree of B.  Subsequently B will hold higher
+		//  powers of PX.
+		//
+		//  The polynomial PX is stored in 'gfplys.txt' in the format
+		//
+		//    n  a0  a1  a2  ... an
+		//
+		//  where n is the degree of the polynomial and the ai are
+		//  its coefficients.
+		//
+		input >> e;
+		for ( k = 0; k <= e; k++ )
+		{
+			input >> px[k+1];
+		}
 
-    px[0] = e;
-    b[0] = 0;
-    b[1] = 1;
-//
-//  Niederreiter (page 56, after equation (7), defines two variables 
-//  Q and U.  We do not need Q explicitly, but we do need U.
-//
-    u = 0;
+		px[0] = e;
+		b[0] = 0;
+		b[1] = 1;
+		//
+		//  Niederreiter (page 56, after equation (7), defines two variables 
+		//  Q and U.  We do not need Q explicitly, but we do need U.
+		//
+		u = 0;
 
-    for ( j = 0; j < NFIGS; j++ )
-    {
-//
-//  If U = 0, we need to set B to the next power of PX
-//  and recalculate V.  This is done by subroutine CALCV.
-//
-      if ( u == 0 )
-      {
-        calcv ( px, b, v, v_max );
-      }
-//
-//  Now C is obtained from V.  Neiderreiter obtains A from V 
-//  (page 65, near the bottom), and then gets C from A (page 56,
-//  equation (7)).  However this can be done in one step.
-//
-      for ( r = 0; r < NFIGS; r++ )
-      {
-        C[i][j][r] = v[r+u];
-      }
-//
-//  Increment U.  If U = E, then U = 0 and in Niederreiter's
-//  paper Q = Q + 1.  Here, however, Q is not used explicitly.
-//
-      u = u + 1;
-      if ( u == e )
-      {
-        u = 0;
-      }
-    }
-  }
+		for ( j = 0; j < NFIGS; j++ )
+		{
+			//
+			//  If U = 0, we need to set B to the next power of PX
+			//  and recalculate V.  This is done by subroutine CALCV.
+			//
+			if ( u == 0 )
+			{
+				calcv ( px, b, v, v_max );
+			}
+			//
+			//  Now C is obtained from V.  Neiderreiter obtains A from V 
+			//  (page 65, near the bottom), and then gets C from A (page 56,
+			//  equation (7)).  However this can be done in one step.
+			//
+			for ( r = 0; r < NFIGS; r++ )
+			{
+				C[i][j][r] = v[r+u];
+			}
+			//
+			//  Increment U.  If U = E, then U = 0 and in Niederreiter's
+			//  paper Q = Q + 1.  Here, however, Q is not used explicitly.
+			//
+			u = u + 1;
+			if ( u == e )
+			{
+				u = 0;
+			}
+		}
+	}
 
-  input.close ( );
+	input.close ( );
 
-  return;
+	return;
 }
 //****************************************************************************80
 
@@ -330,113 +341,113 @@ void calcv ( int px[], int b[], int v[], int v_max )
 //    0 < NONZER < Q.  Within these limits, the user can do what he likes.  
 //
 {
-  int arbit = 1;
-  int *b2;
-  int bigm;
-  int e;
-  int h[DEG_MAX+2];
-  int i;
-  int j;
-  int kj;
-  int m;
-  int nonzer = 1;
-  int r;
-  int term;
+	int arbit = 1;
+	int *b2;
+	int bigm;
+	int e;
+	int h[DEG_MAX+2];
+	int i;
+	int j;
+	int kj;
+	int m;
+	int nonzer = 1;
+	int r;
+	int term;
 
-  e = px[0];
-//
-//  The polynomial H is PX^(J-1), which is the value of B on arrival.
-//
-//  In section 3.3, the values of Hi are defined with a minus sign:
-//  don't forget this if you use them later//
-//
-  for ( i = 0; i < DEG_MAX + 2; i++ )
-  {
-    h[i] = b[i];
-  }
-
-  bigm = h[0];
-//
-//  Now multiply B by PX so B becomes PX^J.
-//
-//  In section 2.3, the values of Bi are defined with a minus sign:
-//  don't forget this if you use them later!
-//
-  b2 = plymul ( px, b );
-  
-  for ( i = 0; i < DEG_MAX + 2; i++ )
-  {
-    b[i] = b2[i];
-  }
-  
-  delete [] b2;
-
-  m = b[0];
-//
-//  We don't use J explicitly anywhere, but here it is just in case.
-//
-  j = m / e;
-//
-//  Now choose a value of Kj as defined in section 3.3.
-//  We must have 0 <= Kj < E*J = M.
-//  The limit condition on Kj does not seem very relevant
-//  in this program.
-//
-  kj = bigm;
-//
-//  Now choose values of V in accordance with the conditions in
-//  section 3.3
-//
-  for ( i = 0; i < kj; i++ )
-  {
-    v[i] = 0;
-  }
-  v[kj] = 1;
-
-  if ( kj < bigm )
-  {
-    term = sub [0] [ h[kj+1] ];
-
-	for ( r = kj + 1; r <= bigm - 1; r++ )
-    {
-      v[r] = arbit;
-//
-//  Check the condition of section 3.3,
-//  remembering that the H's have the opposite sign.
-//
-      term = sub [ term ] [ mul [ h[r+1] ] [ v[r] ] ];
-    }
-//
-//  Now V(BIGM) is anything but TERM.
-//
-    v[bigm] = add [ nonzer] [ term ];
-	for ( i = bigm + 1; i <= m - 1; i++ )
+	e = px[0];
+	//
+	//  The polynomial H is PX^(J-1), which is the value of B on arrival.
+	//
+	//  In section 3.3, the values of Hi are defined with a minus sign:
+	//  don't forget this if you use them later//
+	//
+	for ( i = 0; i < DEG_MAX + 2; i++ )
 	{
-      v[i] = arbit;
-    }
-  }
-  else
-  {
-    for ( i = kj + 1; i <= m - 1; i++ )
-	{
-      v[i] = arbit;
-    }
-  }
-//
-//  Calculate the remaining V's using the recursion of section 2.3,
-//  remembering that the B's have the opposite sign.
-//
-  for ( r = 0; r <= v_max - m; r++ )
-  {
-    term = 0;
-	for ( i = 0; i <= m - 1; i++ )
-	{
-      term = sub [ term ] [ mul [ b[i+1] ] [ v[r+i] ] ];
-    }
-    v[r+m] = term;
-  }
+		h[i] = b[i];
+	}
 
-  return;
+	bigm = h[0];
+	//
+	//  Now multiply B by PX so B becomes PX^J.
+	//
+	//  In section 2.3, the values of Bi are defined with a minus sign:
+	//  don't forget this if you use them later!
+	//
+	b2 = plymul ( px, b );
+
+	for ( i = 0; i < DEG_MAX + 2; i++ )
+	{
+		b[i] = b2[i];
+	}
+
+	delete [] b2;
+
+	m = b[0];
+	//
+	//  We don't use J explicitly anywhere, but here it is just in case.
+	//
+	j = m / e;
+	//
+	//  Now choose a value of Kj as defined in section 3.3.
+	//  We must have 0 <= Kj < E*J = M.
+	//  The limit condition on Kj does not seem very relevant
+	//  in this program.
+	//
+	kj = bigm;
+	//
+	//  Now choose values of V in accordance with the conditions in
+	//  section 3.3
+	//
+	for ( i = 0; i < kj; i++ )
+	{
+		v[i] = 0;
+	}
+	v[kj] = 1;
+
+	if ( kj < bigm )
+	{
+		term = sub [0] [ h[kj+1] ];
+
+		for ( r = kj + 1; r <= bigm - 1; r++ )
+		{
+			v[r] = arbit;
+			//
+			//  Check the condition of section 3.3,
+			//  remembering that the H's have the opposite sign.
+			//
+			term = sub [ term ] [ mul [ h[r+1] ] [ v[r] ] ];
+		}
+		//
+		//  Now V(BIGM) is anything but TERM.
+		//
+		v[bigm] = add [ nonzer] [ term ];
+		for ( i = bigm + 1; i <= m - 1; i++ )
+		{
+			v[i] = arbit;
+		}
+	}
+	else
+	{
+		for ( i = kj + 1; i <= m - 1; i++ )
+		{
+			v[i] = arbit;
+		}
+	}
+	//
+	//  Calculate the remaining V's using the recursion of section 2.3,
+	//  remembering that the B's have the opposite sign.
+	//
+	for ( r = 0; r <= v_max - m; r++ )
+	{
+		term = 0;
+		for ( i = 0; i <= m - 1; i++ )
+		{
+			term = sub [ term ] [ mul [ b[i+1] ] [ v[r+i] ] ];
+		}
+		v[r+m] = term;
+	}
+
+	return;
 }
 //****************************************************************************80
 
@@ -489,89 +500,89 @@ void golo ( double quasi[] )
 //    Output, double QUASI[], the next vector in the sequence.
 //
 {
-  int diff;
-  int i;
-  int j;
-  int nq;
-  int oldcnt;
-  int r;
-//
-//  Multiply the numerators in NEXTQ by RECIP to get the next
-//  quasi-random vector.
-//
-  for ( i = 0; i < DIMEN; i++ )
-  {
-    quasi[i] = ( double ) ( NEXTQ[i] ) * RECIP;
-  }
-//
-//  Update COUNT, treated as a base-Q integer.  Instead of
-//  recalculating the values of D from scratch, we update
-//  them for each digit of COUNT which changes.  In terms of
-//  Niederreiter page 54, NEXTQ(I) corresponds to XI(N), with
-//  N being implicit, and D(I,J) corresponds to XI(N,J), again
-//  with N implicit.  Finally COUNT(R) corresponds to AR(N).
-//
-  r = 0;
+	int diff;
+	int i;
+	int j;
+	int nq;
+	int oldcnt;
+	int r;
+	//
+	//  Multiply the numerators in NEXTQ by RECIP to get the next
+	//  quasi-random vector.
+	//
+	for ( i = 0; i < DIMEN; i++ )
+	{
+		quasi[i] = ( double ) ( NEXTQ[i] ) * RECIP;
+	}
+	//
+	//  Update COUNT, treated as a base-Q integer.  Instead of
+	//  recalculating the values of D from scratch, we update
+	//  them for each digit of COUNT which changes.  In terms of
+	//  Niederreiter page 54, NEXTQ(I) corresponds to XI(N), with
+	//  N being implicit, and D(I,J) corresponds to XI(N,J), again
+	//  with N implicit.  Finally COUNT(R) corresponds to AR(N).
+	//
+	r = 0;
 
-  for ( ; ; )
-  {
-    if ( NFIGS <= r )
-    {
-      cout << "\n";
-      cout << "GOLO - Fatal error!\n";
-      cout << "  Too many calls!\n";
-      exit ( 1 );
-    }
+	for ( ; ; )
+	{
+		if ( NFIGS <= r )
+		{
+			cout << "\n";
+			cout << "GOLO - Fatal error!\n";
+			cout << "  Too many calls!\n";
+			exit ( 1 );
+		}
 
-    oldcnt = COUNT[r];
+		oldcnt = COUNT[r];
 
-    if ( COUNT[r] < Q - 1 )
-    {
-      COUNT[r] = COUNT[r] + 1;
-    }
-    else
-    {
-      COUNT[r] = 0;
-    }
+		if ( COUNT[r] < Q - 1 )
+		{
+			COUNT[r] = COUNT[r] + 1;
+		}
+		else
+		{
+			COUNT[r] = 0;
+		}
 
-    diff = sub [ COUNT[r] ] [ oldcnt ];
-//
-//  Digit R has just changed.  DIFF says how much it changed
-//  by.  We use this to update the values of array D.
-//
-    for ( i = 0; i < DIMEN; i++ )
-    {
-      for ( j = 0; j < NFIGS; j++ )
-      {
-        D[i][j] = add [ D[i][j] ] [ mul [ C[i][j][r] ] [ diff ] ];
-      }
-    }
-//
-//  If COUNT(R) is now zero, we must propagate the carry.
-//
-    if ( COUNT[r] != 0 )
-    {
-      break;
-    }
+		diff = sub [ COUNT[r] ] [ oldcnt ];
+		//
+		//  Digit R has just changed.  DIFF says how much it changed
+		//  by.  We use this to update the values of array D.
+		//
+		for ( i = 0; i < DIMEN; i++ )
+		{
+			for ( j = 0; j < NFIGS; j++ )
+			{
+				D[i][j] = add [ D[i][j] ] [ mul [ C[i][j][r] ] [ diff ] ];
+			}
+		}
+		//
+		//  If COUNT(R) is now zero, we must propagate the carry.
+		//
+		if ( COUNT[r] != 0 )
+		{
+			break;
+		}
 
-    r = r + 1;
-  }
-//
-//  Now use the updated values of D to calculate NEXTQ.
-//  Array QPOW helps to speed things up a little:
-//  QPOW(J) is Q^(NFIGS-J).
-//
-  for ( i = 0; i < DIMEN; i++ )
-  {
-    nq = 0;
-    for ( j = 0; j < NFIGS; j++ )
-    {
-      nq = nq + D[i][j] * QPOW[j];
-    }
-    NEXTQ[i] = nq;
-  }
+		r = r + 1;
+	}
+	//
+	//  Now use the updated values of D to calculate NEXTQ.
+	//  Array QPOW helps to speed things up a little:
+	//  QPOW(J) is Q^(NFIGS-J).
+	//
+	for ( i = 0; i < DIMEN; i++ )
+	{
+		nq = 0;
+		for ( j = 0; j < NFIGS; j++ )
+		{
+			nq = nq + D[i][j] * QPOW[j];
+		}
+		NEXTQ[i] = nq;
+	}
 
-  return;
+	return;
 }
 //****************************************************************************80
 
@@ -620,213 +631,53 @@ int i4_characteristic ( int q )
 //    Output, int I4_CHARACTERISTIC, the characteristic of Q.
 //
 {
-  int i;
-  int i_max;
-  int q_copy;
-  int value;
-  
-  if ( q <= 1 )
-  {
-    value = 0;
-    return value;
-  }
-//
-//  If Q is not prime, then there is at least one prime factor
-//  of Q no greater than SQRT(Q)+1.
-//
-//  A faster code would only consider prime values of I,
-//  but that entails storing a table of primes and limiting the 
-//  size of Q.  Simplicity and flexibility for now.
-//
-  i_max = ( int ) ( sqrt ( ( double ) ( q ) ) ) + 1;
-  q_copy = q;
+	int i;
+	int i_max;
+	int q_copy;
+	int value;
 
-  for ( i = 2; i <= i_max; i++ )
-  {
-    if ( ( q_copy % i ) == 0 )
-    {
-      while ( ( q_copy % i ) == 0 )
-	  {
-        q_copy = q_copy / i;
-      }
+	if ( q <= 1 )
+	{
+		value = 0;
+		return value;
+	}
+	//
+	//  If Q is not prime, then there is at least one prime factor
+	//  of Q no greater than SQRT(Q)+1.
+	//
+	//  A faster code would only consider prime values of I,
+	//  but that entails storing a table of primes and limiting the 
+	//  size of Q.  Simplicity and flexibility for now.
+	//
+	i_max = ( int ) ( sqrt ( ( double ) ( q ) ) ) + 1;
+	q_copy = q;
 
-      if ( q_copy == 1 )
-	  {
-        value = i;
-	  }
-      else
-	  {
-        value = 0;
-      }
-      return value;
-    }
-  }
-//
-//  If no factor was found, then Q is prime.
-//
-  value = q;
+	for ( i = 2; i <= i_max; i++ )
+	{
+		if ( ( q_copy % i ) == 0 )
+		{
+			while ( ( q_copy % i ) == 0 )
+			{
+				q_copy = q_copy / i;
+			}
 
-  return value;
-}
-//****************************************************************************80
+			if ( q_copy == 1 )
+			{
+				value = i;
+			}
+			else
+			{
+				value = 0;
+			}
+			return value;
+		}
+	}
+	//
+	//  If no factor was found, then Q is prime.
+	//
+	value = q;
 
-int i4_max ( int i1, int i2 )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    I4_MAX returns the maximum of two I4's.
-//
-//  Licensing:
-//
-//    This code is distributed under the GNU LGPL license. 
-//
-//  Modified:
-//
-//    13 October 1998
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Input, int I1, I2, are two integers to be compared.
-//
-//    Output, int I4_MAX, the larger of I1 and I2.
-//
-{
-  int value;
-
-  if ( i2 < i1 )
-  {
-    value = i1;
-  }
-  else
-  {
-    value = i2;
-  }
-  return value;
-}
-//****************************************************************************80
-
-int i4_min ( int i1, int i2 )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    I4_MIN returns the minimum of two I4's.
-//
-//  Licensing:
-//
-//    This code is distributed under the GNU LGPL license. 
-//
-//  Modified:
-//
-//    13 October 1998
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Input, int I1, I2, two integers to be compared.
-//
-//    Output, int I4_MIN, the smaller of I1 and I2.
-//
-{
-  int value;
-
-  if ( i1 < i2 )
-  {
-    value = i1;
-  }
-  else
-  {
-    value = i2;
-  }
-  return value;
-}
-//****************************************************************************80
-
-int i4_power ( int i, int j )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    I4_POWER returns the value of I^J.
-//
-//  Licensing:
-//
-//    This code is distributed under the GNU LGPL license. 
-//
-//  Modified:
-//
-//    01 April 2004
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Input, int I, J, the base and the power.  J should be nonnegative.
-//
-//    Output, int I4_POWER, the value of I^J.
-//
-{
-  int k;
-  int value;
-
-  if ( j < 0 )
-  {
-    if ( i == 1 )
-    {
-      value = 1;
-    }
-    else if ( i == 0 )
-    {
-      cout << "\n";
-      cout << "I4_POWER - Fatal error!\n";
-      cout << "  I^J requested, with I = 0 and J negative.\n";
-      exit ( 1 );
-    }
-    else
-    {
-      value = 0;
-    }
-  }
-  else if ( j == 0 )
-  {
-    if ( i == 0 )
-    {
-      cout << "\n";
-      cout << "I4_POWER - Fatal error!\n";
-      cout << "  I^J requested, with I = 0 and J = 0.\n";
-      exit ( 1 );
-    }
-    else
-    {
-      value = 1;
-    }
-  }
-  else if ( j == 1 )
-  {
-    value = i;
-  }
-  else
-  {
-    value = 1;
-    for ( k = 1; k <= j; k++ )
-    {
-      value = value * i;
-    }
-  }
-  return value;
+	return value;
 }
 //****************************************************************************80
 
@@ -891,110 +742,110 @@ void inlo ( int dim, int base, int skip )
 //    counting the sign.
 //
 {
-  int i;
-  int j;
-  int nbits = 31;
-  int nq;
-  int r;
-  double temp;
+	int i;
+	int j;
+	int nbits = 31;
+	int nq;
+	int r;
+	double temp;
 
-  DIMEN = dim;
+	DIMEN = dim;
 
-  if ( DIMEN <= 0 || DIM_MAX < DIMEN )
-  {
-    cout << "\n";
-    cout << "INLO - Fatal error!\n";
-    cout << "  Bad spatial dimension.\n";
-    exit ( 1 );
-  }
+	if ( DIMEN <= 0 || DIM_MAX < DIMEN )
+	{
+		cout << "\n";
+		cout << "INLO - Fatal error!\n";
+		cout << "  Bad spatial dimension.\n";
+		exit ( 1 );
+	}
 
-  if ( i4_characteristic ( base ) == 0 )
-  {
-    cout << "\n";
-    cout << "INLO - Fatal error!\n";
-    cout << "  Base not prime power or out of range.\n";
-    exit ( 1 );
-  }
+	if ( i4_characteristic ( base ) == 0 )
+	{
+		cout << "\n";
+		cout << "INLO - Fatal error!\n";
+		cout << "  Base not prime power or out of range.\n";
+		exit ( 1 );
+	}
 
-  setfld ( base );
-//
-//  Calculate how many figures to use in base Q = BASE
-//
-  temp = log ( pow ( 2.0, nbits ) - 1.0 ) / log ( ( double ) ( Q ) );
+	setfld ( base );
+	//
+	//  Calculate how many figures to use in base Q = BASE
+	//
+	temp = log ( pow ( 2.0, nbits ) - 1.0 ) / log ( ( double ) ( Q ) );
 
-  NFIGS = i4_min ( FIG_MAX, ( int ) temp );
-//
-//  Calculate the C array.
-//
-  calcc ( );
-//
-//  Set RECIP.
-//
-  RECIP = 1.0 / ( double ) ( i4_power ( Q, NFIGS ) );
-//
-//  Set QPOW(I) = Q^(NFIGS-I).
-//
-  QPOW[NFIGS-1] = 1;
-  for ( i = NFIGS - 1; 1 <= i; i-- )
-  {
-    QPOW[i-1] = Q * QPOW[i];
-  }
-//
-//  Initialize COUNT.
-//
-  i = skip;
+	NFIGS = i4_min ( FIG_MAX, ( int ) temp );
+	//
+	//  Calculate the C array.
+	//
+	calcc ( );
+	//
+	//  Set RECIP.
+	//
+	RECIP = 1.0 / ( double ) ( i4_power ( Q, NFIGS ) );
+	//
+	//  Set QPOW(I) = Q^(NFIGS-I).
+	//
+	QPOW[NFIGS-1] = 1;
+	for ( i = NFIGS - 1; 1 <= i; i-- )
+	{
+		QPOW[i-1] = Q * QPOW[i];
+	}
+	//
+	//  Initialize COUNT.
+	//
+	i = skip;
 
-  for ( r = 0; r < NFIGS; r++ )
-  {
-    COUNT[r] = ( i % Q );
-    i = i / Q;
-  }
+	for ( r = 0; r < NFIGS; r++ )
+	{
+		COUNT[r] = ( i % Q );
+		i = i / Q;
+	}
 
-  if ( i != 0 )
-  {
-    cout << "\n";
-    cout << "INLO - Fatal error!\n";
-    cout << "  SKIP is too long!\n";
-    exit ( 1 );
-  }
-//
-//  Initialize D.
-//
-  for ( i = 0; i < DIMEN; i++ )
-  {
-    for ( j = 0; j < NFIGS; j++ )
-    {
-      D[i][j] = 0;
-    }
-  }
+	if ( i != 0 )
+	{
+		cout << "\n";
+		cout << "INLO - Fatal error!\n";
+		cout << "  SKIP is too long!\n";
+		exit ( 1 );
+	}
+	//
+	//  Initialize D.
+	//
+	for ( i = 0; i < DIMEN; i++ )
+	{
+		for ( j = 0; j < NFIGS; j++ )
+		{
+			D[i][j] = 0;
+		}
+	}
 
-  for ( r = 0; r < NFIGS; r++ )
-  {
-    if ( COUNT[r] != 0 )
-    {
-      for ( i = 0; i < DIMEN; i++ )
-      {
-        for ( j = 0; j < NFIGS; j++ )
-        {
-          D[i][j] = add [ D[i][j] ] [ mul [ C[i][j][r] ] [ COUNT[r] ] ];
-        }
-      }
-    }
-  }
-//
-//  Initialize NEXTQ.
-//
-  for ( i = 0; i < DIMEN; i++ )
-  {
-    nq = 0;
-    for ( j = 0; j < NFIGS; j++ )
-    {
-      nq = nq + D[i][j] * QPOW[j];
-    }
-    NEXTQ[i] = nq;
-  }
+	for ( r = 0; r < NFIGS; r++ )
+	{
+		if ( COUNT[r] != 0 )
+		{
+			for ( i = 0; i < DIMEN; i++ )
+			{
+				for ( j = 0; j < NFIGS; j++ )
+				{
+					D[i][j] = add [ D[i][j] ] [ mul [ C[i][j][r] ] [ COUNT[r] ] ];
+				}
+			}
+		}
+	}
+	//
+	//  Initialize NEXTQ.
+	//
+	for ( i = 0; i < DIMEN; i++ )
+	{
+		nq = 0;
+		for ( j = 0; j < NFIGS; j++ )
+		{
+			nq = nq + D[i][j] * QPOW[j];
+		}
+		NEXTQ[i] = nq;
+	}
 
-  return;
+	return;
 }
 //****************************************************************************80
 
@@ -1030,144 +881,144 @@ void niederreiter ( int dim_num, int base, int *seed, double r[] )
 //    Output, double R[DIM_NUM], the element of the sequence.
 //
 {
-  static int dim_num_save = -1;
-  int skip;
+	static int dim_num_save = -1;
+	int skip;
 
-  if ( dim_num_save < 1 || dim_num != dim_num_save || *seed <= 0 )
-  {
-    skip = 1;
+	if ( dim_num_save < 1 || dim_num != dim_num_save || *seed <= 0 )
+	{
+		skip = 1;
 
-    inlo ( dim_num, base, skip );
+		inlo ( dim_num, base, skip );
 
-    dim_num_save = dim_num;
-  }
+		dim_num_save = dim_num;
+	}
 
-  golo ( r );
+	golo ( r );
 
-  *seed = *seed + 1;
+	*seed = *seed + 1;
 
-  return;
+	return;
 }
 //****************************************************************************80
 
 void niederreiter_generate ( int dim_num, int n, int base, int *seed, 
-  double r[] )
+							double r[] )
 
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    NIEDERREITER_GENERATE generates a set of Niederreiter values.
-//
-//  Licensing:
-//
-//    This code is distributed under the GNU LGPL license. 
-//
-//  Modified:
-//
-//    11 September 2007
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Input, int DIM_NUM, the spatial dimension.
-//
-//    Input, int N, the number of points desired.
-//
-//    Input, int BASE, the base to use for the Niederreiter sequence.
-//    The base should be a prime, or a power of a prime.
-//
-//    Input/output, int *SEED, a seed for the random number generator.
-//
-//    Output, double R[DIM_NUM*N], the points.
-//
+							//****************************************************************************80
+							//
+							//  Purpose:
+							//
+							//    NIEDERREITER_GENERATE generates a set of Niederreiter values.
+							//
+							//  Licensing:
+							//
+							//    This code is distributed under the GNU LGPL license. 
+							//
+							//  Modified:
+							//
+							//    11 September 2007
+							//
+							//  Author:
+							//
+							//    John Burkardt
+							//
+							//  Parameters:
+							//
+							//    Input, int DIM_NUM, the spatial dimension.
+							//
+							//    Input, int N, the number of points desired.
+							//
+							//    Input, int BASE, the base to use for the Niederreiter sequence.
+							//    The base should be a prime, or a power of a prime.
+							//
+							//    Input/output, int *SEED, a seed for the random number generator.
+							//
+							//    Output, double R[DIM_NUM*N], the points.
+							//
 {
-  int j;
+	int j;
 
-  for ( j = 0; j < n; j++ )
-  {
-    niederreiter ( dim_num, base, seed, r+j*dim_num );
-  }
+	for ( j = 0; j < n; j++ )
+	{
+		niederreiter ( dim_num, base, seed, r+j*dim_num );
+	}
 
-  return;
+	return;
 }
 //****************************************************************************80
 
 void niederreiter_write ( int dim_num, int n, int base, int skip, double r[], 
-  char *output_filename )
+						 char *output_filename )
 
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    NIEDERREITER_WRITE writes a set of Niederreiter values to a file.
-//
-//  Licensing:
-//
-//    This code is distributed under the GNU LGPL license. 
-//
-//  Modified:
-//
-//    12 September 2007
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Input, int DIM_NUM, the spatial dimension.
-//
-//    Input, int N, the number of points desired.
-//
-//    Input, int BASE, the base.
-//
-//    Input, int SKIP, the number of initial points skipped.
-//
-//    Input, double R[DIM_NUM*N], the points.
-//
-//    Input, char *OUTPUT_FILENAME, the name of the
-//    file to which the output should be written.
-//
+						 //****************************************************************************80
+						 //
+						 //  Purpose:
+						 //
+						 //    NIEDERREITER_WRITE writes a set of Niederreiter values to a file.
+						 //
+						 //  Licensing:
+						 //
+						 //    This code is distributed under the GNU LGPL license. 
+						 //
+						 //  Modified:
+						 //
+						 //    12 September 2007
+						 //
+						 //  Author:
+						 //
+						 //    John Burkardt
+						 //
+						 //  Parameters:
+						 //
+						 //    Input, int DIM_NUM, the spatial dimension.
+						 //
+						 //    Input, int N, the number of points desired.
+						 //
+						 //    Input, int BASE, the base.
+						 //
+						 //    Input, int SKIP, the number of initial points skipped.
+						 //
+						 //    Input, double R[DIM_NUM*N], the points.
+						 //
+						 //    Input, char *OUTPUT_FILENAME, the name of the
+						 //    file to which the output should be written.
+						 //
 {
-  int dim;
-  int j;
-  ofstream output;
-  char *string;
+	int dim;
+	int j;
+	ofstream output;
+	char *string;
 
-  output.open ( output_filename );
+	output.open ( output_filename );
 
-  string = timestring ( );
+	string = timestring ( );
 
-  output << "#  " << output_filename << "\n";
-  output << "#  created by NIEDERREITER.F90.\n";
-  output << "#\n";
-  output << "#  File generated on " << string << "\n";
-  output << "#\n";
-  output << "#  Spatial dimension DIM_NUM = " << dim_num << "\n";
-  output << "#  Number of points N = " << n << "\n";
-  output << "#  EPSILON (unit roundoff) = " << r8_epsilon ( ) << "\n";
-  output << "#  Base: " << base << "\n";
-  output << "#  Initial values skipped = " << skip << "\n";
-  output << "#\n";
+	output << "#  " << output_filename << "\n";
+	output << "#  created by NIEDERREITER.F90.\n";
+	output << "#\n";
+	output << "#  File generated on " << string << "\n";
+	output << "#\n";
+	output << "#  Spatial dimension DIM_NUM = " << dim_num << "\n";
+	output << "#  Number of points N = " << n << "\n";
+	output << "#  EPSILON (unit roundoff) = " << r8_epsilon ( ) << "\n";
+	output << "#  Base: " << base << "\n";
+	output << "#  Initial values skipped = " << skip << "\n";
+	output << "#\n";
 
-  delete [] string;
-  
-  for ( j = 0; j < n; j++ )
-  {
-    for ( dim = 0; dim < dim_num; dim++ )
+	delete [] string;
+
+	for ( j = 0; j < n; j++ )
 	{
-	  output << "  " << setw(10) << r[dim+j*dim_num];
+		for ( dim = 0; dim < dim_num; dim++ )
+		{
+			output << "  " << setw(10) << r[dim+j*dim_num];
+		}
+		output << "\n";
 	}
-	output << "\n";
-  }
 
-  output.close ( );
+	output.close ( );
 
-  return;
+	return;
 }
 //****************************************************************************80
 
@@ -1213,101 +1064,54 @@ int *plymul ( int pa[], int pb[] )
 //    Output, int PLYMUL[DEG_MAX+2], the product polynomial.
 //
 {
-  int dega;
-  int degb;
-  int degc;
-  int i;
-  int j;
-  int p;
-  int *pc;
-  int term;
+	int dega;
+	int degb;
+	int degc;
+	int i;
+	int j;
+	int *pc;
+	int term;
 
-  pc = new int[DEG_MAX+2];
-  
-  dega = pa[0];
-  degb = pb[0];
+	pc = new int[DEG_MAX+2];
 
-  if ( dega == -1 || degb == -1 )
-  {
-    degc = -1;
-  }
-  else
-  {
-    degc = dega + degb;
-  }
+	dega = pa[0];
+	degb = pb[0];
 
-  if ( DEG_MAX < degc )
-  {
-    cout << "\n";
-    cout << "PLYMUL - Fatal error!\n";
-    cout << "  The degree of the product exceeds DEG_MAX.\n";
-    exit ( 1 );
-  }
-
-  for ( i = 0; i <= degc; i++ )
-  {
-    term = 0;
-    for ( j = i4_max ( 0, i - dega ); j <= i4_min ( degb, i ); j++ )
+	if ( dega == -1 || degb == -1 )
 	{
-      term = add [ term ] [ mul [ pa[i-j+1] ] [ pb[j+1] ] ];
-    }
-    pc[i+1] = term;
-  }
+		degc = -1;
+	}
+	else
+	{
+		degc = dega + degb;
+	}
 
-  pc[0] = degc;
+	if ( DEG_MAX < degc )
+	{
+		cout << "\n";
+		cout << "PLYMUL - Fatal error!\n";
+		cout << "  The degree of the product exceeds DEG_MAX.\n";
+		exit ( 1 );
+	}
 
-  for ( i = degc + 1; i <= DEG_MAX; i++ )
-  {
-    pc[i+1] = 0;
-  }
+	for ( i = 0; i <= degc; i++ )
+	{
+		term = 0;
+		for ( j = i4_max ( 0, i - dega ); j <= i4_min ( degb, i ); j++ )
+		{
+			term = add [ term ] [ mul [ pa[i-j+1] ] [ pb[j+1] ] ];
+		}
+		pc[i+1] = term;
+	}
 
-  return pc;
-}
-//****************************************************************************80
+	pc[0] = degc;
 
-double r8_epsilon ( void )
+	for ( i = degc + 1; i <= DEG_MAX; i++ )
+	{
+		pc[i+1] = 0;
+	}
 
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    R8_EPSILON returns the R8 roundoff unit.
-//
-//  Discussion:
-//
-//    The roundoff unit is a number R which is a power of 2 with the property 
-//    that, to the precision of the computer's arithmetic,
-//      1 < 1 + R
-//    but 
-//      1 = ( 1 + R / 2 )
-//
-//  Licensing:
-//
-//    This code is distributed under the GNU LGPL license. 
-//
-//  Modified:
-//
-//    01 July 2004
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Output, double R8_EPSILON, the double precision round-off unit.
-//
-{
-  double r;
-
-  r = 1.0;
-
-  while ( 1.0 < ( double ) ( 1.0 + r )  )
-  {
-    r = r / 2.0;
-  }
-
-  return ( 2.0 * r );
+	return pc;
 }
 //****************************************************************************80
 
@@ -1355,154 +1159,57 @@ void setfld ( int q_init )
 //    Input, int Q_INIT, the order of the field.
 //
 {
-  int i;
-  ifstream input;
-  char *input_filename = "gfarit.txt";
-  int j;
-  int n;
+	int i;
+	ifstream input;
+	char *input_filename = "gfarit.txt";
+	int j;
 
-  if ( q_init <= 1 || Q_MAX < q_init )
-  {
-    cout << "\n";
-    cout << "SETFLD - Fatal error!\n";
-    cout << "  Bad value of Q = " << q_init << "\n";
-    exit ( 1 );
-  }
+	if ( q_init <= 1 || Q_MAX < q_init )
+	{
+		cout << "\n";
+		cout << "SETFLD - Fatal error!\n";
+		cout << "  Bad value of Q = " << q_init << "\n";
+		exit ( 1 );
+	}
 
-  Q = q_init;
-  P = i4_characteristic ( Q );
+	Q = q_init;
+	P = i4_characteristic ( Q );
 
-  if ( P == 0 )
-  {
-    cout << "\n";
-    cout << "SETFLD - Fatal error!\n";
-    cout << "  There is no field of order Q = " << Q << "\n";
-    exit ( 1 );
-  }
-//
-//  Set up to handle a field of prime or prime-power order.
-//  Calculate the addition and multiplication tables.
-//
-  for ( i = 0; i < Q; i++ )
-  {
-    for ( j = 0; j < Q; j++ )
-    {
-      add[i][j] = ( i + j ) % P;
-    }
-  }
+	if ( P == 0 )
+	{
+		cout << "\n";
+		cout << "SETFLD - Fatal error!\n";
+		cout << "  There is no field of order Q = " << Q << "\n";
+		exit ( 1 );
+	}
+	//
+	//  Set up to handle a field of prime or prime-power order.
+	//  Calculate the addition and multiplication tables.
+	//
+	for ( i = 0; i < Q; i++ )
+	{
+		for ( j = 0; j < Q; j++ )
+		{
+			add[i][j] = ( i + j ) % P;
+		}
+	}
 
-  for ( i = 0; i < Q; i++ )
-  {
-    for ( j = 0; j < Q; j++ )
-    {
-      mul[i][j] = ( i * j ) % P;
-    }
-  }
-//
-//  Use the addition table to set the subtraction table.
-//
-  for ( i = 0; i < Q; i++ )
-  {
-    for ( j = 0; j < Q; j++ )
-    {
-      sub [ add[i][j] ] [i] = j;
-    }
-  }
-  return;
-}
-//****************************************************************************80
-
-void timestamp ( void )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    TIMESTAMP prints the current YMDHMS date as a time stamp.
-//
-//  Example:
-//
-//    May 31 2001 09:45:54 AM
-//
-//  Licensing:
-//
-//    This code is distributed under the GNU LGPL license. 
-//
-//  Modified:
-//
-//    03 October 2003
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    None
-//
-{
-# define TIME_SIZE 40
-
-  static char time_buffer[TIME_SIZE];
-  const struct tm *tm;
-  size_t len;
-  time_t now;
-
-  now = time ( NULL );
-  tm = localtime ( &now );
-
-  len = strftime ( time_buffer, TIME_SIZE, "%d %B %Y %I:%M:%S %p", tm );
-
-  cout << time_buffer << "\n";
-
-  return;
-# undef TIME_SIZE
-}
-//****************************************************************************80
-
-char *timestring ( void )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    TIMESTRING returns the current YMDHMS date as a string.
-//
-//  Example:
-//
-//    May 31 2001 09:45:54 AM
-//
-//  Licensing:
-//
-//    This code is distributed under the GNU LGPL license. 
-//
-//  Modified:
-//
-//    13 June 2003
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Output, char *TIMESTRING, a string containing the current YMDHMS date.
-//
-{
-# define TIME_SIZE 40
-
-  const struct tm *tm;
-  size_t len;
-  time_t now;
-  char *s;
-
-  now = time ( NULL );
-  tm = localtime ( &now );
-
-  s = new char[TIME_SIZE];
-
-  len = strftime ( s, TIME_SIZE, "%d %B %Y %I:%M:%S %p", tm );
-
-  return s;
-# undef TIME_SIZE
+	for ( i = 0; i < Q; i++ )
+	{
+		for ( j = 0; j < Q; j++ )
+		{
+			mul[i][j] = ( i * j ) % P;
+		}
+	}
+	//
+	//  Use the addition table to set the subtraction table.
+	//
+	for ( i = 0; i < Q; i++ )
+	{
+		for ( j = 0; j < Q; j++ )
+		{
+			sub [ add[i][j] ] [i] = j;
+		}
+	}
+	return;
 }

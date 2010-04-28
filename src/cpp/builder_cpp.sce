@@ -16,6 +16,8 @@ src_dir = get_absolute_file_path("builder_cpp.sce");
 src_path = "c";
 linknames = ["lowdisc"];
 files = [
+  "lowdisc.cpp"
+  "lowdisc_shared.cpp"
   "blas1_d.cpp"
   "faure.cpp"
   "halton.cpp"

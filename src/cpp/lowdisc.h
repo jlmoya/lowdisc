@@ -1,6 +1,6 @@
-// 2009 - DIGITEO - Michael Baudin
-#ifndef _LOWDISC_NIEDER_D_H_
-#define _LOWDISC_NIEDER_D_H_
+// 2009 - INRIA - Michael Baudin
+#ifndef _LOWDISC_H_
+#define _LOWDISC_H_
 
 #ifdef _MSC_VER
 	#if LIBLOWDISC_EXPORTS 
@@ -24,14 +24,17 @@
 
 __BEGIN_DECLS
 
-void niederreiter ( int dim_num, int base, int *seed, double r[] );
-void niederreiter_generate ( int dim_num, int n, int base, int *seed, 
-  double r[] );
-void niederreiter_write ( int dim_num, int n, int base, int skip, double r[], 
-  char *output_filename );
+// lowdisc_errorsetfunction --
+//   Configure the error function.
+LOWDISC_IMPORTEXPORT void lowdisc_errorsetfunction ( void (* f)(char * message) );
+
+// lowdisc_msgsetfunction --
+//   Configure the message function
+LOWDISC_IMPORTEXPORT void lowdisc_msgsetfunction ( void (* f)(char * message));
+
 
 __END_DECLS
 
+#endif /* _LOWDISC_H_ */
 
-#endif /* _LOWDISC_NIEDER_D_H_ */
 
