@@ -30,6 +30,7 @@
 __BEGIN_DECLS
 
 void faure ( int dim_num, int *seed, double quasi[] );
+int prime_ge ( int n );
 
 __END_DECLS
 

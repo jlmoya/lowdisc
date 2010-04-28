@@ -29,6 +29,21 @@ function flag = assert_close ( computed, expected, epsilon )
   end
   if flag <> 1 then pause,end
 endfunction
+//
+// assert_equal --
+//   Returns 1 if the two real matrices computed and expected are equal.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_equal ( computed , expected )
+  if computed==expected then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then pause,end
+endfunction
 
 
 //
@@ -102,7 +117,7 @@ end
 rng = lowdisc_destroy(rng);
 
 //
-// Check the result against TOMS 647 data
+// Check the result against TOMS 647 data in dimension 4
 //
 rng = lowdisc_new();
 rng = lowdisc_configure(rng,"-method","halton");

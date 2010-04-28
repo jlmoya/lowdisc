@@ -16,8 +16,9 @@ using namespace std;
 
 int *binomial_table ( int qs, int m, int n );
 int i4_log_i4 ( int i4, int j4 );
-int prime_ge ( int n );
 void timestamp ( void );
+
+// TODO : disable the prime_ge function and let the user configure the prime base by outside
 
 //****************************************************************************80
 

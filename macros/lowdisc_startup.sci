@@ -46,7 +46,7 @@ function this = lowdisc_startup (this)
   //   Michael Baudin - 2008-2009 - INRIA
   //   Michael Baudin - 2010 - DIGITEO
   //
-
+  
   if (this.startedup<>0) then
     errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "lowdisc_startup" );
     error(errmsg);
@@ -64,7 +64,7 @@ function this = lowdisc_startup (this)
   case "halton" then
     if ( this.dimension > this.primessize ) then
       errmsg = sprintf( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes" ),...
-        "lowdisc_startup" , this.method,this.dimension,this.primessize);
+      "lowdisc_startup" , this.method,this.dimension,this.primessize);
       error(errmsg);
     end
   case "faure" then
@@ -77,29 +77,27 @@ function this = lowdisc_startup (this)
   case "reversehalton" then
     if ( this.dimension > this.primessize ) then
       errmsg = sprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"),...
-        "lowdisc_startup" , this.method,this.dimension,this.primessize);
+      "lowdisc_startup" , this.method,this.dimension,this.primessize);
       error(errmsg);
     end
   case "sobol" then
     this = lowdisc_startsobol ( this )
   case "niederreiter-base-2" then
     this = lowdisc_startnieder2 ( this )
-//
-// Fast sequences based on primitives
-//
+    //
+    // Fast sequences based on primitives
+    //
   case "haltonf" then
-    seed = this.seed;
-    dim = this.dimension;
-    _lowdisc_haltondimnumset ( dim )
+    _lowdisc_haltondimnumset ( this.dimension )
     _lowdisc_haltonstepset ( 1 )
-    _lowdisc_haltonseedset ( dim , zeros ( 1 , dim ) )
+    _lowdisc_haltonseedset ( zeros ( 1 , this.dimension ) )
     if ( this.dimension > this.primessize ) then
       errmsg = sprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"),...
-        "lowdisc_startup" , this.method,this.dimension,this.primessize);
+      "lowdisc_startup" , this.method,this.dimension,this.primessize);
       error(errmsg);
     end
-    basis = this.primeslist(1:dim);
-    _lowdisc_haltonbaseset ( dim , basis )
+    basis = this.primeslist(1:this.dimension);
+    _lowdisc_haltonbaseset ( basis )
   case "reversehaltonf" then
     // TODO
   case "niederreiter-base-2f" then
@@ -111,7 +109,7 @@ function this = lowdisc_startup (this)
     // TODO : allow to configure the basis, based on the primeslist
   else
     errmsg = sprintf(gettext ( "%s: Unknown method %s" ) , ...
-      "lowdisc_startup" , this.method);
+    "lowdisc_startup" , this.method);
     error(errmsg);
   end
   // Initialize the sequence
@@ -122,3 +120,4 @@ function this = lowdisc_startup (this)
     [ this , result ] = lowdisc_next ( this , this.skip )
   end
 endfunction
+

@@ -31,10 +31,11 @@ function str = %LOWDISC_string ( this )
   k = k + 1
   str(k) = sprintf("Van Der Corput Basis: %s\n", _tostring(this.vdcbasis))
   k = k + 1
-  if ( size(this.primeslist,"*") > 10 ) then
-    str(k) = sprintf("Primes List: %s %s\n", _tostring(this.primeslist(1:10)),"...")
+  nbp = size(this.primeslist,"*")
+  if ( nbp > 10 ) then
+    str(k) = sprintf("Primes List (%d primes): %s %s\n", nbp , _tostring(this.primeslist(1:10)),"...")
   else
-    str(k) = sprintf("Primes List: %s\n", _tostring(this.primeslist))
+    str(k) = sprintf("Primes List (%d primes): %s\n", nbp , _tostring(this.primeslist))
   end
   k = k + 1
   str(k) = sprintf("Started Up: %s\n", _tostring(this.startedup))

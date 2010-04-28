@@ -6,17 +6,6 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
-
-// References
-// Reverse Halton
-// B. Vandewoestyne and R. Cools, 
-// Good permutations for deterministic scrambled Halton
-// sequences in terms of L2-discrepancy, Computational and Applied
-// Mathematics 189, 2006
-// See also 
-//
-
-
 function [this,next] = lowdisc_next ( varargin )
   // Returns the next term of the sequence
   //
@@ -185,7 +174,7 @@ endfunction
 //   Returns the next term of the Faure sequence
 //
 function next = _next_faure (this)
-  k = find(this.primeslist>this.dimension,1)
+  k = find(this.primeslist>= this.dimension,1)
   if (k == []) then
     errmsg = sprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
       "_next_faure" , this.dimension);
@@ -229,8 +218,7 @@ endfunction
 // Arguments:
 //
 function [ this , next ] = _next_haltonf ( this )
-  dim = this.dimension;
-  next = _lowdisc_haltonf ( dim );
+  next = _lowdisc_haltonf ( this.dimension );
 endfunction
 //
 // _next_fauref --

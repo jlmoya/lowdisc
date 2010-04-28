@@ -5,6 +5,8 @@
 // you should have received as part of this distribution.  The terms
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+
+
 //
 // assert_close --
 //   Returns 1 if the two real matrices computed and expected are close,
@@ -24,7 +26,7 @@ function flag = assert_close ( computed, expected, epsilon )
   else
     flag = 0;
   end
-  if flag <> 1 then bugmes();quit;end
+  if flag <> 1 then pause,end
 endfunction
 //
 // assert_equal --
@@ -39,11 +41,13 @@ function flag = assert_equal ( computed , expected )
   else
     flag = 0;
   end
-  if flag <> 1 then bugmes();quit;end
+  if flag <> 1 then pause,end
 endfunction
 //
-prarray = lowdisc_primes10000 ( );
+prarray = lowdisc_primes100 ( );
 prsize = size(prarray);
-assert_equal ( prsize , [1 10000] );
+assert_equal ( prsize , [1 100] );
 expected10 = [2      3      5      7     11     13     17     19     23     29];
 assert_equal ( prarray(1:10) , expected10 );
+
+

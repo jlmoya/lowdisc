@@ -60,7 +60,7 @@ function this = lowdisc_reset (this)
 // Fast sequences
 //
   case "haltonf" then
-    _lowdisc_haltonseedset ( dim , zeros ( 1 , dim ) )
+    _lowdisc_haltonstepset ( 1 )
   case "reversehaltonf" then
     // todo
   case "niederreiter-base-2f" then

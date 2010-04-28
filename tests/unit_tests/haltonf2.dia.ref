@@ -7,11 +7,6 @@
 // you should have received as part of this distribution.  The terms
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
-
-
-
-
-
 //
 // assert_close --
 //   Returns 1 if the two real matrices computed and expected are close,
@@ -31,12 +26,11 @@ function flag = assert_close ( computed, expected, epsilon )
   else
     flag = 0;
   end
-  if flag <> 1 then pause,end
+  if flag <> 1 then bugmes();quit;end
 endfunction
 //
 // The following is a port of the test out of the GSL
 //
-
 // test in dimension 1229
 rng = lowdisc_new();
 rng = lowdisc_configure(rng,"-method","haltonf");
@@ -48,7 +42,6 @@ for i=0:30
   [rng,computed] = lowdisc_next (rng);
 end
 rng = lowdisc_destroy(rng);
-
 // test in dimension 2 */
 // should be
 // 0.5 0.333333
@@ -66,7 +59,6 @@ assert_close ( computed, [3.0/4.0 1.0/9.0], 10 * %eps );
 [rng,computed] = lowdisc_next (rng);
 assert_close ( computed, [1.0/8.0 4.0/9.0], 10 * %eps );
 rng = lowdisc_destroy(rng);
-
 // test in dimension 3 */
 rng = lowdisc_new();
 rng = lowdisc_configure(rng,"-method","haltonf");
@@ -86,4 +78,3 @@ assert_close ( computed, [0.75 1.0/9.0 0.6], 10 * %eps );
 [rng,computed] = lowdisc_next (rng);
 assert_close ( computed, [0.125 4.0/9.0 0.8], 10 * %eps );
 rng = lowdisc_destroy(rng);
-

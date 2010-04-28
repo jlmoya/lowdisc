@@ -95,27 +95,27 @@ assert_equal ( primeslist , [2 3 5] );
 string(rng)
  ans  =
  
-!Low Discrepancy Sequence:  !
-!                           !
-!=========================  !
-!                           !
-!Dimension of space: 12     !
-!                           !
-!Method: haltonf            !
-!                           !
-!Sequence Index: 0          !
-!                           !
-!Verbose logging: F         !
-!                           !
-!Skip: 12                   !
-!                           !
-!Leap: 12                   !
-!                           !
-!Van Der Corput Basis: 3    !
-!                           !
-!Primes List: [2 3 5]       !
-!                           !
-!Started Up: 0              !
+!Low Discrepancy Sequence:        !
+!                                 !
+!=========================        !
+!                                 !
+!Dimension of space: 12           !
+!                                 !
+!Method: haltonf                  !
+!                                 !
+!Sequence Index: 0                !
+!                                 !
+!Verbose logging: F               !
+!                                 !
+!Skip: 12                         !
+!                                 !
+!Leap: 12                         !
+!                                 !
+!Van Der Corput Basis: 3          !
+!                                 !
+!Primes List (3 primes): [2 3 5]  !
+!                                 !
+!Started Up: 0                    !
 rng
  rng  =
  
@@ -137,7 +137,7 @@ Leap: 12
 
 Van Der Corput Basis: 3
 
-Primes List: [2 3 5]
+Primes List (3 primes): [2 3 5]
 
 Started Up: 0
 

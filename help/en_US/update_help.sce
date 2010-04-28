@@ -113,6 +113,7 @@ funarray = [
   "lowdisc_next"
   "lowdisc_reset"
   "lowdisc_startup"
+  "lowdisc_primes100"
   "lowdisc_primes1000"
   "lowdisc_primes10000"
   ];

@@ -29,7 +29,7 @@ function m = lowdisc_primes10000 ( )
   //   prarray = lowdisc_primes10000 ( );
   //   rng = lowdisc_configure(rng,"-primeslist",prarray);
   //   rng = lowdisc_configure(rng,"-dimension",1500);
-  //   [this,next] = lowdisc_next ( this );
+  //   [rng,next] = lowdisc_next ( rng );
   //   next
   //   rng = lowdisc_destroy(rng);
   //

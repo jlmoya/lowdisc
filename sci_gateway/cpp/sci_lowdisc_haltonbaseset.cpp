@@ -15,10 +15,9 @@ extern "C" {
 #include "lowdisc_math.h" 
 #include "halton.h" 
 
-// _lowdisc_haltonbaseset ( dim , base )
+// _lowdisc_haltonbaseset ( base )
 //   Set the basis of the Halton sequence.
 // Arguments
-//   dim : the number of variables
 //   base : a matrix of positive integers, the basis
 //     This is usually a matrix of the first dim primes.
 int sci_lowdisc_haltonbaseset (char *fname) {
@@ -27,13 +26,13 @@ int sci_lowdisc_haltonbaseset (char *fname) {
 	int * base = NULL;
 	int dim;
 
-	CheckRhs(2,2) ;
+	CheckRhs(1,1) ;
 	CheckLhs(1,1) ;
-	lowdisc_GetOneInteger ( fname , 1 , &dim );
-	lowdisc_AssertVarType(fname , 2 , sci_matrix );
-	GetRhsVarMatrixDouble ( 2 , &nRows, &nCols, &valueVector);
-	lowdisc_AssertNumberOfRows ( fname , 2 , 1 , nRows );
-	lowdisc_AssertNumberOfColumns ( fname , 2 , dim , nCols );
+	lowdisc_AssertVarType(fname , 1 , sci_matrix );
+	GetRhsVarMatrixDouble ( 1 , &nRows, &nCols, &valueVector);
+	lowdisc_AssertNumberOfRows ( fname , 1 , 1 , nRows );
+	dim = nCols;
+	lowdisc_AssertNumberOfColumns ( fname , 1 , dim , nCols );
 	// Transfer the double array into an array of integers
 	base = ivector ( dim );
 	for(int k = 0; k < dim; k++) {
