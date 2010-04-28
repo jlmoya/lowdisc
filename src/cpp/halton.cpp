@@ -173,7 +173,6 @@ bool halham_dim_num_check ( int dim_num )
 	if ( dim_num < 1 ) 
 	{
 		ostringstream msg;
-		msg << "\n";
 		msg << "HALHAM_DIM_NUM_CHECK - Fatal error!\n";
 		msg << "  DIM_NUM < 0.";
 		msg << "  DIM_NUM = " << dim_num << "\n";
@@ -229,7 +228,6 @@ bool halham_leap_check ( int dim_num, int leap[] )
 		if ( leap[i] < 1 ) 
 		{
 			ostringstream msg;
-			msg << "\n";
 			msg << "HALHAM_LEAP_CHECK - Fatal error!\n";
 			msg << "  Leap entries must be greater than 0.\n";
 			msg << "  leap[" << i << "] = " << leap[i] << "\n";
@@ -276,7 +274,6 @@ bool halham_n_check ( int n )
 	if ( n < 1 ) 
 	{
 		ostringstream msg;
-		msg << "\n";
 		msg << "HALHAM_N_CHECK - Fatal error!\n";
 		msg << "  N < 0.";
 		msg << "  N = " << n << "\n";
@@ -332,7 +329,6 @@ bool halham_seed_check ( int dim_num, int seed[] )
 		if ( seed[i] < 0 ) 
 		{
 			ostringstream msg;
-			msg << "\n";
 			msg << "HALHAM_SEED_CHECK - Fatal error!\n";
 			msg << "  SEED entries must be nonnegative.\n";
 			msg << "  seed[" << i << "] = " << seed[i] << "\n";
@@ -379,7 +375,6 @@ bool halham_step_check ( int step )
 	if ( step < 0 ) 
 	{
 		ostringstream msg;
-		msg << "\n";
 		msg << "HALHAM_STEP_CHECK - Fatal error!\n";
 		msg << "  STEP < 0.";
 		msg << "  STEP = " << step << "\n";
@@ -456,7 +451,6 @@ void halham_write ( int dim_num, int n, int step, int seed[], int leap[],
 	if ( !file_out )
 	{
 		ostringstream msg;
-		msg << "\n";
 		msg << "HALHAM_WRITE - Fatal error!\n";
 		msg << "  Could not open the output file.\n";
 		lowdisc_error ( msg.str() );
@@ -727,7 +721,6 @@ bool halton_base_check ( int dim_num, int base[] )
 		if ( base[i] <= 1 ) 
 		{
 			ostringstream msg;
-			msg << "\n";
 			msg << "HALTON_BASE_CHECK - Fatal error!\n";
 			msg << "  Bases must be greater than 1.\n";
 			msg << "  base[" << i << "] = " << base[i] << "\n";
