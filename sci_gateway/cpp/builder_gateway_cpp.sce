@@ -9,6 +9,8 @@ gateway_path = get_absolute_file_path("builder_gateway_cpp.sce");
 
 libname = "lowdiscgateway";
 namelist = [
+  "_lowdisc_startup" "sci_lowdisc_startup"
+  "_lowdisc_shutdown" "sci_lowdisc_shutdown"
   "_lowdisc_sobolf" "sci_lowdisc_sobolf"
   "_lowdisc_haltonf" "sci_lowdisc_haltonf"
   "_lowdisc_haltonbaseset" "sci_lowdisc_haltonbaseset"
@@ -18,11 +20,12 @@ namelist = [
   "_lowdisc_faureprimege" "sci_lowdisc_faureprimege"
   "_lowdisc_fauref" "sci_lowdisc_fauref"
 ];
-// "_lowdisc_fauref" "sci_lowdisc_fauref"
 // "_lowdisc_nieder2f" "sci_lowdisc_nieder2f"
 // "_lowdisc_reversehaltonf" "sci_lowdisc_reversehaltonf"
 files = [
   "gw_lowdisc_support.cpp"
+  "sci_lowdisc_startup.cpp"
+  "sci_lowdisc_shutdown.cpp"
   "sci_lowdisc_sobolf.cpp"
   "sci_lowdisc_haltonbaseset.cpp"
   "sci_lowdisc_haltondimnumset.cpp"
@@ -32,14 +35,13 @@ files = [
   "sci_lowdisc_fauref.cpp"
   "sci_lowdisc_faureprimege.cpp"
   ];
-//  "sci_lowdisc_haltonf.cpp"
 //  "sci_lowdisc_nieder2f.cpp"
 //  "sci_lowdisc_reversehaltonf.cpp"
 
 
 ldflags = ""
 
-if MSDOS then
+if ( MSDOS ) then
   include2 = "..\..\src\cpp";
   include3 = SCI+"/modules/output_stream/includes";
   cflags = "-DWIN32 -I"""+include2+""" -I"""+include3+"""";

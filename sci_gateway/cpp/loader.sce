@@ -3,7 +3,9 @@
 //
 lowdiscgateway_path = get_file_path('loader.sce');
 link(lowdiscgateway_path+'/../../src/cpp/liblowdisc.dll');
-list_functions = [             '_lowdisc_sobolf';
+list_functions = [             '_lowdisc_startup';
+            '_lowdisc_shutdown';
+            '_lowdisc_sobolf';
             '_lowdisc_haltonf';
             '_lowdisc_haltonbaseset';
             '_lowdisc_haltondimnumset';

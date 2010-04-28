@@ -1,6 +1,6 @@
 
 // Copyright (C) 2008 - INRIA - Michael Baudin
-// Copyright (C) 2009 - Digiteo - Michael Baudin
+// Copyright (C) 2009-2010 - Digiteo - Michael Baudin
 
 extern "C" {
 #include "stack-c.h" 
@@ -32,9 +32,9 @@ int sci_lowdisc_niederf (char *fname) {
 
 	CheckRhs(3,3) ;
 	CheckLhs(2,2) ;
-	nisp_GetOneInteger ( fname , 1 , &dim );
-	nisp_GetOneInteger ( fname , 2 , &base );
-	nisp_GetOneInteger ( fname , 3 , &seed );
+	lowdisc_GetOneInteger ( fname , 1 , &dim );
+	lowdisc_GetOneInteger ( fname , 2 , &base );
+	lowdisc_GetOneInteger ( fname , 3 , &seed );
 	// Call the Niederreiter sequence
 	quasi = dvector ( dim );
 	niederreiter ( dim_num, base, &seed, quasi );

@@ -1,6 +1,6 @@
 
 // Copyright (C) 2008 - INRIA - Michael Baudin
-// Copyright (C) 2009 - Digiteo - Michael Baudin
+// Copyright (C) 2009-2010 - Digiteo - Michael Baudin
 
 extern "C" {
 #include "stack-c.h" 
