@@ -556,10 +556,11 @@ double dmach ( int job )
 	}
 	else
 	{
-		cout << "\n";
-		cout << "DMACH - Fatal error!\n";
-		cout << "  Illegal input value of JOB = " << job << "\n";
-		exit ( 1 );
+		ostringstream msg;
+		msg << "DMACH - Fatal error!\n";
+		msg << "  Illegal input value of JOB = " << job << "\n";
+                lowdisc_error(msg.str());
+                return 0;
 	}
 
 	return value;

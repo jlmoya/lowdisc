@@ -29,11 +29,14 @@
 
 __BEGIN_DECLS
 
+//    NIEDERREITER returns an element of a Niederreiter sequence for base BASE.
 void niederreiter ( int dim_num, int base, int *seed, double r[] );
-void niederreiter_generate ( int dim_num, int n, int base, int *seed, 
-  double r[] );
-void niederreiter_write ( int dim_num, int n, int base, int skip, double r[], 
-  char *output_filename );
+
+//    NIEDERREITER_GENERATE generates a set of n Niederreiter values.
+void niederreiter_generate ( int dim_num, int n, int base, int *seed, double r[] );
+
+//    NIEDERREITER_WRITE writes a set of Niederreiter values to a file.
+void niederreiter_write ( int dim_num, int n, int base, int skip, double r[], char *output_filename );
 
 __END_DECLS
 

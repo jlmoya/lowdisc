@@ -13502,22 +13502,12 @@ void i4_sobol ( int dim_num, int *seed, float quasi[ ] )
     if ( dim_num < 1 || DIM_MAX2 < dim_num )
     {
       ostringstream msg;
-      msg << "ERROR **********************" << endl;
-      msg << "Nisp(i4_sobol) - Fatal Error" << endl;
+      msg << "sobol - i4_sobol - Fatal Error" << endl;
       msg << "  The spatial dimension DIM_NUM should satisfy"<<endl;
       msg << "    1 <= DIM_NUM <= " << DIM_MAX2 << endl;
       msg << "  But this input value is DIM_NUM = " << dim_num << endl;
-      msg << "****************************" << endl;
       lowdisc_error(msg.str());
       return;
-      /*
-      cout << "\n";
-      cout << "I4_SOBOL - Fatal error!\n";
-      cout << "  The spatial dimension DIM_NUM should satisfy:\n";
-      cout << "    1 <= DIM_NUM <= " << DIM_MAX2 << "\n";
-      cout << "  But this input value is DIM_NUM = " << dim_num << "\n";
-      exit ( 1 );
-      */
     }
 
     dim_num_save = dim_num;
@@ -27193,22 +27183,12 @@ void i8_sobol ( int dim_num, long long int *seed, double quasi[ ] )
     if ( dim_num < 1 || DIM_MAX2 < dim_num )
     {
       ostringstream msg;
-      msg << "ERROR **********************" << endl;
-      msg << "Lowdisc(i8_sobol) - Fatal Error" << endl;
+      msg << "sobol - i8_sobol - Fatal Error" << endl;
       msg << "  The spatial dimension DIM_NUM should satisfy"<<endl;
       msg << "    1 <= DIM_NUM <= " << DIM_MAX2 << endl;
       msg << "  But this input value is DIM_NUM = " << dim_num << endl;
-      msg << "****************************" << endl;
       lowdisc_error(msg.str());
       return;
-      /*
-      cout << "\n";
-      cout << "I8_SOBOL - Fatal error!\n";
-      cout << "  The spatial dimension DIM_NUM should satisfy:\n";
-      cout << "    1 <= DIM_NUM <= " << DIM_MAX2 << "\n";
-      cout << "  But this input value is DIM_NUM = " << dim_num << "\n";
-      exit ( 1 );
-      */
     }
 
     dim_num_save = dim_num;
@@ -27364,23 +27344,12 @@ void i8_sobol ( int dim_num, long long int *seed, double quasi[ ] )
   if ( maxcol < l )
   {
     ostringstream msg;
-    msg << "ERROR **********************" << endl;
-    msg << "Lowdisc(i8_sobol) - Fatal Error" << endl;
+    msg << "sobol - i8_sobol - Fatal Error" << endl;
     msg << "  The value of SEED seems to be too large" <<endl;
     msg << "  SEED =   " << *seed  << endl;
     msg << "  MAXCOL = " << maxcol << endl;
-    msg << "****************************" << endl;
     lowdisc_error(msg.str());
     return;
-    /*
-    cout << "\n";
-    cout << "I8_SOBOL - Fatal error!\n";
-    cout << "  The value of SEED seems to be too large!\n";
-    cout << "  SEED =   " << *seed  << "\n";
-    cout << "  MAXCOL = " << maxcol << "\n";
-    cout << "  L =      " << l << "\n";
-    exit ( 2 );
-    */
   }
 //
 //  Calculate the new components of QUASI.

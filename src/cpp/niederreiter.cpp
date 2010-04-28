@@ -182,10 +182,11 @@ void calcc ( void )
 
 		if ( input.eof ( ) )
 		{
-			cout << "\n";
-			cout << "CALCC - Fatal error!\n"; 
-			cout << "  Could not find tables for Q = " << Q << "\n";
-			exit ( 1 );
+			ostringstream msg;
+			msg << "niederrreiter - CALCC - Fatal error!\n"; 
+			msg << "  Could not find tables for Q = " << Q << "\n";
+	                lowdisc_error(msg.str());
+                        return;
 		}
 
 		if ( i == Q )
@@ -533,10 +534,11 @@ void golo ( double quasi[] )
 	{
 		if ( NFIGS <= r )
 		{
-			cout << "\n";
-			cout << "GOLO - Fatal error!\n";
-			cout << "  Too many calls!\n";
-			exit ( 1 );
+			ostringstream msg;
+			msg << "niederrreiter - GOLO - Fatal error!\n";
+			msg << "  Too many calls!\n";
+                        lowdisc_error(msg.str());
+                        return 0;
 		}
 
 		oldcnt = COUNT[r];
@@ -758,18 +760,20 @@ void inlo ( int dim, int base, int skip )
 
 	if ( DIMEN <= 0 || DIM_MAX < DIMEN )
 	{
-		cout << "\n";
-		cout << "INLO - Fatal error!\n";
-		cout << "  Bad spatial dimension.\n";
-		exit ( 1 );
+	        ostringstream msg;
+		msg << "niederreiter - INLO - Fatal error!\n";
+		msg << "  Bad spatial dimension.\n";
+                lowdisc_error(msg.str());
+                return;
 	}
 
 	if ( i4_characteristic ( base ) == 0 )
 	{
-		cout << "\n";
-		cout << "INLO - Fatal error!\n";
-		cout << "  Base not prime power or out of range.\n";
-		exit ( 1 );
+	        ostringstream msg;
+		msg << "niederreiter - INLO - Fatal error!\n";
+		msg << "  Base not prime power or out of range.\n";
+                lowdisc_error(msg.str());
+                return;
 	}
 
 	setfld ( base );
@@ -808,10 +812,11 @@ void inlo ( int dim, int base, int skip )
 
 	if ( i != 0 )
 	{
-		cout << "\n";
-		cout << "INLO - Fatal error!\n";
-		cout << "  SKIP is too long!\n";
-		exit ( 1 );
+	        ostringstream msg;
+		msg << "niederreiter - INLO - Fatal error!\n";
+		msg << "  SKIP is too long!\n";
+                lowdisc_error(msg.str());
+                return;
 	}
 	//
 	//  Initialize D.
@@ -906,8 +911,7 @@ void niederreiter ( int dim_num, int base, int *seed, double r[] )
 }
 //****************************************************************************80
 
-void niederreiter_generate ( int dim_num, int n, int base, int *seed, 
-							double r[] )
+void niederreiter_generate ( int dim_num, int n, int base, int *seed, double r[] )
 
 							//****************************************************************************80
 							//
@@ -952,8 +956,7 @@ void niederreiter_generate ( int dim_num, int n, int base, int *seed,
 }
 //****************************************************************************80
 
-void niederreiter_write ( int dim_num, int n, int base, int skip, double r[], 
-						 char *output_filename )
+void niederreiter_write ( int dim_num, int n, int base, int skip, double r[], char *output_filename )
 
 						 //****************************************************************************80
 						 //
@@ -1093,10 +1096,11 @@ int *plymul ( int pa[], int pb[] )
 
 	if ( DEG_MAX < degc )
 	{
-		cout << "\n";
-		cout << "PLYMUL - Fatal error!\n";
-		cout << "  The degree of the product exceeds DEG_MAX.\n";
-		exit ( 1 );
+		ostringstream msg;
+		msg << "niederreiter - PLYMUL - Fatal error!\n";
+		msg << "  The degree of the product exceeds DEG_MAX.\n";
+                lowdisc_error(msg.str());
+                return 0;
 	}
 
 	for ( i = 0; i <= degc; i++ )
@@ -1171,10 +1175,11 @@ void setfld ( int q_init )
 
 	if ( q_init <= 1 || Q_MAX < q_init )
 	{
-		cout << "\n";
-		cout << "SETFLD - Fatal error!\n";
-		cout << "  Bad value of Q = " << q_init << "\n";
-		exit ( 1 );
+		ostringstream msg;
+		msg << "niederreiter - SETFLD - Fatal error!\n";
+		msg << "  Bad value of Q = " << q_init << "\n";
+                lowdisc_error(msg.str());
+                return;
 	}
 
 	Q = q_init;
@@ -1182,10 +1187,11 @@ void setfld ( int q_init )
 
 	if ( P == 0 )
 	{
-		cout << "\n";
-		cout << "SETFLD - Fatal error!\n";
-		cout << "  There is no field of order Q = " << Q << "\n";
-		exit ( 1 );
+		ostringstream msg;
+		msg << "niederreiter - SETFLD - Fatal error!\n";
+		msg << "  There is no field of order Q = " << Q << "\n";
+                lowdisc_error(msg.str());
+                return;
 	}
 	//
 	//  Set up to handle a field of prime or prime-power order.

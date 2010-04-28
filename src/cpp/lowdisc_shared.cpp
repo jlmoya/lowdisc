@@ -50,8 +50,8 @@ void lowdisc_message ( const string & str ) {
 //****************************************************************************80
 // Generates an error.
 void lowdisc_error ( char * message ) {
+        lowdisc_message ( "Low Discrepancy Module Error !" );
 	if (lowdisc_errorfunction==NULL) {
-		lowdisc_message ( "Low Discrepancy Module Error !" );
 		lowdisc_message ( message );
 		exit(1);
 	} 
@@ -182,8 +182,7 @@ int i4_power ( int i, int j )
 		else if ( i == 0 )
 		{
 			ostringstream msg;
-			msg << "\n";
-			msg << "I4_POWER - Fatal error!\n";
+			msg << "shared - I4_POWER - Fatal error!\n";
 			msg << "  I^J requested, with I = 0 and J negative.\n";
 			lowdisc_error(msg.str());
 			return 0;
@@ -198,8 +197,7 @@ int i4_power ( int i, int j )
 		if ( i == 0 )
 		{
 			ostringstream msg;
-			msg << "\n";
-			msg << "I4_POWER - Fatal error!\n";
+			msg << "shared - I4_POWER - Fatal error!\n";
 			msg << "  I^J requested, with I = 0 and J = 0.\n";
 			lowdisc_error(msg.str());
 			return 0;
@@ -452,8 +450,7 @@ int prime ( int n )
 		else
 		{
 			ostringstream msg;
-			msg << "\n";
-			msg << "PRIME - Fatal error!\n";
+			msg << "shared - PRIME - Fatal error!\n";
 			msg << "  Unexpected input value of n = " << n << "\n";
 			lowdisc_error(msg.str());
 			return 0;
@@ -813,8 +810,7 @@ double r8_uniform_01 ( int *seed )
 	if ( *seed == 0 )
 	{
 		ostringstream msg;
-		msg << "\n";
-		msg << "R8_UNIFORM_01 - Fatal error!\n";
+		msg << "shared - R8_UNIFORM_01 - Fatal error!\n";
 		msg << "  Input value of SEED = 0.\n";
 		lowdisc_error(msg.str());
 		return 0;
@@ -1014,8 +1010,7 @@ float r4_uniform_01 ( int *seed )
 	if ( *seed == 0 )
 	{
 		ostringstream msg;
-		msg << "\n";
-		msg << "R4_UNIFORM_01 - Fatal error!\n";
+		msg << "shared - R4_UNIFORM_01 - Fatal error!\n";
 		msg << "  Input value of SEED = 0.\n";
 		lowdisc_error(msg.str());
 		return 0;
@@ -1106,8 +1101,7 @@ long long int i8_uniform ( long long int a, long long int b, int *seed )
 	if ( *seed == 0 )
 	{
 		ostringstream msg;
-		msg << "\n";
-		msg << "I8_UNIFORM - Fatal error!\n";
+		msg << "shared - I8_UNIFORM - Fatal error!\n";
 		msg << "  Input value of SEED = 0.\n";
 		lowdisc_error(msg.str());
 		return 0;
@@ -1410,10 +1404,8 @@ int i4_uniform ( int a, int b, int *seed )
 	if ( *seed == 0 )
 	{
 		ostringstream msg;
-		msg << "ERROR *******************" << endl;
-		msg << "I4_UNIFORM - Fatal error " << endl;
+		msg << "shared - I4_UNIFORM - Fatal error " << endl;
 		msg << "  Input value of SEED = 0" << endl;
-		msg << "*************************" << endl;
 		lowdisc_error(msg.str());
 		return(0);
 	}

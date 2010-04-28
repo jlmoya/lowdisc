@@ -18,7 +18,13 @@ int *binomial_table ( int qs, int m, int n );
 int i4_log_i4 ( int i4, int j4 );
 void timestamp ( void );
 
-// TODO : disable the prime_ge function and let the user configure the prime base by outside
+// TODO : disable the prime_ge function and let the user configure the prime base by adding an input argument to the function faure
+// TODO : Remove the static fields of faure and set them as private variable (this should help the future C++ orientation)
+
+// int *coef = NULL;
+// int hisum_save = -1;
+// int qs = -1;
+// int *ytemp = NULL;
 
 //****************************************************************************80
 
@@ -168,10 +174,11 @@ void faure ( int dim_num, int *seed, double quasi[] )
 
     if ( qs < 1 )
     {
-      cout << "\n";
-      cout << "FAURE - Fatal error!\n";
-      cout << "  PRIME_GE failed.\n";
-      exit ( 1 );
+      ostringstream msg;
+      msg << "faure - FAURE - Fatal error!\n";
+      msg << "  PRIME_GE failed.\n";
+      lowdisc_error(msg.str());
+      return;
     }
     hisum_save = -1;
   }
