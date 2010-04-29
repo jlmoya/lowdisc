@@ -21,6 +21,8 @@ void lowdisc_CreateLhsInteger ( int ivar , int value );
 void lowdisc_CreateLhsDouble ( int ivar , double value );
 void lowdisc_CreateLhsMatrix ( int ivar , int nRows , int nCols , double ** matrix );
 
+// TODO : remove these pre-processing macros
+
 #define lowdisc_AssertNColumns(fname , ivar , expected_ncols , actual_ncols) \
 	if ( lowdisc_AssertNumberOfColumns(fname , ivar , expected_ncols , actual_ncols) == 0 ) \
 { \

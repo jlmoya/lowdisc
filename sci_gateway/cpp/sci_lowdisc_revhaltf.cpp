@@ -1,6 +1,6 @@
 
 // Copyright (C) 2008 - INRIA - Michael Baudin
-// Copyright (C) 2009 - Digiteo - Michael Baudin
+// Copyright (C) 2009-2010 - Digiteo - Michael Baudin
 
 extern "C" {
 #include "stack-c.h" 
@@ -14,12 +14,13 @@ extern "C" {
 
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
-#include "halton.h" 
+#include "reversehalton.h" 
 
 
-// quasi = _lowdisc_haltonf ( dim )
-//   Get the next element of the Halton sequence.
-int sci_lowdisc_haltonf (char *fname) {
+// quasi = _lowdisc_revhaltf ( iter )
+//   Get the next element of the reverse Halton sequence.
+int sci_lowdisc_revhaltf (char *fname) {
+	int iter;
 	int dim;
 	double * quasi = NULL;
 	int INCX;
@@ -30,10 +31,11 @@ int sci_lowdisc_haltonf (char *fname) {
 	
 	CheckRhs(1,1) ;
 	CheckLhs(1,1) ;
-	lowdisc_GetOneInteger ( fname , 1 , &dim );
-	// Call the Halton sequence
+	lowdisc_GetOneInteger ( fname , 1 , &iter );
+	// Call the reverse Halton sequence
+	dim = reversehalton_dimget ( );
 	quasi = dvector ( dim );
-	halton ( quasi );
+	reversehalton ( iter , quasi );
 	// Returns quasi
 	nRows = 1;
 	nCols = dim;
@@ -45,3 +47,4 @@ int sci_lowdisc_haltonf (char *fname) {
 	free_dvector ( quasi );
 	return 0;
 }
+

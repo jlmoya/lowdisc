@@ -21,9 +21,13 @@ namelist = [
   "_lowdisc_fauref" "sci_lowdisc_fauref"
   "_lowdisc_faurefstart" "sci_lowdisc_faurefstart"
   "_lowdisc_faurefstop" "sci_lowdisc_faurefstop"
+  "_lowdisc_revhaltf" "sci_lowdisc_revhaltf"
+  "_lowdisc_revhaltfbaseget" "sci_lowdisc_revhaltfbaseget"
+  "_lowdisc_revhaltfbaseset" "sci_lowdisc_revhaltfbaseset"
+  "_lowdisc_revhaltfdimget" "sci_lowdisc_revhaltfdimget"
+  "_lowdisc_revhaltfdimset" "sci_lowdisc_revhaltfdimset"
 ];
 // "_lowdisc_nieder2f" "sci_lowdisc_nieder2f"
-// "_lowdisc_reversehaltonf" "sci_lowdisc_reversehaltonf"
 files = [
   "gw_lowdisc_support.cpp"
   "sci_lowdisc_startup.cpp"
@@ -38,9 +42,13 @@ files = [
   "sci_lowdisc_faurefbaseget.cpp"
   "sci_lowdisc_faurefstart.cpp"
   "sci_lowdisc_faurefstop.cpp"
+  "sci_lowdisc_revhaltf.cpp"
+  "sci_lowdisc_revhaltfbaseget.cpp"
+  "sci_lowdisc_revhaltfbaseset.cpp"
+  "sci_lowdisc_revhaltfdimget.cpp"
+  "sci_lowdisc_revhaltfdimset.cpp"
   ];
 //  "sci_lowdisc_nieder2f.cpp"
-//  "sci_lowdisc_reversehaltonf.cpp"
 
 
 ldflags = ""

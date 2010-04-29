@@ -13,14 +13,23 @@ extern "C" {
 
 
 #include "gw_lowdisc_support.h" 
+#include "reversehalton.h" 
 
 
-// quasi = _lowdisc_reversehaltonf ( )
-//   Get the next element of the reverse Halton sequence.
-int sci_lowdisc_reversehaltonf (char *fname) {
-	int seedint;
+//  _lowdisc_revhaltfdimset ( dim )
+//   Set dimension of the reverse Halton sequence.
+int sci_lowdisc_revhaltfdimset (char *fname) {
+	int * dim;
+	int ierr;
 
 	CheckRhs(1,1) ;
 	CheckLhs(0,1) ;
+
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , dim );
+	if ( ierr==0 ) {
+		return 0;
+	}
+	reversehalton_dimset ( * dim );
+	lowdisc_CreateLhsInteger ( 1 , * dim );
 	return 0;
 }

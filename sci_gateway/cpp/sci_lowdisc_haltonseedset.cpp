@@ -23,17 +23,27 @@ int sci_lowdisc_haltonseedset (char *fname) {
 	int nRows, nCols;
 	double * valueVector = NULL;
 	int dim;
+	int ierr;
 	
 	CheckRhs(1,1) ;
 	CheckLhs(1,1) ;
-	lowdisc_AssertVarType ( fname , 1 , sci_matrix );
+	ierr = lowdisc_AssertVariableType ( fname , 1 , sci_matrix );
+	if ( ierr == 0 ) {
+		return 0;
+	}
 	GetRhsVarMatrixDouble ( 1 , &nRows, &nCols, &valueVector);
-	lowdisc_AssertNumberOfRows ( fname , 1 , 1 , nRows );
+	ierr = lowdisc_AssertNumberOfRows ( fname , 1 , 1 , nRows );
+	if ( ierr == 0 ) {
+		return 0;
+	}
 	dim = nCols;
 	// Transfer the double array into an array of integers
 	seed = ivector ( dim );
 	for(int k = 0; k < dim; k++) {
-		lowdisc_Double2IntegerArgument ( fname , 1 , valueVector[k] , seed+k );
+		ierr = lowdisc_Double2IntegerArgument ( fname , 1 , valueVector[k] , seed+k );
+		if ( ierr == 0 ) {
+			return 0;
+		}
 	}
 	// Set the seed
 	halton_seed_set ( seed );
