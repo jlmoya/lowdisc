@@ -55,3 +55,46 @@ expected= [...
 assert_close ( computed, expected , 10 * %eps );
 rng = lowdisc_destroy(rng);
 
+//
+// The following is a port of the test out of the GSL
+//
+// test in dimension 2 */
+rng = lowdisc_new();
+rng = lowdisc_configure(rng,"-method","reversehaltonf");
+rng = lowdisc_configure(rng,"-dimension",2);
+rng = lowdisc_startup (rng);
+[rng,computed] = lowdisc_next (rng);
+[rng,computed] = lowdisc_next (rng);
+[rng,computed] = lowdisc_next (rng);
+// should be
+// 0.5 0.666667
+// 0.25 0.333333
+// 0.75 0.222222
+// 0.125 0.888889*/
+assert_close ( computed, [3.0/4.0 2.0/9.0], 1.e-3 );
+[rng,computed] = lowdisc_next (rng);
+assert_close ( computed, [1.0/8.0 8.0/9.0], 1.e-3 );
+rng = lowdisc_destroy(rng);
+
+
+// test in dimension 3 */
+rng = lowdisc_new();
+rng = lowdisc_configure(rng,"-method","reversehaltonf");
+rng = lowdisc_configure(rng,"-dimension",3);
+rng = lowdisc_startup (rng);
+[rng,computed] = lowdisc_next (rng);
+[rng,computed] = lowdisc_next (rng);
+[rng,computed] = lowdisc_next (rng);
+assert_close ( computed, [0.75 2.0/9.0 0.4], 1.e-3 );
+[rng,computed] = lowdisc_next (rng);
+assert_close ( computed, [0.125 8.0/9.0 0.2], 1e-3 );
+rng = lowdisc_reset (rng);
+[rng,computed] = lowdisc_next (rng);
+[rng,computed] = lowdisc_next (rng);
+[rng,computed] = lowdisc_next (rng);
+assert_close ( computed, [0.75 2.0/9.0 0.4], 1.e-3 );
+[rng,computed] = lowdisc_next (rng);
+assert_close ( computed, [0.125 8.0/9.0 0.2], 1e-3 );
+rng = lowdisc_destroy(rng);
+
+
