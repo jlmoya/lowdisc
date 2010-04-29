@@ -74,7 +74,13 @@ function value = lowdisc_get (this,key)
     end
     value  = this.primeslist ( k )
   case "-faurefprime" then
-    value = _lowdisc_faureprimege ( this.dimension );
+    k = find(this.primeslist>=this.dimension,1)
+    if (k == []) then
+      errmsg = sprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
+        "lowdisc_get" , this.dimension);
+      error(errmsg);
+    end
+    value  = this.primeslist ( k )
   else
     errmsg = sprintf("Unknown key %s",key);
     error(errmsg);

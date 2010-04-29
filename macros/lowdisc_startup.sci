@@ -68,7 +68,7 @@ function this = lowdisc_startup (this)
       error(errmsg);
     end
   case "faure" then
-    k = find(this.primeslist>this.dimension,1)
+    k = find(this.primeslist>=this.dimension,1)
     if (k == []) then
       errmsg = sprintf( gettext ( "%s: Faure sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
         "lowdisc_startup" , this.dimension);
@@ -105,8 +105,14 @@ function this = lowdisc_startup (this)
   case "sobolf" then
     // Nothing to do
   case "fauref" then
-    // Nothing to do
-    // TODO : allow to configure the basis, based on the primeslist
+    k = find(this.primeslist>=this.dimension,1)
+    if (k == []) then
+      errmsg = sprintf( gettext ( "%s: Faure sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
+        "lowdisc_startup" , this.dimension);
+      error(errmsg);
+    end
+    qs = this.primeslist(k)
+    _lowdisc_faurefstart ( this.dimension , qs )
   else
     errmsg = sprintf(gettext ( "%s: Unknown method %s" ) , ...
     "lowdisc_startup" , this.method);

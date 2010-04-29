@@ -4,12 +4,13 @@
 // This file must be used under the terms of the GNU Lesser General Public License license
 // http://www.gnu.org/copyleft/lesser.html
 
-# include <cstdlib>
-# include <iostream>
-# include <iomanip>
-# include <cmath>
-# include <ctime>
-# include <fstream>
+#include <cstdlib>
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <ctime>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -185,8 +186,8 @@ void calcc ( void )
 			ostringstream msg;
 			msg << "niederrreiter - CALCC - Fatal error!\n"; 
 			msg << "  Could not find tables for Q = " << Q << "\n";
-	                lowdisc_error(msg.str());
-                        return;
+			lowdisc_error(msg.str());
+			return;
 		}
 
 		if ( i == Q )
@@ -537,8 +538,8 @@ void golo ( double quasi[] )
 			ostringstream msg;
 			msg << "niederrreiter - GOLO - Fatal error!\n";
 			msg << "  Too many calls!\n";
-                        lowdisc_error(msg.str());
-                        return 0;
+			lowdisc_error(msg.str());
+			return;
 		}
 
 		oldcnt = COUNT[r];
@@ -760,20 +761,20 @@ void inlo ( int dim, int base, int skip )
 
 	if ( DIMEN <= 0 || DIM_MAX < DIMEN )
 	{
-	        ostringstream msg;
+		ostringstream msg;
 		msg << "niederreiter - INLO - Fatal error!\n";
 		msg << "  Bad spatial dimension.\n";
-                lowdisc_error(msg.str());
-                return;
+		lowdisc_error(msg.str());
+		return;
 	}
 
 	if ( i4_characteristic ( base ) == 0 )
 	{
-	        ostringstream msg;
+		ostringstream msg;
 		msg << "niederreiter - INLO - Fatal error!\n";
 		msg << "  Base not prime power or out of range.\n";
-                lowdisc_error(msg.str());
-                return;
+		lowdisc_error(msg.str());
+		return;
 	}
 
 	setfld ( base );
@@ -812,11 +813,11 @@ void inlo ( int dim, int base, int skip )
 
 	if ( i != 0 )
 	{
-	        ostringstream msg;
+		ostringstream msg;
 		msg << "niederreiter - INLO - Fatal error!\n";
 		msg << "  SKIP is too long!\n";
-                lowdisc_error(msg.str());
-                return;
+		lowdisc_error(msg.str());
+		return;
 	}
 	//
 	//  Initialize D.
@@ -913,37 +914,37 @@ void niederreiter ( int dim_num, int base, int *seed, double r[] )
 
 void niederreiter_generate ( int dim_num, int n, int base, int *seed, double r[] )
 
-							//****************************************************************************80
-							//
-							//  Purpose:
-							//
-							//    NIEDERREITER_GENERATE generates a set of Niederreiter values.
-							//
-							//  Licensing:
-							//
-							//    This code is distributed under the GNU LGPL license. 
-							//
-							//  Modified:
-							//
-							//    11 September 2007
-							//
-							//  Author:
-							//
-							//    John Burkardt
-							//
-							//  Parameters:
-							//
-							//    Input, int DIM_NUM, the spatial dimension.
-							//
-							//    Input, int N, the number of points desired.
-							//
-							//    Input, int BASE, the base to use for the Niederreiter sequence.
-							//    The base should be a prime, or a power of a prime.
-							//
-							//    Input/output, int *SEED, a seed for the random number generator.
-							//
-							//    Output, double R[DIM_NUM*N], the points.
-							//
+//****************************************************************************80
+//
+//  Purpose:
+//
+//    NIEDERREITER_GENERATE generates a set of Niederreiter values.
+//
+//  Licensing:
+//
+//    This code is distributed under the GNU LGPL license. 
+//
+//  Modified:
+//
+//    11 September 2007
+//
+//  Author:
+//
+//    John Burkardt
+//
+//  Parameters:
+//
+//    Input, int DIM_NUM, the spatial dimension.
+//
+//    Input, int N, the number of points desired.
+//
+//    Input, int BASE, the base to use for the Niederreiter sequence.
+//    The base should be a prime, or a power of a prime.
+//
+//    Input/output, int *SEED, a seed for the random number generator.
+//
+//    Output, double R[DIM_NUM*N], the points.
+//
 {
 	int j;
 
@@ -958,39 +959,39 @@ void niederreiter_generate ( int dim_num, int n, int base, int *seed, double r[]
 
 void niederreiter_write ( int dim_num, int n, int base, int skip, double r[], char *output_filename )
 
-						 //****************************************************************************80
-						 //
-						 //  Purpose:
-						 //
-						 //    NIEDERREITER_WRITE writes a set of Niederreiter values to a file.
-						 //
-						 //  Licensing:
-						 //
-						 //    This code is distributed under the GNU LGPL license. 
-						 //
-						 //  Modified:
-						 //
-						 //    12 September 2007
-						 //
-						 //  Author:
-						 //
-						 //    John Burkardt
-						 //
-						 //  Parameters:
-						 //
-						 //    Input, int DIM_NUM, the spatial dimension.
-						 //
-						 //    Input, int N, the number of points desired.
-						 //
-						 //    Input, int BASE, the base.
-						 //
-						 //    Input, int SKIP, the number of initial points skipped.
-						 //
-						 //    Input, double R[DIM_NUM*N], the points.
-						 //
-						 //    Input, char *OUTPUT_FILENAME, the name of the
-						 //    file to which the output should be written.
-						 //
+//****************************************************************************80
+//
+//  Purpose:
+//
+//    NIEDERREITER_WRITE writes a set of Niederreiter values to a file.
+//
+//  Licensing:
+//
+//    This code is distributed under the GNU LGPL license. 
+//
+//  Modified:
+//
+//    12 September 2007
+//
+//  Author:
+//
+//    John Burkardt
+//
+//  Parameters:
+//
+//    Input, int DIM_NUM, the spatial dimension.
+//
+//    Input, int N, the number of points desired.
+//
+//    Input, int BASE, the base.
+//
+//    Input, int SKIP, the number of initial points skipped.
+//
+//    Input, double R[DIM_NUM*N], the points.
+//
+//    Input, char *OUTPUT_FILENAME, the name of the
+//    file to which the output should be written.
+//
 {
 	int dim;
 	int j;
@@ -1099,8 +1100,8 @@ int *plymul ( int pa[], int pb[] )
 		ostringstream msg;
 		msg << "niederreiter - PLYMUL - Fatal error!\n";
 		msg << "  The degree of the product exceeds DEG_MAX.\n";
-                lowdisc_error(msg.str());
-                return 0;
+		lowdisc_error(msg.str());
+		return 0;
 	}
 
 	for ( i = 0; i <= degc; i++ )
@@ -1178,8 +1179,8 @@ void setfld ( int q_init )
 		ostringstream msg;
 		msg << "niederreiter - SETFLD - Fatal error!\n";
 		msg << "  Bad value of Q = " << q_init << "\n";
-                lowdisc_error(msg.str());
-                return;
+		lowdisc_error(msg.str());
+		return;
 	}
 
 	Q = q_init;
@@ -1190,8 +1191,8 @@ void setfld ( int q_init )
 		ostringstream msg;
 		msg << "niederreiter - SETFLD - Fatal error!\n";
 		msg << "  There is no field of order Q = " << Q << "\n";
-                lowdisc_error(msg.str());
-                return;
+		lowdisc_error(msg.str());
+		return;
 	}
 	//
 	//  Set up to handle a field of prime or prime-power order.

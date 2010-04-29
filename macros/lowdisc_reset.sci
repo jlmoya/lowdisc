@@ -68,7 +68,9 @@ function this = lowdisc_reset (this)
   case "sobolf" then
     // Nothing to do
   case "fauref" then
-    // Nothing to do
+    // Initialize the table of coefficients
+    // and skips the first term.
+    [ next , seed ] = _lowdisc_fauref ( this.dimension , 0 )
   else
     errmsg = sprintf(gettext ( "%s: Unknown method %s" ) , ...
       "lowdisc_reset" , this.method);

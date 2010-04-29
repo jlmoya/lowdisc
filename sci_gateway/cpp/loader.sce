@@ -11,8 +11,10 @@ list_functions = [             '_lowdisc_startup';
             '_lowdisc_haltondimnumset';
             '_lowdisc_haltonseedset';
             '_lowdisc_haltonstepset';
-            '_lowdisc_faureprimege';
+            '_lowdisc_faurefbaseget';
             '_lowdisc_fauref';
+            '_lowdisc_faurefstart';
+            '_lowdisc_faurefstop';
 ];
 addinter(lowdiscgateway_path+'/lowdiscgateway.dll','lowdiscgateway',list_functions);
 // remove temp. variables on stack

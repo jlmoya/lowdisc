@@ -98,6 +98,14 @@ function [this,next] = lowdisc_next ( varargin )
     imax = varargin(2)
   end
   
+  //
+  // Check that the object is started up
+  if ( this.startedup == 0 ) then
+    errmsg = msprintf(gettext("%s: The sequence is not started up. Call lowdisc_startup first."), "lowdisc_next");
+    error(errmsg)
+  end
+  //
+  // Initialize the vector
   next = zeros(imax,this.dimension)
   
   for i=1:imax
@@ -227,9 +235,7 @@ endfunction
 // Arguments:
 //
 function [ this , next ] = _next_fauref ( this )
-  dim = this.dimension;
-  seed = this.sequenceindex;
-  [ next , seed ] = _lowdisc_fauref ( dim , seed );
+  [ next , seed ] = _lowdisc_fauref ( this.dimension , this.sequenceindex );
 endfunction
 //
 // _next_sobolf --

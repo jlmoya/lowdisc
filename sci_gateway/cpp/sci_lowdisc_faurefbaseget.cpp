@@ -16,17 +16,14 @@ extern "C" {
 #include "faure.h" 
 
 
-// _lowdisc_faurefbaseset ( qs )
-//   Set the prime number used by the Faure sequence.
-// Aguments
-//   qs : the new prime base
-int sci_lowdisc_faurefbaseset (char *fname) {
+// qs = _lowdisc_faurefbaseget ( )
+//   Returns the prime number used by the Faure sequence.
+int sci_lowdisc_faurefbaseget (char *fname) {
 	int qs;
 
-	CheckRhs(1,1) ;
+	CheckRhs(0,0) ;
 	CheckLhs(0,1) ;
-	lowdisc_GetOneInteger ( fname , 1 , &qs );
-	faure_baseset ( qs );
+	qs = faure_baseget ( );
 	lowdisc_CreateLhsInteger ( 1 , qs );
 	return 0;
 }

@@ -61,5 +61,9 @@ clear root_tlbx;
 clear etc_tlbx;
 clear path_addchapter;
 
+// =============================================================================
+// Startup the library
+
+_lowdisc_startup()
 
 

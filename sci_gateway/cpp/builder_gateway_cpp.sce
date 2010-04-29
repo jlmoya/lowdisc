@@ -17,8 +17,10 @@ namelist = [
   "_lowdisc_haltondimnumset" "sci_lowdisc_haltondimnumset"
   "_lowdisc_haltonseedset" "sci_lowdisc_haltonseedset"
   "_lowdisc_haltonstepset" "sci_lowdisc_haltonstepset"
-  "_lowdisc_faureprimege" "sci_lowdisc_faureprimege"
+  "_lowdisc_faurefbaseget" "sci_lowdisc_faurefbaseget"
   "_lowdisc_fauref" "sci_lowdisc_fauref"
+  "_lowdisc_faurefstart" "sci_lowdisc_faurefstart"
+  "_lowdisc_faurefstop" "sci_lowdisc_faurefstop"
 ];
 // "_lowdisc_nieder2f" "sci_lowdisc_nieder2f"
 // "_lowdisc_reversehaltonf" "sci_lowdisc_reversehaltonf"
@@ -33,7 +35,9 @@ files = [
   "sci_lowdisc_haltonseedset.cpp"
   "sci_lowdisc_haltonstepset.cpp"
   "sci_lowdisc_fauref.cpp"
-  "sci_lowdisc_faureprimege.cpp"
+  "sci_lowdisc_faurefbaseget.cpp"
+  "sci_lowdisc_faurefstart.cpp"
+  "sci_lowdisc_faurefstop.cpp"
   ];
 //  "sci_lowdisc_nieder2f.cpp"
 //  "sci_lowdisc_reversehaltonf.cpp"

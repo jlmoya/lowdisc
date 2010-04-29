@@ -52,7 +52,7 @@ function this = lowdisc_destroy (this)
   case "sobolf" then
     // Nothing to do
   case "fauref" then
-    // Nothing to do
+    _lowdisc_faurefstop ( )
   else
     errmsg = sprintf("Unknown method %s",this.method);
     error(errmsg);

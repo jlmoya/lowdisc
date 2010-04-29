@@ -4,10 +4,12 @@
 // This file must be used under the terms of the GNU Lesser General Public License license
 // http://www.gnu.org/copyleft/lesser.html
 
-# include <cstdlib>
-# include <iostream>
-# include <cmath>
-# include <ctime>
+#include <cstdlib>
+#include <iostream>
+#include <cmath>
+#include <ctime>
+#include <sstream>
+#include <fstream>
 
 using namespace std;
 
@@ -17,14 +19,16 @@ using namespace std;
 int *binomial_table ( int qs, int m, int n );
 int i4_log_i4 ( int i4, int j4 );
 void timestamp ( void );
+int prime_ge ( int n );
 
 // TODO : disable the prime_ge function and let the user configure the prime base by adding an input argument to the function faure
 // TODO : Remove the static fields of faure and set them as private variable (this should help the future C++ orientation)
 
-// int *coef = NULL;
-// int hisum_save = -1;
-// int qs = -1;
-// int *ytemp = NULL;
+int startup = 0;
+int *coef = NULL;
+int hisum_save = -1;
+int qs = -1;
+int *ytemp = NULL;
 
 //****************************************************************************80
 
@@ -58,43 +62,159 @@ int *binomial_table ( int qs, int m, int n )
 //    coefficients modulo QS.
 //
 {
-  int *coef;
-  int i;
-  int j;
+	int *coef;
+	int i;
+	int j;
 
-  coef = new int[(m+1)*(n+1)];
+	coef = new int[(m+1)*(n+1)];
 
-  for ( j = 0; j <= n; j++ )
-  {
-    for ( i = 0; i <= m; i++ )
-    {
-      coef[i+j*(m+1)] = 0;
-    }
-  }
+	for ( j = 0; j <= n; j++ )
+	{
+		for ( i = 0; i <= m; i++ )
+		{
+			coef[i+j*(m+1)] = 0;
+		}
+	}
 
-  coef[0] = 1;
+	coef[0] = 1;
 
-  j = 0;
-  for ( i = 1; i <= m; i++ )
-  {
-    coef[i+j*(m+1)] = 1;
-  }
+	j = 0;
+	for ( i = 1; i <= m; i++ )
+	{
+		coef[i+j*(m+1)] = 1;
+	}
 
-  for ( i = 1; i <= i4_min ( m, n ); i++ )
-  {
-    j = i;
-    coef[i+j*(m+1)] = 1;
-  }
+	for ( i = 1; i <= i4_min ( m, n ); i++ )
+	{
+		j = i;
+		coef[i+j*(m+1)] = 1;
+	}
 
-  for( j = 1; j <= n; j++ )
-  {
-    for ( i = j + 1; i <= m; i++ )
-    {
-      coef[i+j*(m+1)] = ( coef[i-1+j*(m+1)] + coef[i-1+(j-1)*(m+1)] ) % qs;
-    }
-  }
+	for( j = 1; j <= n; j++ )
+	{
+		for ( i = j + 1; i <= m; i++ )
+		{
+			coef[i+j*(m+1)] = ( coef[i-1+j*(m+1)] + coef[i-1+(j-1)*(m+1)] ) % qs;
+		}
+	}
 
-  return coef;
+	return coef;
+}
+//****************************************************************************80
+
+void faure_startup ( int dim_num , int basis )
+
+//****************************************************************************80
+//
+//  Purpose:
+//
+//    faure_startup startup the sequence.
+//    Setup the following parameters : 
+//	  startup = 1;
+//    hisum_save = -1
+//    qs the smallest prime greater than dim_num
+//	
+//  Parameters:
+//
+//    Input, int DIM_NUM, the spatial dimension, which should be
+//    at least 2.
+//
+//    Input, int basis, the basis of the Faure sequence.
+//	  If basis=0, then a basis is computed automatically from
+//	  an internal table of primes. If basis is nonzero and positive,
+//	  then it is used as a basis. This feature allows to extend 
+//	  the sequence to dimensions where the internal table is not 
+//	  large enough.
+//    The basis must be the smallest prime greater than dim_num.
+//
+{
+	if ( startup == 1 )
+	{
+		ostringstream msg;
+		msg << "faure - faure_startup - Fatal error!\n";
+		msg << "  Startup is already done.\n";
+		lowdisc_error(msg.str());
+		return;
+	}
+	startup = 1;
+	if ( basis == 0 )
+	{
+		qs = prime_ge ( dim_num );
+	} 
+	else if ( basis < 0 ) 
+	{
+		ostringstream msg;
+		msg << "faure - faure_baseset - Fatal error!\n";
+		msg << "  New base " << basis << " is negative.\n";
+		lowdisc_error(msg.str());
+		return;
+	} else
+	{
+		qs = basis;
+	}
+
+	if ( qs < 1 )
+	{
+		ostringstream msg;
+		msg << "faure - FAURE - Fatal error!\n";
+		msg << "  PRIME_GE failed.\n";
+		lowdisc_error(msg.str());
+		return;
+	}
+	hisum_save = -1;
+	return;
+}
+//****************************************************************************80
+
+int faure_baseget ( )
+
+//****************************************************************************80
+// Returns the base used by the Faure sequence.
+// Must be executed only after the sequence has been started up.
+{
+	return qs;
+}
+//****************************************************************************80
+
+void faure_shutdown ( )
+
+//****************************************************************************80
+//
+//  Purpose:
+//
+//    faure_shutdown shutdown the sequence.
+//    Setup the following parameters : 
+//	  startup = 0;
+//    qs = -1
+//    hisum_save = -1
+//	  Deletes the unnecessary memory.
+//	
+//  Parameters:
+//
+{
+	if ( startup == 0 )
+	{
+		ostringstream msg;
+		msg << "faure - faure_shutdown - Fatal error!\n";
+		msg << "  Shutdown is already done.\n";
+		lowdisc_error(msg.str());
+		return;
+	}
+	startup = 0;
+	qs = -1;
+	hisum_save = -1;
+	if ( coef != NULL )
+	{
+		delete [] coef;
+		coef = NULL;
+	}
+
+	if ( ytemp != NULL )
+	{
+		delete [] ytemp;
+		ytemp = NULL;
+	}
+	return;
 }
 //****************************************************************************80
 
@@ -152,138 +272,128 @@ void faure ( int dim_num, int *seed, double quasi[] )
 //    Output, double QUASI[DIM_NUM], the next quasirandom vector.
 //
 {
-  static int *coef = NULL;
-  int hisum;
-  static int hisum_save = -1;
-  int i;
-  int j;
-  int k;
-  int ktemp;
-  int ltemp;
-  int mtemp;
-  static int qs = -1;
-  double r;
-  static int *ytemp = NULL;
-  int ztemp;
-//
-//  Initialization required or requested?
-//
-  if ( qs <= 0 || *seed <= 0 )
-  {
-    qs = prime_ge ( dim_num );
+	int hisum;
+	int i;
+	int j;
+	int k;
+	int ktemp;
+	int ltemp;
+	int mtemp;
+	double r;
+	int ztemp;
+	//
+	//  Initialization already done ?
+	//
+	if ( startup == 0 )
+	{
+		ostringstream msg;
+		msg << "faure - FAURE - Fatal error!\n";
+		msg << "  Startup is not done.\n";
+		lowdisc_error(msg.str());
+		return;
+	}
+	//
+	//  If SEED < 0, reset for recommended initial skip.
+	//
+	if ( *seed < 0 )
+	{
+		hisum = 3;
+		*seed = i4_power ( qs, hisum + 1 ) - 1;
+	}
+	else if ( *seed == 0 )
+	{
+		hisum = 0;
+	}
+	else
+	{
+		hisum = i4_log_i4 ( *seed, qs );
+	}
+	//
+	//  Is it necessary to recompute the coefficient table?
+	//
+	if ( hisum_save != hisum )
+	{
+		if ( coef != NULL )
+		{
+			delete [] coef;
+		}
 
-    if ( qs < 1 )
-    {
-      ostringstream msg;
-      msg << "faure - FAURE - Fatal error!\n";
-      msg << "  PRIME_GE failed.\n";
-      lowdisc_error(msg.str());
-      return;
-    }
-    hisum_save = -1;
-  }
-//
-//  If SEED < 0, reset for recommended initial skip.
-//
-  if ( *seed < 0 )
-  {
-    hisum = 3;
-    *seed = i4_power ( qs, hisum + 1 ) - 1;
-  }
-  else if ( *seed == 0 )
-  {
-    hisum = 0;
-  }
-  else
-  {
-    hisum = i4_log_i4 ( *seed, qs );
-  }
-//
-//  Is it necessary to recompute the coefficient table?
-//
-  if ( hisum_save != hisum )
-  {
-    if ( coef != NULL )
-    {
-      delete [] coef;
-    }
+		if ( ytemp != NULL )
+		{
+			delete [] ytemp;
+		}
 
-    if ( ytemp != NULL )
-    {
-      delete [] ytemp;
-    }
+		hisum_save = hisum;
 
-    hisum_save = hisum;
+		coef = binomial_table ( qs, hisum, hisum );
 
-    coef = binomial_table ( qs, hisum, hisum );
+		ytemp = new int[hisum+1];
+	}
 
-    ytemp = new int[hisum+1];
-  }
+	//
+	//  Find QUASI(1) using the method of Faure.
+	//
+	//  SEED has a representation in base QS of the form: 
+	//
+	//    Sum ( 0 <= J <= HISUM ) YTEMP(J) * QS**J
+	//
+	//  We now compute the YTEMP(J)'s.
+	//
+	ktemp = i4_power ( qs, hisum + 1 );
+	ltemp = *seed;
 
-//
-//  Find QUASI(1) using the method of Faure.
-//
-//  SEED has a representation in base QS of the form: 
-//
-//    Sum ( 0 <= J <= HISUM ) YTEMP(J) * QS**J
-//
-//  We now compute the YTEMP(J)'s.
-//
-  ktemp = i4_power ( qs, hisum + 1 );
-  ltemp = *seed;
+	for ( i = hisum; 0 <= i; i-- )
+	{
+		ktemp = ktemp / qs;
+		mtemp = ltemp % ktemp;
+		ytemp[i] = ( ltemp - mtemp ) / ktemp;
+		ltemp = mtemp;
+	}
+	//
+	//  QUASI(K) has the form
+	//
+	//    Sum ( 0 <= J <= HISUM ) YTEMP(J) / QS**(J+1)
+	//
+	//  Compute QUASI(1) using nested multiplication.
+	//
+	r = ( ( double ) ytemp[hisum] );
+	for ( i = hisum-1; 0 <= i; i-- )
+	{
+		r = ( ( double ) ytemp[i] ) + r / ( ( double ) qs );
+	}
 
-  for ( i = hisum; 0 <= i; i-- )
-  {
-    ktemp = ktemp / qs;
-    mtemp = ltemp % ktemp;
-    ytemp[i] = ( ltemp - mtemp ) / ktemp;
-    ltemp = mtemp;
-  }
-//
-//  QUASI(K) has the form
-//
-//    Sum ( 0 <= J <= HISUM ) YTEMP(J) / QS**(J+1)
-//
-//  Compute QUASI(1) using nested multiplication.
-//
-  r = ( ( double ) ytemp[hisum] );
-  for ( i = hisum-1; 0 <= i; i-- )
-  {
-    r = ( ( double ) ytemp[i] ) + r / ( ( double ) qs );
-  }
+	quasi[0] = r / ( ( double ) qs );
+	//
+	//  Find components QUASI(2:DIM_NUM) using the Faure method.
+	//
+	for ( k = 1; k < dim_num; k++ )
+	{
+		quasi[k] = 0.0;
+		r = 1.0 / ( ( double ) qs );
 
-  quasi[0] = r / ( ( double ) qs );
-//
-//  Find components QUASI(2:DIM_NUM) using the Faure method.
-//
-  for ( k = 1; k < dim_num; k++ )
-  {
-    quasi[k] = 0.0;
-    r = 1.0 / ( ( double ) qs );
+		for ( j = 0; j <= hisum; j++ )
+		{
+			ztemp = 0;
+			for ( i = j; i <= hisum; i++ )
+			{
+				ztemp = ztemp + ytemp[i] * coef[i+j*(hisum+1)];
+			}
+			//
+			//  New YTEMP(J) is:
+			//
+			//    Sum ( J <= I <= HISUM ) ( old ytemp(i) * binom(i,j) ) mod QS.
+			//
+			ytemp[j] = ztemp % qs;
+			quasi[k] = quasi[k] + ( ( double ) ytemp[j] ) * r;
+			r = r / ( ( double ) qs );
+		}
+	}
+	//
+	//  Update SEED.
+	//
+	*seed = *seed + 1;
 
-    for ( j = 0; j <= hisum; j++ )
-    {
-      ztemp = 0;
-      for ( i = j; i <= hisum; i++ )
-      {
-        ztemp = ztemp + ytemp[i] * coef[i+j*(hisum+1)];
-      }
-//
-//  New YTEMP(J) is:
-//
-//    Sum ( J <= I <= HISUM ) ( old ytemp(i) * binom(i,j) ) mod QS.
-//
-      ytemp[j] = ztemp % qs;
-      quasi[k] = quasi[k] + ( ( double ) ytemp[j] ) * r;
-      r = r / ( ( double ) qs );
-    }
-  }
-//
-//  Update SEED.
-//
-  *seed = *seed + 1;
-
-  return;
+	return;
 }
 //****************************************************************************80
 
@@ -348,28 +458,28 @@ int i4_log_i4 ( int i4, int j4 )
 //    base abs(J4) of abs(I4).
 //
 {
-  int i4_abs;
-  int j4_abs;
-  int value;
+	int i4_abs;
+	int j4_abs;
+	int value;
 
-  value = 0;
+	value = 0;
 
-  i4_abs = abs ( i4 );
+	i4_abs = abs ( i4 );
 
-  if ( 2 <= i4_abs )
-  {
-    j4_abs = abs ( j4 );
+	if ( 2 <= i4_abs )
+	{
+		j4_abs = abs ( j4 );
 
-    if ( 2 <= j4_abs )
-    {
-      while ( j4_abs <= i4_abs )
-      {
-        i4_abs = i4_abs / j4_abs;
-        value = value + 1;
-      }
-    }
-  }
-  return value;
+		if ( 2 <= j4_abs )
+		{
+			while ( j4_abs <= i4_abs )
+			{
+				i4_abs = i4_abs / j4_abs;
+				value = value + 1;
+			}
+		}
+	}
+	return value;
 }
 //****************************************************************************80
 
@@ -414,55 +524,55 @@ int prime_ge ( int n )
 //    largest prime stored, then PRIME_GE is returned as -1.
 //
 {
-  int i_hi;
-  int i_lo;
-  int i_mid;
-  int p;
-  int p_hi;
-  int p_lo;
-  int p_mid;
+	int i_hi;
+	int i_lo;
+	int i_mid;
+	int p;
+	int p_hi;
+	int p_lo;
+	int p_mid;
 
-  if ( n <= 2 )
-  {
-    p = 2;
-  }
-  else
-  {
-    i_lo = 1;
-    p_lo = prime(i_lo);
-    i_hi = prime(-1);
-    p_hi = prime(i_hi);
+	if ( n <= 2 )
+	{
+		p = 2;
+	}
+	else
+	{
+		i_lo = 1;
+		p_lo = prime(i_lo);
+		i_hi = prime(-1);
+		p_hi = prime(i_hi);
 
-    if ( p_hi < n )
-    {
-      p = - p_hi;
-    }
-    else
-    {
-      for ( ; ; )
-      {
-        if ( i_lo + 1 == i_hi )
-        {
-          p = p_hi;
-          break;
-        }
+		if ( p_hi < n )
+		{
+			p = - p_hi;
+		}
+		else
+		{
+			for ( ; ; )
+			{
+				if ( i_lo + 1 == i_hi )
+				{
+					p = p_hi;
+					break;
+				}
 
-        i_mid = ( i_lo + i_hi ) / 2;
-        p_mid = prime(i_mid);
+				i_mid = ( i_lo + i_hi ) / 2;
+				p_mid = prime(i_mid);
 
-        if ( p_mid < n )
-        {
-          i_lo = i_mid;
-          p_lo = p_mid;
-        }
-        else if ( n <= p_mid )
-        {
-          i_hi = i_mid;
-          p_hi = p_mid;
-        }
-      }
-    }
-  }
+				if ( p_mid < n )
+				{
+					i_lo = i_mid;
+					p_lo = p_mid;
+				}
+				else if ( n <= p_mid )
+				{
+					i_hi = i_mid;
+					p_hi = p_mid;
+				}
+			}
+		}
+	}
 
-  return p;
+	return p;
 }

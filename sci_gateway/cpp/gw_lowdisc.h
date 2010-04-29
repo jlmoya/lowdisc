@@ -12,16 +12,27 @@
 extern "C" {
 
 	// Functions providing interfaces to Scilab functions
+	//
+	// Start/Stop the whole library
+	int sci_lowdisc_startup (char *fname);
+	int sci_lowdisc_shutdown (char *fname);
+	//
+	// Fast Sobol sequence
 	int sci_lowdisc_sobolf (char *fname);
+	//
+	// Fast Halton Sequence
 	int sci_lowdisc_haltonseedset (char *fname);
 	int sci_lowdisc_haltonstepset (char *fname);
 	int sci_lowdisc_haltondimnumset (char *fname);
 	int sci_lowdisc_haltonbaseset (char *fname);
 	int sci_lowdisc_haltonf (char *fname);
-	int sci_lowdisc_faureprimege (char *fname);
+	//
+	// Fast Faure sequence
+	int sci_lowdisc_faurefstart (char *fname);
+	int sci_lowdisc_faurefstop (char *fname);
 	int sci_lowdisc_fauref (char *fname);
-	int sci_lowdisc_startup (char *fname);
-	int sci_lowdisc_shutdown (char *fname);
+	int sci_lowdisc_faurefbaseget (char *fname);
+	//
 //	int sci_lowdisc_reversehaltonf (char *fname);
 //	int sci_lowdisc_niederf (char *fname);
 }

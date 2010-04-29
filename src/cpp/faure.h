@@ -29,8 +29,18 @@
 
 __BEGIN_DECLS
 
+// faure_startup startup the sequence.
+void faure_startup ( int dim_num , int basis );
+
+// faure_shutdown shutdown the sequence.
+void faure_shutdown ( );
+
+// FAURE generates a new quasirandom Faure vector with each call.
 void faure ( int dim_num, int *seed, double quasi[] );
-int prime_ge ( int n );
+
+// faure_baseget returns the base used by the Faure sequence (after startup and before first call).
+int faure_baseget ( );
+
 
 __END_DECLS
 
