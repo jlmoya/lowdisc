@@ -37,7 +37,7 @@ int sci_lowdisc_revhaltfbaseget (char *fname) {
 	// Create a Scilab variable
 	nRows=1;
 	nCols=dim;
-	iAllocMatrixOfDouble(Rhs+1, nRows, nCols, &base);
+	lowdisc_CreateLhsMatrix(1, nRows, nCols, &base);
 	// Copy the integer values into doubles
 	for(int k = 0; k < dim; k++) {
 		base[k] = ibase[k];

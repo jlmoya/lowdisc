@@ -14,22 +14,19 @@ extern "C" {
 
 #include "gw_lowdisc_support.h" 
 #include "reversehalton.h" 
+#include "lowdisc_math.h" 
 
 
-//  _lowdisc_revhaltfdimset ( dim )
-//   Set dimension of the reverse Halton sequence.
-int sci_lowdisc_revhaltfdimset (char *fname) {
-	int dim;
-	int ierr;
+// _lowdisc_revhaltfstop ( )
+//   Shutdown the Reverse Halton sequence.
+//
+int sci_lowdisc_revhaltfstop (char *fname) {
 
-	CheckRhs(1,1) ;
+	CheckRhs(0,0) ;
 	CheckLhs(0,1) ;
 
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
-	if ( ierr==0 ) {
-		return 0;
-	}
-	reversehalton_dimset ( dim );
-	lowdisc_CreateLhsInteger ( 1 , dim );
+	reversehalton_shutdown ( );
+	lowdisc_CreateLhsInteger ( 1 , 0 );
+
 	return 0;
 }

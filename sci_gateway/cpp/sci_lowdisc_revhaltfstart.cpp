@@ -17,23 +17,33 @@ extern "C" {
 #include "lowdisc_math.h" 
 
 
-// _lowdisc_revhaltfbaseset ( base )
-//   Set the base of the reverse Halton sequence.
-int sci_lowdisc_revhaltfbaseset (char *fname) {
+// _lowdisc_revhaltfstart ( dim , base )
+//   Startup the Reverse Halton sequence.
+// Parameters
+//   dim: the dimension of the sequence
+//   base: array of size dim, the base of the sequence
+//
+int sci_lowdisc_revhaltfstart (char *fname) {
 	int nRows, nCols;
 	double * valueVector = NULL;
 	int * base = NULL;
 	int dim;
 	int ierr;
 
-	CheckRhs(1,1) ;
+	CheckRhs(2,2) ;
 	CheckLhs(1,1) ;
-	ierr = lowdisc_AssertVariableType(fname , 1 , sci_matrix );
+	// Get dim
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
 	if ( ierr==0 ) {
 		return 0;
 	}
-	GetRhsVarMatrixDouble ( 1 , &nRows, &nCols, &valueVector);
-	ierr = lowdisc_AssertNumberOfRows ( fname , 1 , 1 , nRows );
+	// Get base
+	ierr = lowdisc_AssertVariableType(fname , 2 , sci_matrix );
+	if ( ierr==0 ) {
+		return 0;
+	}
+	GetRhsVarMatrixDouble ( 2 , &nRows, &nCols, &valueVector);
+	ierr = lowdisc_AssertNumberOfRows ( fname , 2 , 1 , nRows );
 	if ( ierr==0 ) {
 		return 0;
 	}
@@ -50,8 +60,8 @@ int sci_lowdisc_revhaltfbaseset (char *fname) {
 			return 0;
 		}
 	}
-	// Set the base
-	reversehalton_baseset ( base );
+	// Startup Reverse Halton
+	reversehalton_startup ( dim , base );
 	// Free the base
 	free_ivector ( base );
 	return 0;
