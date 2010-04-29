@@ -31,6 +31,9 @@ function flag = assert_close ( computed, expected, epsilon )
 endfunction
 
 
+// TODO : add haltonstepget
+// TODO : add haltonseedget
+// TODO : add haltonbaseget
 //
 // Check the "hidden" API of the Fast Halton sequence
 // Check the result against TOMS 647 data in dimension 4
