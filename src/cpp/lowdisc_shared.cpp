@@ -50,7 +50,7 @@ void lowdisc_message ( const string & str ) {
 //****************************************************************************80
 // Generates an error.
 void lowdisc_error ( char * message ) {
-        lowdisc_message ( "Low Discrepancy Module Error !" );
+	lowdisc_message ( "Low Discrepancy Module Error !" );
 	if (lowdisc_errorfunction==NULL) {
 		lowdisc_message ( message );
 		exit(1);
@@ -1028,7 +1028,7 @@ float r4_uniform_01 ( int *seed )
 	//  Although SEED can be represented exactly as a 32 bit integer,
 	//  it generally cannot be represented exactly as a 32 bit real number!
 	//
-	r = ( float ) ( *seed ) * 4.656612875E-10;
+	r = ( float ) ( *seed ) * ( float ) 4.656612875E-10;
 
 	return r;
 }
@@ -1109,7 +1109,7 @@ long long int i8_uniform ( long long int a, long long int b, int *seed )
 
 	k = *seed / 127773;
 
-	*seed = 16807 * ( *seed - k * 127773 ) - k * 2836;
+	*seed = ( int ) ( 16807 * ( *seed - k * 127773 ) - k * 2836) ;
 
 	if ( *seed < 0 )
 	{
@@ -1400,6 +1400,8 @@ int i4_uniform ( int a, int b, int *seed )
 	int k;
 	float r;
 	int value;
+	float minab;
+	float maxab;
 
 	if ( *seed == 0 )
 	{
@@ -1419,12 +1421,13 @@ int i4_uniform ( int a, int b, int *seed )
 		*seed = *seed + 2147483647;
 	}
 
-	r = ( float ) ( *seed ) * 4.656612875E-10;
+	r = ( float ) ( *seed ) * ( float ) 4.656612875E-10;
 	//
 	//  Scale R to lie between A-0.5 and B+0.5.
 	//
-	r = ( 1.0 - r ) * ( ( float ) ( i4_min ( a, b ) ) - 0.5 ) 
-		+         r   * ( ( float ) ( i4_max ( a, b ) ) + 0.5 );
+	minab = ( float ) ( i4_min ( a, b ) );
+	maxab = ( float ) ( i4_max ( a, b ) );
+	r = ( ( float ) 1.0 - r ) * ( minab - ( float ) 0.5 ) + r * ( maxab + ( float ) 0.5 );
 	//
 	//  Use rounding to convert R to an integer between A and B.
 	//

@@ -29,7 +29,21 @@
 
 __BEGIN_DECLS
 
-void reversehalton ( int dim_num, double r[] );
+// reversehalton computes the next element in a reverse Halton sequence.
+void reversehalton ( int iter, double next[] );
+
+// reversehalton_baseset sets the base vector for a reverse Halton sequence.
+void reversehalton_baseset ( int newbase[] );
+
+// reversehalton_baseset sets the base vector for a reverse Halton sequence.
+void reversehalton_baseget ( int * base );
+
+// reversehalton_dimget gets the spatial dimension for a reverse Halton sequence.
+int reversehalton_dimget ( void );
+
+// reversehalton_dimset sets the spatial dimension for a reverse Halton sequence.
+void reversehalton_dimset ( int dim_num );
+
 
 __END_DECLS
 

@@ -22,6 +22,7 @@ files = [
   "faure.cpp"
   "halton.cpp"
   "niederreiter.cpp"
+  "reversehalton.cpp"
   "sobol.cpp"
   "lowdisc_math.cpp"
   ];
