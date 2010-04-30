@@ -31,7 +31,7 @@ int sci_lowdisc_revhaltfstart (char *fname) {
 	int ierr;
 
 	CheckRhs(2,2) ;
-	CheckLhs(1,1) ;
+	CheckLhs(0,1) ;
 	// Get dim
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
 	if ( ierr==0 ) {
@@ -47,7 +47,6 @@ int sci_lowdisc_revhaltfstart (char *fname) {
 	if ( ierr==0 ) {
 		return 0;
 	}
-	dim = reversehalton_dimget ( );
 	ierr = lowdisc_AssertNumberOfColumns ( fname , 1 , dim , nCols );
 	if ( ierr==0 ) {
 		return 0;

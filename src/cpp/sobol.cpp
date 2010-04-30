@@ -24,6 +24,7 @@ using namespace std;
 #include "sobol.h"
 #include "lowdisc_shared.h"
 
+// TODO : remove the static parameters in i4_sobol and i8_sobol to prepare the C++ update
 
 //****************************************************************************80
 

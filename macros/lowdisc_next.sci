@@ -207,7 +207,7 @@ function [ this , next ] = _next_reversehalton (this)
   next = zeros(1:this.dimension);
   for idim=1:this.dimension
     basis = this.primeslist(idim);
-    next(idim) = lowdisc_vdcinv (this.sequenceindex,basis);
+    next(idim) = lowdisc_vdcinv (this.sequenceindex,basis)
   end
 endfunction
 //
@@ -217,7 +217,7 @@ endfunction
 // Arguments:
 //
 function [ this , next ] = _next_reversehaltonf ( this )
-  
+  next = _lowdisc_revhaltf ( this.sequenceindex )
 endfunction
 //
 // _next_haltonf --

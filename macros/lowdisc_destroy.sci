@@ -46,7 +46,7 @@ function this = lowdisc_destroy (this)
   case "haltonf" then
     // Nothing to do
   case "reversehaltonf" then
-    // Nothing to do
+    _lowdisc_revhaltfstop ( );
   case "niederreiter-base-2f" then
     // Nothing to do
   case "sobolf" then

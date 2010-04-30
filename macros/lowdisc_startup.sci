@@ -99,7 +99,7 @@ function this = lowdisc_startup (this)
     basis = this.primeslist(1:this.dimension);
     _lowdisc_haltonbaseset ( basis )
   case "reversehaltonf" then
-    // TODO
+    _lowdisc_revhaltfstart ( this.dimension , this.primeslist(1:this.dimension) );
   case "niederreiter-base-2f" then
     // Nothing to do
   case "sobolf" then

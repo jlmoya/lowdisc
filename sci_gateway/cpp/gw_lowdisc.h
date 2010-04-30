@@ -35,10 +35,10 @@ extern "C" {
 	//
 	// Fast Reverse Halton
 	int sci_lowdisc_revhaltf (char *fname);
+	int sci_lowdisc_revhaltfstart (char *fname);
+	int sci_lowdisc_revhaltfstop (char *fname);
 	int sci_lowdisc_revhaltfbaseget (char *fname);
-	int sci_lowdisc_revhaltfbaseset (char *fname);
 	int sci_lowdisc_revhaltfdimget (char *fname);
-	int sci_lowdisc_revhaltfdimset (char *fname);
 	//
 //	int sci_lowdisc_niederf (char *fname);
 }

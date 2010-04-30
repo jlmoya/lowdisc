@@ -22,10 +22,10 @@ namelist = [
   "_lowdisc_faurefstart" "sci_lowdisc_faurefstart"
   "_lowdisc_faurefstop" "sci_lowdisc_faurefstop"
   "_lowdisc_revhaltf" "sci_lowdisc_revhaltf"
+  "_lowdisc_revhaltfstart" "sci_lowdisc_revhaltfstart"
+  "_lowdisc_revhaltfstop" "sci_lowdisc_revhaltfstop"
   "_lowdisc_revhaltfbaseget" "sci_lowdisc_revhaltfbaseget"
-  "_lowdisc_revhaltfbaseset" "sci_lowdisc_revhaltfbaseset"
   "_lowdisc_revhaltfdimget" "sci_lowdisc_revhaltfdimget"
-  "_lowdisc_revhaltfdimset" "sci_lowdisc_revhaltfdimset"
 ];
 // "_lowdisc_nieder2f" "sci_lowdisc_nieder2f"
 files = [
@@ -43,10 +43,10 @@ files = [
   "sci_lowdisc_faurefstart.cpp"
   "sci_lowdisc_faurefstop.cpp"
   "sci_lowdisc_revhaltf.cpp"
+  "sci_lowdisc_revhaltfstart.cpp"
+  "sci_lowdisc_revhaltfstop.cpp"
   "sci_lowdisc_revhaltfbaseget.cpp"
-  "sci_lowdisc_revhaltfbaseset.cpp"
   "sci_lowdisc_revhaltfdimget.cpp"
-  "sci_lowdisc_revhaltfdimset.cpp"
   ];
 //  "sci_lowdisc_nieder2f.cpp"
 

@@ -30,7 +30,48 @@ function flag = assert_close ( computed, expected, epsilon )
   end
   if flag <> 1 then pause,end
 endfunction
+//
+// assert_equal --
+//   Returns 1 if the two real matrices computed and expected are equal.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_equal ( computed , expected )
+  if computed==expected then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then pause,end
+endfunction
 
+
+//
+// Test "hidden" Reverse Halton API
+//
+dim = 2;
+primelist = lowdisc_primes100();
+_lowdisc_revhaltfstart ( dim , primelist(1:dim) );
+dim2 = _lowdisc_revhaltfdimget ( );
+assert_equal ( dim , dim2 );
+prime2 = _lowdisc_revhaltfbaseget ( );
+assert_equal ( primelist(1:dim) , prime2 );
+computed = [];
+for i = 1 : 6
+  next = _lowdisc_revhaltf ( i );
+  computed(i,1:dim) = next(1:dim);
+end
+expected= [
+    0.5 2./3.
+    1./4. 1./3. 
+    3./4. 2./9.    
+    1./8. 8./9. 
+    5./8. 5./9. 
+    3./8. 1./9. 
+];
+assert_close ( computed, expected , 10 * %eps );
+_lowdisc_revhaltfstop ( );
 
 
 //
@@ -47,11 +88,12 @@ assert_close ( computed, expected , 10 * %eps );
 // Terms #2 to #6
 [rng,computed]=lowdisc_next(rng,5);
 expected= [...
-    1./4. 1./3. ;...
-    3./4. 2./9. ;...   
-    1./8. 8./9. ;...
-    5./8. 5./9. ;...
-    3./8. 1./9. ];
+    1./4. 1./3. 
+    3./4. 2./9.    
+    1./8. 8./9. 
+    5./8. 5./9. 
+    3./8. 1./9. 
+];
 assert_close ( computed, expected , 10 * %eps );
 rng = lowdisc_destroy(rng);
 

@@ -26,7 +26,7 @@ int sci_lowdisc_revhaltfbaseget (char *fname) {
 	int dim;
 
 	CheckRhs(0,0) ;
-	CheckLhs(1,1) ;
+	CheckLhs(0,1) ;
 
 	// Get the dimension
 	dim = reversehalton_dimget ( );

@@ -32,8 +32,8 @@ __BEGIN_DECLS
 // reversehalton computes the next element in a reverse Halton sequence.
 void reversehalton ( int iter, double next[] );
 
-// reversehalton_baseset sets the base vector for a reverse Halton sequence.
-void reversehalton_baseset ( int newbase[] );
+// reversehalton_startup startup the sequence
+void reversehalton_startup ( int dim_num , int newbase[] );
 
 // reversehalton_baseset sets the base vector for a reverse Halton sequence.
 void reversehalton_baseget ( int * base );
@@ -41,9 +41,8 @@ void reversehalton_baseget ( int * base );
 // reversehalton_dimget gets the spatial dimension for a reverse Halton sequence.
 int reversehalton_dimget ( void );
 
-// reversehalton_dimset sets the spatial dimension for a reverse Halton sequence.
-void reversehalton_dimset ( int dim_num );
-
+// reversehalton_shutdown shutdown the sequence.
+void reversehalton_shutdown ( );
 
 __END_DECLS
 

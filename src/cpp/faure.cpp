@@ -21,8 +21,6 @@ int i4_log_i4 ( int i4, int j4 );
 void timestamp ( void );
 int prime_ge ( int n );
 
-// TODO : disable the prime_ge function and let the user configure the prime base by adding an input argument to the function faure
-// TODO : Remove the static fields of faure and set them as private variable (this should help the future C++ orientation)
 
 int startup = 0;
 int *coef = NULL;
