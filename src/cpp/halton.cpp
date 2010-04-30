@@ -173,7 +173,7 @@ bool halham_dim_num_check ( int dim_num )
 	if ( dim_num < 1 ) 
 	{
 		ostringstream msg;
-		msg << "halton - HALHAM_DIM_NUM_CHECK - Fatal error!\n";
+		msg << "halton - HALHAM_DIM_NUM_CHECK - Error!\n";
 		msg << "  DIM_NUM < 0.";
 		msg << "  DIM_NUM = " << dim_num << "\n";
 		lowdisc_error ( msg.str() );
@@ -228,7 +228,7 @@ bool halham_leap_check ( int dim_num, int leap[] )
 		if ( leap[i] < 1 ) 
 		{
 			ostringstream msg;
-			msg << "halton - HALHAM_LEAP_CHECK - Fatal error!\n";
+			msg << "halton - HALHAM_LEAP_CHECK - Error!\n";
 			msg << "  Leap entries must be greater than 0.\n";
 			msg << "  leap[" << i << "] = " << leap[i] << "\n";
 			lowdisc_error ( msg.str() );
@@ -274,7 +274,7 @@ bool halham_n_check ( int n )
 	if ( n < 1 ) 
 	{
 		ostringstream msg;
-		msg << "halton - HALHAM_N_CHECK - Fatal error!\n";
+		msg << "halton - HALHAM_N_CHECK - Error!\n";
 		msg << "  N < 0.";
 		msg << "  N = " << n << "\n";
 		lowdisc_error ( msg.str() );
@@ -329,7 +329,7 @@ bool halham_seed_check ( int dim_num, int seed[] )
 		if ( seed[i] < 0 ) 
 		{
 			ostringstream msg;
-			msg << "halton - HALHAM_SEED_CHECK - Fatal error!\n";
+			msg << "halton - HALHAM_SEED_CHECK - Error!\n";
 			msg << "  SEED entries must be nonnegative.\n";
 			msg << "  seed[" << i << "] = " << seed[i] << "\n";
 			lowdisc_error ( msg.str() );
@@ -375,7 +375,7 @@ bool halham_step_check ( int step )
 	if ( step < 0 ) 
 	{
 		ostringstream msg;
-		msg << "halton - HALHAM_STEP_CHECK - Fatal error!\n";
+		msg << "halton - HALHAM_STEP_CHECK - Error!\n";
 		msg << "  STEP < 0.";
 		msg << "  STEP = " << step << "\n";
 		lowdisc_error ( msg.str() );
@@ -451,7 +451,7 @@ void halham_write ( int dim_num, int n, int step, int seed[], int leap[],
 	if ( !file_out )
 	{
 		ostringstream msg;
-		msg << "halton - HALHAM_WRITE - Fatal error!\n";
+		msg << "halton - HALHAM_WRITE - Error!\n";
 		msg << "  Could not open the output file.\n";
 		lowdisc_error ( msg.str() );
                 return;
@@ -722,7 +722,7 @@ bool halton_base_check ( int dim_num, int base[] )
 		if ( base[i] <= 1 ) 
 		{
 			ostringstream msg;
-			msg << "halton - HALTON_BASE_CHECK - Fatal error!\n";
+			msg << "halton - HALTON_BASE_CHECK - Error!\n";
 			msg << "  Bases must be greater than 1.\n";
 			msg << "  base[" << i << "] = " << base[i] << "\n";
 			lowdisc_error ( msg.str() );

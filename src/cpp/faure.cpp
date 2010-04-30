@@ -129,7 +129,7 @@ void faure_startup ( int dim_num , int basis )
 	if ( startup == 1 )
 	{
 		ostringstream msg;
-		msg << "faure - faure_startup - Fatal error!\n";
+		msg << "faure - faure_startup - Error!\n";
 		msg << "  Startup is already done.\n";
 		lowdisc_error(msg.str());
 		return;
@@ -142,7 +142,7 @@ void faure_startup ( int dim_num , int basis )
 	else if ( basis < 0 ) 
 	{
 		ostringstream msg;
-		msg << "faure - faure_baseset - Fatal error!\n";
+		msg << "faure - faure_baseset - Error!\n";
 		msg << "  New base " << basis << " is negative.\n";
 		lowdisc_error(msg.str());
 		return;
@@ -154,7 +154,7 @@ void faure_startup ( int dim_num , int basis )
 	if ( qs < 1 )
 	{
 		ostringstream msg;
-		msg << "faure - FAURE - Fatal error!\n";
+		msg << "faure - FAURE - Error!\n";
 		msg << "  PRIME_GE failed.\n";
 		lowdisc_error(msg.str());
 		return;
@@ -193,7 +193,7 @@ void faure_shutdown ( )
 	if ( startup == 0 )
 	{
 		ostringstream msg;
-		msg << "faure - faure_shutdown - Fatal error!\n";
+		msg << "faure - faure_shutdown - Error!\n";
 		msg << "  Shutdown is already done.\n";
 		lowdisc_error(msg.str());
 		return;
@@ -285,7 +285,7 @@ void faure ( int dim_num, int *seed, double quasi[] )
 	if ( startup == 0 )
 	{
 		ostringstream msg;
-		msg << "faure - FAURE - Fatal error!\n";
+		msg << "faure - FAURE - Error!\n";
 		msg << "  Startup is not done.\n";
 		lowdisc_error(msg.str());
 		return;

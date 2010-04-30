@@ -32,11 +32,17 @@ __BEGIN_DECLS
 //
 //  32 bit integer routines.
 //
-void i4_sobol ( int dim_num, int *seed, float quasi[ ] );
-//
-//  64 bit integer routines.
-//
-void i8_sobol ( int dim_num, long long int *seed, double quasi[ ] );
+
+// i4_sobol_start  : Startup the Sobol sequence.
+void i4_sobol_start ( int dim_num );
+
+// i4_sobol_stop : Stop the Sobol sequence.
+void i4_sobol_stop ( );
+
+//    I4_SOBOL generates a new quasirandom Sobol vector with each call.
+//    This routine is able to generate 2^30 - 1  = 1 073 741 823 experiments
+//    in dimension 1111.
+void i4_sobol ( int *seed, float quasi[ ] );
 
 __END_DECLS
 

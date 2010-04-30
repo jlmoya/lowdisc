@@ -184,7 +184,7 @@ void calcc ( void )
 		if ( input.eof ( ) )
 		{
 			ostringstream msg;
-			msg << "niederrreiter - CALCC - Fatal error!\n"; 
+			msg << "niederrreiter - CALCC - Error!\n"; 
 			msg << "  Could not find tables for Q = " << Q << "\n";
 			lowdisc_error(msg.str());
 			return;
@@ -536,7 +536,7 @@ void golo ( double quasi[] )
 		if ( NFIGS <= r )
 		{
 			ostringstream msg;
-			msg << "niederrreiter - GOLO - Fatal error!\n";
+			msg << "niederrreiter - GOLO - Error!\n";
 			msg << "  Too many calls!\n";
 			lowdisc_error(msg.str());
 			return;
@@ -762,7 +762,7 @@ void inlo ( int dim, int base, int skip )
 	if ( DIMEN <= 0 || DIM_MAX < DIMEN )
 	{
 		ostringstream msg;
-		msg << "niederreiter - INLO - Fatal error!\n";
+		msg << "niederreiter - INLO - Error!\n";
 		msg << "  Bad spatial dimension.\n";
 		lowdisc_error(msg.str());
 		return;
@@ -771,7 +771,7 @@ void inlo ( int dim, int base, int skip )
 	if ( i4_characteristic ( base ) == 0 )
 	{
 		ostringstream msg;
-		msg << "niederreiter - INLO - Fatal error!\n";
+		msg << "niederreiter - INLO - Error!\n";
 		msg << "  Base not prime power or out of range.\n";
 		lowdisc_error(msg.str());
 		return;
@@ -814,7 +814,7 @@ void inlo ( int dim, int base, int skip )
 	if ( i != 0 )
 	{
 		ostringstream msg;
-		msg << "niederreiter - INLO - Fatal error!\n";
+		msg << "niederreiter - INLO - Error!\n";
 		msg << "  SKIP is too long!\n";
 		lowdisc_error(msg.str());
 		return;
@@ -1098,7 +1098,7 @@ int *plymul ( int pa[], int pb[] )
 	if ( DEG_MAX < degc )
 	{
 		ostringstream msg;
-		msg << "niederreiter - PLYMUL - Fatal error!\n";
+		msg << "niederreiter - PLYMUL - Error!\n";
 		msg << "  The degree of the product exceeds DEG_MAX.\n";
 		lowdisc_error(msg.str());
 		return 0;
@@ -1177,7 +1177,7 @@ void setfld ( int q_init )
 	if ( q_init <= 1 || Q_MAX < q_init )
 	{
 		ostringstream msg;
-		msg << "niederreiter - SETFLD - Fatal error!\n";
+		msg << "niederreiter - SETFLD - Error!\n";
 		msg << "  Bad value of Q = " << q_init << "\n";
 		lowdisc_error(msg.str());
 		return;
@@ -1189,7 +1189,7 @@ void setfld ( int q_init )
 	if ( P == 0 )
 	{
 		ostringstream msg;
-		msg << "niederreiter - SETFLD - Fatal error!\n";
+		msg << "niederreiter - SETFLD - Error!\n";
 		msg << "  There is no field of order Q = " << Q << "\n";
 		lowdisc_error(msg.str());
 		return;

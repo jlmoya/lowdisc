@@ -25,9 +25,9 @@ using namespace std;
 #include "reversehalton.h"
 #include "lowdisc_shared.h"
 
-int startup = 0;
-int reversehalton_dim = 0;
-int * reversehalton_base = NULL;
+int revhal_startup = 0;
+int revhal_dim = 0;
+int * revhal_base = NULL;
 
 //
 // Private functions
@@ -35,6 +35,10 @@ double vdcinv ( int iter , int b );
 
 //  reversehalton --
 //     computes the next element in a reverse Halton subsequence.
+//    This routine is able to generate 2^32 - 1  = 4 294 967 295 experiments
+//    in arbitrary dimension.
+//	  To configure the maximum available dimension, setup a base of 
+//	  primes accordingly with reversehalton_start.
 //
 //  Parameters:
 //
@@ -49,19 +53,19 @@ void reversehalton ( int iter, double next[] )
 	//
 	//  Initialization already done ?
 	//
-	if ( startup == 0 )
+	if ( revhal_startup == 0 )
 	{
 		ostringstream msg;
-		msg << "reversehalton - reversehalton - Fatal error!\n";
-		msg << "  Startup is not done.\n";
+		msg << "reversehalton - reversehalton - Error!\n";
+		msg << "  revhal_startup is not done.\n";
 		lowdisc_error(msg.str());
 		return;
 	}
 
 
-	for ( idim = 0; idim < reversehalton_dim; idim++ )
+	for ( idim = 0; idim < revhal_dim; idim++ )
 	{
-		b = reversehalton_base [idim];
+		b = revhal_base [idim];
 		next[idim] = vdcinv ( iter , b );
 	}
 	return;
@@ -101,40 +105,40 @@ double vdcinv ( int iter , int b )
 }
 
 //***************************************************************************
-//  reversehalton_baseget --
+//  revhal_baseget --
 //     returns the base
 //
 //  Parameters:
 //    base, output : an integer array of size dim.
 //
 
-void reversehalton_baseget ( int * base )
+void revhal_baseget ( int * base )
 {
 	int idim;
-	for ( idim = 0; idim < reversehalton_dim; idim++ )
+	for ( idim = 0; idim < revhal_dim; idim++ )
 	{
-		base[idim] = reversehalton_base[idim];
+		base[idim] = revhal_base[idim];
 	}
 	return;
 }
 
 
 //***************************************************************************
-//  reversehalton_dimget --
+//  revhal_dimget --
 //     gets the spatial dimension for a reverse Halton sequence.
 //
 //  Parameters:
 //    dim, output : an integer, the dimension of the sequence
 //
-int reversehalton_dimget ( )
+int revhal_dimget ( )
 {
-	return reversehalton_dim;
+	return revhal_dim;
 }
 
 //***************************************************************************
 
 //  reversehalton_startup --
-//     Startup the sequence
+//     revhal_startup the sequence
 //
 //  Parameters:
 //    Input, int dim_num, the dimension of the sequence
@@ -144,42 +148,42 @@ void reversehalton_startup ( int dim_num , int newbase[] )
 {
 	int idim;
 
-	if ( startup == 1 )
+	if ( revhal_startup == 1 )
 	{
 		ostringstream msg;
-		msg << "faure - faure_startup - Fatal error!\n";
-		msg << "  Startup is already done.\n";
+		msg << "faure - faure_startup - Error!\n";
+		msg << "  revhal_startup is already done.\n";
 		lowdisc_error(msg.str());
 		return;
 	}
-	startup = 1;
+	revhal_startup = 1;
 
 	if ( dim_num < 1 ) 
 	{
 		ostringstream msg;
-		msg << "reversehalton - reversehalton_dimset - Error!\n";
+		msg << "reversehalton - revhal_dimset - Error!\n";
 		msg << "  Negative dimension dim = " << dim_num << "\n";
 		lowdisc_error ( msg.str() );
 		return;
 	}
-	reversehalton_dim = dim_num;
-	if ( reversehalton_base != NULL )
+	revhal_dim = dim_num;
+	if ( revhal_base != NULL )
 	{
-		delete [] reversehalton_base;
+		delete [] revhal_base;
 	}
-	reversehalton_base = new int[reversehalton_dim];
+	revhal_base = new int[revhal_dim];
 
-	for ( idim = 0; idim < reversehalton_dim; idim++ )
+	for ( idim = 0; idim < revhal_dim; idim++ )
 	{
 		if ( newbase[idim] < 1 ) 
 		{
 			ostringstream msg;
-			msg << "reversehalton - reversehalton_baseset - Error!\n";
+			msg << "reversehalton - revhal_baseset - Error!\n";
 			msg << "  Negative prime base at index idim=" << idim << ", newbase[i] = " << newbase[idim] << "\n";
 			lowdisc_error ( msg.str() );
 			return;
 		}
-		reversehalton_base[idim] = newbase[idim];
+		revhal_base[idim] = newbase[idim];
 	}
 
 	return;
@@ -194,27 +198,27 @@ void reversehalton_shutdown ( )
 //
 //    reversehalton_shutdown shutdown the sequence.
 //    Setup the following parameters : 
-//	  startup = 0;
-//    reversehalton_dim = 0
+//	  revhal_startup = 0;
+//    revhal_dim = 0
 //	  Deletes the unnecessary memory.
 //	
 //  Parameters:
 //
 {
-	if ( startup == 0 )
+	if ( revhal_startup == 0 )
 	{
 		ostringstream msg;
-		msg << "reversehalton - reversehalton_shutdown - Fatal error!\n";
+		msg << "reversehalton - reversehalton_shutdown - Error!\n";
 		msg << "  Shutdown is already done.\n";
 		lowdisc_error(msg.str());
 		return;
 	}
-	startup = 0;
-	reversehalton_dim = 0;
-	if ( reversehalton_base != NULL )
+	revhal_startup = 0;
+	revhal_dim = 0;
+	if ( revhal_base != NULL )
 	{
-		delete [] reversehalton_base;
-		reversehalton_base = NULL;
+		delete [] revhal_base;
+		revhal_base = NULL;
 	}
 	return;
 }

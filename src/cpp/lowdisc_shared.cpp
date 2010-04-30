@@ -182,7 +182,7 @@ int i4_power ( int i, int j )
 		else if ( i == 0 )
 		{
 			ostringstream msg;
-			msg << "shared - I4_POWER - Fatal error!\n";
+			msg << "shared - I4_POWER - Error!\n";
 			msg << "  I^J requested, with I = 0 and J negative.\n";
 			lowdisc_error(msg.str());
 			return 0;
@@ -197,7 +197,7 @@ int i4_power ( int i, int j )
 		if ( i == 0 )
 		{
 			ostringstream msg;
-			msg << "shared - I4_POWER - Fatal error!\n";
+			msg << "shared - I4_POWER - Error!\n";
 			msg << "  I^J requested, with I = 0 and J = 0.\n";
 			lowdisc_error(msg.str());
 			return 0;
@@ -450,7 +450,7 @@ int prime ( int n )
 		else
 		{
 			ostringstream msg;
-			msg << "shared - PRIME - Fatal error!\n";
+			msg << "shared - PRIME - Error!\n";
 			msg << "  Unexpected input value of n = " << n << "\n";
 			lowdisc_error(msg.str());
 			return 0;
@@ -810,7 +810,7 @@ double r8_uniform_01 ( int *seed )
 	if ( *seed == 0 )
 	{
 		ostringstream msg;
-		msg << "shared - R8_UNIFORM_01 - Fatal error!\n";
+		msg << "shared - R8_UNIFORM_01 - Error!\n";
 		msg << "  Input value of SEED = 0.\n";
 		lowdisc_error(msg.str());
 		return 0;
@@ -1010,7 +1010,7 @@ float r4_uniform_01 ( int *seed )
 	if ( *seed == 0 )
 	{
 		ostringstream msg;
-		msg << "shared - R4_UNIFORM_01 - Fatal error!\n";
+		msg << "shared - R4_UNIFORM_01 - Error!\n";
 		msg << "  Input value of SEED = 0.\n";
 		lowdisc_error(msg.str());
 		return 0;
@@ -1101,7 +1101,7 @@ long long int i8_uniform ( long long int a, long long int b, int *seed )
 	if ( *seed == 0 )
 	{
 		ostringstream msg;
-		msg << "shared - I8_UNIFORM - Fatal error!\n";
+		msg << "shared - I8_UNIFORM - Error!\n";
 		msg << "  Input value of SEED = 0.\n";
 		lowdisc_error(msg.str());
 		return 0;
@@ -1406,7 +1406,7 @@ int i4_uniform ( int a, int b, int *seed )
 	if ( *seed == 0 )
 	{
 		ostringstream msg;
-		msg << "shared - I4_UNIFORM - Fatal error " << endl;
+		msg << "shared - I4_UNIFORM - Error " << endl;
 		msg << "  Input value of SEED = 0" << endl;
 		lowdisc_error(msg.str());
 		return(0);

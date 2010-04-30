@@ -557,7 +557,7 @@ double dmach ( int job )
 	else
 	{
 		ostringstream msg;
-		msg << "DMACH - Fatal error!\n";
+		msg << "DMACH - Error!\n";
 		msg << "  Illegal input value of JOB = " << job << "\n";
                 lowdisc_error(msg.str());
                 return 0;
@@ -1288,7 +1288,7 @@ void xerbla ( char *srname, int info )
 {
 	ostringstream msg;
 	msg << "\n";
-	msg << "XERBLA - Fatal error!\n";
+	msg << "XERBLA - Error!\n";
 	msg << "  On entry to routine " << srname << "\n";
 	msg << "  input parameter number " << info << " had an illegal value.\n";
 	lowdisc_error(msg.str());
