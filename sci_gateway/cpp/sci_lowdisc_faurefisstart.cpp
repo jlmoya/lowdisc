@@ -17,12 +17,22 @@ extern "C" {
 #include "faure.h" 
 
 
-// _lowdisc_faurefstop ( 0 )
-//   Stops the Fast Faure sequence.
-int sci_lowdisc_faurefstop (char *fname) {
+// start = _lowdisc_faurefisstart ( )
+//   Returns 1 if the sequence is started up, 0 if not.
+int sci_lowdisc_faurefisstart (char *fname) {
+	bool start;
+
 	CheckRhs(0,0) ;
 	CheckLhs(0,1) ;
-	faure_stop ( );
-	lowdisc_CreateLhsInteger ( 1 , 0 );
+
+	start = faure_isstart ( );
+	if ( start )
+	{
+	  lowdisc_CreateLhsInteger ( 1 , 1 );
+	} 
+	else 
+	{
+	  lowdisc_CreateLhsInteger ( 1 , 0 );
+	}
 	return 0;
 }

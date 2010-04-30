@@ -47,6 +47,9 @@ void i4_sobol ( int *seed, float quasi[ ] );
 // i4_sobol_dimget : Returns the dimension.
 int i4_sobol_dimget ( );
 
+// i4_sobol_isstart : Returns true if the sequence is already started up;
+bool i4_sobol_isstart ( );
+
 __END_DECLS
 
 #endif /* _LOWDISC_SOBOL_D_H_ */

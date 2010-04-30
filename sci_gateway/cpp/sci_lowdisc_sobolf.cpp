@@ -14,44 +14,36 @@ extern "C" {
 
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
-#include "sobol.h"
+#include "sobol_i4.h"
 
 
-// [ quasi , seed ] = _lowdisc_sobolf ( dim , seed )
+// quasi = _lowdisc_sobolf ( seed )
 //   Get the next element of the Sobol sequence.
 int sci_lowdisc_sobolf (char *fname) {
 	int dim;
 	int seed = 0;
-	long long int long_seed = 0;
-	double * quasi = NULL;
-	int INCX;
-	int INCY;
+	float * fquasi = NULL;
 	double *pdblQuasi = NULL; //SCILAB return quasi
-	double *pdblSeed = NULL; //SCILAB return seed
-	double dseed;
 	int nRows;
 	int nCols;
+	int i;
 
-	CheckRhs(2,2) ;
-	CheckLhs(2,2) ;
-	lowdisc_GetOneInteger ( fname , 1 , &dim );
-	lowdisc_GetOneInteger ( fname , 2 , &seed );
-	// Brutally cast the integer seed into a long long int
-	long_seed = (long long int) seed;
+	CheckRhs(1,1) ;
+	CheckLhs(0,1) ;
+	lowdisc_GetOneInteger ( fname , 1 , &seed );
+	dim = i4_sobol_dimget ( );
 	// Call the Sobol sequence
-	quasi = dvector ( dim );
-	i8_sobol ( dim , & long_seed , quasi );
+	fquasi = fvector ( dim );
+	i4_sobol ( & seed , fquasi );
 	// Returns quasi
 	nRows = 1;
 	nCols = dim;
 	lowdisc_CreateLhsMatrix ( 1 , nRows , nCols , &pdblQuasi );
-	INCX = 1;
-	INCY = 1;
-	C2F(dcopy)(&dim,quasi,&INCX,pdblQuasi,&INCY);
-	// Return seed
-	dseed = (double) long_seed;
-	lowdisc_CreateLhsDouble ( 2 , dseed );
+	for ( i = 0; i < dim; i++ )
+	{
+		pdblQuasi[i] = (double) fquasi[i];
+	}
 	// Free the quasi vector
-	free_dvector ( quasi );
+	free_fvector ( fquasi );
 	return 0;
 }

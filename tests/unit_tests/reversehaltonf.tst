@@ -47,20 +47,25 @@ function flag = assert_equal ( computed , expected )
 endfunction
 
 
+
+
 //
 // Test "hidden" Reverse Halton API
 //
+start = _lowdisc_revhaltfisstart ( );
+assert_equal ( start , 0 );
 dim = 2;
 primelist = lowdisc_primes100();
 _lowdisc_revhaltfstart ( dim , primelist(1:dim) );
+start = _lowdisc_revhaltfisstart ( );
+assert_equal ( start , 1 );
 dim2 = _lowdisc_revhaltfdimget ( );
 assert_equal ( dim , dim2 );
 prime2 = _lowdisc_revhaltfbaseget ( );
 assert_equal ( primelist(1:dim) , prime2 );
 computed = [];
 for i = 1 : 6
-  next = _lowdisc_revhaltf ( i );
-  computed(i,1:dim) = next(1:dim);
+  computed(i,1:dim) = _lowdisc_revhaltf ( i );
 end
 expected= [
     0.5 2./3.
@@ -71,6 +76,38 @@ expected= [
     3./8. 1./9. 
 ];
 assert_close ( computed, expected , 10 * %eps );
+_lowdisc_revhaltfstop ( );
+start = _lowdisc_revhaltfisstart ( );
+assert_equal ( start , 0 );
+
+
+//
+// Test the "hidden" API.
+// Get elements 0,1,2,3 then 5,6,7, then 1,2,3
+// i.e. pick arbitrary experiments in the sequence.
+//
+dim = 4;
+primelist = lowdisc_primes100();
+_lowdisc_revhaltfstart ( dim , primelist(1:dim) );
+scenario = [0 1 2 3 5 6 7 1 2 3];
+computed = [];
+for k = 1 : size(scenario,"*")
+  seed = scenario(k);
+  computed(k,1:dim) = _lowdisc_revhaltf ( seed );
+end
+expected= [
+    0.                     0.                     0.                     0.      
+    0.5       0.6666667    0.8     0.8571429  
+    0.25      0.3333333    0.6     0.7142857  
+    0.75      0.2222222    0.4     0.5714286  
+    0.625     0.5555556    0.16    0.2857143  
+    0.375     0.1111111    0.96    0.1428571  
+    0.875     0.7777778    0.76    0.1224490  
+    0.5       0.6666667    0.8     0.8571429  
+    0.25      0.3333333    0.6     0.7142857  
+    0.75      0.2222222    0.4     0.5714286  
+];
+assert_close ( computed , expected , 1.e-7 );
 _lowdisc_revhaltfstop ( );
 
 

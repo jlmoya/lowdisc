@@ -67,9 +67,8 @@ using namespace std;
 #define I8SOBOL_DIM_MAX2 1111
 #define I8SOBOL_LOG_MAX 62
 
-
 static int i8sobol_dim_num = 0;
-static bool i8sobol_initialized = false;
+static bool i8sobol_startup = false;
 static long long int i8sobol_lastq[I8SOBOL_DIM_MAX2];
 static long long int i8sobol_maxcol;
 static long long int i8sobol_poly[I8SOBOL_DIM_MAX2] =
@@ -212,7 +211,7 @@ void i8_sobol_start ( int dim_num )
 	long long int m;
 	long long int newv;
 
-	if ( i8sobol_initialized == true )
+	if ( i8sobol_startup )
 	{
 		ostringstream msg;
 		msg << "sobol - i8_sobol_start - Error!\n";
@@ -220,7 +219,7 @@ void i8_sobol_start ( int dim_num )
 		lowdisc_error(msg.str());
 		return;
 	}
-	i8sobol_initialized = true;
+	i8sobol_startup = true;
 	for ( i = 0; i < I8SOBOL_DIM_MAX2; i++ )
 	{
 		for ( j = 0; j < I8SOBOL_LOG_MAX; j++ )
@@ -353,7 +352,7 @@ void i8_sobol_stop ( )
 //   Stop the Sobol sequence.
 //
 {
-	if ( i8sobol_initialized == false )
+	if ( !i8sobol_startup )
 	{
 		ostringstream msg;
 		msg << "sobol - i8_sobol_stop - Error!\n";
@@ -361,7 +360,7 @@ void i8_sobol_stop ( )
 		lowdisc_error(msg.str());
 		return;
 	}
-	i8sobol_initialized = false;
+	i8sobol_startup = false;
 	return;
 }
 //****************************************************************************80
@@ -431,7 +430,7 @@ void i8_sobol ( long long int *seed, double quasi[ ] )
 	long long int l;
 	long long int seed_temp;
 
-	if ( i8sobol_initialized == false )
+	if ( !i8sobol_startup )
 	{
 		ostringstream msg;
 		msg << "sobol - i8_sobol - Error!\n";
@@ -531,4 +530,15 @@ void i8_sobol ( long long int *seed, double quasi[ ] )
 int i8_sobol_dimget ( )
 {
 	return i8sobol_dim_num;
+}
+//***************************************************************************
+//  i8_sobol_isstart --
+//     Returns true if the sequence is already started up.
+//
+//  Parameters:
+//    startup, output : true if the sequence is already started up.
+//
+bool i8_sobol_isstart ( )
+{
+	return i8sobol_startup;
 }

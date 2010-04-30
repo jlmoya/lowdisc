@@ -20,11 +20,11 @@ using namespace std;
 //
 //  These variables are accessible to the user via calls to set/get routines.
 //
-static int *halton_BASE = NULL;
-static int *halton_LEAP = NULL;
-static int  halton_DIM_NUM = -1;
-static int *halton_SEED = NULL;
-static int  halton_STEP = -1;
+int *halton_BASE = NULL;
+int *halton_LEAP = NULL;
+int  halton_DIM_NUM = -1;
+int *halton_SEED = NULL;
+int  halton_STEP = -1;
 
 // These are non-public functions
 

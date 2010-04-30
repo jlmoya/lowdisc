@@ -29,7 +29,9 @@
 
 __BEGIN_DECLS
 
-
+// TODO : Update the API and create start/stop routines
+// TODO : update the halton function and pass the step argument explicitely
+// TODO : remove the halton_step_set function
 
 // HALTON computes the next element in a leaped Halton subsequence.
 void halton ( double r[] );

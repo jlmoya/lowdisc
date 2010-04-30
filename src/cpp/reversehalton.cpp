@@ -25,7 +25,7 @@ using namespace std;
 #include "reversehalton.h"
 #include "lowdisc_shared.h"
 
-int revhal_startup = 0;
+bool revhal_startup = false;
 int revhal_dim = 0;
 int * revhal_base = NULL;
 
@@ -53,7 +53,7 @@ void reversehalton ( int iter, double next[] )
 	//
 	//  Initialization already done ?
 	//
-	if ( revhal_startup == 0 )
+	if ( !revhal_startup )
 	{
 		ostringstream msg;
 		msg << "reversehalton - reversehalton - Error!\n";
@@ -105,14 +105,14 @@ double vdcinv ( int iter , int b )
 }
 
 //***************************************************************************
-//  revhal_baseget --
+//  reversehalton_baseget --
 //     returns the base
 //
 //  Parameters:
 //    base, output : an integer array of size dim.
 //
 
-void revhal_baseget ( int * base )
+void reversehalton_baseget ( int * base )
 {
 	int idim;
 	for ( idim = 0; idim < revhal_dim; idim++ )
@@ -124,31 +124,31 @@ void revhal_baseget ( int * base )
 
 
 //***************************************************************************
-//  revhal_dimget --
+//  reversehalton_dimget --
 //     gets the spatial dimension for a reverse Halton sequence.
 //
 //  Parameters:
 //    dim, output : an integer, the dimension of the sequence
 //
-int revhal_dimget ( )
+int reversehalton_dimget ( )
 {
 	return revhal_dim;
 }
 
 //***************************************************************************
 
-//  reversehalton_startup --
+//  reversehalton_start --
 //     revhal_startup the sequence
 //
 //  Parameters:
 //    Input, int dim_num, the dimension of the sequence
 //    Input, int base[], a table of dim primes
 //
-void reversehalton_startup ( int dim_num , int newbase[] )
+void reversehalton_start ( int dim_num , int newbase[] )
 {
 	int idim;
 
-	if ( revhal_startup == 1 )
+	if ( revhal_startup )
 	{
 		ostringstream msg;
 		msg << "faure - faure_startup - Error!\n";
@@ -156,7 +156,7 @@ void reversehalton_startup ( int dim_num , int newbase[] )
 		lowdisc_error(msg.str());
 		return;
 	}
-	revhal_startup = 1;
+	revhal_startup = true;
 
 	if ( dim_num < 1 ) 
 	{
@@ -190,13 +190,13 @@ void reversehalton_startup ( int dim_num , int newbase[] )
 }
 //****************************************************************************80
 
-void reversehalton_shutdown ( )
+void reversehalton_stop ( )
 
 //****************************************************************************80
 //
 //  Purpose:
 //
-//    reversehalton_shutdown shutdown the sequence.
+//    reversehalton_stop shutdown the sequence.
 //    Setup the following parameters : 
 //	  revhal_startup = 0;
 //    revhal_dim = 0
@@ -205,7 +205,7 @@ void reversehalton_shutdown ( )
 //  Parameters:
 //
 {
-	if ( revhal_startup == 0 )
+	if ( !revhal_startup )
 	{
 		ostringstream msg;
 		msg << "reversehalton - reversehalton_shutdown - Error!\n";
@@ -213,7 +213,7 @@ void reversehalton_shutdown ( )
 		lowdisc_error(msg.str());
 		return;
 	}
-	revhal_startup = 0;
+	revhal_startup = false;
 	revhal_dim = 0;
 	if ( revhal_base != NULL )
 	{
@@ -221,4 +221,15 @@ void reversehalton_shutdown ( )
 		revhal_base = NULL;
 	}
 	return;
+}
+//***************************************************************************
+//  reversehalton_isstart --
+//     Returns true if the sequence is already started up.
+//
+//  Parameters:
+//    startup, output : true if the sequence is already started up.
+//
+bool reversehalton_isstart ( )
+{
+	return revhal_startup;
 }

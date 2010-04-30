@@ -25,7 +25,7 @@ int sci_lowdisc_revhaltfstop (char *fname) {
 	CheckRhs(0,0) ;
 	CheckLhs(0,1) ;
 
-	reversehalton_shutdown ( );
+	reversehalton_stop ( );
 	lowdisc_CreateLhsInteger ( 1 , 0 );
 
 	return 0;

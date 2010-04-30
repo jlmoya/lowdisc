@@ -237,6 +237,7 @@ rng = lowdisc_configure(rng,"-method","halton");
 prarray = lowdisc_primes1000 ( );
 rng = lowdisc_configure(rng,"-primeslist",prarray);
 rng = lowdisc_configure(rng,"-dimension",150);
+rng = lowdisc_startup (rng);
 [rng,next] = lowdisc_next ( rng , 10 );
 assert_equal ( size(next) , [10 150] );
 rng = lowdisc_destroy(rng);

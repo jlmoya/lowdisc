@@ -235,7 +235,7 @@ endfunction
 // Arguments:
 //
 function [ this , next ] = _next_fauref ( this )
-  [ next , seed ] = _lowdisc_fauref ( this.dimension , this.sequenceindex );
+  next = _lowdisc_fauref ( this.sequenceindex );
 endfunction
 //
 // _next_sobolf --
@@ -244,9 +244,7 @@ endfunction
 // Arguments:
 //
 function [ this , next ] = _next_sobolf ( this )
-  dim = this.dimension;
-  seed = this.sequenceindex;
-  [ next , seed ] = _lowdisc_sobolf ( dim , seed );
+  next = _lowdisc_sobolf ( this.sequenceindex )
 endfunction
 //
 // _next_nieder2f --

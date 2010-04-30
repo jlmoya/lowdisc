@@ -62,15 +62,13 @@ function this = lowdisc_reset (this)
   case "haltonf" then
     _lowdisc_haltonstepset ( 1 )
   case "reversehaltonf" then
-    // todo
+    // Nothing to do
   case "niederreiter-base-2f" then
-    // todo
+    // TODO : make so that it is not necessary
   case "sobolf" then
     // Nothing to do
   case "fauref" then
-    // Initialize the table of coefficients
-    // and skips the first term.
-    [ next , seed ] = _lowdisc_fauref ( this.dimension , 0 )
+    // Nothing to do
   else
     errmsg = sprintf(gettext ( "%s: Unknown method %s" ) , ...
       "lowdisc_reset" , this.method);

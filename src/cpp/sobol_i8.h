@@ -46,6 +46,9 @@ void i8_sobol ( int dim_num, long long int *seed, double quasi[ ] );
 // i8_sobol_dimget : Returns the dimension.
 int i8_sobol_dimget ( );
 
+// i8_sobol_isstart : Returns true if the sequence is already started up;
+bool i8_sobol_isstart ( );
+
 __END_DECLS
 
 #endif /* _LOWDISC_SOBOL_D_H_ */

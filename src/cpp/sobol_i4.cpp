@@ -69,7 +69,7 @@ using namespace std;
 
 static int i4sobol_atmost;
 static int i4sobol_dim_num = 0;
-static bool i4sobol_initialized = false;
+static bool i4sobol_startup = false;
 static int i4sobol_lastq[I4SOBOL_DIM_MAX2];
 static int i4sobol_maxcol;
 static int i4sobol_poly[I4SOBOL_DIM_MAX2] =
@@ -214,7 +214,7 @@ void i4_sobol_start ( int dim_num )
 	bool includ[I4SOBOL_LOG_MAX];
 	int newv;
 
-	if ( i4sobol_initialized == true )
+	if ( i4sobol_startup )
 	{
 		ostringstream msg;
 		msg << "sobol - i4_sobol_start - Fatal error!\n";
@@ -222,7 +222,7 @@ void i4_sobol_start ( int dim_num )
 		lowdisc_error(msg.str());
 		return;
 	}
-	i4sobol_initialized = true;
+	i4sobol_startup = true;
 	for ( i = 0; i < I4SOBOL_DIM_MAX2; i++ )
 	{
 		for ( j = 0; j < I4SOBOL_LOG_MAX; j++ )
@@ -355,7 +355,7 @@ void i4_sobol_stop ( )
 //   Stop the Sobol sequence.
 //
 {
-	if ( i4sobol_initialized == false )
+	if ( !i4sobol_startup )
 	{
 		ostringstream msg;
 		msg << "sobol - i4_sobol_stop - Fatal error!\n";
@@ -363,7 +363,7 @@ void i4_sobol_stop ( )
 		lowdisc_error(msg.str());
 		return;
 	}
-	i4sobol_initialized = false;
+	i4sobol_startup = false;
 	return;
 }
 //****************************************************************************80
@@ -424,7 +424,7 @@ void i4_sobol ( int *seed, float quasi[ ] )
 	int l;
 	int seed_temp;
 
-	if ( i4sobol_initialized == false )
+	if ( !i4sobol_startup )
 	{
 		ostringstream msg;
 		msg << "sobol - i4_sobol - Fatal error!\n";
@@ -526,4 +526,15 @@ void i4_sobol ( int *seed, float quasi[ ] )
 int i4_sobol_dimget ( )
 {
 	return i4sobol_dim_num;
+}
+//***************************************************************************
+//  i4_sobol_isstart --
+//     Returns true if the sequence is already started up.
+//
+//  Parameters:
+//    startup, output : true if the sequence is already started up.
+//
+bool i4_sobol_isstart ( )
+{
+	return i4sobol_startup;
 }

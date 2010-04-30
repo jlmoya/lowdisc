@@ -44,19 +44,25 @@ function flag = assert_equal ( computed , expected )
   if flag <> 1 then pause,end
 endfunction
 
+
 //
 // Test the "hidden" Fast Faure API in dimension 3
 //
 dim = 3;
-seed = 0;
 computed = [];
+start = _lowdisc_faurefisstart ( );
+assert_equal ( start , 0 );
 // Skip first term
 _lowdisc_faurefstart ( dim );
+dim2 = _lowdisc_faurefdimget ( );
+assert_equal ( dim2 , dim );
+start = _lowdisc_faurefisstart ( );
+assert_equal ( start , 1 );
 qs = _lowdisc_faurefbaseget ( );
 assert_equal ( qs , 3 );
-[ next , seed ] = _lowdisc_fauref ( dim , seed );
+next = _lowdisc_fauref ( 0 );
 for i = 1 : 8
-  [ next , seed ] = _lowdisc_fauref ( dim , seed );
+  next = _lowdisc_fauref ( i );
   computed(i,1:dim) = next;
 end
 expected= [
@@ -71,20 +77,21 @@ expected= [
 ];
 assert_close ( computed, expected, %eps );
 _lowdisc_faurefstop ( );
+start = _lowdisc_faurefisstart ( );
+assert_equal ( start , 0 );
 
 //
 // Test the "hidden" Fast Faure API in dimension 4
 //
 dim = 4;
-seed = 0;
 computed = [];
 _lowdisc_faurefstart ( dim );
 qs = _lowdisc_faurefbaseget ( );
 assert_equal ( qs , 5 );
 // Skip first term
-[ next , seed ] = _lowdisc_fauref ( dim , seed );
+next = _lowdisc_fauref ( 0 );
 for i = 1 : 8
-  [ next , seed ] = _lowdisc_fauref ( dim , seed );
+  next = _lowdisc_fauref ( i );
   computed(i,1:dim) = next;
 end
 expected= [
@@ -100,18 +107,46 @@ expected= [
 assert_close ( computed, expected, %eps );
 _lowdisc_faurefstop ( );
 
+
+//
+// Test the "hidden" API.
+// Get elements 0,1,2,3 then 5,6,7, then 1,2,3
+// i.e. pick arbitrary experiments in the sequence.
+//
+dim = 4;
+_lowdisc_faurefstart ( dim );
+scenario = [0 1 2 3 5 6 7 1 2 3];
+computed = [];
+for k = 1 : size(scenario,"*")
+  seed = scenario(k);
+  computed(k,1:dim) = _lowdisc_fauref ( seed );
+end
+expected= [
+    0.                     0.                     0.                     0.      
+    0.2                    0.2                    0.2                    0.2                  
+    0.4                    0.4                    0.4                    0.4                  
+    0.6                    0.6                    0.6                    0.6
+    0.04                   0.24                   0.44                   0.64 
+    0.24                   0.44                   0.64                   0.84
+    0.44                   0.64                   0.84                   0.04                 
+    0.2                    0.2                    0.2                    0.2                  
+    0.4                    0.4                    0.4                    0.4                  
+    0.6                    0.6                    0.6                    0.6
+];
+assert_close ( computed , expected , %eps );
+_lowdisc_faurefstop ( );
+
 //
 // Test the "hidden" Fast Faure API in dimension 2000
 //
 dim = 2000;
-seed = 0;
 primelist = lowdisc_primes10000();
 k = find(primelist>dim,1);
 qs = primelist(k);
 _lowdisc_faurefstart ( dim , qs );
 qs2 = _lowdisc_faurefbaseget ( );
 assert_equal ( qs , qs2 );
-[ next , seed ] = _lowdisc_fauref ( dim , seed );
+next = _lowdisc_fauref ( 0 );
 assert_equal ( size(next) , [1 dim] );
 _lowdisc_faurefstop ( );
 

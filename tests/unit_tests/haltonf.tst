@@ -29,8 +29,24 @@ function flag = assert_close ( computed, expected, epsilon )
   end
   if flag <> 1 then pause,end
 endfunction
+//
+// assert_equal --
+//   Returns 1 if the two real matrices computed and expected are equal.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_equal ( computed , expected )
+  if computed==expected then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then pause,end
+endfunction
 
 
+// TODO : test if we can go backward in the sequence
 // TODO : add haltonstepget
 // TODO : add haltonseedget
 // TODO : add haltonbaseget

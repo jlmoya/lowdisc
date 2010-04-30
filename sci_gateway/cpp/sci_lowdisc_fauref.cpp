@@ -17,7 +17,7 @@ extern "C" {
 #include "faure.h" 
 
 
-// [ quasi , seed ] = _lowdisc_fauref ( dim , seed )
+// quasi = _lowdisc_fauref ( seed )
 //   Get the next element of the Faure sequence.
 int sci_lowdisc_fauref (char *fname) {
 	int dim;
@@ -31,13 +31,13 @@ int sci_lowdisc_fauref (char *fname) {
 	int nRows;
 	int nCols;
 
-	CheckRhs(2,2) ;
-	CheckLhs(2,2) ;
-	lowdisc_GetOneInteger ( fname , 1 , &dim );
-	lowdisc_GetOneInteger ( fname , 2 , &seed );
+	CheckRhs(1,1) ;
+	CheckLhs(0,1) ;
+	lowdisc_GetOneInteger ( fname , 1 , &seed );
+	dim = faure_dimget ( );
 	// Call the Faure sequence
 	quasi = dvector ( dim );
-	faure ( dim, &seed, quasi );
+	faure ( &seed, quasi );
 	// Returns quasi
 	nRows = 1;
 	nCols = dim;
@@ -45,9 +45,6 @@ int sci_lowdisc_fauref (char *fname) {
 	INCX = 1;
 	INCY = 1;
 	C2F(dcopy)(&dim,quasi,&INCX,pdblQuasi,&INCY);
-	// Return seed
-	dseed = (double) seed;
-	lowdisc_CreateLhsDouble ( 2 , dseed );
 	// Free the quasi vector
 	free_dvector ( quasi );
 	return 0;

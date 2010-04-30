@@ -13,16 +13,28 @@ extern "C" {
 
 
 #include "gw_lowdisc_support.h" 
+#include "reversehalton.h" 
 #include "lowdisc_math.h" 
-#include "faure.h" 
 
 
-// _lowdisc_faurefstop ( 0 )
-//   Stops the Fast Faure sequence.
-int sci_lowdisc_faurefstop (char *fname) {
+// start = _lowdisc_revhaltfisstart ( )
+//   Returns 1 if the sequence is started up, 0 if not.
+//
+int sci_lowdisc_revhaltfisstart (char *fname) {
+	bool start;
+
 	CheckRhs(0,0) ;
 	CheckLhs(0,1) ;
-	faure_stop ( );
-	lowdisc_CreateLhsInteger ( 1 , 0 );
+
+	start = reversehalton_isstart ( );
+	if ( start )
+	{
+	  lowdisc_CreateLhsInteger ( 1 , 1 );
+	} 
+	else 
+	{
+	  lowdisc_CreateLhsInteger ( 1 , 0 );
+	}
+
 	return 0;
 }

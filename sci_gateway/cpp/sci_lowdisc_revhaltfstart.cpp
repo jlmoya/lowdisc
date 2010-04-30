@@ -60,7 +60,7 @@ int sci_lowdisc_revhaltfstart (char *fname) {
 		}
 	}
 	// Startup Reverse Halton
-	reversehalton_startup ( dim , base );
+	reversehalton_start ( dim , base );
 	// Free the base
 	free_ivector ( base );
 	return 0;

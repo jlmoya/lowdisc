@@ -50,7 +50,7 @@ function this = lowdisc_destroy (this)
   case "niederreiter-base-2f" then
     // Nothing to do
   case "sobolf" then
-    // Nothing to do
+    _lowdisc_sobolfstop ( );
   case "fauref" then
     _lowdisc_faurefstop ( )
   else

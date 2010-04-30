@@ -19,6 +19,10 @@ extern "C" {
 	//
 	// Fast Sobol sequence
 	int sci_lowdisc_sobolf (char *fname);
+	int sci_lowdisc_sobolfstart (char *fname);
+	int sci_lowdisc_sobolfstop (char *fname);
+	int sci_lowdisc_sobolfdimget (char *fname);
+	int sci_lowdisc_sobolfisstart (char *fname);
 	//
 	// Fast Halton Sequence
 	int sci_lowdisc_haltonseedset (char *fname);
@@ -32,13 +36,16 @@ extern "C" {
 	int sci_lowdisc_faurefstop (char *fname);
 	int sci_lowdisc_fauref (char *fname);
 	int sci_lowdisc_faurefbaseget (char *fname);
+	int sci_lowdisc_faurefisstart (char *fname);
+	int sci_lowdisc_faurefdimget (char *fname);
 	//
 	// Fast Reverse Halton
-	int sci_lowdisc_revhaltf (char *fname);
 	int sci_lowdisc_revhaltfstart (char *fname);
 	int sci_lowdisc_revhaltfstop (char *fname);
+	int sci_lowdisc_revhaltf (char *fname);
 	int sci_lowdisc_revhaltfbaseget (char *fname);
 	int sci_lowdisc_revhaltfdimget (char *fname);
+	int sci_lowdisc_revhaltfisstart (char *fname);
 	//
 //	int sci_lowdisc_niederf (char *fname);
 }

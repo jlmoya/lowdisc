@@ -42,7 +42,7 @@ int sci_lowdisc_faurefstart (char *fname) {
 	{
 		basis = 0;
 	}
-	faure_startup ( dim , basis );
+	faure_start ( dim , basis );
 	lowdisc_CreateLhsInteger ( 1 , dim );
 	return 0;
 }

@@ -74,6 +74,25 @@ function this = lowdisc_configure (this,key,value)
   //     discarded. This option allows to generate alternative 
   //     sequences based on the same basic generator.</listitem>
   //  </itemizedlist>
+  //
+  //   Because of the limitation of floating point integers, 
+  //   the lowdisc_next function is able to generate at most 
+  //   2^52  = 4 503 599 627 370 496 experiments.
+  //   Fast sequences are based on the intermediate storage of the 
+  //   iteration index on a 32 bits C int. This implies 
+  //   that these sequences are able to generate at most 
+  //   2^32-1 = 4 294 967 295 experiments. 
+  //
+  //   Some sequences are limited in the maximum number of dimensions, 
+  //   because they use internally fixed tables of parameters (e.g. the Sobol 
+  //   sequence).
+  //   Some other sequences can be extended with the "-primeslist" option.
+  //   The "-primeslist" option can be configure with a table of 
+  //   primes computed with the lowdisc_primes100(), lowdisc_primes1000()
+  //   or lowdisc_primes10000() functions. The maximum dimension 
+  //   which can be attained with these tables depends on the sequence.
+  //   See the specific settings of each sequence below for detail.
+  //
   //  The following is the list of possible values for "-method".
   //  <itemizedlist>
   //  <listitem>"vandercorput" : the Van Der Corput low 
@@ -81,36 +100,84 @@ function this = lowdisc_configure (this,key,value)
   //    It is available only in 1 dimension (i.e. the -dimension option must be
   //    set to 1, the default). It uses the basis which is associated with
   //    the "-vandercorputbasis" option.
+  //    This sequence is able to generate at most 2^52  = 4 503 599 627 370 496 experiments.
   //    This is a macro-based algorithm.</listitem>
   //  <listitem>"halton" : the Halton low discrepancy sequence.
   //    This sequence is sensitive to the "-primeslist" option.
+  //    By default, it is able to generate experiments in dimension at most 100.
+  //    This sequence is able to generate at most 2^52  = 4 503 599 627 370 496 experiments.
+  //    To extend the number of dimensions, please configure the "-primeslist" option.
+  //    The maximum dimension which can be obtained is equal to the number of 
+  //    different primes in the prime table. 
   //    This is a macro-based algorithm.</listitem>
   //  <listitem>"faure" : the Faure low discrepancy sequence. 
   //    This sequence is sensitive to the "-primeslist" option.
+  //    By default, it is able to generate experiments in dimension at most 541.
+  //    This sequence is able to generate at most 2^52  = 4 503 599 627 370 496 experiments.
+  //    To extend the number of dimensions, please configure the "-primeslist" option.
+  //    The maximum dimension which can be obtained is equal to the maximum 
+  //    prime number in the prime table. 
   //    This is a macro-based algorithm.</listitem>
   //  <listitem>"reversehalton" : the Reverse Halton sequence of Vandewoestyne and Cools.
   //    This sequence is sensitive to the "-primeslist" option.
+  //    By default, it is able to generate experiments in dimension at most 100.
+  //    This sequence is able to generate at most 2^52  = 4 503 599 627 370 496 experiments.
+  //    To extend the number of dimensions, please configure the "-primeslist" option.
+  //    The maximum dimension which can be obtained is equal to the number of 
+  //    different primes in the prime table. 
   //    This is a macro-based algorithm. </listitem>
   //  <listitem>"sobol" : the Sobol sequence. 
-  //    This sequence is available for problems where the dimension is lower than 40.
+  //    It is able to generate experiments in dimension at most 40.
+  //    This sequence is able to generate at most 2^30-1  = 1 073 741 823 experiments.
+  //    There is no way to extend the number of dimensions or the number of 
+  //    experiments.
   //    This is a macro-based algorithm. 
   //    The current implementation is a Scilab port of the source code in Matlab 
   //    by John Burkardt. The original source code was created by Bennett Fox in Fortran.
   //    </listitem>
   //  <listitem>"niederreiter-base-2" : The Niederreiter Base 2 sequence. 
   //    This is a macro-based algorithm. 
+  //    It is able to generate experiments in dimension at most 20.
+  //    This sequence is able to generate at most 2^32 - 1  = 4 294 967 295 experiments.
+  //    There is no way to extend the number of dimensions or the number of 
+  //    experiments.
   //    The implementation is a Scilab port of the Matlab source code by John Burkardt.
   //    Original Fortran 77 version by Paul Bratley, Bennett Fox, Harald Niederreiter.
   //    </listitem>
   //  <listitem>"reversehaltonf" : the Reverse Halton sequence of Vandewoestyne and Cools.
+  //    This sequence is sensitive to the "-primeslist" option.
+  //    By default, it is able to generate experiments in dimension at most 100.
+  //    This sequence is able to generate at most 2^32 - 1  = 4 294 967 295 experiments.
+  //    To extend the number of dimensions, please configure the "-primeslist" option.
+  //    The maximum dimension which can be obtained is equal to the number of 
+  //    different primes in the prime table. 
   //    This fast algorithm is based on a compiled C source code. </listitem>
   //  <listitem>"niederreiter-base-2f" : The Niederreiter Base 2 sequence. 
   //    This fast algorithm is based on a compiled C source code. </listitem>
   //  <listitem>"sobolf" : the Sobol sequence. 
-  //    This fast algorithm is based on a compiled C source code. </listitem>
+  //    It is able to generate experiments in dimension at most 1111.
+  //    This sequence is able to generate at most 2^30-1  = 1 073 741 823 experiments.
+  //    There is no way to extend the number of dimensions or the number of 
+  //    experiments.
+  //    This fast algorithm is based on a compiled C source code. 
+  //    The implementation is a modification of the C source code by John Burkardt.
+  //    Original Fortran 77 version by Bennett Fox.
+  //    </listitem>
   //  <listitem>"fauref" : the Faure sequence.
+  //    This sequence is sensitive to the "-primeslist" option.
+  //    By default, it is able to generate experiments in dimension at most 541.
+  //    This sequence is able to generate at most 2^32 - 1  = 4 294 967 295 experiments.
+  //    To extend the number of dimensions, please configure the "-primeslist" option.
+  //    The maximum dimension which can be obtained is equal to the maximum 
+  //    prime number in the prime table. 
   //    This fast algorithm is based on a compiled C source code. </listitem>
   //  <listitem>"haltonf" : the Halton sequence. 
+  //    This sequence is sensitive to the "-primeslist" option.
+  //    By default, it is able to generate experiments in dimension at most 100.
+  //    This sequence is able to generate at most 2^32 - 1  = 4 294 967 295 experiments.
+  //    To extend the number of dimensions, please configure the "-primeslist" option.
+  //    The maximum dimension which can be obtained is equal to the number of 
+  //    different primes in the prime table. 
   //    This fast algorithm is based on a compiled C source code. </listitem>
   //  </itemizedlist>
   //

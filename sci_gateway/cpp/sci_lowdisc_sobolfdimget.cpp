@@ -14,15 +14,17 @@ extern "C" {
 
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
-#include "faure.h" 
+#include "sobol_i4.h"
 
 
-// _lowdisc_faurefstop ( 0 )
-//   Stops the Fast Faure sequence.
-int sci_lowdisc_faurefstop (char *fname) {
+// dim = _lowdisc_sobolfdimget ( )
+//   Get the dimension of the Sobol sequence.
+int sci_lowdisc_sobolfdimget (char *fname) {
+	int dim;
+
 	CheckRhs(0,0) ;
 	CheckLhs(0,1) ;
-	faure_stop ( );
-	lowdisc_CreateLhsInteger ( 1 , 0 );
+	dim = i4_sobol_dimget ( );
+	lowdisc_CreateLhsInteger ( 1 , dim );
 	return 0;
 }

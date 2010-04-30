@@ -30,16 +30,22 @@
 __BEGIN_DECLS
 
 // faure_startup startup the sequence.
-void faure_startup ( int dim_num , int basis );
+void faure_start ( int dim_num , int basis );
 
 // faure_shutdown shutdown the sequence.
-void faure_shutdown ( );
+void faure_stop ( );
 
 // FAURE generates a new quasirandom Faure vector with each call.
-void faure ( int dim_num, int *seed, double quasi[] );
+void faure ( int *seed, double quasi[] );
 
 // faure_baseget returns the base used by the Faure sequence (after startup and before first call).
 int faure_baseget ( );
+
+// faure_isstart : Returns true if the sequence is already started up;
+bool faure_isstart ( );
+
+// faure_dimget gets the spatial dimension for a Faure sequence.
+int faure_dimget ( void );
 
 
 __END_DECLS

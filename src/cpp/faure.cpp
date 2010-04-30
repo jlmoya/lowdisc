@@ -22,7 +22,8 @@ void timestamp ( void );
 int prime_ge ( int n );
 
 
-int startup = 0;
+int faure_dim_num = 0;
+bool faure_startup = false;
 int *coef = NULL;
 int hisum_save = -1;
 int qs = -1;
@@ -100,7 +101,7 @@ int *binomial_table ( int qs, int m, int n )
 }
 //****************************************************************************80
 
-void faure_startup ( int dim_num , int basis )
+void faure_start ( int dim_num , int basis )
 
 //****************************************************************************80
 //
@@ -108,13 +109,13 @@ void faure_startup ( int dim_num , int basis )
 //
 //    faure_startup startup the sequence.
 //    Setup the following parameters : 
-//	  startup = 1;
+//	  faure_startup = true;
 //    hisum_save = -1
-//    qs the smallest prime greater than dim_num
+//    qs the smallest prime greater than faure_dim_num
 //	
 //  Parameters:
 //
-//    Input, int DIM_NUM, the spatial dimension, which should be
+//    Input, int faure_dim_num, the spatial dimension, which should be
 //    at least 2.
 //
 //    Input, int basis, the basis of the Faure sequence.
@@ -123,10 +124,10 @@ void faure_startup ( int dim_num , int basis )
 //	  then it is used as a basis. This feature allows to extend 
 //	  the sequence to dimensions where the internal table is not 
 //	  large enough.
-//    The basis must be the smallest prime greater than dim_num.
+//    The basis must be the smallest prime greater than faure_dim_num.
 //
 {
-	if ( startup == 1 )
+	if ( faure_startup )
 	{
 		ostringstream msg;
 		msg << "faure - faure_startup - Error!\n";
@@ -134,10 +135,26 @@ void faure_startup ( int dim_num , int basis )
 		lowdisc_error(msg.str());
 		return;
 	}
-	startup = 1;
+	faure_startup = true;
+	//
+	// Store the dimension
+	//
+	if ( dim_num < 1 )
+	{
+		ostringstream msg;
+		msg << "faure - faure_start - Fatal Error" << endl;
+		msg << "  The spatial dimension DIM_NUM is lower than 1." << endl;
+		msg << "  But this input value is DIM_NUM = " << dim_num << endl;
+		lowdisc_error(msg.str());
+		return;
+	}
+	faure_dim_num = dim_num;
+	//
+	// Compute qs
+	//
 	if ( basis == 0 )
 	{
-		qs = prime_ge ( dim_num );
+		qs = prime_ge ( faure_dim_num );
 	} 
 	else if ( basis < 0 ) 
 	{
@@ -174,15 +191,15 @@ int faure_baseget ( )
 }
 //****************************************************************************80
 
-void faure_shutdown ( )
+void faure_stop ( )
 
 //****************************************************************************80
 //
 //  Purpose:
 //
-//    faure_shutdown shutdown the sequence.
+//    faure_stop shutdown the sequence.
 //    Setup the following parameters : 
-//	  startup = 0;
+//	  faure_startup = 0;
 //    qs = -1
 //    hisum_save = -1
 //	  Deletes the unnecessary memory.
@@ -190,7 +207,7 @@ void faure_shutdown ( )
 //  Parameters:
 //
 {
-	if ( startup == 0 )
+	if ( !faure_startup )
 	{
 		ostringstream msg;
 		msg << "faure - faure_shutdown - Error!\n";
@@ -198,7 +215,7 @@ void faure_shutdown ( )
 		lowdisc_error(msg.str());
 		return;
 	}
-	startup = 0;
+	faure_startup = false;
 	qs = -1;
 	hisum_save = -1;
 	if ( coef != NULL )
@@ -216,7 +233,7 @@ void faure_shutdown ( )
 }
 //****************************************************************************80
 
-void faure ( int dim_num, int *seed, double quasi[] )
+void faure ( int *seed, double quasi[] )
 
 //****************************************************************************80
 //
@@ -282,7 +299,7 @@ void faure ( int dim_num, int *seed, double quasi[] )
 	//
 	//  Initialization already done ?
 	//
-	if ( startup == 0 )
+	if ( !faure_startup )
 	{
 		ostringstream msg;
 		msg << "faure - FAURE - Error!\n";
@@ -364,7 +381,7 @@ void faure ( int dim_num, int *seed, double quasi[] )
 	//
 	//  Find components QUASI(2:DIM_NUM) using the Faure method.
 	//
-	for ( k = 1; k < dim_num; k++ )
+	for ( k = 1; k < faure_dim_num; k++ )
 	{
 		quasi[k] = 0.0;
 		r = 1.0 / ( ( double ) qs );
@@ -573,4 +590,26 @@ int prime_ge ( int n )
 	}
 
 	return p;
+}
+//***************************************************************************
+//  faure_isstart --
+//     Returns true if the sequence is already started up.
+//
+//  Parameters:
+//    startup, output : true if the sequence is already started up.
+//
+bool faure_isstart ( )
+{
+	return faure_startup;
+}
+//***************************************************************************
+//  faure_dimget --
+//     gets the spatial dimension for a Faure sequence.
+//
+//  Parameters:
+//    dim, output : an integer, the dimension of the sequence
+//
+int faure_dimget ( )
+{
+	return faure_dim_num;
 }

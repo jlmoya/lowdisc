@@ -103,7 +103,7 @@ function this = lowdisc_startup (this)
   case "niederreiter-base-2f" then
     // Nothing to do
   case "sobolf" then
-    // Nothing to do
+    _lowdisc_sobolfstart ( this.dimension );
   case "fauref" then
     k = find(this.primeslist>=this.dimension,1)
     if (k == []) then
