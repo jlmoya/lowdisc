@@ -30,10 +30,14 @@ int sci_lowdisc_fauref (char *fname) {
 	double dseed;
 	int nRows;
 	int nCols;
+        int ierr;
 
 	CheckRhs(1,1) ;
 	CheckLhs(0,1) ;
-	lowdisc_GetOneInteger ( fname , 1 , &seed );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &seed );
+	if ( ierr==0 ) {
+		return 0;
+	}
 	dim = faure_dimget ( );
 	// Call the Faure sequence
 	quasi = dvector ( dim );

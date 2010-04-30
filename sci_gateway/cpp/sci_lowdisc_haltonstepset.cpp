@@ -24,10 +24,14 @@ extern "C" {
 //     If step = 2, the element #1, #3, #5, etc...
 int sci_lowdisc_haltonstepset (char *fname) {
 	int step;
+	int ierr;
 	
 	CheckRhs(1,1) ;
 	CheckLhs(1,1) ;
-	lowdisc_GetOneInteger ( fname , 1 , &step );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &step );
+	if ( ierr==0 ) {
+		return 0;
+	}
 	// Set the step
 	halton_step_set ( step );
 	return 0;

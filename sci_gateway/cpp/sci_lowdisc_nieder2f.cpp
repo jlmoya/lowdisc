@@ -29,12 +29,22 @@ int sci_lowdisc_niederf (char *fname) {
 	double dseed;
 	int nRows;
 	int nCols;
+        int ierr;
 
 	CheckRhs(3,3) ;
 	CheckLhs(2,2) ;
-	lowdisc_GetOneInteger ( fname , 1 , &dim );
-	lowdisc_GetOneInteger ( fname , 2 , &base );
-	lowdisc_GetOneInteger ( fname , 3 , &seed );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
+	if ( ierr==0 ) {
+		return 0;
+	}
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &base );
+	if ( ierr==0 ) {
+		return 0;
+	}
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &seed );
+	if ( ierr==0 ) {
+		return 0;
+	}
 	// Call the Niederreiter sequence
 	quasi = dvector ( dim );
 	niederreiter ( dim_num, base, &seed, quasi );

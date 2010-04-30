@@ -27,10 +27,14 @@ int sci_lowdisc_sobolf (char *fname) {
 	int nRows;
 	int nCols;
 	int i;
+	int ierr;
 
 	CheckRhs(1,1) ;
 	CheckLhs(0,1) ;
-	lowdisc_GetOneInteger ( fname , 1 , &seed );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &seed );
+	if ( ierr==0 ) {
+		return 0;
+	}
 	dim = i4_sobol_dimget ( );
 	// Call the Sobol sequence
 	fquasi = fvector ( dim );

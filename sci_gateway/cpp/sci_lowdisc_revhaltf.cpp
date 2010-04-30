@@ -28,10 +28,14 @@ int sci_lowdisc_revhaltf (char *fname) {
 	double *pdblQuasi = NULL; //SCILAB return quasi
 	int nRows;
 	int nCols;
+        int ierr;
 	
 	CheckRhs(1,1) ;
 	CheckLhs(1,1) ;
-	lowdisc_GetOneInteger ( fname , 1 , &iter );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &iter );
+	if ( ierr==0 ) {
+		return 0;
+	}
 	// Call the reverse Halton sequence
 	dim = reversehalton_dimget ( );
 	quasi = dvector ( dim );

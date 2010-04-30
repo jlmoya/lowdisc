@@ -22,10 +22,14 @@ extern "C" {
 //   dim : a positive integer, the number of parameters
 int sci_lowdisc_haltondimnumset (char *fname) {
 	int dim;
+        int ierr;
 	
 	CheckRhs(1,1) ;
 	CheckLhs(1,1) ;
-	lowdisc_GetOneInteger ( fname , 1 , &dim );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
+	if ( ierr==0 ) {
+		return 0;
+	}
 	// Set the dimension
 	halton_dim_num_set ( dim );
 	return 0;

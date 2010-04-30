@@ -21,10 +21,14 @@ extern "C" {
 //   Start the Sobol sequence.
 int sci_lowdisc_sobolfstart (char *fname) {
 	int dim;
+        int ierr;
 
 	CheckRhs(1,1);
 	CheckLhs(0,1);
-	lowdisc_GetOneInteger ( fname , 1 , &dim );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
+	if ( ierr==0 ) {
+		return 0;
+	}
 	i4_sobol_start ( dim );
 	lowdisc_CreateLhsInteger ( 1 , 0 );
 	return 0;

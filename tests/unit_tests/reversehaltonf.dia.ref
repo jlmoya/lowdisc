@@ -1,0 +1,162 @@
+// Copyright (C) 2008 - INRIA - Michael Baudin
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution.  The terms
+// are also available at
+// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+//
+// assert_close --
+//   Returns 1 if the two real matrices computed and expected are close,
+//   i.e. if the relative distance between computed and expected is lesser than epsilon.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_close ( computed, expected, epsilon )
+  if expected==0.0 then
+    shift = norm(computed-expected);
+  else
+    shift = norm(computed-expected)/norm(expected);
+  end
+  if shift < epsilon then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then bugmes();quit;end
+endfunction
+//
+// assert_equal --
+//   Returns 1 if the two real matrices computed and expected are equal.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_equal ( computed , expected )
+  if computed==expected then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then bugmes();quit;end
+endfunction
+//
+// Test "hidden" Reverse Halton API
+//
+start = _lowdisc_revhaltfisstart ( );
+assert_equal ( start , 0 );
+dim = 2;
+primelist = lowdisc_primes100();
+_lowdisc_revhaltfstart ( dim , primelist(1:dim) );
+start = _lowdisc_revhaltfisstart ( );
+assert_equal ( start , 1 );
+dim2 = _lowdisc_revhaltfdimget ( );
+assert_equal ( dim , dim2 );
+prime2 = _lowdisc_revhaltfbaseget ( );
+assert_equal ( primelist(1:dim) , prime2 );
+computed = [];
+for i = 1 : 6
+  computed(i,1:dim) = _lowdisc_revhaltf ( i );
+end
+expected= [
+    0.5 2./3.
+    1./4. 1./3. 
+    3./4. 2./9.    
+    1./8. 8./9. 
+    5./8. 5./9. 
+    3./8. 1./9. 
+];
+assert_close ( computed, expected , 10 * %eps );
+_lowdisc_revhaltfstop ( );
+start = _lowdisc_revhaltfisstart ( );
+assert_equal ( start , 0 );
+//
+// Test the "hidden" API.
+// Get elements 0,1,2,3 then 5,6,7, then 1,2,3
+// i.e. pick arbitrary experiments in the sequence.
+//
+dim = 4;
+primelist = lowdisc_primes100();
+_lowdisc_revhaltfstart ( dim , primelist(1:dim) );
+scenario = [0 1 2 3 5 6 7 1 2 3];
+computed = [];
+for k = 1 : size(scenario,"*")
+  seed = scenario(k);
+  computed(k,1:dim) = _lowdisc_revhaltf ( seed );
+end
+expected= [
+    0.                     0.                     0.                     0.      
+    0.5       0.6666667    0.8     0.8571429  
+    0.25      0.3333333    0.6     0.7142857  
+    0.75      0.2222222    0.4     0.5714286  
+    0.625     0.5555556    0.16    0.2857143  
+    0.375     0.1111111    0.96    0.1428571  
+    0.875     0.7777778    0.76    0.1224490  
+    0.5       0.6666667    0.8     0.8571429  
+    0.25      0.3333333    0.6     0.7142857  
+    0.75      0.2222222    0.4     0.5714286  
+];
+assert_close ( computed , expected , 1.e-7 );
+_lowdisc_revhaltfstop ( );
+//
+// Check the Fast Reverse Halton sequence
+//
+rng = lowdisc_new();
+rng = lowdisc_configure(rng,"-method","reversehaltonf");
+rng = lowdisc_configure(rng,"-dimension",2);
+rng = lowdisc_startup (rng);
+// Term #1
+[rng,computed] = lowdisc_next (rng);
+expected = [0.5 2./3.];
+assert_close ( computed, expected , 10 * %eps );
+// Terms #2 to #6
+[rng,computed]=lowdisc_next(rng,5);
+expected= [...
+    1./4. 1./3. 
+    3./4. 2./9.    
+    1./8. 8./9. 
+    5./8. 5./9. 
+    3./8. 1./9. 
+];
+assert_close ( computed, expected , 10 * %eps );
+rng = lowdisc_destroy(rng);
+//
+// The following is a port of the test out of the GSL
+//
+// test in dimension 2 */
+rng = lowdisc_new();
+rng = lowdisc_configure(rng,"-method","reversehaltonf");
+rng = lowdisc_configure(rng,"-dimension",2);
+rng = lowdisc_startup (rng);
+[rng,computed] = lowdisc_next (rng);
+[rng,computed] = lowdisc_next (rng);
+[rng,computed] = lowdisc_next (rng);
+// should be
+// 0.5 0.666667
+// 0.25 0.333333
+// 0.75 0.222222
+// 0.125 0.888889*/
+assert_close ( computed, [3.0/4.0 2.0/9.0], 1.e-3 );
+[rng,computed] = lowdisc_next (rng);
+assert_close ( computed, [1.0/8.0 8.0/9.0], 1.e-3 );
+rng = lowdisc_destroy(rng);
+// test in dimension 3 */
+rng = lowdisc_new();
+rng = lowdisc_configure(rng,"-method","reversehaltonf");
+rng = lowdisc_configure(rng,"-dimension",3);
+rng = lowdisc_startup (rng);
+[rng,computed] = lowdisc_next (rng);
+[rng,computed] = lowdisc_next (rng);
+[rng,computed] = lowdisc_next (rng);
+assert_close ( computed, [0.75 2.0/9.0 0.4], 1.e-3 );
+[rng,computed] = lowdisc_next (rng);
+assert_close ( computed, [0.125 8.0/9.0 0.2], 1e-3 );
+rng = lowdisc_reset (rng);
+[rng,computed] = lowdisc_next (rng);
+[rng,computed] = lowdisc_next (rng);
+[rng,computed] = lowdisc_next (rng);
+assert_close ( computed, [0.75 2.0/9.0 0.4], 1.e-3 );
+[rng,computed] = lowdisc_next (rng);
+assert_close ( computed, [0.125 8.0/9.0 0.2], 1e-3 );
+rng = lowdisc_destroy(rng);

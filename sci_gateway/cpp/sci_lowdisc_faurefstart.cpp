@@ -31,12 +31,19 @@ extern "C" {
 int sci_lowdisc_faurefstart (char *fname) {
 	int dim;
 	int basis;
+        int ierr;
 
 	CheckRhs(1,2) ;
 	CheckLhs(0,1) ;
-	lowdisc_GetOneInteger ( fname , 1 , &dim );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
+	if ( ierr==0 ) {
+		return 0;
+	}
 	if ( Rhs==2 ) {
-		lowdisc_GetOneInteger ( fname , 2 , &basis );
+		ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &basis );
+	if ( ierr==0 ) {
+		return 0;
+	}
 	} 
 	else
 	{

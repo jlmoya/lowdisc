@@ -27,10 +27,14 @@ int sci_lowdisc_haltonf (char *fname) {
 	double *pdblQuasi = NULL; //SCILAB return quasi
 	int nRows;
 	int nCols;
+        int ierr;
 	
 	CheckRhs(1,1) ;
 	CheckLhs(1,1) ;
-	lowdisc_GetOneInteger ( fname , 1 , &dim );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
+	if ( ierr==0 ) {
+		return 0;
+	}
 	// Call the Halton sequence
 	quasi = dvector ( dim );
 	halton ( quasi );
