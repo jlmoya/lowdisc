@@ -8,6 +8,10 @@
 
 #include "lowdisc_math.h"
 
+//*********************************************************
+//
+// Integers
+//
 int * ivector(int n) {
 	return(new int[n]);
 }
@@ -31,6 +35,10 @@ void free_imatrix(int ** mat, int l) {
 	delete [] mat;
 }
 
+//*********************************************************
+//
+// Doubles
+//
 double * dvector(int n) {
 	return(new double[n]);
 }
@@ -48,6 +56,33 @@ void free_dvector(double * v) {
 }
 
 void free_dmatrix(double ** mat, int l) {
+	for(int i=0;i<l;i++) {
+		delete [] mat[i];
+	}
+	delete [] mat;
+}
+
+//*********************************************************
+//
+// Float
+//
+float * fvector(int n) {
+	return(new float[n]);
+}
+
+float ** fmatrix(int l, int c) {
+	float **a = new float * [l];
+	for(int i = 0; i < l; i++) {
+		a[i] = new float[c];
+	}
+	return(a);
+}
+
+void free_fvector(float * v) {
+	delete [] v;
+}
+
+void free_fmatrix(float ** mat, int l) {
 	for(int i=0;i<l;i++) {
 		delete [] mat[i];
 	}

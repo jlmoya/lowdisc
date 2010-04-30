@@ -516,3 +516,14 @@ void i4_sobol ( int *seed, float quasi[ ] )
 }
 //****************************************************************************80
 
+//***************************************************************************
+//  i4_sobol_dimget --
+//     gets the spatial dimension for a Sobol sequence.
+//
+//  Parameters:
+//    dim, output : an integer, the dimension of the sequence
+//
+int i4_sobol_dimget ( )
+{
+	return i4sobol_dim_num;
+}

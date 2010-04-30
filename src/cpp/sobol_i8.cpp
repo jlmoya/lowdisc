@@ -521,3 +521,14 @@ void i8_sobol ( long long int *seed, double quasi[ ] )
 
 	return;
 }
+//***************************************************************************
+//  i8_sobol_dimget --
+//     gets the spatial dimension for a Sobol sequence.
+//
+//  Parameters:
+//    dim, output : an integer, the dimension of the sequence
+//
+int i8_sobol_dimget ( )
+{
+	return i8sobol_dim_num;
+}

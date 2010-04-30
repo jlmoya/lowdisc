@@ -30,15 +30,29 @@
 
 __BEGIN_DECLS
 
+//
+// Integers
+//
 int * ivector(int n);
 int ** imatrix(int l, int c);
 void free_ivector(int * v);
 void free_imatrix(int ** mat, int l);
 
+//
+// Doubles
+//
 double **dmatrix(int,int);
 double *dvector(int);
 void free_dmatrix(double **,int);
 void free_dvector(double *);
+
+//
+// Float
+//
+float * fvector(int n);
+float ** fmatrix(int l, int c);
+void free_fvector(float * v);
+void free_fmatrix(float ** mat, int l);
 
 __END_DECLS
 

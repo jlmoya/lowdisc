@@ -44,6 +44,9 @@ void i4_sobol_stop ( );
 //    in dimension 1111.
 void i4_sobol ( int *seed, float quasi[ ] );
 
+// i4_sobol_dimget : Returns the dimension.
+int i4_sobol_dimget ( );
+
 __END_DECLS
 
 #endif /* _LOWDISC_SOBOL_D_H_ */
