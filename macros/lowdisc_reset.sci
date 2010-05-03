@@ -51,16 +51,19 @@ function this = lowdisc_reset (this)
   //
   select this.method
   case "vandercorput" then
+    // Nothing to do
   case "halton" then
+    // Nothing to do
   case "faure" then
+    // Nothing to do
   case "reversehalton" then
+    // Nothing to do
   case "sobol" then
+    // Nothing to do
   case "niederreiter-base-2" then
-//
-// Fast sequences
-//
+    // Nothing to do
   case "haltonf" then
-    _lowdisc_haltonstepset ( 1 )
+    // Nothing to do
   case "reversehaltonf" then
     // Nothing to do
   case "niederreiter-base-2f" then

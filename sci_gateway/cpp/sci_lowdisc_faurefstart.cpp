@@ -31,7 +31,7 @@ extern "C" {
 int sci_lowdisc_faurefstart (char *fname) {
 	int dim;
 	int basis;
-        int ierr;
+	int ierr;
 
 	CheckRhs(1,2) ;
 	CheckLhs(0,1) ;
@@ -41,9 +41,9 @@ int sci_lowdisc_faurefstart (char *fname) {
 	}
 	if ( Rhs==2 ) {
 		ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &basis );
-	if ( ierr==0 ) {
-		return 0;
-	}
+		if ( ierr==0 ) {
+			return 0;
+		}
 	} 
 	else
 	{

@@ -226,7 +226,6 @@ int lowdisc_Double2IntegerArgument ( char * fname , int ivar , double dvalue , i
 	}
 	*ivalue = (int)dvalue;
 	// Now check that the double was really an integer
-	// TODO : put a warning instead of an error
 	if ( (double)*ivalue != dvalue ) {
 		Scierror(999,_("%s: Wrong integer in argument #%d: found %e which is different from the closest integer %d.\n"),fname,ivar , dvalue , *ivalue );
 		return 0;

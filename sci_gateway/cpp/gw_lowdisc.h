@@ -25,11 +25,14 @@ extern "C" {
 	int sci_lowdisc_sobolfisstart (char *fname);
 	//
 	// Fast Halton Sequence
-	int sci_lowdisc_haltonseedset (char *fname);
-	int sci_lowdisc_haltonstepset (char *fname);
-	int sci_lowdisc_haltondimnumset (char *fname);
-	int sci_lowdisc_haltonbaseset (char *fname);
 	int sci_lowdisc_haltonf (char *fname);
+	int sci_lowdisc_haltonfstart (char *fname);
+	int sci_lowdisc_haltonfstop (char *fname);
+	int sci_lowdisc_haltonfdimget (char *fname);
+	int sci_lowdisc_haltonfbaseget (char *fname);
+	int sci_lowdisc_haltonfseedget (char *fname);
+	int sci_lowdisc_haltonfleapget (char *fname);
+	int sci_lowdisc_haltonfisstart (char *fname);
 	//
 	// Fast Faure sequence
 	int sci_lowdisc_faurefstart (char *fname);

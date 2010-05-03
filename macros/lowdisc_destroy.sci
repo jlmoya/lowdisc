@@ -39,20 +39,27 @@ function this = lowdisc_destroy (this)
   case "reversehalton" then
     // Nothing to do
   case "sobol" then
-  case "niederreiter-base-2" then
-//
-// Fast sequences
-//
-  case "haltonf" then
     // Nothing to do
+  case "niederreiter-base-2" then
+    // Nothing to do
+  case "haltonf" then
+    if ( this.startedup == 1 ) then
+      _lowdisc_haltonfstop ( )
+    end
   case "reversehaltonf" then
-    _lowdisc_revhaltfstop ( );
+    if ( this.startedup == 1 ) then
+      _lowdisc_revhaltfstop ( );
+    end
   case "niederreiter-base-2f" then
     // Nothing to do
   case "sobolf" then
-    _lowdisc_sobolfstop ( );
+    if ( this.startedup == 1 ) then
+      _lowdisc_sobolfstop ( );
+    end
   case "fauref" then
-    _lowdisc_faurefstop ( )
+    if ( this.startedup == 1 ) then
+      _lowdisc_faurefstop ( )
+    end
   else
     errmsg = sprintf("Unknown method %s",this.method);
     error(errmsg);

@@ -198,10 +198,6 @@ void faure_stop ( )
 //  Purpose:
 //
 //    faure_stop shutdown the sequence.
-//    Setup the following parameters : 
-//	  faure_startup = 0;
-//    qs = -1
-//    hisum_save = -1
 //	  Deletes the unnecessary memory.
 //	
 //  Parameters:
@@ -210,7 +206,7 @@ void faure_stop ( )
 	if ( !faure_startup )
 	{
 		ostringstream msg;
-		msg << "faure - faure_shutdown - Error!\n";
+		msg << "faure - faure_stop - Error!\n";
 		msg << "  Shutdown is already done.\n";
 		lowdisc_error(msg.str());
 		return;

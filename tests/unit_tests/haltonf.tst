@@ -46,24 +46,32 @@ function flag = assert_equal ( computed , expected )
 endfunction
 
 
-// TODO : test if we can go backward in the sequence
-// TODO : add haltonstepget
-// TODO : add haltonseedget
-// TODO : add haltonbaseget
 //
 // Check the "hidden" API of the Fast Halton sequence
 // Check the result against TOMS 647 data in dimension 4
 //
+start = _lowdisc_haltonfisstart ( );
+assert_equal ( start , 0 );
 dim = 4;
-_lowdisc_haltondimnumset ( dim );
-_lowdisc_haltonstepset ( 1 );
-_lowdisc_haltonseedset ( zeros ( 1 , dim ) );
 primeslist = lowdisc_primes100 ( );
-_lowdisc_haltonbaseset ( primeslist(1:dim) );
-// Skip the first term 
-next = _lowdisc_haltonf ( 4 );
+base = primeslist(1:dim);
+seed = zeros(1,dim);
+leap = ones(1,dim);
+_lowdisc_haltonfstart ( dim , base , seed , leap );
+start = _lowdisc_haltonfisstart ( );
+assert_equal ( start , 1 );
+// Check get methods
+dim2 = _lowdisc_haltonfdimget ( );
+assert_equal ( dim2 , dim );
+base2 = _lowdisc_haltonfbaseget ( );
+assert_equal ( base2 , base );
+seed2 = _lowdisc_haltonfseedget ( );
+assert_equal ( seed2 , seed );
+leap2 = _lowdisc_haltonfleapget ( );
+assert_equal ( leap2 , leap );
+// Skip the first and second terms
 for i = 1 : 100
-  computed(i,1:dim) = _lowdisc_haltonf ( 4 );
+  computed(i,1:dim) = _lowdisc_haltonf ( i + 1 );
 end
 expected = [
 0.250000      0.666667      0.400000      0.285714
@@ -168,7 +176,41 @@ expected = [
 0.648438      0.744856      0.232000      0.434402
 ];
 assert_close ( computed , expected , 1.e-5 );
+_lowdisc_haltonfstop ( );
+start = _lowdisc_haltonfisstart ( );
+assert_equal ( start , 0 );
 
+//
+// Test the "hidden" API.
+// Get elements 0,1,2,3 then 5,6,7, then 1,2,3
+// i.e. pick arbitrary experiments in the sequence.
+//
+dim = 4;
+primeslist = lowdisc_primes100 ( );
+base = primeslist(1:dim);
+seed = zeros(1,dim);
+leap = ones(1,dim);
+_lowdisc_haltonfstart ( dim , base , seed , leap );
+scenario = [0 1 2 3 5 6 7 1 2 3];
+computed = [];
+for k = 1 : size(scenario,"*")
+  seed = scenario(k);
+  computed(k,1:dim) = _lowdisc_haltonf ( seed );
+end
+expected= [
+    0.        0.                     0.                     0.      
+    0.5       0.33333333333333331    0.2                    0.14285714285714285  
+    0.25      0.66666666666666663    0.4                    0.28571428571428570  
+    0.75      0.11111111111111110    0.60000000000000009    0.42857142857142855  
+    0.625     0.77777777777777768    0.04                   0.71428571428571419  
+    0.375     0.22222222222222221    0.24000000000000002    0.85714285714285710  
+    0.875     0.55555555555555558    0.44                   0.02040816326530612  
+    0.5       0.33333333333333331    0.2                    0.14285714285714285  
+    0.25      0.66666666666666663    0.4                    0.28571428571428570  
+    0.75      0.11111111111111110    0.60000000000000009    0.42857142857142855  
+];
+assert_close ( computed , expected , %eps );
+_lowdisc_haltonfstop ( );
 
 //
 // Check the Fast Halton sequence in dimension 2

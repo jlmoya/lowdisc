@@ -16,21 +16,17 @@ extern "C" {
 #include "halton.h" 
 
 
-// _lowdisc_haltondimnumset ( dim )
-//   Set the dimension of the Halton sequence.
+// dim = _lowdisc_haltonfdimget ( )
+//   Get the dimension of the Halton sequence.
 // Arguments
 //   dim : a positive integer, the number of parameters
-int sci_lowdisc_haltondimnumset (char *fname) {
+int sci_lowdisc_haltonfdimget (char *fname) {
 	int dim;
-        int ierr;
-	
-	CheckRhs(1,1) ;
-	CheckLhs(1,1) ;
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
-	if ( ierr==0 ) {
-		return 0;
-	}
-	// Set the dimension
-	halton_dim_num_set ( dim );
+
+	CheckRhs(0,0) ;
+	CheckLhs(0,1) ;
+
+	dim = halton_dim_num_get ( );
+	lowdisc_CreateLhsInteger ( 1 , dim );
 	return 0;
 }

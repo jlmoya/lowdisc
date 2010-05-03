@@ -19,6 +19,7 @@ extern "C" {
 
 // start = _lowdisc_sobolfisstart ( )
 //   Returns 1 if the sequence is started up, 0 if not.
+// TODO : return a boolean instead of a double
 int sci_lowdisc_sobolfisstart (char *fname) {
 	bool start;
 

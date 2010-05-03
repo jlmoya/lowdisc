@@ -84,20 +84,16 @@ function this = lowdisc_startup (this)
     this = lowdisc_startsobol ( this )
   case "niederreiter-base-2" then
     this = lowdisc_startnieder2 ( this )
-    //
-    // Fast sequences based on primitives
-    //
   case "haltonf" then
-    _lowdisc_haltondimnumset ( this.dimension )
-    _lowdisc_haltonstepset ( 1 )
-    _lowdisc_haltonseedset ( zeros ( 1 , this.dimension ) )
+    seed = zeros(1,this.dimension);
+    leap = ones(1,this.dimension);
     if ( this.dimension > this.primessize ) then
       errmsg = sprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"),...
       "lowdisc_startup" , this.method,this.dimension,this.primessize);
       error(errmsg);
     end
-    basis = this.primeslist(1:this.dimension);
-    _lowdisc_haltonbaseset ( basis )
+    base = this.primeslist(1:this.dimension);
+    _lowdisc_haltonfstart ( this.dimension , base , seed , leap );
   case "reversehaltonf" then
     _lowdisc_revhaltfstart ( this.dimension , this.primeslist(1:this.dimension) );
   case "niederreiter-base-2f" then

@@ -226,7 +226,7 @@ endfunction
 // Arguments:
 //
 function [ this , next ] = _next_haltonf ( this )
-  next = _lowdisc_haltonf ( this.dimension );
+  next = _lowdisc_haltonf ( this.sequenceindex );
 endfunction
 //
 // _next_fauref --

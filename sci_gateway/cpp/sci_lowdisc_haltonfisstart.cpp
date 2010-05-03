@@ -13,21 +13,20 @@ extern "C" {
 
 
 #include "gw_lowdisc_support.h" 
-#include "reversehalton.h" 
 #include "lowdisc_math.h" 
+#include "halton.h" 
 
 
-// start = _lowdisc_revhaltfisstart ( )
+// start = _lowdisc_haltonfisstart ( )
 //   Returns 1 if the sequence is started up, 0 if not.
-//
 // TODO : return a boolean instead of a double
-int sci_lowdisc_revhaltfisstart (char *fname) {
+int sci_lowdisc_haltonfisstart (char *fname) {
 	bool start;
 
 	CheckRhs(0,0) ;
 	CheckLhs(0,1) ;
 
-	start = reversehalton_isstart ( );
+	start = halton_isstart ( );
 	if ( start )
 	{
 	  lowdisc_CreateLhsInteger ( 1 , 1 );
@@ -36,6 +35,5 @@ int sci_lowdisc_revhaltfisstart (char *fname) {
 	{
 	  lowdisc_CreateLhsInteger ( 1 , 0 );
 	}
-
 	return 0;
 }

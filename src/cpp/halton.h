@@ -29,46 +29,32 @@
 
 __BEGIN_DECLS
 
-// TODO : Update the API and create start/stop routines
-// TODO : update the halton function and pass the step argument explicitely
-// TODO : remove the halton_step_set function
+// halton_start starts the sequence
+void halton_start ( int dim_num , int base[] , int seed[] , int leap[] );
+
+// halton_stop stops the sequence
+void halton_stop ( );
 
 // HALTON computes the next element in a leaped Halton subsequence.
-void halton ( double r[] );
-
-// HALTON_SEQUENCE computes N elements in an DIM_NUM-dimensional Halton sequence.
-void halton_sequence ( int n, double r[] );
-
-// HALTON_BASE_GET gets the base vector for a leaped Halton subsequence.
-int *halton_base_get ( void );
-
-// HALTON_BASE_SET sets the base vector for a leaped Halton subsequence.
-void halton_base_set ( int base[] );
-
-// HALTON_LEAP_GET gets the leap vector for a leaped Halton subsequence.
-int *halton_leap_get ( void );
-
-// HALTON_LEAP_SET sets the leap vector for a leaped Halton subsequence.
-void halton_leap_set ( int leap[] );
+void halton ( int step , double r[] );
 
 // HALTON_DIM_NUM_GET gets the spatial dimension for a leaped Halton subsequence.
 int halton_dim_num_get ( void );
 
-// HALTON_DIM_NUM_SET sets the spatial dimension for a leaped Halton subsequence.
-void halton_dim_num_set ( int dim_num );
+// HALTON_BASE_GET gets the base vector for a leaped Halton subsequence.
+void halton_base_get ( int base[] );
+
+// HALTON_LEAP_GET gets the leap vector for a leaped Halton subsequence.
+void halton_leap_get ( int leap[] );
 
 // HALTON_SEED_GET gets the seed vector for a leaped Halton subsequence.
-int *halton_seed_get ( void );
-
-// HALTON_SEED_SET sets the seed vector for a leaped Halton subsequence.
-void halton_seed_set ( int seed[] );
+void halton_seed_get ( int seed[] );
 
 // HALTON_STEP_GET gets the step for the leaped Halton subsequence.
 int halton_step_get ( void );
 
-// HALTON_STEP_SET sets the step for a leaped Halton subsequence.
-void halton_step_set ( int step );
-
+// halton_isstart : Returns true if the sequence is already started up;
+bool halton_isstart ( );
 
 __END_DECLS
 
