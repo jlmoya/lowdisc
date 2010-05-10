@@ -1,5 +1,5 @@
-Monte-Carlo Scilab Toolbox
+Low Discrepancy Scilab Toolbox
 
-This toolbox is released under the terms of the CeCILL license :
-http://www.cecill.info/index.en.html
+This toolbox must be used under the terms of the GNU LGPL license.
+http://www.gnu.org/licenses/lgpl.html
 

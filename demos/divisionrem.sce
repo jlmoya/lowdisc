@@ -7,6 +7,7 @@
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
 
+
 //
 // assert_close --
 //   Returns 1 if the two real matrices computed and expected are close,
@@ -28,10 +29,39 @@ function flag = assert_close ( computed, expected, epsilon )
   end
   if flag <> 1 then pause,end
 endfunction
+// lowdisc_rem --
+//  Remainder after division.
 //
-// Test the lowdisc_radicalinv library command
+function r = lowdisc_rem ( X , Y )
+  r = X - fix ( X ./ Y ) .* Y
+endfunction
+
+
 //
-basis = 2;
-phi = lowdisc_radicalinv ( 4 , basis );
-assert_close ( phi , 0.125 , %eps );
+// Check the rem function
+//
+computed = lowdisc_rem ( 0 , 2 );
+expected = 0;
+assert_close ( computed, expected , %eps );
+computed = lowdisc_rem ( 1 , 2 );
+expected = 1;
+assert_close ( computed, expected , %eps );
+computed = lowdisc_rem ( 2 , 2 );
+expected = 0;
+assert_close ( computed, expected , %eps );
+computed = lowdisc_rem ( 3 , 2 );
+expected = 1;
+assert_close ( computed, expected , %eps );
+computed = lowdisc_rem ( 4 , 2 );
+expected = 0;
+assert_close ( computed, expected , %eps );
+computed = lowdisc_rem ( -1 , 2 );
+expected = -1;
+assert_close ( computed, expected , %eps );
+computed = lowdisc_rem ( -2 , 2 );
+expected = 0;
+assert_close ( computed, expected , %eps );
+computed = lowdisc_rem ( -3 , 2 );
+expected = -1;
+assert_close ( computed, expected , %eps );
 

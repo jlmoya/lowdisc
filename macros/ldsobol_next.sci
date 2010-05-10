@@ -2,12 +2,8 @@
 // Copyright (C) 2009 - John Burkardt
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
-//
-// This file must be used under the terms of the CeCILL.
-// This source file is licensed as described in the file COPYING, which
-// you should have received as part of this distribution.  The terms
-// are also available at
-// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+
+// This file must be used under the terms of the GNU LGPL license.
 
 function [this,next] = ldsobol_next ( varargin )
 
@@ -127,7 +123,7 @@ function [ this , quasi ] = _next_sobol ( this )
 //
 //  Find the position of the right-hand zero in count
 //
-    l = lowdisc_bitlo0 ( count );
+    l = _bitlo0 ( count );
 //
 //  Check that the user is not calling too many times!
 //
@@ -139,10 +135,117 @@ function [ this , quasi ] = _next_sobol ( this )
 //
   for i = 1 : dim_num
     quasi(1,i) = lastq(i) * recipd;
-    lastq(i) = lowdisc_xor ( lastq(i), v(i,l) );
+    lastq(i) = _xor ( lastq(i), v(i,l) );
   end
   // Put data into structure
   this.sobollastq = lastq;
   this.sobolcount = this.sobolcount + 1;
+endfunction
+
+//
+// _bitlo0 --
+//   I4_BIT_LO0 returns the position of the low 0 bit base 2 in an integer.
+//
+//  Example:
+//
+//       N    Binary     BIT
+//    ----    --------  ----
+//       0           0     1
+//       1           1     2
+//       2          10     1
+//       3          11     3 
+//       4         100     1
+//       5         101     2
+//       6         110     1
+//       7         111     4
+//       8        1000     1
+//       9        1001     2
+//      10        1010     1
+//      11        1011     3
+//      12        1100     1
+//      13        1101     2
+//      14        1110     1
+//      15        1111     5
+//      16       10000     1
+//      17       10001     2
+//    1023  1111111111     1
+//    1024 10000000000     1
+//    1025 10000000001     1
+//
+//  Licensing:
+//    This code is distributed under the GNU LGPL license.
+//
+//  Modified:
+//    16 February 2005
+//
+//  Author:
+//    John Burkardt
+//    Scilab version : 
+//       2009 - Digiteo - Michael Baudin
+//
+//  Parameters:
+//    Input, integer N, the integer to be measured.
+//    N should be nonnegative.
+//
+//    Output, integer BIT, the position of the low 1 bit.
+//
+function bit = _bitlo0 ( n )
+  bit = 0;
+  i = floor ( n );
+  while ( 1 )
+    bit = bit + 1;
+    i2 = floor ( i / 2 );
+    if ( i == 2 * i2 )
+      break;
+    end
+    i = i2;
+  end
+endfunction
+
+// _xor --
+//   calculates the exclusive OR of two integers.
+//
+//  Licensing:
+//
+//    This code is distributed under the GNU LGPL license.
+//
+//  Modified:
+//
+//    16 February 2005
+//
+//  Author:
+//
+//   John Burkardt
+//    Scilab version : 
+//       2009 - Digiteo - Michael Baudin
+//
+//  Parameters:
+//
+//    Input, integer I, J, two values whose exclusive OR is needed.
+//
+//    Output, integer K, the exclusive OR of I and J.
+//
+function k = _xor ( i, j )
+  k = 0;
+  l = 1;
+//
+  i = floor ( i );
+  j = floor ( j );
+  while ( i ~= 0 | j ~= 0 )
+//
+//  Check the current right-hand bits of I and J.
+//  If they differ, set the appropriate bit of K.
+//
+    i2 = floor ( i / 2 );
+    j2 = floor ( j / 2 );
+    if ( ...
+      ( ( i == 2 * i2 ) & ( j ~= 2 * j2 ) ) | ...
+      ( ( i ~= 2 * i2 ) & ( j == 2 * j2 ) ) )
+      k = k + l;
+    end
+    i = i2;
+    j = j2;
+    l = 2 * l;
+  end
 endfunction
 

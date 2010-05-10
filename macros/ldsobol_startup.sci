@@ -1,11 +1,7 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
-//
-// This file must be used under the terms of the CeCILL.
-// This source file is licensed as described in the file COPYING, which
-// you should have received as part of this distribution.  The terms
-// are also available at
-// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+
+// This file must be used under the terms of the GNU LGPL license.
 
 function this = ldsobol_startup (this)
 //   Startup the sobol sequence
@@ -98,7 +94,7 @@ function this = ldsobol_startup (this)
   //
   //  Find the number of bits in ATMOST.
   //
-  maxcol = lowdisc_bithi1 ( atmost );
+  maxcol = _bithi1 ( atmost );
   //
   //  Initialize row 1 of V.
   //
@@ -141,7 +137,7 @@ function this = ldsobol_startup (this)
       for k = 1 : m
         l = 2 * l;
         if ( includ(k) )
-          newv = lowdisc_xor ( newv, l * v(i,j-k) );
+          newv = _xor ( newv, l * v(i,j-k) );
         end
       end
       v(i,j) = newv;
@@ -181,6 +177,142 @@ function this = ldsobol_startup (this)
   // TODO : skip directly when sequence authorizes it.
   if ( this.skip > 0 ) then
     [ this , result ] = lowdisc_next ( this , this.skip )
+  end
+endfunction
+
+
+// _xor --
+//   calculates the exclusive OR of two integers.
+//
+//  Licensing:
+//
+//    This code is distributed under the GNU LGPL license.
+//
+//  Modified:
+//
+//    16 February 2005
+//
+//  Author:
+//
+//   John Burkardt
+//    Scilab version : 
+//       2009 - Digiteo - Michael Baudin
+//
+//  Parameters:
+//
+//    Input, integer I, J, two values whose exclusive OR is needed.
+//
+//    Output, integer K, the exclusive OR of I and J.
+//
+function k = _xor ( i, j )
+  k = 0;
+  l = 1;
+//
+  i = floor ( i );
+  j = floor ( j );
+  while ( i ~= 0 | j ~= 0 )
+//
+//  Check the current right-hand bits of I and J.
+//  If they differ, set the appropriate bit of K.
+//
+    i2 = floor ( i / 2 );
+    j2 = floor ( j / 2 );
+    if ( ...
+      ( ( i == 2 * i2 ) & ( j ~= 2 * j2 ) ) | ...
+      ( ( i ~= 2 * i2 ) & ( j == 2 * j2 ) ) )
+      k = k + l;
+    end
+    i = i2;
+    j = j2;
+    l = 2 * l;
+  end
+endfunction
+
+//
+// _bithi1 --
+//   I4_BIT_HI1 returns the position of the high 1 bit base 2 in an integer.
+//
+//  Example:
+//
+//       N    Binary     BIT
+//    ----    --------  ----
+//       0           0     0
+//       1           1     1
+//       2          10     2
+//       3          11     2 
+//       4         100     3
+//       5         101     3
+//       6         110     3
+//       7         111     3
+//       8        1000     4
+//       9        1001     4
+//      10        1010     4
+//      11        1011     4
+//      12        1100     4
+//      13        1101     4
+//      14        1110     4
+//      15        1111     4
+//      16       10000     5
+//      17       10001     5
+//    1023  1111111111    10
+//    1024 10000000000    11
+//    1025 10000000001    11
+//
+//  ilist =  [
+//        22      96     
+//        83      56     
+//        41       6      
+//        26      11      
+//         4      64      
+//         6      45      
+//        40      76     
+//        80       0     
+//        90      35     
+//         9       1       
+//  ];
+//  expected =  [
+//    118
+//    107
+//    47
+//    17
+//    68
+//    43
+//    100
+//    80
+//    121
+//    8
+//  ];
+//
+//  Licensing:
+//
+//    This code is distributed under the GNU LGPL license.
+//
+//  Modified:
+//
+//    16 February 2005
+//
+//  Author:
+//
+//    John Burkardt
+//    Scilab version : 
+//       2009 - Digiteo - Michael Baudin
+//
+//  Parameters:
+//
+//    Input, integer N, the integer to be measured.
+//    N should be nonnegative.  If N is nonpositive, the value will always be 0.
+//
+//    Output, integer BIT, the number of bits base 2.
+//
+function bit = _bithi1 ( n )
+  i = floor ( n );
+  bit = 0;
+  while ( 1 )
+    if ( i <= 0 )
+      break;
+    end
+    bit = bit + 1;
+    i = floor ( i / 2 );
   end
 endfunction
 

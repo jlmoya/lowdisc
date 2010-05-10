@@ -1,5 +1,4 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) Anders Holtsberg
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
@@ -8,8 +7,8 @@
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
 // 
-// lowdisc_binomial --
-//   Returns the binomial number (n,k), i.e.
+// lowdisc_binomialmod --
+//   Returns the binomial number (n,k) modulo m, i.e.
 //   the number of k-element subsets of an n-element set.
 //   It is defined by n!/(k! (n-k)!
 //   and can be computed as 
@@ -17,6 +16,12 @@
 //   n (n-1) ... (n-k+1)
 //   -------------------
 //   k (k-1) ... 1
+//
+//   =
+//
+//   n (n-1) ... (n-k+1)
+//   -------------------
+//   1 2 ... (k-1) k
 //                    
 // References
 //   http://en.wikipedia.org/wiki/Binomial_coefficients
@@ -36,28 +41,51 @@
 //   to prevent the computation of 1 because an intermediate
 //   result is > 1.e308.
 //   This is why the gammaln function is used instead.
-// Note about rounding for integer inputs
-//   If n = 4 and k = 1, the gammaln and exp functions 
-//   are accurate only to 1ulp. This leads to the 
-//   result that b = 3.99...99998.
-//   It is the result of the fact that we use the elementary 
-//   functions exp and gammaln.
-//   This is very close to 4, but is not equal to 4.
-//   Assume that you know compute c = b (mod 4) and you 
-//   get c = b = 3.99...99998, intead of getting c  = 4.
-//   This is why, when input arguments are integers,
-//   the result is rounded to the nearest integer.
 //
-function b = lowdisc_binomial ( n , k )
+function b = lowdisc_binomialmod ( n , k , m )
   if ( ( k < 0 ) | ( k > n ) ) then 
     b = 0
   else
-    r = gammaln ( n + 1 ) - gammaln (k + 1) - gammaln (n - k + 1)
-    b = exp( r );
+    b = 1
+    for i = 1 : k
+      b = modulo ( b * (n - i + 1) / (k - i + 1) , m )
+    end
   end
   // If the input where integers, returns also an integer.
   if ( and(round(n)==n) & and(round(k)==k) ) then
     b = round ( b )
   end
 endfunction
+//
+// assert_equal --
+//   Returns 1 if the two real matrices computed and expected are equal.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_equal ( computed , expected )
+  if ( and ( computed==expected ) ) then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then pause,end
+endfunction
+
+c = lowdisc_binomialmod ( 4 , 1 , 5 );
+assert_equal ( c , 4 );
+c = lowdisc_binomialmod ( 5 , 0 , 6 );
+assert_equal ( c , 1  );
+c = lowdisc_binomialmod ( 5 , 1 , 6 );
+assert_equal ( c , 5  );
+c = lowdisc_binomialmod ( 5 , 2 , 6 );
+assert_equal ( c , 4  );
+c = lowdisc_binomialmod ( 5 , 3 , 6 );
+assert_equal ( c , 4  );
+c = lowdisc_binomialmod ( 5 , 4 , 6 );
+assert_equal ( c , 5  );
+c = lowdisc_binomialmod ( 5 , 5 , 6 );
+assert_equal ( c , 1  );
+c = lowdisc_binomialmod ( 17 , 18 , 18 );
+assert_equal ( c , 0  );
 

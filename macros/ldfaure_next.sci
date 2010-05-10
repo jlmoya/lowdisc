@@ -1,3 +1,4 @@
+// Copyright (C) Anders Holtsberg
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
@@ -73,7 +74,7 @@ function next = _next_faure (this)
       "_next_faure" , basis , this.dimension);
     error(errmsg);
   end
-  digits = lowdisc_bary ( this.sequenceindex , basis , "bigendian" )
+  digits = _bary ( this.sequenceindex , basis , "bigendian" )
   digits = digits'
   r = size ( digits , 1 )
   // Compute a vector made of 1/b, 1/b^2, etc...
@@ -127,10 +128,132 @@ function c = _fauremat ( r , i )
   for m = 1:r
     for n = 1:r
       if ( m <= n ) then
-        c(m,n) = i^(n-m) * lowdisc_binomial ( n-1 , m-1 );
+        c(m,n) = i^(n-m) * _binomial ( n-1 , m-1 );
       end
     end
   end
 endfunction
 
+
+// 
+// _binomial --
+//   Returns the binomial number (n,k), i.e.
+//   the number of k-element subsets of an n-element set.
+//   It is defined by n!/(k! (n-k)!
+//   and can be computed as 
+//
+//   n (n-1) ... (n-k+1)
+//   -------------------
+//   k (k-1) ... 1
+//                    
+// References
+//   http://en.wikipedia.org/wiki/Binomial_coefficients
+//   http://wiki.tcl.tk/1755
+//
+// Note about floating point accuracy
+//   factorial(170) ~ 7.e306
+//   So n=170 is the greatest integer for which
+//   n! can be computed.
+//   If the naive formula 
+//
+//   b = factorial(n)/factorial(k)/factorial(n-k);
+//
+//   was used, the maximum value n for which 
+//   the binomial can be computed is n = 170.
+//   But binomial(171,1) = 1, so there is no reason
+//   to prevent the computation of 1 because an intermediate
+//   result is > 1.e308.
+//   This is why the gammaln function is used instead.
+// Note about rounding for integer inputs
+//   If n = 4 and k = 1, the gammaln and exp functions 
+//   are accurate only to 1ulp. This leads to the 
+//   result that b = 3.99...99998.
+//   It is the result of the fact that we use the elementary 
+//   functions exp and gammaln.
+//   This is very close to 4, but is not equal to 4.
+//   Assume that you know compute c = b (mod 4) and you 
+//   get c = b = 3.99...99998, intead of getting c  = 4.
+//   This is why, when input arguments are integers,
+//   the result is rounded to the nearest integer.
+// c = lowdisc_binomial ( 4 , 1 ) // 4
+// c = lowdisc_binomial ( 5 , 0 ) // 1
+// c = lowdisc_binomial ( 5 , 1 ) // 5
+// c = lowdisc_binomial ( 5 , 2 ) // 10
+// c = lowdisc_binomial ( 5 , 3 ) // 10
+// c = lowdisc_binomial ( 5 , 4 ) // 5
+// c = lowdisc_binomial ( 5 , 5 ) // 1
+// c = lowdisc_binomial ( 17 , 18 ) // 0
+// c = lowdisc_binomial ( 17 , -1 ) // 0
+// c = lowdisc_binomial ( 1.5 , 0.5 ) // 1.5
+// c = lowdisc_binomial ( 10000 , 134 ) // 2.050083865024873735e307
+//
+function b = _binomial ( n , k )
+  if ( ( k < 0 ) | ( k > n ) ) then 
+    b = 0
+  else
+    r = gammaln ( n + 1 ) - gammaln (k + 1) - gammaln (n - k + 1)
+    b = exp( r );
+  end
+  // If the input where integers, returns also an integer.
+  if ( and(round(n)==n) & and(round(k)==k) ) then
+    b = round ( b )
+  end
+endfunction
+//
+// _bary --
+//   Returns the list of digits of the decomposition of 
+//   k in base b, i.e. decompose k as 
+//   k = d0 b^jmax + d1 b^{jmax-1} + ... + d{jmax+1} b^0.
+//   The order is little endian order, i.e. the first 
+//   digit is associated with b^jmax, and the last digit
+//   is associated with b^0.
+// Arguments
+//   k : the integer to decompose
+//   basis : the basis
+// References
+//   Monte-Carlo methods in Financial Engineering, Paul Glasserman
+// Test : 
+//   _bary (4,2)                      // [1 0 0]
+//   _bary (4,2,"bigendian")          // [0 0 1]
+//   _bary ( 4 , 2 )                  // [1 0 0]
+//   _bary ( 4 , 2 , "littleendian" ) // [1 0 0]
+//   _bary ( 4 , 2 , "bigendian" )    // [0 0 1]
+//
+function digits = _bary ( k , basis , order )
+  if (~isdef('order','local')) then
+    order = "littleendian";
+  end
+  select order
+  case "littleendian"
+    if (k==0) then
+      digits = zeros(1,1);
+    else
+      jmax = int(log(k)/log(basis));
+      q = int(basis^jmax);
+      for j=1:jmax+1
+        aj = int(k/q);
+        digits(1,j) = aj;
+        k = k - q * aj;
+        q = q/basis;
+      end
+    end
+  case "bigendian"
+    if k==0 then
+      digits = zeros(1,1);
+    else
+      jmax = int(log(k)/log(basis));
+      current = k
+      j = 1;
+      while ( current > 0 )
+        digit = modulo ( current , basis )
+        digits(1,j) =digit
+        current = int ( current / basis )
+        j = j + 1
+      end
+    end
+  else
+    error ( sprintf ( gettext ( "%s: Unknown order"  ), ...
+      "_bary" ) )
+  end
+endfunction
 

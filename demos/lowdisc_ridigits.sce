@@ -1,10 +1,6 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-//
-// This file must be used under the terms of the CeCILL.
-// This source file is licensed as described in the file COPYING, which
-// you should have received as part of this distribution.  The terms
-// are also available at
-// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+
+// This file must be used under the terms of the GNU LGPL license.
 
 //
 // lowdisc_ridigits --
@@ -14,7 +10,7 @@
 // Arguments
 //   digits : the digits of the number, as row vector
 //   basis : the basis of the sequence
-// Test : radicalinverse_digits ( [0 0 1] , 2) -> 0.125
+// Test : lowdisc_ridigits ( [0 0 1] , 2) -> 0.125
 //
 function phi = lowdisc_ridigits ( digits , basis )
   ib = 1.0 / basis
@@ -25,4 +21,8 @@ function phi = lowdisc_ridigits ( digits , basis )
     ib = ib / basis
   end
 endfunction
+
+lowdisc_ridigits ( [0 0 1] , 2)
+
+expected = 0.125
 
