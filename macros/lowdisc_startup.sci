@@ -1,4 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
@@ -115,7 +116,7 @@ function this = lowdisc_startup (this)
     error(errmsg);
   end
   // Initialize the sequence
-  this = lowdisc_reset (this);
+  this.sequenceindex = 0;
   // Skip (i.e. ignore) as many elements as required
   // TODO : skip directly when sequence authorizes it.
   if ( this.skip > 0 ) then

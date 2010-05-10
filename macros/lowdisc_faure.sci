@@ -6,6 +6,8 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
+// TODO : remove this function
+
 //
 // lowdisc_faure --
 //   Returns the vector of index #k in dimension d of the

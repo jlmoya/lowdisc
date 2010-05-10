@@ -1,3 +1,4 @@
+// TODO : remove this function
 
 //  lowdisc_niedercalcc2 --
 //   computes the constants C(I,J,R).

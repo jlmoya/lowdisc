@@ -1,3 +1,5 @@
+// TODO : remove this function
+
 // lowdisc_niederplymul2 --
 //    multiplies two polynomials in the field of order 2.
 //

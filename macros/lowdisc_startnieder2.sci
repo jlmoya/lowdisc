@@ -1,3 +1,5 @@
+// TODO : remove this function
+
 // lowdisc_nieder2 --
 //  Startup Niederreiter's sequence.
 //

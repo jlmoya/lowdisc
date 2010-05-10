@@ -1,4 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
@@ -74,7 +75,7 @@ function [this,next] = lowdisc_next ( varargin )
   //   rng = lowdisc_startup (rng);
   //   [rng,computed]=lowdisc_next(rng);
   //   // Terms #1 to #100
-  //   [rng,computed]=lowdisc_terms(rng,100);
+  //   [rng,computed]=lowdisc_next(rng,100);
   //   for i = 1:100
   //     mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
   //   end
@@ -97,7 +98,7 @@ function [this,next] = lowdisc_next ( varargin )
   else
     imax = varargin(2)
   end
-  
+
   //
   // Check that the object is started up
   if ( this.startedup == 0 ) then
@@ -110,9 +111,18 @@ function [this,next] = lowdisc_next ( varargin )
   
   for i=1:imax
     this.sequenceindex = this.sequenceindex + 1;
-    //
-    // Compute vector
-    //
+    [this , onevector] = next_all ( this )
+    next(i,1:this.dimension) = onevector
+    // Leap over (i.e. ignore) as many elements as required
+    if ( this.leap > 0 ) then
+      for j = 1 : this.leap
+        this.sequenceindex = this.sequenceindex + 1;
+        [this , onevector] = next_all ( this )
+      end
+    end
+  end
+endfunction
+function [this , onevector] = next_all ( this )
     select this.method
     case "vandercorput" then
       onevector = _next_vandercorput (this);
@@ -144,13 +154,8 @@ function [this,next] = lowdisc_next ( varargin )
       "lowdisc_next" , this.method);
       error(errmsg);
     end
-    next(i,1:this.dimension) = onevector
-    // Leap over (i.e. ignore) as many elements as required
-    if ( this.leap > 0 ) then
-      [ this , ignored ] = lowdisc_terms ( this , this.leap )
-    end
-  end
 endfunction
+
 //
 // _next_vandercorput --
 //   Returns the next term of the Van Der Corput sequence

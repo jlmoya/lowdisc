@@ -7,59 +7,31 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
-function this = lowdisc_new ()
-  // Create a new object.
+function this = ldnied2_new ()
+  // Create a new Niederreiter Base 2 object.
   //
-  // Calling Sequence
-  //   this = lowdisc_new ()
-  //
-  // Parameters
-  //   this: the current object
-  //
-  // Description
-  //   This function requires to take the current object both as an input
-  //   and an output argument.
-  //
-  // Examples
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","faure");
-  //   rng
-  //   rng = lowdisc_destroy(rng);
-  //
-  // Authors
-  //   Michael Baudin - 2008-2009 - INRIA
-  //   Michael Baudin - 2010 - DIGITEO
 
   this = tlist([
-    "LOWDISC"
+    "LDNIED2"
     "verbose"
     "dimension"
-    "method"
     "sequenceindex"
-    "vdcbasis"
     "primeslist"
     "startedup"
     "primessize"
-    "sobolv"
-    "sobolmaxcol"
-    "sobollastq"
-    "sobolrecipd"
-    "sobolcount"
+    "skip"
+    "leap"
     "NR_cj"
     "NR_seed"
     "NR_nextq"
     "NR_recip"
     "NR_nbits"
-    "skip"
-    "leap"
     ])
   //
   // Configurable options
   this.verbose=%f
   this.dimension=1
-  this.method="halton"
   this.sequenceindex=0
-  this.vdcbasis = 2
   // This makes the component available up to dimension 100
   this.primeslist = lowdisc_primes100 ( )
   this.skip = 0

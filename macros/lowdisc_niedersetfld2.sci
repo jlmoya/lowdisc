@@ -1,3 +1,5 @@
+// TODO : remove this function
+
 //  lowdisc_niedersetfld2 --
 //     sets up arithmetic tables for the finite field of order 2.
 //
