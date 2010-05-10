@@ -215,8 +215,7 @@ _lowdisc_haltonfstop ( );
 //
 // Check the Fast Halton sequence in dimension 2
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","haltonf");
+rng = lowdisc_new("haltonf");
 rng = lowdisc_configure(rng,"-dimension",2);
 rng = lowdisc_startup (rng);
 // Term #1
@@ -239,8 +238,7 @@ rng = lowdisc_destroy(rng);
 //
 // Check the Fast Halton sequence in dimension 4 against TOMS 647
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","haltonf");
+rng = lowdisc_new("haltonf");
 rng = lowdisc_configure(rng,"-dimension",4);
 // Skip 1 term, as in the TOMS implementation
 rng = lowdisc_configure(rng,"-skip",1);
@@ -353,8 +351,7 @@ rng = lowdisc_destroy(rng);
 
 
 // test in dimension 1229
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","haltonf");
+rng = lowdisc_new("haltonf");
 rng = lowdisc_configure(rng,"-dimension",1229);
 prarray = lowdisc_primes10000 ( );
 rng = lowdisc_configure(rng,"-primeslist",prarray);
@@ -370,8 +367,7 @@ rng = lowdisc_destroy(rng);
 // 0.25 0.666667
 // 0.75 0.111111
 // 0.125 0.444444*/
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","haltonf");
+rng = lowdisc_new("haltonf");
 rng = lowdisc_configure(rng,"-dimension",2);
 rng = lowdisc_startup (rng);
 [rng,computed] = lowdisc_next (rng);
@@ -383,17 +379,9 @@ assert_close ( computed, [1.0/8.0 4.0/9.0], 10 * %eps );
 rng = lowdisc_destroy(rng);
 
 // test in dimension 3 */
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","haltonf");
+rng = lowdisc_new("haltonf");
 rng = lowdisc_configure(rng,"-dimension",3);
 rng = lowdisc_startup (rng);
-[rng,computed] = lowdisc_next (rng);
-[rng,computed] = lowdisc_next (rng);
-[rng,computed] = lowdisc_next (rng);
-assert_close ( computed, [0.75 1.0/9.0 0.6], 10 * %eps );
-[rng,computed] = lowdisc_next (rng);
-assert_close ( computed, [0.125 4.0/9.0 0.8], 10 * %eps );
-rng = lowdisc_reset (rng);
 [rng,computed] = lowdisc_next (rng);
 [rng,computed] = lowdisc_next (rng);
 [rng,computed] = lowdisc_next (rng);

@@ -64,25 +64,29 @@ function value = lowdisc_get (this,key)
   //   Michael Baudin - 2010 - DIGITEO
   //
 
-  select key
-  case "-faureprime" then
-    k = find(this.primeslist>=this.dimension,1)
-    if (k == []) then
-      errmsg = sprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
-        "lowdisc_get" , this.dimension);
-      error(errmsg);
-    end
-    value  = this.primeslist ( k )
-  case "-faurefprime" then
-    k = find(this.primeslist>=this.dimension,1)
-    if (k == []) then
-      errmsg = sprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
-        "lowdisc_get" , this.dimension);
-      error(errmsg);
-    end
-    value  = this.primeslist ( k )
+  select this.method
+  case "halton" then
+    value     = ldhalton_get ( this.sequence , key )
+  case "faure" then
+    value     = ldfaure_get ( this.sequence , key )
+  case "reversehalton" then
+    value     = ldrevhal_get ( this.sequence , key )
+  case "sobol" then
+    value     = ldsobol_get ( this.sequence , key )
+  case "niederreiter-base-2" then
+    value     = ldnied2_get ( this.sequence , key )
+  case "reversehaltonf" then
+    value     = ldrevhalf_get ( this.sequence , key )
+  case "niederreiter-base-2f" then
+    value     = ldnied2f_get ( this.sequence , key )
+  case "sobolf" then
+    value     = ldsobolf_get ( this.sequence , key )
+  case "fauref" then
+    value     = ldfauref_get ( this.sequence , key )
+  case "haltonf" then
+    value     = ldhaltonf_get ( this.sequence , key )
   else
-    errmsg = sprintf(gettext("%s: Unknown key %s"),"lowdisc_get",key);
+    errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_get" , this.method);
     error(errmsg);
   end
 endfunction

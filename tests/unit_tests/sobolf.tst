@@ -1,4 +1,5 @@
-// Copyright (C) 2008 - INRIA - Michael Baudin
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
@@ -116,8 +117,7 @@ _lowdisc_sobolfstop ( );
 //
 // Check the Fast Sobol sequence
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","sobolf");
+rng = lowdisc_new("sobolf");
 rng = lowdisc_configure(rng,"-dimension",2);
 rng = lowdisc_startup (rng);
 // Term #1
@@ -138,8 +138,7 @@ rng = lowdisc_destroy(rng);
 
 //
 // test Fast Sobol in dimension 2 
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","sobolf");
+rng = lowdisc_new("sobolf");
 rng = lowdisc_configure(rng,"-dimension",2);
 rng = lowdisc_startup (rng);
 [rng,computed] = lowdisc_next (rng);
@@ -154,19 +153,9 @@ rng = lowdisc_destroy(rng);
 
 
 // test in dimension 3
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","sobolf");
+rng = lowdisc_new("sobolf");
 rng = lowdisc_configure(rng,"-dimension",3);
 rng = lowdisc_startup (rng);
-[rng,computed] = lowdisc_next (rng);
-[rng,computed] = lowdisc_next (rng);
-[rng,computed] = lowdisc_next (rng);
-expected = [0.25 0.75 0.25];
-assert_close ( computed, expected, 10*%eps );
-[rng,computed] = lowdisc_next (rng);
-expected = [0.375 0.375 0.625];
-assert_close ( computed, expected, 10*%eps );
-rng = lowdisc_reset (rng);
 [rng,computed] = lowdisc_next (rng);
 [rng,computed] = lowdisc_next (rng);
 [rng,computed] = lowdisc_next (rng);
@@ -180,8 +169,7 @@ rng = lowdisc_destroy(rng);
 //
 // Check the result against TOMS 647 data
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","sobolf");
+rng = lowdisc_new("sobolf");
 rng = lowdisc_configure(rng,"-dimension",4);
 rng = lowdisc_startup (rng);
 [rng,computed]=lowdisc_next(rng,100);

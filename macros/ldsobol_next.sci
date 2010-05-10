@@ -1,3 +1,5 @@
+// Copyright (C) Bennett Fox.
+// Copyright (C) 2009 - John Burkardt
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
 //

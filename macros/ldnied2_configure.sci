@@ -46,7 +46,7 @@ function this = ldnied2_configure (this,key,value)
     this.leap = value;
   else
     errmsg = sprintf ( gettext ( "%s: Unknown key %s" ) , ...
-    "lowdisc_configure" , key)
+    "ldnied2_configure" , key)
     error(errmsg)
   end
 endfunction

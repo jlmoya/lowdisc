@@ -23,7 +23,7 @@ function value = ldsobol_cget (this,key)
   case "-leap" then
     value = this.leap;
   else
-    errmsg = sprintf("Unknown key %s",key);
+    errmsg = sprintf(gettext("%s: Unknown key %s"),"ldsobol_cget",key);
     error(errmsg);
   end
 endfunction

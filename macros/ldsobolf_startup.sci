@@ -7,10 +7,10 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
-function this = lowdisc_startup (this)
+function this = ldsobolf_startup (this)
   
   if (this.startedup<>0) then
-    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "lowdisc_startup" );
+    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "ldsobolf_startup" );
     error(errmsg);
   end
   if (this.verbose) then

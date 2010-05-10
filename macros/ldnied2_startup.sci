@@ -1,11 +1,9 @@
+// Copyright (C) Paul Bratley, Bennett Fox, Harald Niederreiter
+// Copyright (C) 2003 - John Burkardt
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
-// This file must be used under the terms of the CeCILL.
-// This source file is licensed as described in the file COPYING, which
-// you should have received as part of this distribution.  The terms
-// are also available at
-// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+//    This code is distributed under the GNU LGPL license.
 
 function this = ldnied2_startup (this)
 // lowdisc_nieder2 --
@@ -25,7 +23,7 @@ function this = ldnied2_startup (this)
 //
   
   if (this.startedup<>0) then
-    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "lowdisc_startup" );
+    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "ldnied2_startup" );
     error(errmsg);
   end
   if (this.verbose) then

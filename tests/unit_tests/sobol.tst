@@ -1,4 +1,5 @@
-// Copyright (C) 2008 - INRIA - Michael Baudin
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
@@ -34,8 +35,7 @@ endfunction
 //
 // Check the Sobol sequence in 2 dimensions
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","sobol");
+rng = lowdisc_new("sobol");
 rng = lowdisc_configure(rng,"-dimension",2);
 rng = lowdisc_startup (rng);
 // Term #1
@@ -58,8 +58,7 @@ rng = lowdisc_destroy(rng);
 //
 // Check the Sobol sequence in 4 dimensions
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","sobol");
+rng = lowdisc_new("sobol");
 rng = lowdisc_configure(rng,"-dimension",4);
 rng = lowdisc_startup (rng);
 // Terms #1 to #11
@@ -107,8 +106,7 @@ rng = lowdisc_destroy(rng);
 //
 // Check the result against TOMS 647 data
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","sobol");
+rng = lowdisc_new("sobol");
 rng = lowdisc_configure(rng,"-dimension",4);
 rng = lowdisc_startup (rng);
 [rng,computed]=lowdisc_next(rng,100);

@@ -23,7 +23,7 @@ function value = ldrevhal_cget (this,key)
   case "-leap" then
     value = this.leap;
   else
-    errmsg = sprintf("Unknown key %s",key);
+    errmsg = sprintf(gettext("%s: Unknown key %s"),"ldrevhal_cget",key);
     error(errmsg);
   end
 endfunction

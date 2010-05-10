@@ -42,17 +42,9 @@ function flag = assert_equal ( computed , expected )
   if flag <> 1 then bugmes();quit;end
 endfunction
 //
-// Test the lowdisc_faure library command
-//
-basis = 3;
-dimension = 3;
-vk = lowdisc_faure ( 4 , basis , dimension );
-assert_close ( vk , [4/9 7/9 1/9] , %eps );
-//
 // Check the Faure sequence in dimension 3
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","faure");
+rng = lowdisc_new("faure");
 rng = lowdisc_configure(rng,"-dimension",3);
 rng = lowdisc_startup (rng);
 // Term #1
@@ -75,8 +67,7 @@ rng = lowdisc_destroy(rng);
 //
 // Compare the results against the data extracted from the TOMS 647 program.
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","faure");
+rng = lowdisc_new("faure");
 rng = lowdisc_configure(rng,"-dimension",3);
 // Skip qs^4 - 1 terms, as in TOMS implementation
 qs = lowdisc_get ( rng , "-faureprime" );
@@ -190,8 +181,7 @@ rng = lowdisc_destroy(rng);
 //
 // Compare the results against the data extracted from the TOMS 647 program.
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","faure");
+rng = lowdisc_new("faure");
 rng = lowdisc_configure(rng,"-dimension",4);
 // Skip qs^4 - 1 terms, as in TOMS implementation
 qs = lowdisc_get ( rng , "-faureprime" );
@@ -303,8 +293,7 @@ expected = [
 assert_close ( computed , expected , 1.e-5 );
 rng = lowdisc_destroy(rng);
 // Configure a list of primes and use it
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","faure");
+rng = lowdisc_new("faure");
 prarray = lowdisc_primes1000 ( );
 rng = lowdisc_configure(rng,"-primeslist",prarray);
 rng = lowdisc_configure(rng,"-dimension",150);

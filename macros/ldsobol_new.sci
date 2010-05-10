@@ -7,6 +7,8 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
+// TODO : rename the fields "sobolv", "sobolmaxcol", "sobollastq", "sobolrecipd", "sobolcount"
+
 function this = ldsobol_new ()
   // Create a new Sobol object.
   //

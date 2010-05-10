@@ -17,40 +17,13 @@ function str = %LOWDISC_string ( this )
   k = k + 1
   str(k) = sprintf("=========================")
   k = k + 1
-  str(k) = sprintf("Dimension of space: %s\n", _tostring(this.dimension))
+  str(k) = sprintf("method: %s\n", _tostring(this.method))
   k = k + 1
-  str(k) = sprintf("Method: %s\n", _tostring(this.method))
-  k = k + 1
-  str(k) = sprintf("Sequence Index: %s\n", _tostring(this.sequenceindex))
-  k = k + 1
-  str(k) = sprintf("Verbose logging: %s\n", _tostring(this.verbose))
-  k = k + 1
-  str(k) = sprintf("Skip: %s\n", _tostring(this.skip))
-  k = k + 1
-  str(k) = sprintf("Leap: %s\n", _tostring(this.leap))
-  k = k + 1
-  str(k) = sprintf("Van Der Corput Basis: %s\n", _tostring(this.vdcbasis))
-  k = k + 1
-  nbp = size(this.primeslist,"*")
-  if ( nbp > 10 ) then
-    str(k) = sprintf("Primes List (%d primes): %s %s\n", nbp , _tostring(this.primeslist(1:10)),"...")
-  else
-    str(k) = sprintf("Primes List (%d primes): %s\n", nbp , _tostring(this.primeslist))
-  end
-  k = k + 1
-  str(k) = sprintf("Started Up: %s\n", _tostring(this.startedup))
+  str(k) = sprintf("sequence: <a Low Discrepancy Sequence>\n")
   k = k + 1
 endfunction
 
-function bool = _mlist_isfield ( s , fieldname ) 
-  // Get the matrix of integers representing defined fields
-  df = definedfields ( s )
-  // Search for the index ifield associated with given fieldname
-  ifield = find(s(1)==fieldname)
-  // Search for ifield in the matrix of defined fields
-  jj = find(df==ifield)
-  bool = jj <> []
-endfunction
+
 function s = _tostring ( x )
   if ( x==[] ) then
     s = "[]"

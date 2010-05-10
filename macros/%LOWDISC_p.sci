@@ -11,6 +11,10 @@
 //   Prints the string containing the low discrepancy sequence
 //
 function %LOWDISC_p ( this )
-  lowdisc_print ( this )
+  str = string(this)
+  nbrows = size(str,"r")
+  for i = 1 : nbrows
+    mprintf("%s\n",str(i))
+  end
 endfunction
 

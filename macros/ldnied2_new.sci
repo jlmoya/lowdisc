@@ -7,6 +7,8 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
+// TODO : rename the "NR_cj", "NR_seed", "NR_nextq", "NR_recip", "NR_nbits" fields
+
 function this = ldnied2_new ()
   // Create a new Niederreiter Base 2 object.
   //

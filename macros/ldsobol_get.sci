@@ -8,11 +8,7 @@
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
 function value = ldsobol_get (this,key)
-  select key
-  else
-    errmsg = sprintf("%s: Unknown key %s","ldsobol_get",key);
-    error(errmsg);
-  end
-
+  errmsg = sprintf(gettext("%s: Unknown key %s"),"ldsobol_get",key);
+  error(errmsg);
 endfunction
 

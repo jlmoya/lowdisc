@@ -7,7 +7,7 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
-function value = ldfaure_cget (this,key)
+function value = ldrevhalf_cget (this,key)
 
   select key
   case "-verbose" then
@@ -23,7 +23,7 @@ function value = ldfaure_cget (this,key)
   case "-leap" then
     value = this.leap;
   else
-    errmsg = sprintf(gettext("%s: Unknown key %s"),"ldfaure_cget",key);
+    errmsg = sprintf(gettext("%s: Unknown key %s"),"ldrevhalf_cget",key);
     error(errmsg);
   end
 endfunction

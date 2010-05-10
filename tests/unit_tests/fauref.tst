@@ -1,4 +1,5 @@
-// Copyright (C) 2008 - INRIA - Michael Baudin
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
@@ -153,8 +154,7 @@ _lowdisc_faurefstop ( );
 //
 // Check the Faure sequence in dimension 3
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","fauref");
+rng = lowdisc_new("fauref");
 rng = lowdisc_configure(rng,"-dimension",3);
 rng = lowdisc_startup (rng);
 // Term #1
@@ -178,8 +178,7 @@ rng = lowdisc_destroy(rng);
 //
 // Compare the results against the data extracted from the TOMS 647 program.
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","fauref");
+rng = lowdisc_new("fauref");
 rng = lowdisc_configure(rng,"-dimension",3);
 // Skip qs^4 - 1 terms, as in TOMS implementation
 qs = lowdisc_get ( rng , "-faurefprime" );
@@ -295,8 +294,7 @@ rng = lowdisc_destroy(rng);
 //
 // Compare the results against the data extracted from the TOMS 647 program.
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","fauref");
+rng = lowdisc_new("fauref");
 rng = lowdisc_configure(rng,"-dimension",4);
 // Skip qs^4 - 1 terms, as in TOMS implementation
 qs = lowdisc_get ( rng , "-faurefprime" );
@@ -409,8 +407,7 @@ assert_close ( computed , expected , 1.e-5 );
 rng = lowdisc_destroy(rng);
 
 // Configure a list of primes and use it
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","fauref");
+rng = lowdisc_new("fauref");
 prarray = lowdisc_primes1000 ( );
 rng = lowdisc_configure(rng,"-primeslist",prarray);
 rng = lowdisc_configure(rng,"-dimension",150);

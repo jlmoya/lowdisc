@@ -23,7 +23,7 @@ function this = ldsobol_startup (this)
 //
   
   if (this.startedup<>0) then
-    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "lowdisc_startup" );
+    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "ldsobol_startup" );
     error(errmsg);
   end
   if (this.verbose) then

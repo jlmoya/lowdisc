@@ -46,7 +46,7 @@ function this = ldfauref_configure (this,key,value)
     this.leap = value;
   else
     errmsg = sprintf ( gettext ( "%s: Unknown key %s" ) , ...
-    "lowdisc_configure" , key)
+    "ldfauref_configure" , key)
     error(errmsg)
   end
 endfunction

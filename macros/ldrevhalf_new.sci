@@ -24,9 +24,7 @@ function this = ldrevhalf_new ()
   // Configurable options
   this.verbose=%f
   this.dimension=1
-  this.method="halton"
   this.sequenceindex=0
-  this.vdcbasis = 2
   // This makes the component available up to dimension 100
   this.primeslist = lowdisc_primes100 ( )
   this.skip = 0

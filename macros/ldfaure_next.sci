@@ -83,7 +83,7 @@ function next = _next_faure (this)
     ib = ib / basis
   end
   // Compute the element #i in the sequence
-  for idim = 1 : dimension
+  for idim = 1 : this.dimension
     ci = _fauremat ( r , idim - 1 )
     y = ci * digits
     ymodb = modulo ( y , basis )
@@ -106,6 +106,22 @@ endfunction
 // faurematrix(3,2) = [1 2 4; 0 1 4; 0 0 1]
 // faurematrix(2,1) = [1 1; 0 1]
 // faurematrix(2,2) = [1 2; 0 1]
+// faurematrix ( 5 , 1 );
+// expected = [
+//     1.    1.    1.    1.    1.                        
+//     0.    1.    2.    3.    4.  
+//     0.    0.    1.    3.    6.  
+//     0.    0.    0.    1.    4.  
+//     0.    0.    0.    0.    1.                        
+// ];
+// faurematrix ( 5 , 1 );
+// expected = [
+//     1.    1.    1.    1.    1.                        
+//     0.    1.    2.    3.    4.  
+//     0.    0.    1.    3.    6.  
+//     0.    0.    0.    1.    4.  
+//     0.    0.    0.    0.    1.                        
+// ];
 //
 function c = _fauremat ( r , i )
   for m = 1:r

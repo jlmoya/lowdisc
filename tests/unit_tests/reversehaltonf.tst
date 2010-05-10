@@ -114,8 +114,7 @@ _lowdisc_revhaltfstop ( );
 //
 // Check the Fast Reverse Halton sequence
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","reversehaltonf");
+rng = lowdisc_new("reversehaltonf");
 rng = lowdisc_configure(rng,"-dimension",2);
 rng = lowdisc_startup (rng);
 // Term #1
@@ -134,12 +133,8 @@ expected= [...
 assert_close ( computed, expected , 10 * %eps );
 rng = lowdisc_destroy(rng);
 
-//
-// The following is a port of the test out of the GSL
-//
-// test in dimension 2 */
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","reversehaltonf");
+// test in dimension 2
+rng = lowdisc_new("reversehaltonf");
 rng = lowdisc_configure(rng,"-dimension",2);
 rng = lowdisc_startup (rng);
 [rng,computed] = lowdisc_next (rng);
@@ -157,17 +152,9 @@ rng = lowdisc_destroy(rng);
 
 
 // test in dimension 3 */
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","reversehaltonf");
+rng = lowdisc_new("reversehaltonf");
 rng = lowdisc_configure(rng,"-dimension",3);
 rng = lowdisc_startup (rng);
-[rng,computed] = lowdisc_next (rng);
-[rng,computed] = lowdisc_next (rng);
-[rng,computed] = lowdisc_next (rng);
-assert_close ( computed, [0.75 2.0/9.0 0.4], 1.e-3 );
-[rng,computed] = lowdisc_next (rng);
-assert_close ( computed, [0.125 8.0/9.0 0.2], 1e-3 );
-rng = lowdisc_reset (rng);
 [rng,computed] = lowdisc_next (rng);
 [rng,computed] = lowdisc_next (rng);
 [rng,computed] = lowdisc_next (rng);

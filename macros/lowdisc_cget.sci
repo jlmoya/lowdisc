@@ -37,25 +37,34 @@ function value = lowdisc_cget (this,key)
   //   Michael Baudin - 2010 - DIGITEO
 
   select key
-  case "-verbose" then
-    value = this.verbose;
-  case "-dimension" then
-    value = this.dimension;
   case "-method" then
     value = this.method;
-  case "-sequenceindex" then
-    value = this.sequenceindex;
-  case "-vandercorputbasis" then
-    value = this.vdcbasis;
-  case "-primeslist" then
-    value = this.primeslist;
-  case "-skip" then
-    value = this.skip;
-  case "-leap" then
-    value = this.leap;
   else
-    errmsg = sprintf("Unknown key %s",key);
-    error(errmsg);
+    select this.method
+    case "halton" then
+      value     = ldhalton_cget ( this.sequence , key )
+    case "faure" then
+      value     = ldfaure_cget ( this.sequence , key )
+    case "reversehalton" then
+      value     = ldrevhal_cget ( this.sequence , key )
+    case "sobol" then
+      value     = ldsobol_cget ( this.sequence , key )
+    case "niederreiter-base-2" then
+      value     = ldnied2_cget ( this.sequence , key )
+    case "reversehaltonf" then
+      value     = ldrevhalf_cget ( this.sequence , key )
+    case "niederreiter-base-2f" then
+      value     = ldnied2f_cget ( this.sequence , key )
+    case "sobolf" then
+      value     = ldsobolf_cget ( this.sequence , key )
+    case "fauref" then
+      value     = ldfauref_cget ( this.sequence , key )
+    case "haltonf" then
+      value     = ldhaltonf_cget ( this.sequence , key )
+    else
+      errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_cget" , this.method);
+      error(errmsg);
+    end
   end
 endfunction
 

@@ -34,13 +34,13 @@ function [this,next] = ldsobolf_next ( varargin )
   
   for i=1:imax
     this.sequenceindex = this.sequenceindex + 1;
-    next = _lowdisc_sobolf ( this.sequenceindex )
+    onevector = _lowdisc_sobolf ( this.sequenceindex )
     next(i,1:this.dimension) = onevector
     // Leap over (i.e. ignore) as many elements as required
     if ( this.leap > 0 ) then
       for j = 1 : this.leap
         this.sequenceindex = this.sequenceindex + 1;
-        next = _lowdisc_sobolf ( this.sequenceindex )
+        onevector = _lowdisc_sobolf ( this.sequenceindex )
       end
     end
   end

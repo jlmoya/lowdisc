@@ -42,22 +42,3 @@ next = lowdisc_vdc ( 4 , basis );
 assert_close ( next , 0.125 , %eps );
 next = lowdisc_vdc ( 5 , basis );
 assert_close ( next , 0.625 , %eps );
-//
-// Check the Van Der Corput sequence
-//
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","vandercorput");
-rng = lowdisc_startup (rng);
-// Term #1
-[rng,computed] = lowdisc_next (rng);
-assert_close ( computed , 0.5 , %eps );
-// Terms #2 to #6
-[rng,computed]=lowdisc_next(rng,5);
-expected= [...
-    0.25 ;...
-    0.75 ;...   
-    0.125   ;...
-    0.625   ;...
-    0.375  ];
-assert_close ( computed , expected , %eps );
-rng = lowdisc_destroy(rng);

@@ -11,6 +11,6 @@
 //   Prints the string containing the low discrepancy sequence
 //
 function %LDSOBOL_p ( this )
-  lowdisc_print ( this )
+  ldgen_print ( this )
 endfunction
 

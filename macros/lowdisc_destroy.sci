@@ -31,40 +31,29 @@ function this = lowdisc_destroy (this)
   //   Michael Baudin - 2010 - DIGITEO
 
   select this.method
-  case "vandercorput" then
-    // Nothing to do
   case "halton" then
-    // Nothing to do
+    this.sequence     = ldhalton_destroy ( this.sequence )
   case "faure" then
-    // Nothing to do
+    this.sequence     = ldfaure_destroy ( this.sequence )
   case "reversehalton" then
-    // Nothing to do
+    this.sequence     = ldrevhal_destroy ( this.sequence )
   case "sobol" then
-    // Nothing to do
+    this.sequence     = ldsobol_destroy ( this.sequence )
   case "niederreiter-base-2" then
-    // Nothing to do
-  case "haltonf" then
-    if ( this.startedup == 1 ) then
-      _lowdisc_haltonfstop ( )
-    end
+    this.sequence     = ldnied2_destroy ( this.sequence )
   case "reversehaltonf" then
-    if ( this.startedup == 1 ) then
-      _lowdisc_revhaltfstop ( );
-    end
+    this.sequence     = ldrevhalf_destroy ( this.sequence )
   case "niederreiter-base-2f" then
-    // Nothing to do
+    this.sequence     = ldnied2f_destroy ( this.sequence )
   case "sobolf" then
-    if ( this.startedup == 1 ) then
-      _lowdisc_sobolfstop ( );
-    end
+    this.sequence     = ldsobolf_destroy ( this.sequence )
   case "fauref" then
-    if ( this.startedup == 1 ) then
-      _lowdisc_faurefstop ( )
-    end
+    this.sequence     = ldfauref_destroy ( this.sequence )
+  case "haltonf" then
+    this.sequence     = ldhaltonf_destroy ( this.sequence )
   else
-    errmsg = sprintf("Unknown method %s",this.method);
+    errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_destroy" , this.method);
     error(errmsg);
   end
-
 endfunction
 

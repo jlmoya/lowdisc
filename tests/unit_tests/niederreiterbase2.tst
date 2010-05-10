@@ -1,4 +1,5 @@
-// Copyright (C) 2008 - INRIA - Michael Baudin
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
@@ -34,8 +35,7 @@ endfunction
 //
 // Check the Niederreiter base 2 sequence
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","niederreiter-base-2");
+rng = lowdisc_new("niederreiter-base-2");
 rng = lowdisc_configure(rng,"-dimension",2);
 rng = lowdisc_startup (rng);
 // Term #1
@@ -58,8 +58,7 @@ rng = lowdisc_destroy(rng);
 //
 // Check the Niederreiter base 2 sequence in dimension 4
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","niederreiter-base-2");
+rng = lowdisc_new("niederreiter-base-2");
 rng = lowdisc_configure(rng,"-dimension",4);
 rng = lowdisc_startup (rng);
 // Term #1-12

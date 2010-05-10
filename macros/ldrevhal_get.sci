@@ -1,4 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
@@ -7,11 +8,7 @@
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
 function value = ldrevhal_get (this,key)
-  select key
-  else
-    errmsg = sprintf("%s: Unknown key %s","ldrevhal_get",key);
+    errmsg = sprintf(gettext("%s: Unknown key %s"),"ldrevhal_get",key);
     error(errmsg);
-  end
-
 endfunction
 

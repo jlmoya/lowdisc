@@ -18,16 +18,27 @@ This module currently provides the following functions:
 * lowdisc_cget : Returns the value associated with the given key for the given object.
 * lowdisc_configure : Update one option of the current object and returns an updated object.
 * lowdisc_destroy : Destroy the current object and returns an updated object.
-* lowdisc_display : Prints the current sequence.
 * lowdisc_new : Creates and returns a new sequence.
 * lowdisc_next : Returns the next vector in the sequence.
-* lowdisc_reset : Reset the random number generator.
 * lowdisc_startup : Startup a random number object.
-* lowdisc_terms : Returns several terms of the sequence.
 
 This component currently provides the following sequences:
 * "slow" sequences based on macros : vandercorput, halton, faure, reversehalton, sobol, niederreiter-base-2,
 * "fast" sequences based on C source code : reversehaltonf, niederreiter-base-2f, sobolf, fauref, haltonf.
+
+The internal design of the toolbox is based on the 
+following hierarchy.
+ * lowdisc is the highest level component.
+   It allows to access to any sequence with a constructor based 
+   on a string representing the sequence. For example, rng = lowdisc_new("halton")
+   creates a new Halton sequence.
+   In this framework, the lowdisc component allows to access to all sequences
+   with a single API, where all the methods are valid for all sequences and 
+   all sequences share the same options.
+ * ldhalton_new (), ldfaure_new (), etc... are each implementing a specific
+   low discrepancy sequence. Each sequence is independent of the others.
+   Each sequence has its specific options, but all must implement the 
+   following methods : new, destroy, configure, cget, get, startup and next.
 
 See the overview in the help provided with this toolbox.
 
@@ -37,9 +48,7 @@ Michael Baudin
 
 Licence
 
-This toolbox is released under the CeCILL_V2 licence :
-
-http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+This toolbox is distributed under the GNU LGPL license.
 
 
 

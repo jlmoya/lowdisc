@@ -48,79 +48,30 @@ function this = lowdisc_startup (this)
   //   Michael Baudin - 2010 - DIGITEO
   //
   
-  if (this.startedup<>0) then
-    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "lowdisc_startup" );
-    error(errmsg);
-  end
-  if (this.verbose) then
-    mprintf( "Starting up the sequence." );
-  end
-  this.startedup = 1;
-  //
-  // Create the sequence
-  //
   select this.method
-  case "vandercorput" then
-    // Nothing to do
   case "halton" then
-    if ( this.dimension > this.primessize ) then
-      errmsg = sprintf( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes" ),...
-      "lowdisc_startup" , this.method,this.dimension,this.primessize);
-      error(errmsg);
-    end
+    this.sequence     = ldhalton_startup ( this.sequence )
   case "faure" then
-    k = find(this.primeslist>=this.dimension,1)
-    if (k == []) then
-      errmsg = sprintf( gettext ( "%s: Faure sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
-        "lowdisc_startup" , this.dimension);
-      error(errmsg);
-    end
+    this.sequence     = ldfaure_startup ( this.sequence )
   case "reversehalton" then
-    if ( this.dimension > this.primessize ) then
-      errmsg = sprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"),...
-      "lowdisc_startup" , this.method,this.dimension,this.primessize);
-      error(errmsg);
-    end
+    this.sequence     = ldrevhal_startup ( this.sequence )
   case "sobol" then
-    this = lowdisc_startsobol ( this )
+    this.sequence     = ldsobol_startup ( this.sequence )
   case "niederreiter-base-2" then
-    this = lowdisc_startnieder2 ( this )
-  case "haltonf" then
-    seed = zeros(1,this.dimension);
-    leap = ones(1,this.dimension);
-    if ( this.dimension > this.primessize ) then
-      errmsg = sprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"),...
-      "lowdisc_startup" , this.method,this.dimension,this.primessize);
-      error(errmsg);
-    end
-    base = this.primeslist(1:this.dimension);
-    _lowdisc_haltonfstart ( this.dimension , base , seed , leap );
+    this.sequence     = ldnied2_startup ( this.sequence )
   case "reversehaltonf" then
-    _lowdisc_revhaltfstart ( this.dimension , this.primeslist(1:this.dimension) );
+    this.sequence     = ldrevhalf_startup ( this.sequence )
   case "niederreiter-base-2f" then
-    // Nothing to do
+    this.sequence     = ldnied2f_startup ( this.sequence )
   case "sobolf" then
-    _lowdisc_sobolfstart ( this.dimension );
+    this.sequence     = ldsobolf_startup ( this.sequence )
   case "fauref" then
-    k = find(this.primeslist>=this.dimension,1)
-    if (k == []) then
-      errmsg = sprintf( gettext ( "%s: Faure sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
-        "lowdisc_startup" , this.dimension);
-      error(errmsg);
-    end
-    qs = this.primeslist(k)
-    _lowdisc_faurefstart ( this.dimension , qs )
+    this.sequence     = ldfauref_startup ( this.sequence )
+  case "haltonf" then
+    this.sequence     = ldhaltonf_startup ( this.sequence )
   else
-    errmsg = sprintf(gettext ( "%s: Unknown method %s" ) , ...
-    "lowdisc_startup" , this.method);
+    errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_startup" , this.method);
     error(errmsg);
-  end
-  // Initialize the sequence
-  this.sequenceindex = 0;
-  // Skip (i.e. ignore) as many elements as required
-  // TODO : skip directly when sequence authorizes it.
-  if ( this.skip > 0 ) then
-    [ this , result ] = lowdisc_next ( this , this.skip )
   end
 endfunction
 
