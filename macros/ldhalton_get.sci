@@ -7,6 +7,11 @@
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
 function value = ldhalton_get (this,key)
+  select key
+  else
+    errmsg = sprintf(gettext("%s: Unknown key %s"),"ldhalton_get",key);
+    error(errmsg);
+  end
 
 endfunction
 

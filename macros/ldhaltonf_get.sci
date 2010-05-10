@@ -1,4 +1,4 @@
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
@@ -6,11 +6,12 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
-//
-// %LDFAURE_p --
-//   Prints the string containing the low discrepancy sequence
-//
-function %LDFAURE_p ( this )
-  lowdisc_print ( this )
+function value = ldhaltonf_get (this,key)
+
+  select key
+  else
+    errmsg = sprintf(gettext("%s: Unknown key %s"),"ldhaltonf_get",key);
+    error(errmsg);
+  end
 endfunction
 

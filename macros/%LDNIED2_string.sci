@@ -13,7 +13,7 @@
 function str = %LDNIED2_string ( this )
   str = []
   k = 1
-  str(k) = sprintf("Low Discrepancy Sequence:")
+  str(k) = sprintf("Low Discrepancy Sequence: Niederreiter Base 2")
   k = k + 1
   str(k) = sprintf("=========================")
   k = k + 1

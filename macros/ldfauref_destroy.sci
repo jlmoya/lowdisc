@@ -1,3 +1,4 @@
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the CeCILL.
@@ -6,11 +7,11 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
-//
-// %LDFAURE_p --
-//   Prints the string containing the low discrepancy sequence
-//
-function %LDFAURE_p ( this )
-  lowdisc_print ( this )
+function this = ldfauref_destroy (this)
+
+    if ( this.startedup == 1 ) then
+      _lowdisc_faurefstop ( )
+    end
+
 endfunction
 

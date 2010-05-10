@@ -7,10 +7,14 @@
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
 //
-// %LDFAURE_p --
+// lowdisc_print --
 //   Prints the string containing the low discrepancy sequence
 //
-function %LDFAURE_p ( this )
-  lowdisc_print ( this )
+function lowdisc_print ( this )
+  str = string(this)
+  nbrows = size(str,"r")
+  for i = 1 : nbrows
+    mprintf("%s\n",str(i))
+  end
 endfunction
 

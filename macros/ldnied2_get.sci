@@ -7,6 +7,11 @@
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
 function value = ldnied2_get (this,key)
+  select key
+  else
+    errmsg = sprintf("%s: Unknown key %s","ldnied2_get",key);
+    error(errmsg);
+  end
 
 endfunction
 

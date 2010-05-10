@@ -7,10 +7,10 @@
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
 //
-// %LDFAURE_p --
+// %LDREVHALF_p --
 //   Prints the string containing the low discrepancy sequence
 //
-function %LDFAURE_p ( this )
+function %LDREVHALF_p ( this )
   lowdisc_print ( this )
 endfunction
 

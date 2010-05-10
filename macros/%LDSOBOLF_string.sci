@@ -7,13 +7,13 @@
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
 //
-// %LDHALTON_string --
+// %LDSOBOLF_string --
 //   Returns the string containing the low discrepancy sequence
 //
-function str = %LDHALTON_string ( this )
+function str = %LDSOBOLF_string ( this )
   str = []
   k = 1
-  str(k) = sprintf("Low Discrepancy Sequence: Halton")
+  str(k) = sprintf("Low Discrepancy Sequence: Fast Sobol")
   k = k + 1
   str(k) = sprintf("=========================")
   k = k + 1

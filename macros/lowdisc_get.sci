@@ -82,7 +82,7 @@ function value = lowdisc_get (this,key)
     end
     value  = this.primeslist ( k )
   else
-    errmsg = sprintf("Unknown key %s",key);
+    errmsg = sprintf(gettext("%s: Unknown key %s"),"lowdisc_get",key);
     error(errmsg);
   end
 endfunction
