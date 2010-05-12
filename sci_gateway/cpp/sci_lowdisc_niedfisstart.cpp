@@ -13,21 +13,27 @@ extern "C" {
 
 
 #include "gw_lowdisc_support.h" 
+#include "lowdisc_math.h" 
 #include "niederreiter.h" 
 
 
-// dim = _lowdisc_niedfdimget ( )
-//   Get the dimension of the Niederreiter sequence.
-// Arguments
-//   dim : a positive integer, the number of parameters
-int sci_lowdisc_niedfdimget (char *fname) {
-	int dim;
-	//
+// start = _lowdisc_niedfisstart ( )
+//   Returns 1 if the sequence is started up, 0 if not.
+// TODO : return a boolean instead of a double
+int sci_lowdisc_niedfisstart (char *fname) {
+	bool start;
+
 	CheckRhs(0,0) ;
 	CheckLhs(0,1) ;
-	//
-	dim = niederreiter_dim_num_get ( );
-	//
-	lowdisc_CreateLhsInteger ( 1 , dim );
+
+	start = niederreiter_isstart ( );
+	if ( start )
+	{
+	  lowdisc_CreateLhsInteger ( 1 , 1 );
+	} 
+	else 
+	{
+	  lowdisc_CreateLhsInteger ( 1 , 0 );
+	}
 	return 0;
 }

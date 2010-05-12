@@ -19,12 +19,11 @@ extern "C" {
 
 // quasi = _lowdisc_haltonf ( step )
 //   Get the next element of the Halton sequence.
+// TODO : rename as _lowdisc_haltonfnext
 int sci_lowdisc_haltonf (char *fname) {
 	int step;
 	int dim;
 	double * quasi = NULL;
-	int INCX;
-	int INCY;
 	int nRows;
 	int nCols;
 	int ierr;

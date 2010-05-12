@@ -19,6 +19,7 @@ extern "C" {
 
 // quasi = _lowdisc_revhaltf ( iter )
 //   Get the next element of the reverse Halton sequence.
+// TODO : rename as _lowdisc_revhaltfnext
 int sci_lowdisc_revhaltf (char *fname) {
 	int iter;
 	int dim;

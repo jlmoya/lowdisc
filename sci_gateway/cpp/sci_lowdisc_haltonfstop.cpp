@@ -17,7 +17,7 @@ extern "C" {
 #include "halton.h" 
 
 
-// quasi = _lowdisc_haltonfstop ( )
+// _lowdisc_haltonfstop ( )
 //   Stop the Halton sequence.
 int sci_lowdisc_haltonfstop (char *fname) {
 	

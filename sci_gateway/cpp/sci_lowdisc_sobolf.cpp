@@ -19,6 +19,7 @@ extern "C" {
 
 // quasi = _lowdisc_sobolf ( seed )
 //   Get the next element of the Sobol sequence.
+// TODO : rename as _lowdisc_sobolfnext
 int sci_lowdisc_sobolf (char *fname) {
 	int dim;
 	int seed = 0;

@@ -38,18 +38,25 @@ extern "C" {
 	int sci_lowdisc_faurefstart (char *fname);
 	int sci_lowdisc_faurefstop (char *fname);
 	int sci_lowdisc_fauref (char *fname);
+	int sci_lowdisc_faurefdimget (char *fname);
 	int sci_lowdisc_faurefbaseget (char *fname);
 	int sci_lowdisc_faurefisstart (char *fname);
-	int sci_lowdisc_faurefdimget (char *fname);
 	//
 	// Fast Reverse Halton
 	int sci_lowdisc_revhaltfstart (char *fname);
 	int sci_lowdisc_revhaltfstop (char *fname);
 	int sci_lowdisc_revhaltf (char *fname);
-	int sci_lowdisc_revhaltfbaseget (char *fname);
 	int sci_lowdisc_revhaltfdimget (char *fname);
+	int sci_lowdisc_revhaltfbaseget (char *fname);
 	int sci_lowdisc_revhaltfisstart (char *fname);
 	//
-//	int sci_lowdisc_niederf (char *fname);
+	// Fast Niederreiter
+	int sci_lowdisc_niedfstart (char *fname);
+	int sci_lowdisc_niedfstop (char *fname);
+	int sci_lowdisc_niedf (char *fname);
+	int sci_lowdisc_niedfbaseget (char *fname);
+	int sci_lowdisc_niedfdimget (char *fname);
+	int sci_lowdisc_niedfskipget (char *fname);
+	int sci_lowdisc_niedfisstart (char *fname);
 }
 #endif /* __SCI_GW_LOWDISC_H__ */
