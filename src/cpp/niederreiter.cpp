@@ -33,67 +33,164 @@ void setfld ( int q );
 //    gives the order Q of a field, its characteristic P, and its
 //    addition, multiplication, and subtraction tables.
 //
-//    Global, int DEG_MAX, the maximum degree of the polynomials
+//    Global, int nieder_DEG_MAX, the maximum degree of the polynomials
 //    to be considered.
 //
 //    Global, int P, the characteristic of the field.
 //
 //    Global, int Q, the order of the field.
 //
-//    Global, int Q_MAX, the order of the largest field to
+//    Global, int nieder_Q_MAX, the order of the largest field to
 //    be handled.
 //
-//    Global, int ADD[Q_MAX][Q_MAX], the field addition table. 
+//    Global, int ADD[nieder_Q_MAX][nieder_Q_MAX], the field addition table. 
 //
-//    Global, int MUL[Q_MAX][Q_MAX], the field multiplication table. 
+//    Global, int MUL[nieder_Q_MAX][nieder_Q_MAX], the field multiplication table. 
 //
-//    Global, int SUB[Q_MAX][Q_MAX], the field subtraction table.
+//    Global, int SUB[nieder_Q_MAX][nieder_Q_MAX], the field subtraction table.
 //
-const int DEG_MAX = 50;
-int P;
-int Q;
-const int Q_MAX = 50;
+int nieder_P;
+int nieder_Q;
+const int nieder_DEG_MAX = 50;
+const int nieder_Q_MAX = 50;
 
-int add[Q_MAX][Q_MAX];
-int mul[Q_MAX][Q_MAX];
-int sub[Q_MAX][Q_MAX];
+int nieder_add[nieder_Q_MAX][nieder_Q_MAX];
+int nieder_mul[nieder_Q_MAX][nieder_Q_MAX];
+int nieder_sub[nieder_Q_MAX][nieder_Q_MAX];
 //
 //  GLOBAL DATA "/COMM/"
 //
-//    Global, int C[DIM_MAX,FIG_MAX,0:FIG_MAX-1], the values of 
+//    Global, int C[nieder_DIM_MAX,nieder_FIG_MAX,0:nieder_FIG_MAX-1], the values of 
 //    Niederreiter's C(I,J,R).
 //
-//    Global, int COUNT[0:FIG_MAX-1], the index of the current item 
+//    Global, int COUNT[0:nieder_FIG_MAX-1], the index of the current item 
 //    in the sequence, expressed as an array of base-Q digits.  COUNT(R)
 //    is the same as Niederreiter's AR(N) (page 54) except that N is implicit.
 //
-//    Global, int D[DIM_MAX][FIG_MAX].
+//    Global, int D[nieder_DIM_MAX][nieder_FIG_MAX].
 //
 //    Global, int DIMEN, the dimension of the sequence to be generated.
 //
-//    Global, int NEXTQ[DIM_MAX], the numerators of the next item in 
+//    Global, int NEXTQ[nieder_DIM_MAX], the numerators of the next item in 
 //    the series.  These are like Niederreiter's XI(N) (page 54) except that
 //    N is implicit, and the NEXTQ are integers.  To obtain the values of 
 //    XI(N), multiply by RECIP.
 //
 //    Global, int NFIGS, the number of base Q digits we are using.
 //
-//    Global, int QPOW[FIG_MAX], to speed things up a bit. 
+//    Global, int QPOW[nieder_FIG_MAX], to speed things up a bit. 
 //    QPOW(I) = Q ** (NFIGS-I).
 //
 //    Global, double RECIP = 1.0 / Q^NFIGS.
 //
-const int DIM_MAX = 50;
-const int FIG_MAX = 20;
+const int nieder_DIM_MAX = 50;
+const int nieder_FIG_MAX = 20;
 
-int C[DIM_MAX][FIG_MAX][FIG_MAX];
-int COUNT[FIG_MAX];
-int D[DIM_MAX][FIG_MAX];
-int DIMEN;
-int NEXTQ[DIM_MAX];
-int NFIGS;
-int QPOW[FIG_MAX];
-double RECIP;
+int nieder_C[nieder_DIM_MAX][nieder_FIG_MAX][nieder_FIG_MAX];
+int nieder_COUNT[nieder_FIG_MAX];
+int nieder_D[nieder_DIM_MAX][nieder_FIG_MAX];
+int nieder_DIMEN;
+int nieder_BASE;
+int nieder_SKIP;
+int nieder_NEXTQ[nieder_DIM_MAX];
+int nieder_NFIGS;
+int nieder_QPOW[nieder_FIG_MAX];
+double nieder_RECIP;
+bool nieder_startup = false;
+
+//****************************************************************************80
+
+void niederreiter_start ( int dim_num, int base, int skip )
+// niederreiter_start
+//   Startup the Niederreiter sequence.
+//   TODO : allocate the memory instead of static arrays
+//
+//  Parameters:
+//
+//    Input, int DIM_NUM, the spatial dimension.
+//
+//    Input, int BASE, the base to use for the Niederreiter sequence.
+//    The base should be a prime, or a power of a prime.
+//
+{
+	if ( nieder_startup )
+	{
+		ostringstream msg;
+		msg << "niederreiter - niederreiter_start - Error!\n";
+		msg << "  Startup is already done.\n";
+		lowdisc_error(msg.str());
+		return;
+	}
+	nieder_startup = true;
+
+	nieder_BASE = base;
+	nieder_SKIP = skip;
+	inlo ( dim_num, base, skip );
+	return;
+}
+
+//****************************************************************************80
+
+void niederreiter_stop ( )
+// niederreiter_stop
+//   Stop the Niederreiter sequence.
+//   TODO : de-allocate the memory (obviously after the first fix : allocate the memory).
+//
+{
+	if ( !nieder_startup )
+	{
+		ostringstream msg;
+		msg << "niederreiter - niederreiter_stop - Error!\n";
+		msg << "  Startup is not done.\n";
+		lowdisc_error(msg.str());
+		return;
+	}
+	nieder_startup = false;
+	return;
+}
+
+//****************************************************************************80
+
+void niederreiter ( double r[] )
+
+//****************************************************************************80
+//
+//  Purpose:
+//
+//    NIEDERREITER returns an element of a Niederreiter sequence for base BASE.
+//
+//  Licensing:
+//
+//    This code is distributed under the GNU LGPL license. 
+//
+//  Modified:
+//
+//    11 September 2007
+//
+//  Author:
+//
+//    John Burkardt
+//
+//  Parameters:
+//
+//    Input/output, int *SEED, a seed for the random number generator.
+//
+//    Output, double R[DIM_NUM], the element of the sequence.
+//
+{
+
+	if ( !nieder_startup )
+	{
+		ostringstream msg;
+		msg << "niederreiter - niederreiter - Error!\n";
+		msg << "  Startup is not done.\n";
+		lowdisc_error(msg.str());
+		return;
+	}
+	golo ( r );
+
+	return;
+}
 
 //****************************************************************************80
 
@@ -149,7 +246,7 @@ void calcc ( void )
 //
 //  Local Parameters:
 //
-//    Local, int MAXE; we need DIM_MAX irreducible polynomials over GF(Q).
+//    Local, int MAXE; we need nieder_DIM_MAX irreducible polynomials over GF(Q).
 //    MAXE is the highest degree among these.
 //
 //    Local, int V_MAX, the maximum index used in V.
@@ -158,9 +255,9 @@ void calcc ( void )
 //
 {
 	const int maxe = 5;
-	const int v_max = FIG_MAX + maxe;
+	const int v_max = nieder_FIG_MAX + maxe;
 
-	int b[DEG_MAX+2];
+	int b[nieder_DEG_MAX+2];
 	int e;
 	ifstream input;
 	char *input_filename = "gfplys.txt";
@@ -185,12 +282,12 @@ void calcc ( void )
 		{
 			ostringstream msg;
 			msg << "niederrreiter - CALCC - Error!\n"; 
-			msg << "  Could not find tables for Q = " << Q << "\n";
+			msg << "  Could not find tables for Q = " << nieder_Q << "\n";
 			lowdisc_error(msg.str());
 			return;
 		}
 
-		if ( i == Q )
+		if ( i == nieder_Q )
 		{
 			break;
 		}
@@ -205,7 +302,7 @@ void calcc ( void )
 		}
 	}
 
-	for ( i = 0; i < DIMEN; i++ )
+	for ( i = 0; i < nieder_DIMEN; i++ )
 	{
 		//
 		//  For each dimension, we need to calculate powers of an
@@ -239,7 +336,7 @@ void calcc ( void )
 		//
 		u = 0;
 
-		for ( j = 0; j < NFIGS; j++ )
+		for ( j = 0; j < nieder_NFIGS; j++ )
 		{
 			//
 			//  If U = 0, we need to set B to the next power of PX
@@ -254,9 +351,9 @@ void calcc ( void )
 			//  (page 65, near the bottom), and then gets C from A (page 56,
 			//  equation (7)).  However this can be done in one step.
 			//
-			for ( r = 0; r < NFIGS; r++ )
+			for ( r = 0; r < nieder_NFIGS; r++ )
 			{
-				C[i][j][r] = v[r+u];
+				nieder_C[i][j][r] = v[r+u];
 			}
 			//
 			//  Increment U.  If U = E, then U = 0 and in Niederreiter's
@@ -323,7 +420,7 @@ void calcv ( int px[], int b[], int v[], int v_max )
 //    for the dimension currently being considered.  The degree of PX will 
 //    be called E.
 //
-//    Input/output, int B[DEG_MAX+2].  On input, B is the polynomial 
+//    Input/output, int B[nieder_DEG_MAX+2].  On input, B is the polynomial 
 //    defined in section 2.3 of BFN.  The degree of B implicitly defines 
 //    the parameter J of section 3.3, by degree(B) = E*(J-1).  On output, 
 //    B has been multiplied by PX, so its degree is now E*J.
@@ -352,7 +449,7 @@ void calcv ( int px[], int b[], int v[], int v_max )
 	int *b2;
 	int bigm;
 	int e;
-	int h[DEG_MAX+2];
+	int h[nieder_DEG_MAX+2];
 	int i;
 	int j;
 	int kj;
@@ -368,7 +465,7 @@ void calcv ( int px[], int b[], int v[], int v_max )
 	//  In section 3.3, the values of Hi are defined with a minus sign:
 	//  don't forget this if you use them later//
 	//
-	for ( i = 0; i < DEG_MAX + 2; i++ )
+	for ( i = 0; i < nieder_DEG_MAX + 2; i++ )
 	{
 		h[i] = b[i];
 	}
@@ -382,7 +479,7 @@ void calcv ( int px[], int b[], int v[], int v_max )
 	//
 	b2 = plymul ( px, b );
 
-	for ( i = 0; i < DEG_MAX + 2; i++ )
+	for ( i = 0; i < nieder_DEG_MAX + 2; i++ )
 	{
 		b[i] = b2[i];
 	}
@@ -413,7 +510,7 @@ void calcv ( int px[], int b[], int v[], int v_max )
 
 	if ( kj < bigm )
 	{
-		term = sub [0] [ h[kj+1] ];
+		term = nieder_sub [0] [ h[kj+1] ];
 
 		for ( r = kj + 1; r <= bigm - 1; r++ )
 		{
@@ -422,12 +519,12 @@ void calcv ( int px[], int b[], int v[], int v_max )
 			//  Check the condition of section 3.3,
 			//  remembering that the H's have the opposite sign.
 			//
-			term = sub [ term ] [ mul [ h[r+1] ] [ v[r] ] ];
+			term = nieder_sub [ term ] [ nieder_mul [ h[r+1] ] [ v[r] ] ];
 		}
 		//
 		//  Now V(BIGM) is anything but TERM.
 		//
-		v[bigm] = add [ nonzer] [ term ];
+		v[bigm] = nieder_add [ nonzer] [ term ];
 		for ( i = bigm + 1; i <= m - 1; i++ )
 		{
 			v[i] = arbit;
@@ -449,7 +546,7 @@ void calcv ( int px[], int b[], int v[], int v_max )
 		term = 0;
 		for ( i = 0; i <= m - 1; i++ )
 		{
-			term = sub [ term ] [ mul [ b[i+1] ] [ v[r+i] ] ];
+			term = nieder_sub [ term ] [ nieder_mul [ b[i+1] ] [ v[r+i] ] ];
 		}
 		v[r+m] = term;
 	}
@@ -517,9 +614,9 @@ void golo ( double quasi[] )
 	//  Multiply the numerators in NEXTQ by RECIP to get the next
 	//  quasi-random vector.
 	//
-	for ( i = 0; i < DIMEN; i++ )
+	for ( i = 0; i < nieder_DIMEN; i++ )
 	{
-		quasi[i] = ( double ) ( NEXTQ[i] ) * RECIP;
+		quasi[i] = ( double ) ( nieder_NEXTQ[i] ) * nieder_RECIP;
 	}
 	//
 	//  Update COUNT, treated as a base-Q integer.  Instead of
@@ -533,7 +630,7 @@ void golo ( double quasi[] )
 
 	for ( ; ; )
 	{
-		if ( NFIGS <= r )
+		if ( nieder_NFIGS <= r )
 		{
 			ostringstream msg;
 			msg << "niederrreiter - GOLO - Error!\n";
@@ -542,33 +639,33 @@ void golo ( double quasi[] )
 			return;
 		}
 
-		oldcnt = COUNT[r];
+		oldcnt = nieder_COUNT[r];
 
-		if ( COUNT[r] < Q - 1 )
+		if ( nieder_COUNT[r] < nieder_Q - 1 )
 		{
-			COUNT[r] = COUNT[r] + 1;
+			nieder_COUNT[r] = nieder_COUNT[r] + 1;
 		}
 		else
 		{
-			COUNT[r] = 0;
+			nieder_COUNT[r] = 0;
 		}
 
-		diff = sub [ COUNT[r] ] [ oldcnt ];
+		diff = nieder_sub [ nieder_COUNT[r] ] [ oldcnt ];
 		//
 		//  Digit R has just changed.  DIFF says how much it changed
 		//  by.  We use this to update the values of array D.
 		//
-		for ( i = 0; i < DIMEN; i++ )
+		for ( i = 0; i < nieder_DIMEN; i++ )
 		{
-			for ( j = 0; j < NFIGS; j++ )
+			for ( j = 0; j < nieder_NFIGS; j++ )
 			{
-				D[i][j] = add [ D[i][j] ] [ mul [ C[i][j][r] ] [ diff ] ];
+				nieder_D[i][j] = nieder_add [ nieder_D[i][j] ] [ nieder_mul [ nieder_C[i][j][r] ] [ diff ] ];
 			}
 		}
 		//
 		//  If COUNT(R) is now zero, we must propagate the carry.
 		//
-		if ( COUNT[r] != 0 )
+		if ( nieder_COUNT[r] != 0 )
 		{
 			break;
 		}
@@ -578,16 +675,16 @@ void golo ( double quasi[] )
 	//
 	//  Now use the updated values of D to calculate NEXTQ.
 	//  Array QPOW helps to speed things up a little:
-	//  QPOW(J) is Q^(NFIGS-J).
+	//  QPOW(J) is Q^(nieder_NFIGS-J).
 	//
-	for ( i = 0; i < DIMEN; i++ )
+	for ( i = 0; i < nieder_DIMEN; i++ )
 	{
 		nq = 0;
-		for ( j = 0; j < NFIGS; j++ )
+		for ( j = 0; j < nieder_NFIGS; j++ )
 		{
-			nq = nq + D[i][j] * QPOW[j];
+			nq = nq + nieder_D[i][j] * nieder_QPOW[j];
 		}
-		NEXTQ[i] = nq;
+		nieder_NEXTQ[i] = nq;
 	}
 
 	return;
@@ -757,14 +854,23 @@ void inlo ( int dim, int base, int skip )
 	int r;
 	double temp;
 
-	DIMEN = dim;
+	nieder_DIMEN = dim;
 
-	if ( DIMEN <= 0 || DIM_MAX < DIMEN )
+	if ( nieder_DIMEN <= 0 || nieder_DIM_MAX < nieder_DIMEN )
 	{
 		ostringstream msg;
 		msg << "niederreiter - INLO - Error!\n";
 		msg << "  Bad spatial dimension.\n";
 		lowdisc_error(msg.str());
+		return;
+	}
+	if ( base < 1 ) 
+	{
+		ostringstream msg;
+		msg << "niederreiter - inlo - Error!\n";
+		msg << "  Base must be greater than 1.\n";
+		msg << "  base = " << base << "\n";
+		lowdisc_error ( msg.str() );
 		return;
 	}
 
@@ -781,9 +887,9 @@ void inlo ( int dim, int base, int skip )
 	//
 	//  Calculate how many figures to use in base Q = BASE
 	//
-	temp = log ( pow ( 2.0, nbits ) - 1.0 ) / log ( ( double ) ( Q ) );
+	temp = log ( pow ( 2.0, nbits ) - 1.0 ) / log ( ( double ) ( nieder_Q ) );
 
-	NFIGS = i4_min ( FIG_MAX, ( int ) temp );
+	nieder_NFIGS = i4_min ( nieder_FIG_MAX, ( int ) temp );
 	//
 	//  Calculate the C array.
 	//
@@ -791,24 +897,33 @@ void inlo ( int dim, int base, int skip )
 	//
 	//  Set RECIP.
 	//
-	RECIP = 1.0 / ( double ) ( i4_power ( Q, NFIGS ) );
+	nieder_RECIP = 1.0 / ( double ) ( i4_power ( nieder_Q, nieder_NFIGS ) );
 	//
-	//  Set QPOW(I) = Q^(NFIGS-I).
+	//  Set QPOW(I) = Q^(nieder_NFIGS-I).
 	//
-	QPOW[NFIGS-1] = 1;
-	for ( i = NFIGS - 1; 1 <= i; i-- )
+	nieder_QPOW[nieder_NFIGS-1] = 1;
+	for ( i = nieder_NFIGS - 1; 1 <= i; i-- )
 	{
-		QPOW[i-1] = Q * QPOW[i];
+		nieder_QPOW[i-1] = nieder_Q * nieder_QPOW[i];
 	}
 	//
 	//  Initialize COUNT.
 	//
+	if ( skip < 0 ) 
+	{
+		ostringstream msg;
+		msg << "niederreiter - inlo - Error!\n";
+		msg << "  Skip must be greater than 1.\n";
+		msg << "  skip = " << skip << "\n";
+		lowdisc_error ( msg.str() );
+		return;
+	}
 	i = skip;
 
-	for ( r = 0; r < NFIGS; r++ )
+	for ( r = 0; r < nieder_NFIGS; r++ )
 	{
-		COUNT[r] = ( i % Q );
-		i = i / Q;
+		nieder_COUNT[r] = ( i % nieder_Q );
+		i = i / nieder_Q;
 	}
 
 	if ( i != 0 )
@@ -822,23 +937,23 @@ void inlo ( int dim, int base, int skip )
 	//
 	//  Initialize D.
 	//
-	for ( i = 0; i < DIMEN; i++ )
+	for ( i = 0; i < nieder_DIMEN; i++ )
 	{
-		for ( j = 0; j < NFIGS; j++ )
+		for ( j = 0; j < nieder_NFIGS; j++ )
 		{
-			D[i][j] = 0;
+			nieder_D[i][j] = 0;
 		}
 	}
 
-	for ( r = 0; r < NFIGS; r++ )
+	for ( r = 0; r < nieder_NFIGS; r++ )
 	{
-		if ( COUNT[r] != 0 )
+		if ( nieder_COUNT[r] != 0 )
 		{
-			for ( i = 0; i < DIMEN; i++ )
+			for ( i = 0; i < nieder_DIMEN; i++ )
 			{
-				for ( j = 0; j < NFIGS; j++ )
+				for ( j = 0; j < nieder_NFIGS; j++ )
 				{
-					D[i][j] = add [ D[i][j] ] [ mul [ C[i][j][r] ] [ COUNT[r] ] ];
+					nieder_D[i][j] = nieder_add [ nieder_D[i][j] ] [ nieder_mul [ nieder_C[i][j][r] ] [ nieder_COUNT[r] ] ];
 				}
 			}
 		}
@@ -846,190 +961,20 @@ void inlo ( int dim, int base, int skip )
 	//
 	//  Initialize NEXTQ.
 	//
-	for ( i = 0; i < DIMEN; i++ )
+	for ( i = 0; i < nieder_DIMEN; i++ )
 	{
 		nq = 0;
-		for ( j = 0; j < NFIGS; j++ )
+		for ( j = 0; j < nieder_NFIGS; j++ )
 		{
-			nq = nq + D[i][j] * QPOW[j];
+			nq = nq + nieder_D[i][j] * nieder_QPOW[j];
 		}
-		NEXTQ[i] = nq;
+		nieder_NEXTQ[i] = nq;
 	}
 
 	return;
 }
 //****************************************************************************80
 
-void niederreiter ( int dim_num, int base, int *seed, double r[] )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    NIEDERREITER returns an element of a Niederreiter sequence for base BASE.
-//
-//  Licensing:
-//
-//    This code is distributed under the GNU LGPL license. 
-//
-//  Modified:
-//
-//    11 September 2007
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Input, int DIM_NUM, the spatial dimension.
-//
-//    Input, int BASE, the base to use for the Niederreiter sequence.
-//    The base should be a prime, or a power of a prime.
-//
-//    Input/output, int *SEED, a seed for the random number generator.
-//
-//    Output, double R[DIM_NUM], the element of the sequence.
-//
-{
-	static int dim_num_save = -1;
-	int skip;
-
-	if ( dim_num_save < 1 || dim_num != dim_num_save || *seed <= 0 )
-	{
-		skip = 1;
-
-		inlo ( dim_num, base, skip );
-
-		dim_num_save = dim_num;
-	}
-
-	golo ( r );
-
-	*seed = *seed + 1;
-
-	return;
-}
-//****************************************************************************80
-
-void niederreiter_generate ( int dim_num, int n, int base, int *seed, double r[] )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    NIEDERREITER_GENERATE generates a set of Niederreiter values.
-//
-//  Licensing:
-//
-//    This code is distributed under the GNU LGPL license. 
-//
-//  Modified:
-//
-//    11 September 2007
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Input, int DIM_NUM, the spatial dimension.
-//
-//    Input, int N, the number of points desired.
-//
-//    Input, int BASE, the base to use for the Niederreiter sequence.
-//    The base should be a prime, or a power of a prime.
-//
-//    Input/output, int *SEED, a seed for the random number generator.
-//
-//    Output, double R[DIM_NUM*N], the points.
-//
-{
-	int j;
-
-	for ( j = 0; j < n; j++ )
-	{
-		niederreiter ( dim_num, base, seed, r+j*dim_num );
-	}
-
-	return;
-}
-//****************************************************************************80
-
-void niederreiter_write ( int dim_num, int n, int base, int skip, double r[], char *output_filename )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    NIEDERREITER_WRITE writes a set of Niederreiter values to a file.
-//
-//  Licensing:
-//
-//    This code is distributed under the GNU LGPL license. 
-//
-//  Modified:
-//
-//    12 September 2007
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Input, int DIM_NUM, the spatial dimension.
-//
-//    Input, int N, the number of points desired.
-//
-//    Input, int BASE, the base.
-//
-//    Input, int SKIP, the number of initial points skipped.
-//
-//    Input, double R[DIM_NUM*N], the points.
-//
-//    Input, char *OUTPUT_FILENAME, the name of the
-//    file to which the output should be written.
-//
-{
-	int dim;
-	int j;
-	ofstream output;
-	char *string;
-
-	output.open ( output_filename );
-
-	string = timestring ( );
-
-	output << "#  " << output_filename << "\n";
-	output << "#  created by NIEDERREITER.F90.\n";
-	output << "#\n";
-	output << "#  File generated on " << string << "\n";
-	output << "#\n";
-	output << "#  Spatial dimension DIM_NUM = " << dim_num << "\n";
-	output << "#  Number of points N = " << n << "\n";
-	output << "#  EPSILON (unit roundoff) = " << r8_epsilon ( ) << "\n";
-	output << "#  Base: " << base << "\n";
-	output << "#  Initial values skipped = " << skip << "\n";
-	output << "#\n";
-
-	delete [] string;
-
-	for ( j = 0; j < n; j++ )
-	{
-		for ( dim = 0; dim < dim_num; dim++ )
-		{
-			output << "  " << setw(10) << r[dim+j*dim_num];
-		}
-		output << "\n";
-	}
-
-	output.close ( );
-
-	return;
-}
-//****************************************************************************80
 
 int *plymul ( int pa[], int pb[] )
 
@@ -1066,11 +1011,11 @@ int *plymul ( int pa[], int pb[] )
 //
 //  Parameters:
 //
-//    Input, int PA[DEG_MAX+2], the first polynomial.
+//    Input, int PA[nieder_DEG_MAX+2], the first polynomial.
 //
-//    Input, int PB[DEG_MAX+2], the second polynomial.
+//    Input, int PB[nieder_DEG_MAX+2], the second polynomial.
 //
-//    Output, int PLYMUL[DEG_MAX+2], the product polynomial.
+//    Output, int PLYMUL[nieder_DEG_MAX+2], the product polynomial.
 //
 {
 	int dega;
@@ -1081,7 +1026,7 @@ int *plymul ( int pa[], int pb[] )
 	int *pc;
 	int term;
 
-	pc = new int[DEG_MAX+2];
+	pc = new int[nieder_DEG_MAX+2];
 
 	dega = pa[0];
 	degb = pb[0];
@@ -1095,11 +1040,11 @@ int *plymul ( int pa[], int pb[] )
 		degc = dega + degb;
 	}
 
-	if ( DEG_MAX < degc )
+	if ( nieder_DEG_MAX < degc )
 	{
 		ostringstream msg;
 		msg << "niederreiter - PLYMUL - Error!\n";
-		msg << "  The degree of the product exceeds DEG_MAX.\n";
+		msg << "  The degree of the product exceeds nieder_DEG_MAX.\n";
 		lowdisc_error(msg.str());
 		return 0;
 	}
@@ -1109,14 +1054,14 @@ int *plymul ( int pa[], int pb[] )
 		term = 0;
 		for ( j = i4_max ( 0, i - dega ); j <= i4_min ( degb, i ); j++ )
 		{
-			term = add [ term ] [ mul [ pa[i-j+1] ] [ pb[j+1] ] ];
+			term = nieder_add [ term ] [ nieder_mul [ pa[i-j+1] ] [ pb[j+1] ] ];
 		}
 		pc[i+1] = term;
 	}
 
 	pc[0] = degc;
 
-	for ( i = degc + 1; i <= DEG_MAX; i++ )
+	for ( i = degc + 1; i <= nieder_DEG_MAX; i++ )
 	{
 		pc[i+1] = 0;
 	}
@@ -1170,11 +1115,9 @@ void setfld ( int q_init )
 //
 {
 	int i;
-	ifstream input;
-	char *input_filename = "gfarit.txt";
 	int j;
 
-	if ( q_init <= 1 || Q_MAX < q_init )
+	if ( q_init <= 1 || nieder_Q_MAX < q_init )
 	{
 		ostringstream msg;
 		msg << "niederreiter - SETFLD - Error!\n";
@@ -1183,14 +1126,14 @@ void setfld ( int q_init )
 		return;
 	}
 
-	Q = q_init;
-	P = i4_characteristic ( Q );
+	nieder_Q = q_init;
+	nieder_P = i4_characteristic ( nieder_Q );
 
-	if ( P == 0 )
+	if ( nieder_P == 0 )
 	{
 		ostringstream msg;
 		msg << "niederreiter - SETFLD - Error!\n";
-		msg << "  There is no field of order Q = " << Q << "\n";
+		msg << "  There is no field of order Q = " << nieder_Q << "\n";
 		lowdisc_error(msg.str());
 		return;
 	}
@@ -1198,30 +1141,64 @@ void setfld ( int q_init )
 	//  Set up to handle a field of prime or prime-power order.
 	//  Calculate the addition and multiplication tables.
 	//
-	for ( i = 0; i < Q; i++ )
+	for ( i = 0; i < nieder_Q; i++ )
 	{
-		for ( j = 0; j < Q; j++ )
+		for ( j = 0; j < nieder_Q; j++ )
 		{
-			add[i][j] = ( i + j ) % P;
+			nieder_add[i][j] = ( i + j ) % nieder_P;
 		}
 	}
 
-	for ( i = 0; i < Q; i++ )
+	for ( i = 0; i < nieder_Q; i++ )
 	{
-		for ( j = 0; j < Q; j++ )
+		for ( j = 0; j < nieder_Q; j++ )
 		{
-			mul[i][j] = ( i * j ) % P;
+			nieder_mul[i][j] = ( i * j ) % nieder_P;
 		}
 	}
 	//
 	//  Use the addition table to set the subtraction table.
 	//
-	for ( i = 0; i < Q; i++ )
+	for ( i = 0; i < nieder_Q; i++ )
 	{
-		for ( j = 0; j < Q; j++ )
+		for ( j = 0; j < nieder_Q; j++ )
 		{
-			sub [ add[i][j] ] [i] = j;
+			nieder_sub [ nieder_add[i][j] ] [i] = j;
 		}
 	}
 	return;
+}
+//****************************************************************************80
+
+
+int niederreiter_dim_num_get ( void )
+//    niederreiter_dim_num_get gets the spatial dimension for a Niederreiter sequence.
+{
+	return nieder_DIMEN;
+}
+//****************************************************************************80
+
+int niederreiter_base_get ( )
+//    niederreiter_base_get gets the base for a Niederreiter sequence.
+{
+	return nieder_BASE;
+}
+//****************************************************************************80
+
+int niederreiter_skip_get ( )
+//    niederreiter_skip_get gets the skip for a Niederreiter sequence.
+{
+	return nieder_SKIP;
+}
+
+//***************************************************************************
+//  niederreiter_isstart --
+//     Returns true if the sequence is already started up.
+//
+//  Parameters:
+//    startup, output : true if the sequence is already started up.
+//
+bool niederreiter_isstart ( )
+{
+	return nieder_startup;
 }

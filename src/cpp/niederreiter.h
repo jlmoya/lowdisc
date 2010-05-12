@@ -29,14 +29,26 @@
 
 __BEGIN_DECLS
 
+// Starts the sequence
+void niederreiter_start ( int dim_num, int base, int skip );
+
+// Stop the sequence
+void niederreiter_stop ( );
+
 //    NIEDERREITER returns an element of a Niederreiter sequence for base BASE.
-void niederreiter ( int dim_num, int base, int *seed, double r[] );
+void niederreiter ( double r[] );
 
-//    NIEDERREITER_GENERATE generates a set of n Niederreiter values.
-void niederreiter_generate ( int dim_num, int n, int base, int *seed, double r[] );
+// Returns the number of dimensions in the sequence
+int niederreiter_dim_num_get ( );
 
-//    NIEDERREITER_WRITE writes a set of Niederreiter values to a file.
-void niederreiter_write ( int dim_num, int n, int base, int skip, double r[], char *output_filename );
+// Returns the base of the sequence
+int niederreiter_base_get ( );
+
+// Returns the skip of the sequence
+int niederreiter_skip_get ( );
+
+// Returns true if the sequence is started up
+bool niederreiter_isstart ( );
 
 __END_DECLS
 
