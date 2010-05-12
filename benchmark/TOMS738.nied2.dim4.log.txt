@@ -1,12 +1,15 @@
   This is program GENIN2
   Output file name is OUTFIL.DAT
   Choose a test integral (1 to 4) or 0 to quit :
+ NUM =            1
   Enter dimension :
+ DIMEN =            4
   Choose sequence length :
   2 ** 10 =          1024
   2 ** 15 =         32768
   2 ** 20 =       1048576
   Enter SEQLEN  (possibly a power of 2 above)
+ SEQLEN =         1024
   Choose the number of values to skip :
   There is reason to believe that BASE * e,
   where e is defined for example in
@@ -23,6 +26,7 @@
   the implicit constant.
   Numerically, 2 ** POWER =         4096
   Enter SKIP (not necessarily the value above)
+ SKIP =            0
   GENIN2 :  Initialization complete
   Odd-looking iteration numbers are powers of 2
 ====================================================================
