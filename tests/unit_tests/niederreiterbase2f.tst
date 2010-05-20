@@ -32,6 +32,44 @@ endfunction
 
 
 //
+// Test the "hidden" API
+//
+start = _lowdisc_niedfisstart ( );
+assert_equal ( start , 0 );
+dim = 4;
+seed = 0;
+_lowdisc_sobolfstart ( dim );
+start = _lowdisc_niedfisstart ( );
+assert_equal ( start , 1 );
+dim2 = _lowdisc_niedfdimget( );
+assert_equal ( dim2 , dim );
+computed = [];
+// Skip first term
+next = _lowdisc_niedf ( 0 );
+for i = 1 : 11;
+  next = _lowdisc_niedf ( i );
+  computed(i,1:dim) = next;
+end
+expected= [
+   0.500000    0.500000    0.500000    0.500000  
+   0.750000    0.250000    0.750000    0.250000  
+   0.250000    0.750000    0.250000    0.750000  
+   0.375000    0.375000    0.625000    0.125000  
+   0.875000    0.875000    0.125000    0.625000  
+   0.625000    0.125000    0.375000    0.375000  
+   0.125000    0.625000    0.875000    0.875000  
+   0.187500    0.312500    0.312500    0.687500  
+   0.687500    0.812500    0.812500    0.187500  
+   0.937500    0.062500    0.562500    0.937500  
+   0.437500    0.562500    0.062500    0.437500  
+];
+assert_close ( computed , expected , %eps );
+_lowdisc_niedfstop ( );
+start = _lowdisc_niedfisstart ( );
+assert_equal ( start , 0 );
+
+
+//
 // Check the Fast Niederreiter base 2 sequence
 //
 rng = lowdisc_new();
