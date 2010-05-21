@@ -30,6 +30,21 @@ function flag = assert_close ( computed, expected, epsilon )
   if flag <> 1 then pause,end
 endfunction
 
+//
+// assert_equal --
+//   Returns 1 if the two real matrices computed and expected are equal.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_equal ( computed , expected )
+  if computed==expected then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then pause,end
+endfunction
 
 //
 // Test the "hidden" API
@@ -37,8 +52,11 @@ endfunction
 start = _lowdisc_niedfisstart ( );
 assert_equal ( start , 0 );
 dim = 4;
-seed = 0;
-_lowdisc_sobolfstart ( dim );
+base = 2;
+skip = 0;
+gfaritfile = fullfile(TMPDIR,"gfarit.txt")
+gfplysfile = fullfile(TMPDIR,"gfplys.txt")
+_lowdisc_niedfstart ( dim , base , skip , gfaritfile , gfplysfile);
 start = _lowdisc_niedfisstart ( );
 assert_equal ( start , 1 );
 dim2 = _lowdisc_niedfdimget( );

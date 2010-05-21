@@ -40,6 +40,7 @@ if or(getscilabmode() == ["NW";"STD"]) then
     if ( isdir(path_addchapter) <> [] ) then
         add_help_chapter("Low Discrepancy", path_addchapter, %F);
     clear add_help_chapter;
+    clear path_addchapter;
     end
 end
 
@@ -59,7 +60,6 @@ end
 
 clear root_tlbx;
 clear etc_tlbx;
-clear path_addchapter;
 
 // =============================================================================
 // Startup the library

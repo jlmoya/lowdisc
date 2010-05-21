@@ -30,7 +30,7 @@
 __BEGIN_DECLS
 
 // Starts the sequence
-void niederreiter_start ( int dim_num, int base, int skip );
+void niederreiter_start ( int dim_num, int base, int skip , char * gfaritfile , char * gfplysfile );
 
 // Stop the sequence
 void niederreiter_stop ( );

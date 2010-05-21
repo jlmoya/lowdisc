@@ -15,21 +15,21 @@
 mode(-1);
 lines(0);
 // Uncomment this line to make a debug version of the Toolbox
-//setenv('DEBUG_SCILAB_DYNAMIC_LINK','YES')
+//setenv("DEBUG_SCILAB_DYNAMIC_LINK","YES")
 try
- getversion('scilab');
+ getversion("scilab");
 catch
- error(gettext('Scilab 5.0 or more is required.'));  
+ error(gettext("Scilab 5.0 or more is required."));  
 end;
 // ====================================================================
-if ~with_module('development_tools') then
-  error(msprintf(gettext('%s module not installed."),'development_tools'));
+if ~with_module("development_tools") then
+  error(msprintf(gettext("%s module not installed."),"development_tools"));
 end
 // ====================================================================
-TOOLBOX_NAME = 'lowdiscrepancy';
-TOOLBOX_TITLE = 'Low Discrepancy Toolbox';
+TOOLBOX_NAME = "lowdiscrepancy";
+TOOLBOX_TITLE = "Low Discrepancy Toolbox";
 // ====================================================================
-toolbox_dir = get_absolute_file_path('builder.sce');
+toolbox_dir = get_absolute_file_path("builder.sce");
 
 if ( %t ) then
 tbx_builder_src(toolbox_dir);

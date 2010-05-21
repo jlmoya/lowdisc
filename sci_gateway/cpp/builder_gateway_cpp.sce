@@ -91,7 +91,6 @@ files = [
   "sci_lowdisc_niedfskipget.cpp"
   "sci_lowdisc_niedfisstart.cpp"
   ];
-//  "sci_lowdisc_nieder2f.cpp"
 
 
 ldflags = ""
