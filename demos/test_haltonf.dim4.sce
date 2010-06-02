@@ -6,8 +6,7 @@
 DIMEN = 4;
 mprintf ("SCILAB\n")
 mprintf ("DIMENSION = %d\n", DIMEN)
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","halton");
+rng = lowdisc_new("halton");
 rng = lowdisc_configure(rng,"-dimension",DIMEN);
 rng = lowdisc_startup (rng);
 [rng,computed]=lowdisc_next(rng);

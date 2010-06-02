@@ -5,8 +5,7 @@
 //
 [fd,err]=mopen( "test_faure.dim3.log.txt" , "w" )
 mfprintf ( fd , "SCILAB\n")
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","faure");
+rng = lowdisc_new("faure");
 rng = lowdisc_configure(rng,"-dimension",3);
 // Skip qs^4 - 1 terms, as in TOMS implementation
 qs = lowdisc_get ( rng , "-faureprime" );

@@ -5,8 +5,7 @@
 //
 [fd,err]=mopen( "test_sobol.dim4.log.txt" , "w" )
 mfprintf ( fd , "SCILAB\n")
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","sobol");
+rng = lowdisc_new("sobol");
 rng = lowdisc_configure(rng,"-dimension",4);
 str = string(rng);
 nrows = size(str,"r");

@@ -5,8 +5,7 @@
 //
 [fd,err]=mopen( "test_halton.dim4.log.txt" , "w" )
 mfprintf ( fd , "SCILAB\n")
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","halton");
+rng = lowdisc_new("halton");
 rng = lowdisc_configure(rng,"-dimension",4);
 // Skip 1 term, as in TOMS implementation
 rng = lowdisc_configure(rng,"-skip", 1);

@@ -5,8 +5,7 @@
 //
 [fd,err]=mopen( "test_fauref.dim4.log.txt" , "w" )
 mfprintf ( fd , "SCILAB\n")
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","fauref");
+rng = lowdisc_new("fauref");
 rng = lowdisc_configure(rng,"-dimension",4);
 // Skip qs^4 - 1 terms, as in TOMS implementation
 qs = lowdisc_get ( rng , "-faurefprime" );
