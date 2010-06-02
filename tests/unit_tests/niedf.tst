@@ -61,11 +61,15 @@ start = _lowdisc_niedfisstart ( );
 assert_equal ( start , 1 );
 dim2 = _lowdisc_niedfdimget( );
 assert_equal ( dim2 , dim );
+base2 = _lowdisc_niedfbaseget( );
+assert_equal ( base2 , base );
+skip2 = _lowdisc_niedfskipget( );
+assert_equal ( skip2 , skip );
 computed = [];
 // Skip first term
-next = _lowdisc_niedf ( 0 );
+next = _lowdisc_niedf ( );
 for i = 1 : 11;
-  next = _lowdisc_niedf ( i );
+  next = _lowdisc_niedf ( );
   computed(i,1:dim) = next;
 end
 expected= [
