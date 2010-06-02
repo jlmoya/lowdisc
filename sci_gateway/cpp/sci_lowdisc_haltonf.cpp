@@ -37,8 +37,6 @@ int sci_lowdisc_haltonf (char *fname) {
 		return 0;
 	}
 	dim = halton_dim_num_get();
-	// Call the Halton sequence
-	quasi = dvector ( dim );
 	// Returns quasi
 	nRows = 1;
 	nCols = dim;

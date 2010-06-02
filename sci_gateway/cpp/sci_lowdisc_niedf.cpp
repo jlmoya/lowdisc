@@ -19,7 +19,7 @@ extern "C" {
 
 // quasi = _lowdisc_niedf ( )
 //   Get the next element of the Niederreiter sequence.
-// TODO : rename as _lowdisc_haltonfnext
+// TODO : rename as _lowdisc_niedfnext
 int sci_lowdisc_niedf (char *fname) {
 	int dim;
 	double * quasi = NULL;
@@ -31,8 +31,6 @@ int sci_lowdisc_niedf (char *fname) {
 	CheckLhs(0,1) ;
 	//
 	dim = niederreiter_dim_num_get();
-	// Call the Niederreiter sequence
-	quasi = dvector ( dim );
 	// Returns quasi
 	nRows = 1;
 	nCols = dim;
