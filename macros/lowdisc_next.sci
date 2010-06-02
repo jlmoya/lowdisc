@@ -27,8 +27,7 @@ function [this,next] = lowdisc_next ( varargin )
   //   This function is sensitive to the "-leap" option.
   //
   // Examples
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","halton");
+  //   rng = lowdisc_new("halton");
   //   rng = lowdisc_startup (rng);
   //   // Term #1
   //   [rng,computed] = lowdisc_next (rng);
@@ -40,8 +39,7 @@ function [this,next] = lowdisc_next ( varargin )
   //   rng = lowdisc_destroy(rng);
   //
   //   // See the imax parameter in action
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","halton");
+  //   rng = lowdisc_new("halton");
   //   rng = lowdisc_startup (rng);
   //   // Term #1 to 100
   //   [rng,computed] = lowdisc_next (rng,100);
@@ -51,8 +49,7 @@ function [this,next] = lowdisc_next ( varargin )
   //   rng = lowdisc_destroy(rng);
   //
   //   // See the -leap option in action
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","halton");
+  //   rng = lowdisc_new("halton");
   //   rng = lowdisc_configure(rng,"-leap",10);
   //   rng = lowdisc_startup (rng);
   //   // Term #1
@@ -65,8 +62,7 @@ function [this,next] = lowdisc_next ( varargin )
   //   rng = lowdisc_destroy(rng);
   //
   //   // See the -skip option in action.
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","fauref");
+  //   rng = lowdisc_new("fauref");
   //   rng = lowdisc_configure(rng,"-dimension",4);
   //   // Skip qs^4 - 1 terms, as in TOMS implementation
   //   qs = lowdisc_get ( rng , "-faurefprime" );

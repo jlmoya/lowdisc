@@ -27,8 +27,7 @@ function value = lowdisc_get (this,key)
   //
   // Examples
   //
-  //  rng = lowdisc_new();
-  //  rng = lowdisc_configure(rng,"-method","faure");
+  //  rng = lowdisc_new("faure");
   //  rng = lowdisc_configure(rng,"-dimension",4);
   //  // Skip qs^4 - 1 terms, as in TOMS implementation
   //  qs = lowdisc_get ( rng , "-faureprime" );
@@ -43,8 +42,7 @@ function value = lowdisc_get (this,key)
   //  rng = lowdisc_destroy(rng);
   //
   //   // See the -skip option in action in the Faure fast sequence.
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","fauref");
+  //   rng = lowdisc_new("fauref");
   //   rng = lowdisc_configure(rng,"-dimension",4);
   //   // Skip qs^4 - 1 terms, as in TOMS implementation
   //   qs = lowdisc_get ( rng , "-faurefprime" );

@@ -24,9 +24,8 @@ function m = lowdisc_primes1000 ( )
   //   prarray = lowdisc_primes1000 ( );
   //   size(prarray)
   //
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","faure");
-  //   prarray = lowdisc_primes1000 ( );
+  //   rng = lowdisc_new("faure");
+ //   prarray = lowdisc_primes1000 ( );
   //   rng = lowdisc_configure(rng,"-primeslist",prarray);
   //   rng = lowdisc_configure(rng,"-dimension",150);
   //   [rng,next] = lowdisc_next ( rng );

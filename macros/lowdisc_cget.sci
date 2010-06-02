@@ -23,8 +23,7 @@ function value = lowdisc_cget (this,key)
   //   which has been configured with the lowdisc_configure command.
   //
   // Examples
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","faure");
+  //   rng = lowdisc_new("faure");
   //   rng = lowdisc_configure(rng,"-dimension",3);
   //   method = lowdisc_cget(rng,"-method")
   //   nbdim = lowdisc_cget(rng,"-dimension")

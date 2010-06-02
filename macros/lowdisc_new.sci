@@ -21,7 +21,7 @@ function this = lowdisc_new ( varargin )
   //   This function requires to take the current object both as an input
   //   and an output argument.
   //
-  //  The following is the list of possible values for "-method".
+  //  The following is the list of possible values for method.
   //  <itemizedlist>
   //  <listitem>"vandercorput" : the Van Der Corput low 
   //    discrepancy sequence. 
@@ -110,8 +110,7 @@ function this = lowdisc_new ( varargin )
   //  </itemizedlist>
   //
   // Examples
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","faure");
+  //   rng = lowdisc_new("faure");
   //   rng
   //   rng = lowdisc_destroy(rng);
   //

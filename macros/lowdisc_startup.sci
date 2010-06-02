@@ -17,8 +17,7 @@ function this = lowdisc_startup (this)
   //   This function is sensitive to the "-skip" option.
   //
   // Examples
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","halton");
+  //   rng = lowdisc_new("halton");
   //   rng = lowdisc_startup (rng);
   //   // Term #1
   //   [rng,computed] = lowdisc_next (rng);
@@ -28,8 +27,7 @@ function this = lowdisc_startup (this)
   //   rng = lowdisc_destroy(rng);
   //
   //   // See the -skip option in action
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","halton");
+  //   rng = lowdisc_new("halton");
   //   rng = lowdisc_configure(rng,"-skip",12);
   //   rng = lowdisc_startup (rng);
   //   // Term #13

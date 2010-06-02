@@ -21,8 +21,7 @@ function this = lowdisc_destroy (this)
   //   and an output argument.
   //
   // Examples
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","faure");
+  //   rng = lowdisc_new("faure");
   //   rng
   //   rng = lowdisc_destroy(rng);
   //

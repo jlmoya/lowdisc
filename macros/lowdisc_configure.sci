@@ -93,8 +93,7 @@ function this = lowdisc_configure (this,key,value)
   //   See the specific settings of each sequence below for detail.
   //
   // Examples
-  //   rng = lowdisc_new();
-  //   rng = lowdisc_configure(rng,"-method","faure");
+  //   rng = lowdisc_new("faure");
   //   rng = lowdisc_configure(rng,"-dimension",3);
   //   method = lowdisc_cget(rng,"-method")
   //   nbdim = lowdisc_cget(rng,"-dimension")
