@@ -62,9 +62,9 @@ dim2 = _lowdisc_sobolfdimget( );
 assert_equal ( dim2 , dim );
 computed = [];
 // Skip first term
-next = _lowdisc_sobolf ( 0 );
+next = _lowdisc_sobolfnext ( 0 );
 for i = 1 : 11;
-  next = _lowdisc_sobolf ( i );
+  next = _lowdisc_sobolfnext ( i );
   computed(i,1:dim) = next;
 end
 expected= [
@@ -97,7 +97,7 @@ scenario = [0 1 2 3 5 6 7 1 2 3];
 computed = [];
 for k = 1 : size(scenario,"*")
   seed = scenario(k);
-  computed(k,1:dim) = _lowdisc_sobolf ( seed );
+  computed(k,1:dim) = _lowdisc_sobolfnext ( seed );
 end
 expected= [
    0.          0.          0.          0.      

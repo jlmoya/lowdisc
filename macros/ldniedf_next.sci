@@ -33,13 +33,13 @@ function [this,next] = ldniedf_next ( varargin )
   
   for i=1:imax
     this.sequenceindex = this.sequenceindex + 1;
-    onevector = _lowdisc_niedf ( );
+    onevector = _lowdisc_niedfnext ( );
     next(i,1:this.dimension) = onevector
     // Leap over (i.e. ignore) as many elements as required
     if ( this.leap > 0 ) then
       for j = 1 : this.leap
         this.sequenceindex = this.sequenceindex + 1;
-        next = _lowdisc_niedf ( );
+        next = _lowdisc_niedfnext ( );
       end
     end
   end

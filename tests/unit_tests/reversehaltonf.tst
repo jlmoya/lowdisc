@@ -65,7 +65,7 @@ prime2 = _lowdisc_revhaltfbaseget ( );
 assert_equal ( primelist(1:dim) , prime2 );
 computed = [];
 for i = 1 : 6
-  computed(i,1:dim) = _lowdisc_revhaltf ( i );
+  computed(i,1:dim) = _lowdisc_revhaltfnext ( i );
 end
 expected= [
     0.5 2./3.
@@ -93,7 +93,7 @@ scenario = [0 1 2 3 5 6 7 1 2 3];
 computed = [];
 for k = 1 : size(scenario,"*")
   seed = scenario(k);
-  computed(k,1:dim) = _lowdisc_revhaltf ( seed );
+  computed(k,1:dim) = _lowdisc_revhaltfnext ( seed );
 end
 expected= [
     0.                     0.                     0.                     0.      

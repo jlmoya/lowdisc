@@ -14,41 +14,32 @@ extern "C" {
 
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
-#include "sobol_i4.h"
+#include "faure.h" 
 
 
-// quasi = _lowdisc_sobolf ( seed )
-//   Get the next element of the Sobol sequence.
-// TODO : rename as _lowdisc_sobolfnext
-int sci_lowdisc_sobolf (char *fname) {
+// quasi = _lowdisc_faurefnext ( seed )
+//   Get the next element of the Faure sequence.
+int sci_lowdisc_faurefnext (char *fname) {
 	int dim;
 	int seed = 0;
-	float * fquasi = NULL;
-	double *pdblQuasi = NULL; //SCILAB return quasi
+	double * quasi = NULL;
 	int nRows;
 	int nCols;
-	int i;
 	int ierr;
-
+	//
 	CheckRhs(1,1) ;
 	CheckLhs(0,1) ;
+	//
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &seed );
 	if ( ierr==0 ) {
 		return 0;
 	}
-	dim = i4_sobol_dimget ( );
-	// Call the Sobol sequence
-	fquasi = fvector ( dim );
-	i4_sobol ( & seed , fquasi );
+	dim = faure_dimget ( );
 	// Returns quasi
 	nRows = 1;
 	nCols = dim;
-	lowdisc_CreateLhsMatrix ( 1 , nRows , nCols , &pdblQuasi );
-	for ( i = 0; i < dim; i++ )
-	{
-		pdblQuasi[i] = (double) fquasi[i];
-	}
-	// Free the quasi vector
-	free_fvector ( fquasi );
+	lowdisc_CreateLhsMatrix ( 1 , nRows , nCols , &quasi );
+	// Call the Faure sequence
+	faure ( &seed, quasi );
 	return 0;
 }

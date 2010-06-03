@@ -17,10 +17,9 @@ extern "C" {
 #include "niederreiter.h" 
 
 
-// quasi = _lowdisc_niedf ( )
+// quasi = _lowdisc_niedfnext ( )
 //   Get the next element of the Niederreiter sequence.
-// TODO : rename as _lowdisc_niedfnext
-int sci_lowdisc_niedf (char *fname) {
+int sci_lowdisc_niedfnext (char *fname) {
 	int dim;
 	double * quasi = NULL;
 	int nRows;

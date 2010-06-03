@@ -1,6 +1,6 @@
 
 // Copyright (C) 2008 - INRIA - Michael Baudin
-// Copyright (C) 2009-2010 - Digiteo - Michael Baudin
+// Copyright (C) 2009 - Digiteo - Michael Baudin
 
 extern "C" {
 #include "stack-c.h" 
@@ -14,33 +14,32 @@ extern "C" {
 
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
-#include "faure.h" 
+#include "halton.h" 
 
 
-// quasi = _lowdisc_fauref ( seed )
-//   Get the next element of the Faure sequence.
-// TODO : rename as _lowdisc_faurefnext
-int sci_lowdisc_fauref (char *fname) {
+// quasi = _lowdisc_haltonfnext ( step )
+//   Get the next element of the Halton sequence.
+int sci_lowdisc_haltonfnext (char *fname) {
+	int step;
 	int dim;
-	int seed = 0;
 	double * quasi = NULL;
 	int nRows;
 	int nCols;
 	int ierr;
-	//
+
 	CheckRhs(1,1) ;
 	CheckLhs(0,1) ;
 	//
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &seed );
+	// Get step
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &step );
 	if ( ierr==0 ) {
 		return 0;
 	}
-	dim = faure_dimget ( );
+	dim = halton_dim_num_get();
 	// Returns quasi
 	nRows = 1;
 	nCols = dim;
 	lowdisc_CreateLhsMatrix ( 1 , nRows , nCols , &quasi );
-	// Call the Faure sequence
-	faure ( &seed, quasi );
+	halton ( step , quasi );
 	return 0;
 }

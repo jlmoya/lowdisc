@@ -81,11 +81,11 @@ skip2 = _lowdisc_niedfskipget( );
 assert_equal ( skip2 , skip );
 computed = [];
 // Skip first term
-next = _lowdisc_niedf ( );
+next = _lowdisc_niedfnext ( );
 expected = [0.000000      0.000000      0.000000      0.000000];
 assert_close ( next , expected , %eps );
 for i = 1 : 9;
-  next = _lowdisc_niedf ( );
+  next = _lowdisc_niedfnext ( );
   computed(i,1:dim) = next;
 end
 // These values are from TOMS 738 / GENIN

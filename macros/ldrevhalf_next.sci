@@ -34,13 +34,13 @@ function [this,next] = ldrevhalf_next ( varargin )
   
   for i=1:imax
     this.sequenceindex = this.sequenceindex + 1;
-    onevector = _lowdisc_revhaltf ( this.sequenceindex )
+    onevector = _lowdisc_revhaltfnext ( this.sequenceindex )
     next(i,1:this.dimension) = onevector
     // Leap over (i.e. ignore) as many elements as required
     if ( this.leap > 0 ) then
       for j = 1 : this.leap
         this.sequenceindex = this.sequenceindex + 1;
-        onevector = _lowdisc_revhaltf ( this.sequenceindex )
+        onevector = _lowdisc_revhaltfnext ( this.sequenceindex )
       end
     end
   end
