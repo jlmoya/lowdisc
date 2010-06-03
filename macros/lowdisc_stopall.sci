@@ -1,4 +1,4 @@
-// Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 
@@ -6,22 +6,19 @@
 
 
 
-function _lowdisc_stopall ( )
+function lowdisc_stopall ( )
   // Stop all fast sequences.
   //
   // Calling Sequence
-  //   _lowdisc_stopall ( )
-  //
-  // Parameters
-  //   
+  //   lowdisc_stopall ( )
   //
   // Description
   //   This function allows to stop all fast sequences. This 
-  //   might be handy in case of interactive ploof and may allow
+  //   might be handy in case of interactive plouf and may allow
   //   to reset all "lost" sequences.
   //
   // Examples
-  //   _lowdisc_stopall ( )
+  //   lowdisc_stopall ( )
   //
   // Authors
   //   Michael Baudin - 2010 - DIGITEO

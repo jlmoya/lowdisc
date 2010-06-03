@@ -155,6 +155,7 @@ funarray = [
   "lowdisc_primes100"
   "lowdisc_primes1000"
   "lowdisc_primes10000"
+  "lowdisc_stopall"
   ];
 macrosdir = helpdir +"../../macros";
 demosdir = helpdir +"../../demos";

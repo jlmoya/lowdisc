@@ -39,7 +39,7 @@
    <varlistentry><term>this:</term>
       <listitem><para> the current object</para></listitem></varlistentry>
    <varlistentry><term>method:</term>
-      <listitem><para> (optionnal) a string, the low discrepancy sequence (default = "halton"). The method can be equal to : "halton", "faure", "reversehalton", "sobol", "niederreiter-base-2", "reversehaltonf", "niederreiter-base-2f", "sobolf", "fauref", "haltonf". See below for details.</para></listitem></varlistentry>
+      <listitem><para> (optionnal) a string, the low discrepancy sequence (default = "halton"). The method can be equal to : "halton", "haltonf", "faure", "fauref", "reversehalton", "reversehaltonf", "sobol", "sobolf", "niederreiter-base-2", "niederreiterf". See below for details.</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
