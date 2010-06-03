@@ -2,7 +2,7 @@
 
 //
 // Check the Fast Niederreiter in dimension 6
-// Use the default base 2.
+// Use the base 7.
 //
 DIMEN = 6;
 BASE = 7;

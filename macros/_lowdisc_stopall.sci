@@ -54,6 +54,13 @@ function _lowdisc_stopall ( )
   if ( start == 1 ) then
     _lowdisc_haltonfstop ( );
   end
+  //
+  // Fast Niederreiter
+  //
+  start = _lowdisc_niedfisstart ( );
+  if ( start == 1 ) then
+    _lowdisc_niedfstop ( );
+  end
 
 endfunction
 

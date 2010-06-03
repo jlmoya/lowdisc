@@ -25,9 +25,9 @@ function this = ldniedf_startup (this)
   // Create the sequence
   //
   // Start the sequence
-  _lowdisc_niedfstart ( this.dimension , this.base , skip , this.gfaritfile , this.gfplysfile );
+  _lowdisc_niedfstart ( this.dimension , this.base , this.skip , this.gfaritfile , this.gfplysfile );
   //
   // Initialize the sequence at the right place
-  this.sequenceindex = skip;
+  this.sequenceindex = this.skip;
 endfunction
 

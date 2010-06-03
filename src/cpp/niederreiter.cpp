@@ -43,7 +43,7 @@
 using namespace std;
 #include "niederreiter.h"
 #include "lowdisc_shared.h"
-int calcc ( void );
+int calcc ( char * gfplysfile );
 void calcv ( int px[], int b[], int v[], int v_max );
 void golo ( double quasi[] );
 int i4_characteristic ( int q );
@@ -258,7 +258,8 @@ int calcc ( char * gfplysfile )
 //    Local, int NPOLS, the number of precalculated irreducible polynomials.
 //
 {
-	const int maxe = 5;
+	// MB, 03/06 : updated from maxe=5 to maxe=7. On line #25 of irrtabs.dat, e=7 and 1  1  0  0  0  0  0  1 corresponds to px[1] to px[8]
+	const int maxe = 7;
 	const int v_max = nieder_FIG_MAX + maxe;
 	int b[nieder_DEG_MAX+2];
 	int e;
@@ -283,7 +284,7 @@ int calcc ( char * gfplysfile )
 		lowdisc_error(msg.str());
 		return 0;
 	}
-	for ( ; ; )
+	while ( true ) 
 	{
 		input >> i;
 		if ( input.eof ( ) )

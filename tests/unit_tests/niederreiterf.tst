@@ -84,7 +84,7 @@ computed = [];
 next = _lowdisc_niedf ( );
 expected = [0.000000      0.000000      0.000000      0.000000];
 assert_close ( next , expected , %eps );
-for i = 1 : 11;
+for i = 1 : 9;
   next = _lowdisc_niedf ( );
   computed(i,1:dim) = next;
 end
