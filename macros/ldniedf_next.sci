@@ -7,11 +7,10 @@
 
 
 
-function [this,next] = ldsobolf_next ( varargin )
-
+function [this,next] = ldniedf_next ( varargin )
   [lhs,rhs]=argn();
   if ( rhs > 2 ) then
-    errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldsobolf_next", rhs);
+    errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldniedf_next", rhs);
     error(errmsg)
   end
   
@@ -34,13 +33,13 @@ function [this,next] = ldsobolf_next ( varargin )
   
   for i=1:imax
     this.sequenceindex = this.sequenceindex + 1;
-    onevector = _lowdisc_sobolf ( this.sequenceindex )
+    onevector = _lowdisc_niedf ( );
     next(i,1:this.dimension) = onevector
     // Leap over (i.e. ignore) as many elements as required
     if ( this.leap > 0 ) then
       for j = 1 : this.leap
         this.sequenceindex = this.sequenceindex + 1;
-        onevector = _lowdisc_sobolf ( this.sequenceindex )
+        next = _lowdisc_niedf ( );
       end
     end
   end

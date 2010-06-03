@@ -9,7 +9,7 @@ function [this,next] = ldsobol_next ( varargin )
 
   [lhs,rhs]=argn();
   if ( rhs > 2 ) then
-    errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "lowdisc_next", rhs);
+    errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldsobol_next", rhs);
     error(errmsg)
   end
   

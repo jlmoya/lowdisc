@@ -14,12 +14,16 @@
 //
 function methods = lowdisc_methods ()
   methods = [
-   "vandercorput" 
    "halton" 
    "haltonf" 
+   "faure" 
+   "fauref" 
+   "reversehalton"
    "reversehaltonf" 
-   "niederreiter-base-2f" 
+   "sobol"
    "sobolf"
+   "niederreiter-base-2" 
+   "niederreiterf" 
    ];
 endfunction
 

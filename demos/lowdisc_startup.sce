@@ -3,8 +3,7 @@ mode(1)
 // Demo of lowdisc_startup.sci
 //
 
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","halton");
+rng = lowdisc_new("halton");
 rng = lowdisc_startup (rng);
 // Term #1
 [rng,computed] = lowdisc_next (rng);
@@ -15,8 +14,7 @@ rng = lowdisc_destroy(rng);
 halt()   // Press return to continue
  
 // See the -skip option in action
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","halton");
+rng = lowdisc_new("halton");
 rng = lowdisc_configure(rng,"-skip",12);
 rng = lowdisc_startup (rng);
 // Term #13
@@ -28,3 +26,9 @@ rng = lowdisc_destroy(rng);
 halt()   // Press return to continue
  
 //========= E N D === O F === D E M O =========//
+//
+// Load this script into the editor
+//
+filename = "lowdisc_startup.sce";
+dname = get_absolute_file_path(filename);
+editor ( dname + filename );

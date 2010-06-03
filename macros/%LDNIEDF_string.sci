@@ -1,0 +1,62 @@
+// Copyright (C) 2010 - DIGITEO - Michael Baudin
+//
+// This file must be used under the terms of the GNU LGPL license.
+
+
+
+
+
+//
+// %LDNIEDF_string --
+//   Returns the string containing the low discrepancy sequence
+//
+function str = %LDNIEDF_string ( this )
+  str = []
+  k = 1
+  str(k) = sprintf("Low Discrepancy Sequence: Fast Niederreiter")
+  k = k + 1
+  str(k) = sprintf("=========================")
+  k = k + 1
+  str(k) = sprintf("Dimension of space: %s\n", _tostring(this.dimension))
+  k = k + 1
+  str(k) = sprintf("Sequence Index: %s\n", _tostring(this.sequenceindex))
+  k = k + 1
+  str(k) = sprintf("Verbose logging: %s\n", _tostring(this.verbose))
+  k = k + 1
+  str(k) = sprintf("Base: %s\n", _tostring(this.base))
+  k = k + 1
+  str(k) = sprintf("Skip: %s\n", _tostring(this.skip))
+  k = k + 1
+  str(k) = sprintf("Leap: %s\n", _tostring(this.leap))
+  k = k + 1
+  str(k) = sprintf("Gfaritfile: %s\n", _tostring(this.gfaritfile))
+  k = k + 1
+  str(k) = sprintf("Gfplysfile: %s\n", _tostring(this.gfplysfile))
+  k = k + 1
+  str(k) = sprintf("Started Up: %s\n", _tostring(this.startedup))
+  k = k + 1
+endfunction
+
+function bool = _mlist_isfield ( s , fieldname ) 
+  // Get the matrix of integers representing defined fields
+  df = definedfields ( s )
+  // Search for the index ifield associated with given fieldname
+  ifield = find(s(1)==fieldname)
+  // Search for ifield in the matrix of defined fields
+  jj = find(df==ifield)
+  bool = jj <> []
+endfunction
+function s = _tostring ( x )
+  if ( x==[] ) then
+    s = "[]"
+  else
+    n = size ( x , "*" )
+    if ( n == 1 ) then
+      s = string(x)
+    else
+      s = "["+strcat(string(x)," ")+"]"
+    end
+  end
+endfunction
+
+

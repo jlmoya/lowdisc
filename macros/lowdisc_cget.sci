@@ -52,8 +52,8 @@ function value = lowdisc_cget (this,key)
       value     = ldnied2_cget ( this.sequence , key )
     case "reversehaltonf" then
       value     = ldrevhalf_cget ( this.sequence , key )
-    case "niederreiter-base-2f" then
-      value     = ldnied2f_cget ( this.sequence , key )
+    case "niederreiterf" then
+      value     = ldniedf_cget ( this.sequence , key )
     case "sobolf" then
       value     = ldsobolf_cget ( this.sequence , key )
     case "fauref" then

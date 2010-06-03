@@ -42,8 +42,8 @@ function this = lowdisc_destroy (this)
     this.sequence     = ldnied2_destroy ( this.sequence )
   case "reversehaltonf" then
     this.sequence     = ldrevhalf_destroy ( this.sequence )
-  case "niederreiter-base-2f" then
-    this.sequence     = ldnied2f_destroy ( this.sequence )
+  case "niederreiterf" then
+    this.sequence     = ldniedf_destroy ( this.sequence )
   case "sobolf" then
     this.sequence     = ldsobolf_destroy ( this.sequence )
   case "fauref" then

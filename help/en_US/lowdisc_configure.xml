@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 28-Apr-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 03-Jun-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -56,7 +56,6 @@ The following keys are available.
 <listitem>"-dimension" : a positive floating point integer,
 the dimension of the space, i.e.
 the size of the vector returned by the command lowdisc_next (default = 1).</listitem>
-<listitem>"-method" : a string, the low discrepancy sequence (default = "halton").</listitem>
 <listitem>"-vandercorputbasis" : a positive floating point integer, greater or equal to 2,
 the basis used in the Van Der Corput sequence (default = 2).
 The value is expected to be . It should be a prime number, but that
@@ -102,45 +101,26 @@ there are leap elements which are generated and immediately
 discarded. This option allows to generate alternative
 sequences based on the same basic generator.</listitem>
 </itemizedlist>
-The following is the list of possible values for "-method".
-<itemizedlist>
-<listitem>"vandercorput" : the Van Der Corput low
-discrepancy sequence.
-It is available only in 1 dimension (i.e. the -dimension option must be
-set to 1, the default). It uses the basis which is associated with
-the "-vandercorputbasis" option.
-This is a macro-based algorithm.</listitem>
-<listitem>"halton" : the Halton low discrepancy sequence.
-This sequence is sensitive to the "-primeslist" option.
-This is a macro-based algorithm.</listitem>
-<listitem>"faure" : the Faure low discrepancy sequence.
-This sequence is sensitive to the "-primeslist" option.
-This is a macro-based algorithm.</listitem>
-<listitem>"reversehalton" : the Reverse Halton sequence of Vandewoestyne and Cools.
-This sequence is sensitive to the "-primeslist" option.
-This is a macro-based algorithm. </listitem>
-<listitem>"sobol" : the Sobol sequence.
-This sequence is available for problems where the dimension is lower than 40.
-This is a macro-based algorithm.
-The current implementation is a Scilab port of the source code in Matlab
-by John Burkardt. The original source code was created by Bennett Fox in Fortran.
-</listitem>
-<listitem>"niederreiter-base-2" : The Niederreiter Base 2 sequence.
-This is a macro-based algorithm.
-The implementation is a Scilab port of the Matlab source code by John Burkardt.
-Original Fortran 77 version by Paul Bratley, Bennett Fox, Harald Niederreiter.
-</listitem>
-<listitem>"reversehaltonf" : the Reverse Halton sequence of Vandewoestyne and Cools.
-This fast algorithm is based on a compiled C source code. </listitem>
-<listitem>"niederreiter-base-2f" : The Niederreiter Base 2 sequence.
-This fast algorithm is based on a compiled C source code. </listitem>
-<listitem>"sobolf" : the Sobol sequence.
-This fast algorithm is based on a compiled C source code. </listitem>
-<listitem>"fauref" : the Faure sequence.
-This fast algorithm is based on a compiled C source code. </listitem>
-<listitem>"haltonf" : the Halton sequence.
-This fast algorithm is based on a compiled C source code. </listitem>
-</itemizedlist>
+   </para>
+   <para>
+Because of the limitation of floating point integers,
+the lowdisc_next function is able to generate at most
+2^52  = 4 503 599 627 370 496 experiments.
+Fast sequences are based on the intermediate storage of the
+iteration index on a 32 bits C int. This implies
+that these sequences are able to generate at most
+2^32-1 = 4 294 967 295 experiments.
+   </para>
+   <para>
+Some sequences are limited in the maximum number of dimensions,
+because they use internally fixed tables of parameters (e.g. the Sobol
+sequence).
+Some other sequences can be extended with the "-primeslist" option.
+The "-primeslist" option can be configure with a table of
+primes computed with the lowdisc_primes100(), lowdisc_primes1000()
+or lowdisc_primes10000() functions. The maximum dimension
+which can be attained with these tables depends on the sequence.
+See the specific settings of each sequence below for detail.
    </para>
    <para>
 </para>
@@ -149,8 +129,7 @@ This fast algorithm is based on a compiled C source code. </listitem>
 <refsection>
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","faure");
+rng = lowdisc_new("faure");
 rng = lowdisc_configure(rng,"-dimension",3);
 method = lowdisc_cget(rng,"-method")
 nbdim = lowdisc_cget(rng,"-dimension")

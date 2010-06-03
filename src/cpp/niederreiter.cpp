@@ -194,7 +194,7 @@ void niederreiter_stop ( )
 	return;
 }
 //****************************************************************************80
-void niederreiter ( double r[] )
+void niederreiter ( double quasi[] )
 //****************************************************************************80
 //
 //  Purpose:
@@ -205,7 +205,7 @@ void niederreiter ( double r[] )
 //
 //    Input/output, int *SEED, a seed for the random number generator.
 //
-//    Output, double R[DIM_NUM], the element of the sequence.
+//    Output, double quasi[DIM_NUM], the element of the sequence.
 //
 {
 	if ( !nieder_startup )
@@ -216,7 +216,7 @@ void niederreiter ( double r[] )
 		lowdisc_error(msg.str());
 		return;
 	}
-	golo ( r );
+	golo ( quasi );
 	return;
 }
 //****************************************************************************80
@@ -569,7 +569,7 @@ void golo ( double quasi[] )
 	//  with N implicit.  Finally COUNT(R) corresponds to AR(N).
 	//
 	r = 0;
-	for ( ; ; )
+	while ( true )
 	{
 		if ( nieder_NFIGS <= r )
 		{

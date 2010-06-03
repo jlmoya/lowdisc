@@ -119,8 +119,8 @@ function this = lowdisc_configure (this,key,value)
       this.sequence     = ldnied2_configure ( this.sequence , key , value )
     case "reversehaltonf" then
       this.sequence     = ldrevhalf_configure ( this.sequence , key , value )
-    case "niederreiter-base-2f" then
-      this.sequence     = ldnied2f_configure ( this.sequence , key , value )
+    case "niederreiterf" then
+      this.sequence     = ldniedf_configure ( this.sequence , key , value )
     case "sobolf" then
       this.sequence     = ldsobolf_configure ( this.sequence , key , value )
     case "fauref" then

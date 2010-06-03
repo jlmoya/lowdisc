@@ -11,11 +11,12 @@ function this = lowdisc_new ( varargin )
   // Create a new object.
   //
   // Calling Sequence
+  //   this = lowdisc_new ( )
   //   this = lowdisc_new ( method )
   //
   // Parameters
   //   this: the current object
-  //   method: a string, the low discrepancy sequence (default = "halton")
+  //   method: (optionnal) a string, the low discrepancy sequence (default = "halton"). The method can be equal to : "halton", "haltonf", "faure", "fauref", "reversehalton", "reversehaltonf", "sobol", "sobolf", "niederreiter-base-2", "niederreiterf". See below for details. 
   //
   // Description
   //   This function requires to take the current object both as an input
@@ -23,13 +24,6 @@ function this = lowdisc_new ( varargin )
   //
   //  The following is the list of possible values for method.
   //  <itemizedlist>
-  //  <listitem>"vandercorput" : the Van Der Corput low 
-  //    discrepancy sequence. 
-  //    It is available only in 1 dimension (i.e. the -dimension option must be
-  //    set to 1, the default). It uses the basis which is associated with
-  //    the "-vandercorputbasis" option.
-  //    This sequence is able to generate at most 2^52  = 4 503 599 627 370 496 experiments.
-  //    This is a macro-based algorithm.</listitem>
   //  <listitem>"halton" : the Halton low discrepancy sequence.
   //    This sequence is sensitive to the "-primeslist" option.
   //    By default, it is able to generate experiments in dimension at most 100.
@@ -150,8 +144,8 @@ function this = lowdisc_new ( varargin )
     this.sequence     = ldnied2_new ()
   case "reversehaltonf" then
     this.sequence     = ldrevhalf_new ()
-  case "niederreiter-base-2f" then
-    this.sequence     = ldnied2f_new ()
+  case "niederreiterf" then
+    this.sequence     = ldniedf_new ()
   case "sobolf" then
     this.sequence     = ldsobolf_new ()
   case "fauref" then

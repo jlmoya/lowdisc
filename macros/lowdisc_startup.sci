@@ -55,8 +55,8 @@ function this = lowdisc_startup (this)
     this.sequence     = ldnied2_startup ( this.sequence )
   case "reversehaltonf" then
     this.sequence     = ldrevhalf_startup ( this.sequence )
-  case "niederreiter-base-2f" then
-    this.sequence     = ldnied2f_startup ( this.sequence )
+  case "niederreiterf" then
+    this.sequence     = ldniedf_startup ( this.sequence )
   case "sobolf" then
     this.sequence     = ldsobolf_startup ( this.sequence )
   case "fauref" then

@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 28-Apr-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 03-Jun-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -53,8 +53,7 @@ and an output argument.
 <refsection>
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","faure");
+rng = lowdisc_new("faure");
 rng
 rng = lowdisc_destroy(rng);
 

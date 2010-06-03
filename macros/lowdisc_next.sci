@@ -108,8 +108,8 @@ function [this,next] = lowdisc_next ( varargin )
     [this.sequence,next]     = ldnied2_next ( this.sequence , imax )
   case "reversehaltonf" then
     [this.sequence,next]     = ldrevhalf_next ( this.sequence , imax )
-  case "niederreiter-base-2f" then
-    [this.sequence,next]     = ldnied2f_next ( this.sequence , imax )
+  case "niederreiterf" then
+    [this.sequence,next]     = ldniedf_next ( this.sequence , imax )
   case "sobolf" then
     [this.sequence,next]     = ldsobolf_next ( this.sequence , imax )
   case "fauref" then

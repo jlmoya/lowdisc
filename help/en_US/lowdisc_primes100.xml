@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 28-Apr-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 03-Jun-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -57,8 +57,7 @@ we can use a low discrepancy sequence in higher dimensions.
 prarray = lowdisc_primes100 ( );
 size(prarray)
 
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","faure");
+rng = lowdisc_new("faure");
 prarray = lowdisc_primes100 ( );
 rng = lowdisc_configure(rng,"-primeslist",prarray);
 rng = lowdisc_configure(rng,"-dimension",50);

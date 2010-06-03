@@ -46,6 +46,20 @@ function flag = assert_equal ( computed , expected )
   if flag <> 1 then pause,end
 endfunction
 
+// A word of caution !
+// In dimension 4, the programs GENIN and GENIN2 do produce the 
+// same results but in different orders:
+// GENIN GENIN2
+// #1    #1    
+// #2    #2    
+// #3    #4    
+// #4    #3    
+// #5    #8
+// #6    #7
+// #7    #5
+// #8    #6
+// etc...
+
 //
 // Test the "hidden" API
 //
@@ -68,48 +82,54 @@ assert_equal ( skip2 , skip );
 computed = [];
 // Skip first term
 next = _lowdisc_niedf ( );
+expected = [0.000000      0.000000      0.000000      0.000000];
+assert_close ( next , expected , %eps );
 for i = 1 : 11;
   next = _lowdisc_niedf ( );
   computed(i,1:dim) = next;
 end
+// These values are from TOMS 738 / GENIN
 expected= [
-   0.500000    0.500000    0.500000    0.500000  
-   0.750000    0.250000    0.750000    0.250000  
-   0.250000    0.750000    0.250000    0.750000  
-   0.375000    0.375000    0.625000    0.125000  
-   0.875000    0.875000    0.125000    0.625000  
-   0.625000    0.125000    0.375000    0.375000  
-   0.125000    0.625000    0.875000    0.875000  
-   0.187500    0.312500    0.312500    0.687500  
-   0.687500    0.812500    0.812500    0.187500  
-   0.937500    0.062500    0.562500    0.937500  
-   0.437500    0.562500    0.062500    0.437500  
+  0.500000      0.500000      0.750000      0.875000
+  0.250000      0.750000      0.562500      0.765625
+  0.750000      0.250000      0.312500      0.140625
+  0.125000      0.625000      0.437500      0.546875
+  0.625000      0.125000      0.687500      0.421875
+  0.375000      0.375000      0.875000      0.281250
+  0.875000      0.875000      0.125000      0.656250
+  0.062500      0.937500      0.953125      0.234375
+  0.562500      0.437500      0.203125      0.859375
 ];
-assert_close ( computed , expected , %eps );
+assert_close ( computed , expected , 1.e-4 );
 _lowdisc_niedfstop ( );
 start = _lowdisc_niedfisstart ( );
 assert_equal ( start , 0 );
 
 
 //
-// Check the Fast Niederreiter base 2 sequence
+// Check the Fast Niederreiter sequence 
+// Use base 2 - this is the default.
 //
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","niederreiter-base-2f");
-rng = lowdisc_configure(rng,"-dimension",2);
+rng = lowdisc_new("niederreiterf");
+rng = lowdisc_configure(rng,"-dimension",4);
 rng = lowdisc_startup (rng);
 // Term #1
 [rng,computed] = lowdisc_next (rng);
-expected = [0. 0.];
+expected = [0.000000      0.000000      0.000000      0.000000];
 assert_close ( computed, expected , 10 * %eps );
 // Terms #2 to #6
-[rng,computed]=lowdisc_next(rng,5);
+[rng,computed]=lowdisc_next(rng,9);
 expected= [...
-    1./2. 1./2. ;...
-    3./4. 1./4. ;...   
-    1./4. 3./4. ;...
-    3./8. 3./8. ;...
-    7./8. 7./8. ];
-assert_close ( computed, expected , 10 * %eps );
+  0.500000      0.500000      0.750000      0.875000
+  0.250000      0.750000      0.562500      0.765625
+  0.750000      0.250000      0.312500      0.140625
+  0.125000      0.625000      0.437500      0.546875
+  0.625000      0.125000      0.687500      0.421875
+  0.375000      0.375000      0.875000      0.281250
+  0.875000      0.875000      0.125000      0.656250
+  0.062500      0.937500      0.953125      0.234375
+  0.562500      0.437500      0.203125      0.859375
+];
+assert_close ( computed, expected , 1.e-4 );
 rng = lowdisc_destroy(rng);
 

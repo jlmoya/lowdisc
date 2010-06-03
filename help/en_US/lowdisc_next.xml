@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 28-Apr-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 03-Jun-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -61,8 +61,7 @@ This function is sensitive to the "-leap" option.
 <refsection>
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","halton");
+rng = lowdisc_new("halton");
 rng = lowdisc_startup (rng);
 // Term #1
 [rng,computed] = lowdisc_next (rng);
@@ -74,8 +73,7 @@ rng
 rng = lowdisc_destroy(rng);
 
 // See the imax parameter in action
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","halton");
+rng = lowdisc_new("halton");
 rng = lowdisc_startup (rng);
 // Term #1 to 100
 [rng,computed] = lowdisc_next (rng,100);
@@ -85,8 +83,7 @@ rng
 rng = lowdisc_destroy(rng);
 
 // See the -leap option in action
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","halton");
+rng = lowdisc_new("halton");
 rng = lowdisc_configure(rng,"-leap",10);
 rng = lowdisc_startup (rng);
 // Term #1
@@ -99,8 +96,7 @@ rng
 rng = lowdisc_destroy(rng);
 
 // See the -skip option in action.
-rng = lowdisc_new();
-rng = lowdisc_configure(rng,"-method","fauref");
+rng = lowdisc_new("fauref");
 rng = lowdisc_configure(rng,"-dimension",4);
 // Skip qs^4 - 1 terms, as in TOMS implementation
 qs = lowdisc_get ( rng , "-faurefprime" );
@@ -109,7 +105,7 @@ rng
 rng = lowdisc_startup (rng);
 [rng,computed]=lowdisc_next(rng);
 // Terms #1 to #100
-[rng,computed]=lowdisc_terms(rng,100);
+[rng,computed]=lowdisc_next(rng,100);
 for i = 1:100
 mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
 end
