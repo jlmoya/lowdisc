@@ -8,40 +8,21 @@
 
 
 // TODO : rename the fields "sobolv", "sobolmaxcol", "sobollastq", "sobolrecipd", "sobolcount"
-
+// TODO : remove the field sobolcount, which should be replaced by the index
 function this = ldsobol_new ()
   // Create a new Sobol object.
   //
 
   this = tlist([
     "LDSOBOL"
-    "verbose"
-    "dimension"
-    "sequenceindex"
-    "primeslist"
-    "startedup"
-    "primessize"
+    "baseobj"
     "sobolv"
     "sobolmaxcol"
     "sobollastq"
     "sobolrecipd"
     "sobolcount"
-    "skip"
-    "leap"
     ])
-  //
-  // Configurable options
-  this.verbose=%f
-  this.dimension=1
-  this.sequenceindex=0
-  // This makes the component available up to dimension 100
-  this.primeslist = lowdisc_primes100 ( )
-  this.skip = 0
-  this.leap = 0
-  //
-  // Non Configurable options
-  this.primessize = size(this.primeslist,2)
-  this.startedup = 0
+  this.baseobj = ldbase_new ()
 endfunction
 
 

@@ -35,15 +35,15 @@ endfunction
 //
 // Check the Niederreiter base 2 sequence
 //
-rng = lowdisc_new("niederreiter-base-2");
-rng = lowdisc_configure(rng,"-dimension",2);
-rng = lowdisc_startup (rng);
+lds = lowdisc_new("niederreiter-base-2");
+lds = lowdisc_configure(lds,"-dimension",2);
+lds = lowdisc_startup (lds);
 // Term #1
-[rng,computed] = lowdisc_next (rng);
+[lds,computed] = lowdisc_next (lds);
 expected = [0. 0.];
 assert_close ( computed, expected , 10 * %eps );
 // Terms #2 to #6
-[rng,computed]=lowdisc_next(rng,5);
+[lds,computed]=lowdisc_next(lds,5);
 expected= [
     1./2. 1./2. 
     3./4. 1./4. 
@@ -52,17 +52,17 @@ expected= [
     7./8. 7./8. 
 ];
 assert_close ( computed, expected , 10 * %eps );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 
 
 //
 // Check the Niederreiter base 2 sequence in dimension 4
 //
-rng = lowdisc_new("niederreiter-base-2");
-rng = lowdisc_configure(rng,"-dimension",4);
-rng = lowdisc_startup (rng);
+lds = lowdisc_new("niederreiter-base-2");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_startup (lds);
 // Term #1-12
-[rng,computed] = lowdisc_next (rng,12);
+[lds,computed] = lowdisc_next (lds,12);
 expected = [
    0.000000  0.000000  0.000000  0.000000
    0.500000  0.500000  0.750000  0.875000
@@ -79,9 +79,9 @@ expected = [
 ];
 assert_close ( computed, expected , 10 * %eps );
 // Drop terms 13-95
-[rng,computed]=lowdisc_next(rng,95-13+1);
+[lds,computed]=lowdisc_next(lds,95-13+1);
 // Terms #96 - 111
-[rng,computed]=lowdisc_next(rng,111-96+1);
+[lds,computed]=lowdisc_next(lds,111-96+1);
 expected= [
    0.054688  0.929688  0.101563  0.509766
    0.039063  0.132813  0.464844  0.214844
@@ -101,5 +101,5 @@ expected= [
    0.601563  0.320313  0.261719  0.917969
 ];
 assert_close ( computed, expected , 1.e-5 );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 

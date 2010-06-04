@@ -8,23 +8,7 @@
 
 
 function value = ldsobolf_cget (this,key)
-
-  select key
-  case "-verbose" then
-    value = this.verbose;
-  case "-dimension" then
-    value = this.dimension;
-  case "-sequenceindex" then
-    value = this.sequenceindex;
-  case "-primeslist" then
-    value = this.primeslist;
-  case "-skip" then
-    value = this.skip;
-  case "-leap" then
-    value = this.leap;
-  else
-    errmsg = sprintf(gettext("%s: Unknown key %s"),"ldsobolf_cget",key);
-    error(errmsg);
-  end
+  // Delegate to ldbase
+  value = ldbase_cget ( this.baseobj , key )
 endfunction
 

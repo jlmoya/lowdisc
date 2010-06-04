@@ -135,7 +135,10 @@
     <title>Authors</title>
 
     <simplelist type="vert">
-      <member>Michaël Baudin</member>
+      <member>2010 - DIGITEO - Michael Baudin</member>
+      <member>2008-2009 - INRIA - Michael Baudin</member>
+      <member>2003 - John Burkardt</member>
+      <member>1994 - Paul Bratley, Bennett Fox, Harald Niederreiter</member>
     </simplelist>
   </refsection>
 
@@ -150,8 +153,7 @@
 
       <member><link linkend="lowdisc_cget">lowdisc_cget</link></member>
 
-      <member><link
-      linkend="lowdisc_configure">lowdisc_configure</link></member>
+      <member><link linkend="lowdisc_configure">lowdisc_configure</link></member>
 
       <member><link linkend="lowdisc_display">lowdisc_display</link></member>
 
@@ -221,3 +223,4 @@
     <para>"Gnu Scientific Library - The Reverse Halton Sequence", Olivier Teytaud, 2007</para>
   </refsection>
 </refentry>
+

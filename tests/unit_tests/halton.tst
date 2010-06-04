@@ -49,13 +49,13 @@ endfunction
 //
 // Check the Halton sequence in dimension 1
 //
-rng = lowdisc_new("halton");
-rng = lowdisc_startup (rng);
+lds = lowdisc_new("halton");
+lds = lowdisc_startup (lds);
 // Term #1
-[rng,computed] = lowdisc_next (rng);
+[lds,computed] = lowdisc_next (lds);
 assert_close ( computed , 0.5 , %eps );
 // Terms #2 to #6
-[rng,computed]=lowdisc_next(rng,5);
+[lds,computed]=lowdisc_next(lds,5);
 expected= [
     0.25 
     0.75    
@@ -64,21 +64,21 @@ expected= [
     0.375  
 ];
 assert_close ( computed, expected, %eps );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 
 
 //
 // Check the Halton sequence in dimension 2
 //
-rng = lowdisc_new("halton");
-rng = lowdisc_configure(rng,"-dimension",2);
-rng = lowdisc_startup (rng);
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-dimension",2);
+lds = lowdisc_startup (lds);
 // Term #1
-[rng,computed] = lowdisc_next (rng);
+[lds,computed] = lowdisc_next (lds);
 expected = [0.5 1.0/3.0];
 assert_close ( computed, expected, %eps );
 // Terms #2 to #6
-[rng,computed]=lowdisc_next(rng,5);
+[lds,computed]=lowdisc_next(lds,5);
 expected= [
     1./4. 2./3. 
     3./4. 1./9.    
@@ -87,13 +87,13 @@ expected= [
     3./8. 2./9. 
 ];
 assert_close ( computed, expected, %eps );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 
 
 //
 // Try an extended list of primes, so that one can manage problems up to 200 dimensions
 //
-rng = lowdisc_new("halton");
+lds = lowdisc_new("halton");
 myprimes = [
   2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97 101 103 107 ...
   109 113 127 131 137 139 149 151 157 163 167 173 179 181 191 193 197 199 211 223 227 229 233 ...
@@ -105,23 +105,23 @@ myprimes = [
   991 997 1009 1013 1019 1021 1031 1033 1039 1049 1051 1061 1063 1069 1087 1091 1093 1097 1103 ...
   1109 1117 1123 1129 1151 1153 1163 1171 1181 1187 1193 1201 1213 1217 1223
 ];
-rng = lowdisc_configure(rng,"-primeslist",myprimes);
-rng = lowdisc_configure(rng,"-dimension",200);
-rng = lowdisc_startup (rng);
+lds = lowdisc_configure(lds,"-primeslist",myprimes);
+lds = lowdisc_configure(lds,"-dimension",200);
+lds = lowdisc_startup (lds);
 for i = 1:10
-  [rng,computed] = lowdisc_next (rng);
+  [lds,computed] = lowdisc_next (lds);
 end
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 
 //
 // Check the result against TOMS 647 data in dimension 4
 //
-rng = lowdisc_new("halton");
-rng = lowdisc_configure(rng,"-dimension",4);
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-dimension",4);
 // Skip 1 term, as in TOMS implementation
-rng = lowdisc_configure(rng,"-skip", 1);
-rng = lowdisc_startup (rng);
-[rng,computed]=lowdisc_next(rng,100);
+lds = lowdisc_configure(lds,"-skip", 1);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,100);
 expected = [
 0.250000      0.666667      0.400000      0.285714
 0.750000      0.111111      0.600000      0.428571
@@ -225,25 +225,25 @@ expected = [
 0.648438      0.744856      0.232000      0.434402
 ];
 assert_close ( computed , expected , 1.e-5 );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 
 // Configure a list of primes and use it
-rng = lowdisc_new("halton");
+lds = lowdisc_new("halton");
 prarray = lowdisc_primes1000 ( );
-rng = lowdisc_configure(rng,"-primeslist",prarray);
-rng = lowdisc_configure(rng,"-dimension",150);
-rng = lowdisc_startup (rng);
-[rng,next] = lowdisc_next ( rng , 10 );
+lds = lowdisc_configure(lds,"-primeslist",prarray);
+lds = lowdisc_configure(lds,"-dimension",150);
+lds = lowdisc_startup (lds);
+[lds,next] = lowdisc_next ( lds , 10 );
 assert_equal ( size(next) , [10 150] );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 //
 // Check the leaped Halton sequence in dimension 4
 //
-rng = lowdisc_new("halton");
-rng = lowdisc_configure(rng,"-dimension",4);
-rng = lowdisc_configure(rng,"-leap", 1);
-rng = lowdisc_startup (rng);
-[rng,computed]=lowdisc_next(rng,10);
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-leap", 1);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
 expected = [
     0.5          0.3333333    0.2      0.1428571  
     0.75         0.1111111    0.6      0.4285714  
@@ -257,5 +257,5 @@ expected = [
     0.78125      0.4074074    0.92     0.7551020  
 ];
 assert_close ( computed , expected , 1.e-5 );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 

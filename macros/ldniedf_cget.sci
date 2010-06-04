@@ -7,24 +7,14 @@
 
 
 
-function value = ldnied2f_cget (this,key)
+function value = ldniedf_cget (this,key)
 
   select key
-  case "-verbose" then
-    value = this.verbose;
-  case "-dimension" then
-    value = this.dimension;
-  case "-sequenceindex" then
-    value = this.sequenceindex;
-  case "-primeslist" then
-    value = this.primeslist;
-  case "-skip" then
-    value = this.skip;
-  case "-leap" then
-    value = this.leap;
+  case "-base" then
+    value = this.base;
   else
-    errmsg = sprintf(gettext("%s: Unknown key %s"),"ldnied2f_cget",key);
-    error(errmsg);
+    // Delegate to ldbase
+    value = ldbase_cget ( this.baseobj , key )
   end
 endfunction
 

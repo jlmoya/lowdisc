@@ -42,9 +42,21 @@ following hierarchy.
 
 See the overview in the help provided with this toolbox.
 
+TODO
+
+ * check the maximal dimension available for Fast Niederreiter (is that 50 ?)
+ * test the skip and leap
+ * improve the performance of skip and leap
+ * Add scrambling algorithms
+ * Add algorithms to compute the discrepancy
+ * Add test cases on integrals as in Bratley and Fox
+ * Update the help page : Niederreiter base 2 is slow while Niederreiter arbitrary base is fast
+ * Tell Burkardt about the bug in Niederreiter : size of the table
+ * remove _mlist_isfield where unused
+
 Author
 
-Michael Baudin
+2008-2010 - DIGITEO - Michael Baudin
 
 Licence
 

@@ -1,0 +1,57 @@
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2010 - DIGITEO - Michael Baudin
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution.  The terms
+// are also available at
+// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+
+
+
+
+
+//
+// assert_close --
+//   Returns 1 if the two real matrices computed and expected are close,
+//   i.e. if the relative distance between computed and expected is lesser than epsilon.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_close ( computed, expected, epsilon )
+  if expected==0.0 then
+    shift = norm(computed-expected);
+  else
+    shift = norm(computed-expected)/norm(expected);
+  end
+  if shift < epsilon then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then pause,end
+endfunction
+//
+// Check the Sobol sequence in 2 dimensions
+//
+lds = ldsobol_new();
+lds = ldsobol_configure(lds,"-dimension",2);
+lds = ldsobol_startup (lds);
+// Term #1
+[lds,computed] = ldsobol_next (lds);
+expected = [0.5 0.5];
+assert_close ( computed, expected, 10*%eps );
+// Terms #2 to #6
+[lds,computed]=ldsobol_next(lds,5);
+expected= [
+    3./4. 1./4. 
+    1./4. 3./4. 
+    3./8. 3./8. 
+    7./8. 7./8. 
+    5./8. 1./8. 
+];
+assert_close ( computed, expected, 10*%eps );
+lds = ldsobol_destroy(lds);
+
+

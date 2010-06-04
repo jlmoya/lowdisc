@@ -8,6 +8,7 @@
 
 
 // TODO : rename the "NR_cj", "NR_seed", "NR_nextq", "NR_recip", "NR_nbits" fields
+// TODO : remove the field NR_seed, which should be replaced by the index
 
 function this = ldnied2_new ()
   // Create a new Niederreiter Base 2 object.
@@ -15,33 +16,14 @@ function this = ldnied2_new ()
 
   this = tlist([
     "LDNIED2"
-    "verbose"
-    "dimension"
-    "sequenceindex"
-    "primeslist"
-    "startedup"
-    "primessize"
-    "skip"
-    "leap"
+    "baseobj"
     "NR_cj"
     "NR_seed"
     "NR_nextq"
     "NR_recip"
     "NR_nbits"
     ])
-  //
-  // Configurable options
-  this.verbose=%f
-  this.dimension=1
-  this.sequenceindex=0
-  // This makes the component available up to dimension 100
-  this.primeslist = lowdisc_primes100 ( )
-  this.skip = 0
-  this.leap = 0
-  //
-  // Non Configurable options
-  this.primessize = size(this.primeslist,2)
-  this.startedup = 0
+  this.baseobj = ldbase_new ()
 endfunction
 
 

@@ -8,6 +8,8 @@
 
 
 function this = ldnied2_destroy (this)
+  // Delegate to ldbase
+  this.baseobj = ldbase_destroy ( this.baseobj )
 
 endfunction
 

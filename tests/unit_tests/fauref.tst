@@ -152,17 +152,17 @@ assert_equal ( size(next) , [1 dim] );
 _lowdisc_faurefstop ( );
 
 //
-// Check the Faure sequence in dimension 3
+// Check the Fast Faure sequence in dimension 3
 //
-rng = lowdisc_new("fauref");
-rng = lowdisc_configure(rng,"-dimension",3);
-rng = lowdisc_startup (rng);
+lds = lowdisc_new("fauref");
+lds = lowdisc_configure(lds,"-dimension",3);
+lds = lowdisc_startup (lds);
 // Term #1
-[rng,computed] = lowdisc_next (rng);
+[lds,computed] = lowdisc_next (lds);
 expected = [1/3 1/3 1/3];
 assert_close ( computed, expected, %eps );
 // Terms #2 to #6
-[rng,computed]=lowdisc_next(rng,7);
+[lds,computed]=lowdisc_next(lds,7);
 expected= [
     2/3 2/3 2/3 
     1/9 4/9 7/9 
@@ -173,18 +173,18 @@ expected= [
     8/9 5/9 2/9
 ];
 assert_close ( computed, expected, %eps );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 
 //
 // Compare the results against the data extracted from the TOMS 647 program.
 //
-rng = lowdisc_new("fauref");
-rng = lowdisc_configure(rng,"-dimension",3);
+lds = lowdisc_new("fauref");
+lds = lowdisc_configure(lds,"-dimension",3);
 // Skip qs^4 - 1 terms, as in TOMS implementation
-qs = lowdisc_get ( rng , "-faurefprime" );
-rng = lowdisc_configure(rng,"-skip", qs^4 - 2);
-rng = lowdisc_startup (rng);
-[rng,computed]=lowdisc_next(rng,100);
+qs = lowdisc_get ( lds , "-faurefprime" );
+lds = lowdisc_configure(lds,"-skip", qs^4 - 2);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,100);
 expected = [
 0.987654      0.765432      0.209877
 0.004115      0.460905      0.584362
@@ -288,19 +288,19 @@ expected = [
 0.934156      0.403292      0.168724
 ];
 assert_close ( computed , expected , 1.e-5 );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 
 
 //
 // Compare the results against the data extracted from the TOMS 647 program.
 //
-rng = lowdisc_new("fauref");
-rng = lowdisc_configure(rng,"-dimension",4);
+lds = lowdisc_new("fauref");
+lds = lowdisc_configure(lds,"-dimension",4);
 // Skip qs^4 - 1 terms, as in TOMS implementation
-qs = lowdisc_get ( rng , "-faurefprime" );
-rng = lowdisc_configure(rng,"-skip", qs^4 - 2);
-rng = lowdisc_startup (rng);
-[rng,computed]=lowdisc_next(rng,100);
+qs = lowdisc_get ( lds , "-faurefprime" );
+lds = lowdisc_configure(lds,"-skip", qs^4 - 2);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,100);
 expected = [
 0.998400      0.374400      0.150400      0.046400
 0.000320      0.374720      0.317120      0.355520
@@ -404,15 +404,15 @@ expected = [
 0.784320      0.398720      0.941120      0.619520
 ];
 assert_close ( computed , expected , 1.e-5 );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 
 // Configure a list of primes and use it
-rng = lowdisc_new("fauref");
+lds = lowdisc_new("fauref");
 prarray = lowdisc_primes1000 ( );
-rng = lowdisc_configure(rng,"-primeslist",prarray);
-rng = lowdisc_configure(rng,"-dimension",150);
-rng = lowdisc_startup ( rng );
-[rng,next] = lowdisc_next ( rng , 10 );
+lds = lowdisc_configure(lds,"-primeslist",prarray);
+lds = lowdisc_configure(lds,"-dimension",150);
+lds = lowdisc_startup ( lds );
+[lds,next] = lowdisc_next ( lds , 10 );
 assert_equal ( size(next) , [10 150] );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 

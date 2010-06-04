@@ -8,22 +8,18 @@
 
 
 function this = ldrevhalf_startup (this)
-  
-  if (this.startedup<>0) then
-    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "ldrevhalf_startup" );
-    error(errmsg);
-  end
-  if (this.verbose) then
-    mprintf( "Starting up the sequence." );
-  end
-  this.startedup = 1;
-  _lowdisc_revhaltfstart ( this.dimension , this.primeslist(1:this.dimension) );
-  // Initialize the sequence
-  this.sequenceindex = 0;
+  this.baseobj = ldbase_startup ( this.baseobj )
+  dimension = ldbase_cget ( this.baseobj , "-dimension" )
+    if (dimension>this.primessize) then
+      errmsg = sprintf( gettext ( "%s: Reverse Halton sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , "ldrevhalf_startup" , dimension);
+      error(errmsg);
+    end
+  _lowdisc_revhaltfstart ( dimension , this.primeslist(1:dimension) );
   // Skip (i.e. ignore) as many elements as required
   // TODO : skip directly when sequence authorizes it.
-  if ( this.skip > 0 ) then
-    [ this , result ] = ldrevhalf_next ( this , this.skip )
+  skip = ldbase_cget ( this.baseobj , "-skip" )
+  if ( skip > 0 ) then
+    [ this , result ] = ldrevhalf_next ( this , skip )
   end
 endfunction
 

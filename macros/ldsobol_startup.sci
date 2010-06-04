@@ -1,5 +1,7 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2005 - John Burkardt
+// Copyright (C) 1986 - Bennett Fox
 
 // This file must be used under the terms of the GNU LGPL license.
 
@@ -18,19 +20,12 @@ function this = ldsobol_startup (this)
 //       2009 - Digiteo - Michael Baudin
 //
   
-  if (this.startedup<>0) then
-    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "ldsobol_startup" );
-    error(errmsg);
-  end
-  if (this.verbose) then
-    mprintf( "Starting up the sequence." );
-  end
-  this.startedup = 1;
+  this.baseobj = ldbase_startup ( this.baseobj )
   //
   // Create the sequence
   //
   // Extract data
-  dim_num = this.dimension
+  dim_num = ldbase_cget ( this.baseobj , "-dimension" )
   
   dimmax = 40;
   logmax = 30;
@@ -171,12 +166,11 @@ function this = ldsobol_startup (this)
   // Our Sobol sequence starts with [0.5 0.5] in 2 dimensions
   //
   [ this , quasi ] = ldsobol_next ( this );
-  // Initialize the sequence
-  this.sequenceindex = 0;
   // Skip (i.e. ignore) as many elements as required
   // TODO : skip directly when sequence authorizes it.
-  if ( this.skip > 0 ) then
-    [ this , result ] = lowdisc_next ( this , this.skip )
+  skip = ldbase_cget ( this.baseobj , "-skip" )
+  if ( skip > 0 ) then
+    [ this , result ] = ldsobol_next ( this , skip )
   end
 endfunction
 

@@ -48,45 +48,39 @@ endfunction
 //
 // Check the configure/cget methods.
 //
-sequencearray = [
-"halton"
-"faure"
-"reversehalton"
-"sobol"
-"niederreiter-base-2"
-"reversehaltonf"
-//"niederreiter-base-2f"
-"sobolf"
-"fauref"
-"haltonf"
-];
+sequencearray = lowdisc_methods ();
 for sequencename = sequencearray'
-  rng = lowdisc_new(sequencename);
+  lds = lowdisc_new(sequencename);
   //
-  rng = lowdisc_configure(rng,"-dimension",12);
-  nbdim = lowdisc_cget(rng,"-dimension");
+  lds = lowdisc_configure(lds,"-dimension",12);
+  nbdim = lowdisc_cget(lds,"-dimension");
   assert_equal ( nbdim , 12 );
   //
-  i = lowdisc_cget(rng,"-sequenceindex");
+  i = lowdisc_get(lds,"-index");
   assert_equal ( i , 0 );
   //
-  verbose = lowdisc_cget(rng,"-verbose");
+  verbose = lowdisc_cget(lds,"-verbose");
   assert_equal ( verbose , %f );
   //
-  method = lowdisc_cget(rng,"-method");
+  lds = lowdisc_configure(lds,"-verbose",%T);
+  verbose = lowdisc_cget(lds,"-verbose");
+  assert_equal ( verbose , %T );
+  //
+  method = lowdisc_cget(lds,"-method");
   assert_equal ( method , sequencename );
   //
-  rng = lowdisc_configure(rng,"-skip",12);
-  skip = lowdisc_cget(rng,"-skip");
+  lds = lowdisc_configure(lds,"-skip",12);
+  skip = lowdisc_cget(lds,"-skip");
   assert_equal ( skip , 12 );
   //
-  rng = lowdisc_configure(rng,"-leap",12);
-  leap = lowdisc_cget(rng,"-leap");
+  lds = lowdisc_configure(lds,"-leap",12);
+  leap = lowdisc_cget(lds,"-leap");
   assert_equal ( leap , leap );
   //
   // Test printing system
-  string(rng)
-  rng
-  rng = lowdisc_destroy(rng);
+  string(lds)
+  lds
+  lds.sequence
+  lds = lowdisc_destroy(lds);
 end
 

@@ -9,28 +9,21 @@
 
 function this = ldrevhal_startup (this)
   
-  if (this.startedup<>0) then
-    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "ldrevhal_startup" );
-    error(errmsg);
-  end
-  if (this.verbose) then
-    mprintf( "Starting up the sequence." );
-  end
-  this.startedup = 1;
+  this.baseobj = ldbase_startup ( this.baseobj )
   //
   // Create the sequence
   //
-    if ( this.dimension > this.primessize ) then
+    dimension = ldbase_cget ( this.baseobj , "-dimension" )
+    if ( dimension > this.primessize ) then
       errmsg = sprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"),...
-      "lowdisc_startup" , this.method,this.dimension,this.primessize);
+      "ldrevhal_startup" , this.method,dimension,this.primessize);
       error(errmsg);
     end
-  // Initialize the sequence
-  this.sequenceindex = 0;
   // Skip (i.e. ignore) as many elements as required
   // TODO : skip directly when sequence authorizes it.
-  if ( this.skip > 0 ) then
-    [ this , result ] = lowdisc_next ( this , this.skip )
+  skip = ldbase_cget ( this.baseobj , "-skip" )
+  if ( skip > 0 ) then
+    [ this , result ] = ldrevhal_next ( this , skip )
   end
 endfunction
 

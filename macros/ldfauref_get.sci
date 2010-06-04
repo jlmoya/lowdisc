@@ -11,16 +11,17 @@ function value = ldfauref_get (this,key)
 
   select key
   case "-faurefprime" then
-    k = find(this.primeslist>=this.dimension,1)
+    dimension = ldbase_cget ( this.baseobj , "-dimension" )
+    k = find(this.primeslist>=dimension,1)
     if (k == []) then
       errmsg = sprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
-        "ldfauref_get" , this.dimension);
+        "ldfauref_get" , dimension);
       error(errmsg);
     end
     value  = this.primeslist ( k )
   else
-    errmsg = sprintf(gettext("%s: Unknown key %s"),"ldfauref_get",key);
-    error(errmsg);
+    // Delegate to ldbase
+    value = ldbase_get ( this.baseobj , key )
   end
 endfunction
 

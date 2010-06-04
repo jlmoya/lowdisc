@@ -14,48 +14,55 @@ function [this,next] = ldrevhal_next ( varargin )
     errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldrevhal_next", rhs);
     error(errmsg)
   end
-  
+  //
   this = varargin(1)
   if ( rhs < 2 ) then
     imax = 1
   else
     imax = varargin(2)
   end
-
   //
   // Check that the object is started up
-  if ( this.startedup == 0 ) then
-    errmsg = msprintf(gettext("%s: The sequence is not started up. Call lowdisc_startup first."), "lowdisc_next");
+  if ( ~ldbase_get ( this.baseobj , "-startedup" ) ) then
+    errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldrevhal_startup first."), "ldrevhal_next");
     error(errmsg)
   end
   //
+  dimension = ldbase_cget ( this.baseobj , "-dimension" )
+  leap = ldbase_cget ( this.baseobj , "-leap" )
+  //
   // Initialize the vector
-  next = zeros(imax,this.dimension)
-  
+  next = zeros(imax,dimension)
+  //
   for i=1:imax
-    this.sequenceindex = this.sequenceindex + 1;
-      [this,onevector] = _next_reversehalton (this);
-    next(i,1:this.dimension) = onevector
+    this.baseobj = ldbase_incr ( this.baseobj )
+    index = ldbase_get ( this.baseobj , "-index" )
+    onevector = _reversehalton ( dimension , index , this.primeslist )
+    next(i,1:dimension) = onevector
     // Leap over (i.e. ignore) as many elements as required
-    if ( this.leap > 0 ) then
-      for j = 1 : this.leap
-        this.sequenceindex = this.sequenceindex + 1;
-      [this,onevector] = _next_reversehalton (this);
+    if ( leap > 0 ) then
+      for j = 1 : leap
+        this.baseobj = ldbase_incr ( this.baseobj )
+        index = ldbase_get ( this.baseobj , "-index" )
+        onevector = _reversehalton ( dimension , index , this.primeslist )
       end
     end
   end
 endfunction
 //
-// _next_reversehalton --
+// _reversehalton --
 //   Returns the next value of the reverse Halton
 //   sequence.
-// Arguments:
+// Parameters
+//   dimension : the number of variables
+//   index : the index of the element in the sequence
+//   primes : a matrix of consecutive prime numbers, in increasing order
 //
-function [ this , next ] = _next_reversehalton (this)
-  next = zeros(1:this.dimension);
-  for idim=1:this.dimension
-    basis = this.primeslist(idim);
-    next(idim) = _vdcinv (this.sequenceindex,basis)
+function next = _reversehalton ( dimension , index , primes )
+  next = zeros(1:dimension);
+  for idim=1:dimension
+    basis = primes ( idim );
+    next(idim) = _vdcinv ( index , basis )
   end
 endfunction
 //

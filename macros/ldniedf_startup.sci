@@ -13,21 +13,15 @@ function this = ldniedf_startup (this)
 //       2010 - Digiteo - Michael Baudin
 //
   
-  if (this.startedup<>0) then
-    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "ldniedf_startup" );
-    error(errmsg);
-  end
-  if (this.verbose) then
-    mprintf( "Starting up the sequence." );
-  end
-  this.startedup = 1;
+  this.baseobj = ldbase_startup ( this.baseobj )
   //
   // Create the sequence
-  //
-  // Start the sequence
-  _lowdisc_niedfstart ( this.dimension , this.base , this.skip , this.gfaritfile , this.gfplysfile );
+  skip = ldbase_cget ( this.baseobj , "-skip" )
+  dimension = ldbase_cget ( this.baseobj , "-dimension" )
+  _lowdisc_niedfstart ( dimension , this.base , skip , this.gfaritfile , this.gfplysfile );
   //
   // Initialize the sequence at the right place
-  this.sequenceindex = this.skip;
+  // TODO : test this
+  this.baseobj = ldbase_indexset ( this.baseobj , skip )
 endfunction
 

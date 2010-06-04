@@ -1,7 +1,7 @@
-// Copyright (C) Bennett Fox.
-// Copyright (C) 2009 - John Burkardt
-// Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2009 - John Burkardt
+// Copyright (C) 1986 - Bennett Fox
 
 // This file must be used under the terms of the GNU LGPL license.
 
@@ -12,33 +12,36 @@ function [this,next] = ldsobol_next ( varargin )
     errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldsobol_next", rhs);
     error(errmsg)
   end
-  
+  //
   this = varargin(1)
   if ( rhs < 2 ) then
     imax = 1
   else
     imax = varargin(2)
   end
-
   //
   // Check that the object is started up
-  if ( this.startedup == 0 ) then
-    errmsg = msprintf(gettext("%s: The sequence is not started up. Call lowdisc_startup first."), "lowdisc_next");
+  if ( ~ldbase_get ( this.baseobj , "-startedup" ) ) then
+    errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldsobol_startup first."), "ldsobol_next");
     error(errmsg)
   end
   //
+  dimension = ldbase_cget ( this.baseobj , "-dimension" )
+  leap = ldbase_cget ( this.baseobj , "-leap" )
+  //
   // Initialize the vector
-  next = zeros(imax,this.dimension)
-  
+  next = zeros(imax,dimension)
+  //
   for i=1:imax
-    this.sequenceindex = this.sequenceindex + 1;
+    this.baseobj = ldbase_incr ( this.baseobj )
     [ this , onevector ] = _next_sobol ( this );
-    next(i,1:this.dimension) = onevector
+    next(i,1:dimension) = onevector
     // Leap over (i.e. ignore) as many elements as required
-    if ( this.leap > 0 ) then
-      for j = 1 : this.leap
-        this.sequenceindex = this.sequenceindex + 1;
-      [ this , onevector ] = _next_sobol ( this );
+    // TODO : improve this to leap the elements without actually generating them
+    if ( leap > 0 ) then
+      for j = 1 : leap
+        this.baseobj = ldbase_incr ( this.baseobj )
+        [ this , onevector ] = _next_sobol ( this );
       end
     end
   end
@@ -118,7 +121,7 @@ function [ this , quasi ] = _next_sobol ( this )
   count = this.sobolcount
   v = this.sobolv
   recipd = this.sobolrecipd
-  dim_num = this.dimension
+  dim_num = ldbase_cget ( this.baseobj , "-dimension" )
   maxcol = this.sobolmaxcol;
 //
 //  Find the position of the right-hand zero in count

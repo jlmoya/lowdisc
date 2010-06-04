@@ -44,57 +44,77 @@ endfunction
 //
 // Check the configure/cget methods.
 //
-sequencearray = [
-"halton"
-"faure"
-"reversehalton"
-"sobol"
-"niederreiter-base-2"
-"reversehaltonf"
-//"niederreiter-base-2f"
-"sobolf"
-"fauref"
-"haltonf"
-];
+sequencearray = lowdisc_methods ();
 for sequencename = sequencearray'
-  rng = lowdisc_new(sequencename);
+  lds = lowdisc_new(sequencename);
   //
-  rng = lowdisc_configure(rng,"-dimension",12);
-  nbdim = lowdisc_cget(rng,"-dimension");
+  lds = lowdisc_configure(lds,"-dimension",12);
+  nbdim = lowdisc_cget(lds,"-dimension");
   assert_equal ( nbdim , 12 );
   //
-  i = lowdisc_cget(rng,"-sequenceindex");
+  i = lowdisc_get(lds,"-index");
   assert_equal ( i , 0 );
   //
-  verbose = lowdisc_cget(rng,"-verbose");
+  verbose = lowdisc_cget(lds,"-verbose");
   assert_equal ( verbose , %f );
   //
-  method = lowdisc_cget(rng,"-method");
+  lds = lowdisc_configure(lds,"-verbose",%T);
+  verbose = lowdisc_cget(lds,"-verbose");
+  assert_equal ( verbose , %T );
+  //
+  method = lowdisc_cget(lds,"-method");
   assert_equal ( method , sequencename );
   //
-  rng = lowdisc_configure(rng,"-skip",12);
-  skip = lowdisc_cget(rng,"-skip");
+  lds = lowdisc_configure(lds,"-skip",12);
+  skip = lowdisc_cget(lds,"-skip");
   assert_equal ( skip , 12 );
   //
-  rng = lowdisc_configure(rng,"-leap",12);
-  leap = lowdisc_cget(rng,"-leap");
+  lds = lowdisc_configure(lds,"-leap",12);
+  leap = lowdisc_cget(lds,"-leap");
   assert_equal ( leap , leap );
   //
   // Test printing system
-  string(rng)
-  rng
-  rng = lowdisc_destroy(rng);
+  string(lds)
+  lds
+  lds.sequence
+  lds = lowdisc_destroy(lds);
 end
  ans  =
  
-!Low Discrepancy Sequence:               !
-!                                        !
-!=========================               !
-!                                        !
-!method: halton                          !
-!                                        !
-!sequence: <a Low Discrepancy Sequence>  !
- rng  =
+!Low Discrepancy Sequence:                                  !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!method: halton                                             !
+!                                                           !
+!sequence: <a Low Discrepancy Sequence>                     !
+!                                                           !
+!                                                           !
+!                                                           !
+!Low Discrepancy Sequence: Halton                           !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...  !
+!                                                           !
+!                                                           !
+!                                                           !
+!Abstract Low Discrepancy Sequence:                         !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!Dimension of space: 12                                     !
+!                                                           !
+!Index: 0                                                   !
+!                                                           !
+!Verbose logging: T                                         !
+!                                                           !
+!Skip: 12                                                   !
+!                                                           !
+!Leap: 12                                                   !
+!                                                           !
+!Started Up: F                                              !
+ lds  =
  
 Low Discrepancy Sequence:
 
@@ -104,16 +124,191 @@ method: halton
 
 sequence: <a Low Discrepancy Sequence>
 
+
+
+Low Discrepancy Sequence: Halton
+
+=========================
+
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
  ans  =
  
-!Low Discrepancy Sequence:               !
-!                                        !
-!=========================               !
-!                                        !
-!method: faure                           !
-!                                        !
-!sequence: <a Low Discrepancy Sequence>  !
- rng  =
+Low Discrepancy Sequence: Halton
+
+=========================
+
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+!Low Discrepancy Sequence:                                  !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!method: haltonf                                            !
+!                                                           !
+!sequence: <a Low Discrepancy Sequence>                     !
+!                                                           !
+!                                                           !
+!                                                           !
+!Low Discrepancy Sequence: Halton                           !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...  !
+!                                                           !
+!                                                           !
+!                                                           !
+!Abstract Low Discrepancy Sequence:                         !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!Dimension of space: 12                                     !
+!                                                           !
+!Index: 0                                                   !
+!                                                           !
+!Verbose logging: T                                         !
+!                                                           !
+!Skip: 12                                                   !
+!                                                           !
+!Leap: 12                                                   !
+!                                                           !
+!Started Up: F                                              !
+ lds  =
+ 
+Low Discrepancy Sequence:
+
+=========================
+
+method: haltonf
+
+sequence: <a Low Discrepancy Sequence>
+
+
+
+Low Discrepancy Sequence: Halton
+
+=========================
+
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+Low Discrepancy Sequence: Halton
+
+=========================
+
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+!Low Discrepancy Sequence:                                  !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!method: faure                                              !
+!                                                           !
+!sequence: <a Low Discrepancy Sequence>                     !
+!                                                           !
+!                                                           !
+!                                                           !
+!Low Discrepancy Sequence: Faure                            !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...  !
+!                                                           !
+!                                                           !
+!                                                           !
+!Abstract Low Discrepancy Sequence:                         !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!Dimension of space: 12                                     !
+!                                                           !
+!Index: 0                                                   !
+!                                                           !
+!Verbose logging: T                                         !
+!                                                           !
+!Skip: 12                                                   !
+!                                                           !
+!Leap: 12                                                   !
+!                                                           !
+!Started Up: F                                              !
+ lds  =
  
 Low Discrepancy Sequence:
 
@@ -123,16 +318,191 @@ method: faure
 
 sequence: <a Low Discrepancy Sequence>
 
+
+
+Low Discrepancy Sequence: Faure
+
+=========================
+
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
  ans  =
  
-!Low Discrepancy Sequence:               !
-!                                        !
-!=========================               !
-!                                        !
-!method: reversehalton                   !
-!                                        !
-!sequence: <a Low Discrepancy Sequence>  !
- rng  =
+Low Discrepancy Sequence: Faure
+
+=========================
+
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+!Low Discrepancy Sequence:                                  !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!method: fauref                                             !
+!                                                           !
+!sequence: <a Low Discrepancy Sequence>                     !
+!                                                           !
+!                                                           !
+!                                                           !
+!Low Discrepancy Sequence: Faure Fast                       !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...  !
+!                                                           !
+!                                                           !
+!                                                           !
+!Abstract Low Discrepancy Sequence:                         !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!Dimension of space: 12                                     !
+!                                                           !
+!Index: 0                                                   !
+!                                                           !
+!Verbose logging: T                                         !
+!                                                           !
+!Skip: 12                                                   !
+!                                                           !
+!Leap: 12                                                   !
+!                                                           !
+!Started Up: F                                              !
+ lds  =
+ 
+Low Discrepancy Sequence:
+
+=========================
+
+method: fauref
+
+sequence: <a Low Discrepancy Sequence>
+
+
+
+Low Discrepancy Sequence: Faure Fast
+
+=========================
+
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+Low Discrepancy Sequence: Faure Fast
+
+=========================
+
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+!Low Discrepancy Sequence:                                  !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!method: reversehalton                                      !
+!                                                           !
+!sequence: <a Low Discrepancy Sequence>                     !
+!                                                           !
+!                                                           !
+!                                                           !
+!Low Discrepancy Sequence: Reverse Halton                   !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...  !
+!                                                           !
+!                                                           !
+!                                                           !
+!Abstract Low Discrepancy Sequence:                         !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!Dimension of space: 12                                     !
+!                                                           !
+!Index: 0                                                   !
+!                                                           !
+!Verbose logging: T                                         !
+!                                                           !
+!Skip: 12                                                   !
+!                                                           !
+!Leap: 12                                                   !
+!                                                           !
+!Started Up: F                                              !
+ lds  =
  
 Low Discrepancy Sequence:
 
@@ -141,6 +511,155 @@ Low Discrepancy Sequence:
 method: reversehalton
 
 sequence: <a Low Discrepancy Sequence>
+
+
+
+Low Discrepancy Sequence: Reverse Halton
+
+=========================
+
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+Low Discrepancy Sequence: Reverse Halton
+
+=========================
+
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+!Low Discrepancy Sequence:                                  !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!method: reversehaltonf                                     !
+!                                                           !
+!sequence: <a Low Discrepancy Sequence>                     !
+!                                                           !
+!                                                           !
+!                                                           !
+!Low Discrepancy Sequence: Reverse Halton                   !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...  !
+!                                                           !
+!                                                           !
+!                                                           !
+!Abstract Low Discrepancy Sequence:                         !
+!                                                           !
+!=========================                                  !
+!                                                           !
+!Dimension of space: 12                                     !
+!                                                           !
+!Index: 0                                                   !
+!                                                           !
+!Verbose logging: T                                         !
+!                                                           !
+!Skip: 12                                                   !
+!                                                           !
+!Leap: 12                                                   !
+!                                                           !
+!Started Up: F                                              !
+ lds  =
+ 
+Low Discrepancy Sequence:
+
+=========================
+
+method: reversehaltonf
+
+sequence: <a Low Discrepancy Sequence>
+
+
+
+Low Discrepancy Sequence: Reverse Halton
+
+=========================
+
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+Low Discrepancy Sequence: Reverse Halton
+
+=========================
+
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
 
  ans  =
  
@@ -151,7 +670,31 @@ sequence: <a Low Discrepancy Sequence>
 !method: sobol                           !
 !                                        !
 !sequence: <a Low Discrepancy Sequence>  !
- rng  =
+!                                        !
+!                                        !
+!                                        !
+!Low Discrepancy Sequence: Sobol         !
+!                                        !
+!=========================               !
+!                                        !
+!                                        !
+!                                        !
+!Abstract Low Discrepancy Sequence:      !
+!                                        !
+!=========================               !
+!                                        !
+!Dimension of space: 12                  !
+!                                        !
+!Index: 0                                !
+!                                        !
+!Verbose logging: T                      !
+!                                        !
+!Skip: 12                                !
+!                                        !
+!Leap: 12                                !
+!                                        !
+!Started Up: F                           !
+ lds  =
  
 Low Discrepancy Sequence:
 
@@ -161,43 +704,53 @@ method: sobol
 
 sequence: <a Low Discrepancy Sequence>
 
- ans  =
- 
-!Low Discrepancy Sequence:               !
-!                                        !
-!=========================               !
-!                                        !
-!method: niederreiter-base-2             !
-!                                        !
-!sequence: <a Low Discrepancy Sequence>  !
- rng  =
- 
-Low Discrepancy Sequence:
+
+
+Low Discrepancy Sequence: Sobol
 
 =========================
 
-method: niederreiter-base-2
 
-sequence: <a Low Discrepancy Sequence>
 
- ans  =
- 
-!Low Discrepancy Sequence:               !
-!                                        !
-!=========================               !
-!                                        !
-!method: reversehaltonf                  !
-!                                        !
-!sequence: <a Low Discrepancy Sequence>  !
- rng  =
- 
-Low Discrepancy Sequence:
+Abstract Low Discrepancy Sequence:
 
 =========================
 
-method: reversehaltonf
+Dimension of space: 12
 
-sequence: <a Low Discrepancy Sequence>
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+Low Discrepancy Sequence: Sobol
+
+=========================
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
 
  ans  =
  
@@ -208,7 +761,31 @@ sequence: <a Low Discrepancy Sequence>
 !method: sobolf                          !
 !                                        !
 !sequence: <a Low Discrepancy Sequence>  !
- rng  =
+!                                        !
+!                                        !
+!                                        !
+!Low Discrepancy Sequence: Fast Sobol    !
+!                                        !
+!=========================               !
+!                                        !
+!                                        !
+!                                        !
+!Abstract Low Discrepancy Sequence:      !
+!                                        !
+!=========================               !
+!                                        !
+!Dimension of space: 12                  !
+!                                        !
+!Index: 0                                !
+!                                        !
+!Verbose logging: T                      !
+!                                        !
+!Skip: 12                                !
+!                                        !
+!Leap: 12                                !
+!                                        !
+!Started Up: F                           !
+ lds  =
  
 Low Discrepancy Sequence:
 
@@ -218,41 +795,253 @@ method: sobolf
 
 sequence: <a Low Discrepancy Sequence>
 
+
+
+Low Discrepancy Sequence: Fast Sobol
+
+=========================
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
  ans  =
  
-!Low Discrepancy Sequence:               !
-!                                        !
-!=========================               !
-!                                        !
-!method: fauref                          !
-!                                        !
-!sequence: <a Low Discrepancy Sequence>  !
- rng  =
+Low Discrepancy Sequence: Fast Sobol
+
+=========================
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+!Low Discrepancy Sequence:                      !
+!                                               !
+!=========================                      !
+!                                               !
+!method: niederreiter-base-2                    !
+!                                               !
+!sequence: <a Low Discrepancy Sequence>         !
+!                                               !
+!                                               !
+!                                               !
+!Low Discrepancy Sequence: Niederreiter Base 2  !
+!                                               !
+!=========================                      !
+!                                               !
+!                                               !
+!                                               !
+!Abstract Low Discrepancy Sequence:             !
+!                                               !
+!=========================                      !
+!                                               !
+!Dimension of space: 12                         !
+!                                               !
+!Index: 0                                       !
+!                                               !
+!Verbose logging: T                             !
+!                                               !
+!Skip: 12                                       !
+!                                               !
+!Leap: 12                                       !
+!                                               !
+!Started Up: F                                  !
+ lds  =
  
 Low Discrepancy Sequence:
 
 =========================
 
-method: fauref
+method: niederreiter-base-2
 
 sequence: <a Low Discrepancy Sequence>
 
+
+
+Low Discrepancy Sequence: Niederreiter Base 2
+
+=========================
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
  ans  =
  
-!Low Discrepancy Sequence:               !
-!                                        !
-!=========================               !
-!                                        !
-!method: haltonf                         !
-!                                        !
-!sequence: <a Low Discrepancy Sequence>  !
- rng  =
+Low Discrepancy Sequence: Niederreiter Base 2
+
+=========================
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+!Low Discrepancy Sequence:                                             !
+!                                                                      !
+!=========================                                             !
+!                                                                      !
+!method: niederreiterf                                                 !
+!                                                                      !
+!sequence: <a Low Discrepancy Sequence>                                !
+!                                                                      !
+!                                                                      !
+!                                                                      !
+!Low Discrepancy Sequence: Fast Niederreiter                           !
+!                                                                      !
+!=========================                                             !
+!                                                                      !
+!Base: 2                                                               !
+!                                                                      !
+!Gfaritfile: TMPDIR\gfarit.tx!
+!     t                                                                !
+!                                                                      !
+!Gfplysfile: TMPDIR\gfplys.tx!
+!     t                                                                !
+!                                                                      !
+!                                                                      !
+!                                                                      !
+!Abstract Low Discrepancy Sequence:                                    !
+!                                                                      !
+!=========================                                             !
+!                                                                      !
+!Dimension of space: 12                                                !
+!                                                                      !
+!Index: 0                                                              !
+!                                                                      !
+!Verbose logging: T                                                    !
+!                                                                      !
+!Skip: 12                                                              !
+!                                                                      !
+!Leap: 12                                                              !
+!                                                                      !
+!Started Up: F                                                         !
+ lds  =
  
 Low Discrepancy Sequence:
 
 =========================
 
-method: haltonf
+method: niederreiterf
 
 sequence: <a Low Discrepancy Sequence>
+
+
+
+Low Discrepancy Sequence: Fast Niederreiter
+
+=========================
+
+Base: 2
+
+Gfaritfile: TMPDIR\gfarit.txt
+
+Gfplysfile: TMPDIR\gfplys.txt
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
+
+ ans  =
+ 
+Low Discrepancy Sequence: Fast Niederreiter
+
+=========================
+
+Base: 2
+
+Gfaritfile: TMPDIR\gfarit.txt
+
+Gfplysfile: TMPDIR\gfplys.txt
+
+
+
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 12
+
+Index: 0
+
+Verbose logging: T
+
+Skip: 12
+
+Leap: 12
+
+Started Up: F
 

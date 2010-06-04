@@ -117,15 +117,15 @@ _lowdisc_sobolfstop ( );
 //
 // Check the Fast Sobol sequence
 //
-rng = lowdisc_new("sobolf");
-rng = lowdisc_configure(rng,"-dimension",2);
-rng = lowdisc_startup (rng);
+lds = lowdisc_new("sobolf");
+lds = lowdisc_configure(lds,"-dimension",2);
+lds = lowdisc_startup (lds);
 // Term #1
-[rng,computed] = lowdisc_next (rng);
+[lds,computed] = lowdisc_next (lds);
 expected = [0.5 0.5];
 assert_close ( computed, expected, 10*%eps );
 // Terms #2 to #6
-[rng,computed]=lowdisc_next(rng,5);
+[lds,computed]=lowdisc_next(lds,5);
 expected= [
     3./4. 1./4. 
     1./4. 3./4.    
@@ -134,45 +134,45 @@ expected= [
     5./8. 1./8. 
 ];
 assert_close ( computed, expected, 10*%eps );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 
 //
 // test Fast Sobol in dimension 2 
-rng = lowdisc_new("sobolf");
-rng = lowdisc_configure(rng,"-dimension",2);
-rng = lowdisc_startup (rng);
-[rng,computed] = lowdisc_next (rng);
-[rng,computed] = lowdisc_next (rng);
-[rng,computed] = lowdisc_next (rng);
+lds = lowdisc_new("sobolf");
+lds = lowdisc_configure(lds,"-dimension",2);
+lds = lowdisc_startup (lds);
+[lds,computed] = lowdisc_next (lds);
+[lds,computed] = lowdisc_next (lds);
+[lds,computed] = lowdisc_next (lds);
 expected = [0.25 0.75];
 assert_close ( computed, expected, 10*%eps );
-[rng,computed] = lowdisc_next (rng);
+[lds,computed] = lowdisc_next (lds);
 expected = [0.375 0.375];
 assert_close ( computed, expected, 10*%eps );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 
 
 // test in dimension 3
-rng = lowdisc_new("sobolf");
-rng = lowdisc_configure(rng,"-dimension",3);
-rng = lowdisc_startup (rng);
-[rng,computed] = lowdisc_next (rng);
-[rng,computed] = lowdisc_next (rng);
-[rng,computed] = lowdisc_next (rng);
+lds = lowdisc_new("sobolf");
+lds = lowdisc_configure(lds,"-dimension",3);
+lds = lowdisc_startup (lds);
+[lds,computed] = lowdisc_next (lds);
+[lds,computed] = lowdisc_next (lds);
+[lds,computed] = lowdisc_next (lds);
 expected = [0.25 0.75 0.25];
 assert_close ( computed, expected, 10*%eps );
-[rng,computed] = lowdisc_next (rng);
+[lds,computed] = lowdisc_next (lds);
 expected = [0.375 0.375 0.625];
 assert_close ( computed, expected, 10*%eps );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 
 //
 // Check the result against TOMS 647 data
 //
-rng = lowdisc_new("sobolf");
-rng = lowdisc_configure(rng,"-dimension",4);
-rng = lowdisc_startup (rng);
-[rng,computed]=lowdisc_next(rng,100);
+lds = lowdisc_new("sobolf");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,100);
 expected = [
 0.500000      0.500000      0.500000      0.500000
 0.750000      0.250000      0.750000      0.250000
@@ -276,5 +276,5 @@ expected = [
 0.414062      0.257812      0.304688      0.476562
 ];
 assert_close ( computed , expected , 1.e-5 );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 

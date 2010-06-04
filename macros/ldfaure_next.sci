@@ -9,50 +9,74 @@
 
 
 function [this,next] = ldfaure_next ( varargin )
-
   [lhs,rhs]=argn();
   if ( rhs > 2 ) then
     errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldfaure_next", rhs);
     error(errmsg)
   end
-  
+  //
   this = varargin(1)
   if ( rhs < 2 ) then
     imax = 1
   else
     imax = varargin(2)
   end
-
   //
   // Check that the object is started up
-  if ( this.startedup == 0 ) then
-    errmsg = msprintf(gettext("%s: The sequence is not started up. Call lowdisc_startup first."), "lowdisc_next");
+  if ( ~ldbase_get ( this.baseobj , "-startedup" ) ) then
+    errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldfaure_startup first."), "ldfaure_next");
     error(errmsg)
   end
   //
+  dimension = ldbase_cget ( this.baseobj , "-dimension" )
+  leap = ldbase_cget ( this.baseobj , "-leap" )
+  //
+  // Get the basis
+  k = find(this.primeslist>= dimension,1)
+  if (k == []) then
+    errmsg = sprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
+      "_next_faure" , dimension);
+    error(errmsg);
+  end
+  basis  = this.primeslist ( k )
+  if (basis < dimension) then
+    errmsg = sprintf( gettext ( "%s: Internal error : the current basis %d is lower than the current dimension %d, which is not consistent with the Faure sequence." ) , ...
+      "_next_faure" , basis , dimension);
+    error(errmsg);
+  end
+  //
   // Initialize the vector
-  next = zeros(imax,this.dimension)
-  
+  next = zeros(imax,dimension)
+  //
   for i=1:imax
-    this.sequenceindex = this.sequenceindex + 1;
-    onevector = _next_faure (this);
-    next(i,1:this.dimension) = onevector
+    this.baseobj = ldbase_incr ( this.baseobj )
+    index = ldbase_get ( this.baseobj , "-index" )
+    onevector = _fauresequence ( dimension , index , basis )
+    next(i,1:dimension) = onevector
     // Leap over (i.e. ignore) as many elements as required
-    if ( this.leap > 0 ) then
-      for j = 1 : this.leap
-        this.sequenceindex = this.sequenceindex + 1;
-        onevector = _next_faure (this);
+    // TODO : improve this to leap the elements without actually generating them
+    if ( leap > 0 ) then
+      for j = 1 : leap
+        this.baseobj = ldbase_incr ( this.baseobj )
+        index = ldbase_get ( this.baseobj , "-index" )
+        onevector = _fauresequence ( dimension , index , basis )
       end
     end
   end
 endfunction
 //
-// _next_faure --
+// _fauresequence --
 //   Returns the next term of the Faure sequence
-// References
-//   Monte-Carlo methods in Financial Engineering, Paul Glasserman
-// Test : fauresequence ( 4 , 3 , 3 ) = [4/9 7/9 1/9]
-// Caution !
+//
+// Parameters
+//   dimension : the number of variables
+//   index : the number of the element in the sequence
+//   basis : the basis used in the sequence
+//
+// Examples
+//   _fauresequence ( 3 , 4 , 3 ) = [4/9 7/9 1/9]
+//
+// Description
 //   This implementation is not protected against overflow.
 //   Practically, we did not experience any problem with 
 //   that specific issue.
@@ -61,20 +85,11 @@ endfunction
 //   To do this, it suffices to pass the basis to the fauremat
 //   function and to use binomialmod instead of binomial.
 //
-function next = _next_faure (this)
-  k = find(this.primeslist>= this.dimension,1)
-  if (k == []) then
-    errmsg = sprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
-      "_next_faure" , this.dimension);
-    error(errmsg);
-  end
-  basis  = this.primeslist ( k )
-  if (basis < this.dimension) then
-    errmsg = sprintf( gettext ( "%s: Internal error : the current basis %d is lower than the current dimension %d, which is not consistent with the Faure sequence." ) , ...
-      "_next_faure" , basis , this.dimension);
-    error(errmsg);
-  end
-  digits = _bary ( this.sequenceindex , basis , "bigendian" )
+// References
+//   Monte-Carlo methods in Financial Engineering, Paul Glasserman
+//
+function next = _fauresequence ( dimension , index , basis )
+  digits = _bary ( index , basis , "bigendian" )
   digits = digits'
   r = size ( digits , 1 )
   // Compute a vector made of 1/b, 1/b^2, etc...
@@ -84,7 +99,7 @@ function next = _next_faure (this)
     ib = ib / basis
   end
   // Compute the element #i in the sequence
-  for idim = 1 : this.dimension
+  for idim = 1 : dimension
     ci = _fauremat ( r , idim - 1 )
     y = ci * digits
     ymodb = modulo ( y , basis )

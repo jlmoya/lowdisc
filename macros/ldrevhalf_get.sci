@@ -8,7 +8,7 @@
 
 
 function value = ldrevhalf_get (this,key)
-    errmsg = sprintf(gettext("%s: Unknown key %s"),"ldrevhalf_get",key);
-    error(errmsg);
+    // Delegate to ldbase
+    value = ldbase_get ( this.baseobj , key )
 endfunction
 

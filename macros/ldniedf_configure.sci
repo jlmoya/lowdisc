@@ -10,33 +10,13 @@
 function this = ldniedf_configure (this,key,value)
 
   select key
-  case "-verbose" then
-    assert_typeboolean ( value );
-    this.verbose = value
-  case "-dimension" then
-    assert_typereal ( value );
-    this.dimension = value
-  case "-sequenceindex" then
-    // TODO : remove this option - the use should not be able to write this setting.
-    assert_typereal ( value );
-    assert_positive ( value ); 
-    this.sequenceindex = value;
-  case "-skip" then
-    assert_typereal ( value );
-    assert_positive ( value ); 
-    this.skip = value;
-  case "-leap" then
-    assert_typereal ( value );
-    assert_positive ( value ); 
-    this.leap = value;
   case "-base" then
     assert_typereal ( value );
     assert_positive ( value ); 
     this.base = value;
   else
-    errmsg = sprintf ( gettext ( "%s: Unknown key %s" ) , ...
-    "ldniedf_configure" , key)
-    error(errmsg)
+    // Delegate to ldbase
+    this.baseobj = ldbase_configure ( this.baseobj , key ,value )
   end
 endfunction
 // Generates an error if the given variable is not of type real

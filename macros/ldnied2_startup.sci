@@ -1,7 +1,7 @@
-// Copyright (C) Paul Bratley, Bennett Fox, Harald Niederreiter
-// Copyright (C) 2003 - John Burkardt
-// Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2003 - John Burkardt
+// Copyright (C) 1994 - Paul Bratley, Bennett Fox, Harald Niederreiter
 //
 //    This code is distributed under the GNU LGPL license.
 
@@ -22,19 +22,12 @@ function this = ldnied2_startup (this)
 //       2009 - Digiteo - Michael Baudin
 //
   
-  if (this.startedup<>0) then
-    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "ldnied2_startup" );
-    error(errmsg);
-  end
-  if (this.verbose) then
-    mprintf( "Starting up the sequence." );
-  end
-  this.startedup = 1;
+  this.baseobj = ldbase_startup ( this.baseobj )
   //
   // Create the sequence
   //
   // Extract data
-  dim = this.dimension;
+  dim = ldbase_cget ( this.baseobj , "-dimension" )
 
   maxdim = 20;
   nbits = 31;
@@ -43,7 +36,7 @@ function this = ldnied2_startup (this)
 //  Initialization.
 //
     if ( maxdim < dim )
-      error ( sprintf ( gettext ( '%s: Dimension %d is greater than maximum %d') , dim , maxdim ) );
+      error ( sprintf ( gettext ( "%s: Dimension %d is greater than maximum %d") , "ldbase_startup" , dim , maxdim ) );
     end
     seed = 0;
 //
@@ -75,12 +68,11 @@ function this = ldnied2_startup (this)
     this.NR_nextq = NR_nextq
     this.NR_recip = NR_recip;
     this.NR_nbits = nbits;
-  // Initialize the sequence
-  this.sequenceindex = 0;
   // Skip (i.e. ignore) as many elements as required
   // TODO : skip directly when sequence authorizes it.
-  if ( this.skip > 0 ) then
-    [ this , result ] = lowdisc_next ( this , this.skip )
+  skip = ldbase_cget ( this.baseobj , "-skip" )
+  if ( skip > 0 ) then
+    [ this , result ] = ldnied2_next ( this , skip )
   end
 endfunction
 

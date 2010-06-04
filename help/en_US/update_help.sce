@@ -141,7 +141,8 @@ function helpupdate ( funarray , helpdir , macrosdir , demosdir , modulename )
     error(sprintf(gettext("%s: Unable to write demo file: %s\n"),"updatehelp",demofile));
   end
 endfunction
-
+//
+// Generate the object-oriented library help
 helpdir = get_absolute_file_path('update_help.sce');
 funarray = [
   "lowdisc_cget"
@@ -152,6 +153,15 @@ funarray = [
   "lowdisc_next"
   "lowdisc_reset"
   "lowdisc_startup"
+  ];
+macrosdir = helpdir +"../../macros";
+demosdir = helpdir +"../../demos";
+modulename = "lowdisc";
+helpupdate ( funarray , helpdir , macrosdir , demosdir , modulename )
+//
+// Generate the static functions help
+helpdir = fullfile(get_absolute_file_path('update_help.sce'),"staticfunctions");
+funarray = [
   "lowdisc_primes100"
   "lowdisc_primes1000"
   "lowdisc_primes10000"

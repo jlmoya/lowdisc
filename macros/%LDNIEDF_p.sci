@@ -11,6 +11,6 @@
 //   Prints the string containing the low discrepancy sequence
 //
 function %LDNIEDF_p ( this )
-  ldgen_print ( this )
+  lowdisc_print ( this )
 endfunction
 

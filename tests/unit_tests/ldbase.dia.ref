@@ -1,0 +1,109 @@
+// Copyright (C) 2008 - INRIA - Michael Baudin
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution.  The terms
+// are also available at
+// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+//
+// assert_close --
+//   Returns 1 if the two real matrices computed and expected are close,
+//   i.e. if the relative distance between computed and expected is lesser than epsilon.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_close ( computed, expected, epsilon )
+  if expected==0.0 then
+    shift = norm(computed-expected);
+  else
+    shift = norm(computed-expected)/norm(expected);
+  end
+  if shift < epsilon then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then bugmes();quit;end
+endfunction
+//
+// assert_equal --
+//   Returns 1 if the two real matrices computed and expected are equal.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_equal ( computed , expected )
+  if computed==expected then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then bugmes();quit;end
+endfunction
+ldb = ldbase_new();
+ldb
+ ldb  =
+ 
+Abstract Low Discrepancy Sequence:
+
+=========================
+
+Dimension of space: 1
+
+Index: 0
+
+Verbose logging: F
+
+Skip: 0
+
+Leap: 0
+
+Started Up: F
+
+//
+startedup = ldbase_get ( ldb , "-startedup" );
+assert_equal ( startedup , %f );
+//
+ldb = ldbase_configure ( ldb , "-dimension" , 4 );
+dimension = ldbase_cget ( ldb , "-dimension" );
+assert_equal ( dimension , 4 );
+//
+verbose = ldbase_cget ( ldb , "-verbose" );
+assert_equal ( verbose , %f );
+//
+ldb = ldbase_configure ( ldb , "-verbose" , %t );
+verbose = ldbase_cget ( ldb , "-verbose" );
+assert_equal ( verbose , %t );
+//
+skip = ldbase_cget ( ldb , "-skip" );
+assert_equal ( skip , 0 );
+//
+ldb = ldbase_configure ( ldb , "-skip" , 10 );
+skip = ldbase_cget ( ldb , "-skip" );
+assert_equal ( skip , 10 );
+//
+leap = ldbase_cget ( ldb , "-leap" );
+assert_equal ( leap , 0 );
+//
+ldb = ldbase_configure ( ldb , "-leap" , 10 );
+leap = ldbase_cget ( ldb , "-leap" );
+assert_equal ( leap , 10 );
+//
+ldb = ldbase_startup ( ldb );
+Starting up the sequence.//
+startedup = ldbase_get ( ldb , "-startedup" );
+assert_equal ( startedup , %t );
+//
+sequenceindex = ldbase_get ( ldb , "-index" );
+assert_equal ( sequenceindex , 0 );
+//
+ldb = ldbase_incr ( ldb );
+sequenceindex = ldbase_get ( ldb , "-index" );
+assert_equal ( sequenceindex , 1 );
+//
+ldb = ldbase_indexset ( ldb , 10 );
+sequenceindex = ldbase_get ( ldb , "-index" );
+assert_equal ( sequenceindex , 10 );
+//
+ldb = ldbase_destroy ( ldb );

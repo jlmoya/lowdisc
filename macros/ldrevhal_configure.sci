@@ -10,12 +10,6 @@
 function this = ldrevhal_configure (this,key,value)
 
   select key
-  case "-verbose" then
-    assert_typeboolean ( value );
-    this.verbose = value
-  case "-dimension" then
-    assert_typereal ( value );
-    this.dimension = value
   case "-primeslist" then
     assert_typereal ( value );
     psize = size(value);
@@ -26,28 +20,14 @@ function this = ldrevhal_configure (this,key,value)
     end    
     if (psize(2)<1) then
       errmsg = sprintf ( gettext ( "%s: The second dimension of the primes list matrix is %d, which is not positive" ) , ...
-        "lowdisc_configure" , psize(2))
+        "ldrevhal_configure" , psize(2))
       error(errmsg)
     end        
     this.primeslist = value;
     this.primessize = psize(2);
-  case "-sequenceindex" then
-    // TODO : remove this option - the use should not be able to write this setting.
-    assert_typereal ( value );
-    assert_positive ( value ); 
-    this.sequenceindex = value;
-  case "-skip" then
-    assert_typereal ( value );
-    assert_positive ( value ); 
-    this.skip = value;
-  case "-leap" then
-    assert_typereal ( value );
-    assert_positive ( value ); 
-    this.leap = value;
   else
-    errmsg = sprintf ( gettext ( "%s: Unknown key %s" ) , ...
-    "ldrevhal_configure" , key)
-    error(errmsg)
+    // Delegate to ldbase
+    this.baseobj = ldbase_configure ( this.baseobj , key ,value )
   end
 endfunction
 // Generates an error if the given variable is not of type real

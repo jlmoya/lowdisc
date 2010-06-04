@@ -11,28 +11,9 @@ function this = ldsobolf_new ()
 
   this = tlist([
     "LDSOBOLF"
-    "verbose"
-    "dimension"
-    "sequenceindex"
-    "primeslist"
-    "startedup"
-    "primessize"
-    "skip"
-    "leap"
+    "baseobj"
     ])
-  //
-  // Configurable options
-  this.verbose=%f
-  this.dimension=1
-  this.sequenceindex=0
-  // This makes the component available up to dimension 100
-  this.primeslist = lowdisc_primes100 ( )
-  this.skip = 0
-  this.leap = 0
-  //
-  // Non Configurable options
-  this.primessize = size(this.primeslist,2)
-  this.startedup = 0
+  this.baseobj = ldbase_new ()
 endfunction
 
 

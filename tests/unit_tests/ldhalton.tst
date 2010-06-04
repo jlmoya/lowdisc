@@ -1,0 +1,72 @@
+// Copyright (C) 2008 - INRIA - Michael Baudin
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution.  The terms
+// are also available at
+// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+
+
+
+//
+// assert_close --
+//   Returns 1 if the two real matrices computed and expected are close,
+//   i.e. if the relative distance between computed and expected is lesser than epsilon.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_close ( computed, expected, epsilon )
+  if expected==0.0 then
+    shift = norm(computed-expected);
+  else
+    shift = norm(computed-expected)/norm(expected);
+  end
+  if shift < epsilon then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then pause,end
+endfunction
+//
+// assert_equal --
+//   Returns 1 if the two real matrices computed and expected are equal.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_equal ( computed , expected )
+  if computed==expected then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then pause,end
+endfunction
+
+
+
+//
+// Check the Halton sequence in dimension 2
+//
+lds = ldhalton_new();
+lds = ldhalton_configure(lds,"-dimension",2);
+lds = ldhalton_startup (lds);
+// Term #1
+[lds,computed] = ldhalton_next (lds);
+expected = [0.5 1.0/3.0];
+assert_close ( computed, expected, %eps );
+// Terms #2 to #6
+[lds,computed]=ldhalton_next(lds,5);
+expected= [
+    1./4. 2./3. 
+    3./4. 1./9.    
+    1./8. 4./9. 
+    5./8. 7./9. 
+    3./8. 2./9. 
+];
+assert_close ( computed, expected, %eps );
+lds = ldhalton_destroy(lds);
+
+

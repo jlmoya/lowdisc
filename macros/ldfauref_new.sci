@@ -11,28 +11,18 @@ function this = ldfauref_new ()
 
   this = tlist([
     "LDFAUREF"
-    "verbose"
-    "dimension"
-    "sequenceindex"
+    "baseobj"
     "primeslist"
-    "startedup"
     "primessize"
-    "skip"
-    "leap"
     ])
   //
   // Configurable options
-  this.verbose=%f
-  this.dimension=1
-  this.sequenceindex=0
+  this.baseobj = ldbase_new ()
   // This makes the component available up to dimension 100
   this.primeslist = lowdisc_primes100 ( )
-  this.skip = 0
-  this.leap = 0
   //
   // Non Configurable options
   this.primessize = size(this.primeslist,2)
-  this.startedup = 0
 endfunction
 
 

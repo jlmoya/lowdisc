@@ -14,33 +14,38 @@ function [this,next] = ldfauref_next ( varargin )
     errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldfauref_next", rhs);
     error(errmsg)
   end
-  
+  //
   this = varargin(1)
   if ( rhs < 2 ) then
     imax = 1
   else
     imax = varargin(2)
   end
-
   //
   // Check that the object is started up
-  if ( this.startedup == 0 ) then
-    errmsg = msprintf(gettext("%s: The sequence is not started up. Call lowdisc_startup first."), "lowdisc_next");
+  if ( ~ldbase_get ( this.baseobj , "-startedup" ) ) then
+    errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldfauref_startup first."), "ldfauref_next");
     error(errmsg)
   end
   //
+  dimension = ldbase_cget ( this.baseobj , "-dimension" )
+  leap = ldbase_cget ( this.baseobj , "-leap" )
+  //
   // Initialize the vector
-  next = zeros(imax,this.dimension)
-  
+  next = zeros(imax,dimension)
+  //
   for i=1:imax
-    this.sequenceindex = this.sequenceindex + 1;
-    onevector = _lowdisc_faurefnext ( this.sequenceindex );
-    next(i,1:this.dimension) = onevector
+    this.baseobj = ldbase_incr ( this.baseobj )
+    index = ldbase_get ( this.baseobj , "-index" )
+    onevector = _lowdisc_faurefnext ( index );
+    next(i,1:dimension) = onevector
     // Leap over (i.e. ignore) as many elements as required
-    if ( this.leap > 0 ) then
-      for j = 1 : this.leap
-        this.sequenceindex = this.sequenceindex + 1;
-        next = _lowdisc_faurefnext ( this.sequenceindex );
+    // TODO : improve this to leap the elements without actually generating them
+    if ( leap > 0 ) then
+      for j = 1 : leap
+        this.baseobj = ldbase_incr ( this.baseobj )
+        index = ldbase_get ( this.baseobj , "-index" )
+        next = _lowdisc_faurefnext ( index );
       end
     end
   end

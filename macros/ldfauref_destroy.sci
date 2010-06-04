@@ -8,10 +8,11 @@
 
 
 function this = ldfauref_destroy (this)
-
-    if ( this.startedup == 1 ) then
-      _lowdisc_faurefstop ( )
-    end
-
+  if ( ldbase_get ( this.baseobj , "-startedup" ) ) then
+    _lowdisc_faurefstop ( )
+  end
+  // Delegate to ldbase
+  this.baseobj = ldbase_destroy ( this.baseobj )
+  
 endfunction
 

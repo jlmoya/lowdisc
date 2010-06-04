@@ -21,6 +21,16 @@ function str = %LOWDISC_string ( this )
   k = k + 1
   str(k) = sprintf("sequence: <a Low Discrepancy Sequence>\n")
   k = k + 1
+  //
+  // Get the sequence string
+  str(k) = ""
+  k = k + 1
+  seqstr = string(this.sequence)
+  nbrows = size(seqstr,"r")
+  for i = 1 : nbrows
+    str(k) = seqstr(i)
+    k = k + 1
+  end
 endfunction
 
 

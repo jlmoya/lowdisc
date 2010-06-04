@@ -108,15 +108,15 @@ assert_equal ( start , 0 );
 // Check the Fast Niederreiter sequence 
 // Use base 2 - this is the default.
 //
-rng = lowdisc_new("niederreiterf");
-rng = lowdisc_configure(rng,"-dimension",4);
-rng = lowdisc_startup (rng);
+lds = lowdisc_new("niederreiterf");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_startup (lds);
 // Term #1
-[rng,computed] = lowdisc_next (rng);
+[lds,computed] = lowdisc_next (lds);
 expected = [0.000000      0.000000      0.000000      0.000000];
 assert_close ( computed, expected , 10 * %eps );
 // Terms #2 to #6
-[rng,computed]=lowdisc_next(rng,9);
+[lds,computed]=lowdisc_next(lds,9);
 expected= [...
   0.500000      0.500000      0.750000      0.875000
   0.250000      0.750000      0.562500      0.765625
@@ -129,17 +129,19 @@ expected= [...
   0.562500      0.437500      0.203125      0.859375
 ];
 assert_close ( computed, expected , 1.e-4 );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 //
 // Check the Fast Niederreiter sequence 
 // Use base 7.
 //
-rng = lowdisc_new("niederreiterf");
-rng = lowdisc_configure(rng,"-dimension",6);
-rng = lowdisc_configure(rng,"-base",7);
-rng = lowdisc_startup (rng);
+lds = lowdisc_new("niederreiterf");
+lds = lowdisc_configure(lds,"-dimension",6);
+lds = lowdisc_configure(lds,"-base",7);
+base = lowdisc_cget(lds,"-base");
+assert_equal ( base , 7 );
+lds = lowdisc_startup (lds);
 // Terms #1 to #10
-[rng,computed]=lowdisc_next(rng,10);
+[lds,computed]=lowdisc_next(lds,10);
 expected= [...
   0.000000       0.000000       0.000000       0.000000       0.000000       0.000000
   0.142857       0.142857       0.142857       0.142857       0.142857       0.142857
@@ -153,4 +155,4 @@ expected= [...
   0.306122       0.163265       0.020408       0.877551       0.734694       0.591837
 ];
 assert_close ( computed, expected , 1.e-4 );
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
