@@ -53,11 +53,11 @@ endfunction
 // Parameters
 //   dimension : the number of variables
 //   index : the index of the element in the sequence
-//   primes : a matrix of consecutive primes, in increasing order
-function next = _haltonsequence ( dimension , index , primes )
+//   primelist : a matrix of consecutive primes, in increasing order
+function next = _haltonsequence ( dimension , index , primelist )
   next = zeros(1:dimension);
   for idim=1:dimension
-    basis = primes ( idim );
+    basis = primelist ( idim );
     next(idim) = _vdc ( index , basis );
   end
 endfunction

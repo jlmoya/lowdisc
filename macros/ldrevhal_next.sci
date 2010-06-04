@@ -56,12 +56,12 @@ endfunction
 // Parameters
 //   dimension : the number of variables
 //   index : the index of the element in the sequence
-//   primes : a matrix of consecutive prime numbers, in increasing order
+//   primelist : a matrix of consecutive prime numbers, in increasing order
 //
-function next = _reversehalton ( dimension , index , primes )
+function next = _reversehalton ( dimension , index , primelist )
   next = zeros(1:dimension);
   for idim=1:dimension
-    basis = primes ( idim );
+    basis = primelist ( idim );
     next(idim) = _vdcinv ( index , basis )
   end
 endfunction
