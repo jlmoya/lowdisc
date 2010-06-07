@@ -34,21 +34,9 @@ lds = ldrevhal_configure(lds,"-dimension",2);
 lds = ldrevhal_startup (lds);
 // Term #1
 [lds,computed] = ldrevhal_next (lds);
-Warning : redefining function: primes                  . Use funcprot(0) to avoid this message
-
 assert_close ( computed , [0.5 2./3.] , %eps );
 // Terms #2 to #6
 [lds,computed]=ldrevhal_next(lds,5);
-Warning : redefining function: primes                  . Use funcprot(0) to avoid this message
-
-Warning : redefining function: primes                  . Use funcprot(0) to avoid this message
-
-Warning : redefining function: primes                  . Use funcprot(0) to avoid this message
-
-Warning : redefining function: primes                  . Use funcprot(0) to avoid this message
-
-Warning : redefining function: primes                  . Use funcprot(0) to avoid this message
-
 expected= [
     1./4. 1./3. 
     3./4. 2./9. 

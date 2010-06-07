@@ -49,22 +49,10 @@ lds = ldhalton_configure(lds,"-dimension",2);
 lds = ldhalton_startup (lds);
 // Term #1
 [lds,computed] = ldhalton_next (lds);
-Warning : redefining function: primes                  . Use funcprot(0) to avoid this message
-
 expected = [0.5 1.0/3.0];
 assert_close ( computed, expected, %eps );
 // Terms #2 to #6
 [lds,computed]=ldhalton_next(lds,5);
-Warning : redefining function: primes                  . Use funcprot(0) to avoid this message
-
-Warning : redefining function: primes                  . Use funcprot(0) to avoid this message
-
-Warning : redefining function: primes                  . Use funcprot(0) to avoid this message
-
-Warning : redefining function: primes                  . Use funcprot(0) to avoid this message
-
-Warning : redefining function: primes                  . Use funcprot(0) to avoid this message
-
 expected= [
     1./4. 2./3. 
     3./4. 1./9.    
