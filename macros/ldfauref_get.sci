@@ -14,7 +14,7 @@ function value = ldfauref_get (this,key)
     dimension = ldbase_cget ( this.baseobj , "-dimension" )
     k = find(this.primeslist>=dimension,1)
     if (k == []) then
-      errmsg = sprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
+      errmsg = msprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
         "ldfauref_get" , dimension);
       error(errmsg);
     end

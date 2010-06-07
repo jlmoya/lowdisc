@@ -15,7 +15,7 @@ function this = ldrevhal_startup (this)
   //
     dimension = ldbase_cget ( this.baseobj , "-dimension" )
     if ( dimension > this.primessize ) then
-      errmsg = sprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"),...
+      errmsg = msprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"),...
       "ldrevhal_startup" , this.method,dimension,this.primessize);
       error(errmsg);
     end

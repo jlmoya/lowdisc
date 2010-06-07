@@ -117,7 +117,7 @@ function [this,next] = lowdisc_next ( varargin )
   case "haltonf" then
     [this.sequence,next]     = ldhaltonf_next ( this.sequence , imax )
   else
-    errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_next" , this.method);
+    errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_next" , this.method);
     error(errmsg);
   end
 endfunction

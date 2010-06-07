@@ -128,7 +128,7 @@ function this = lowdisc_configure (this,key,value)
     case "haltonf" then
       this.sequence     = ldhaltonf_configure ( this.sequence , key , value )
     else
-      errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_configure" , this.method);
+      errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_configure" , this.method);
       error(errmsg);
     end
 endfunction

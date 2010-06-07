@@ -84,7 +84,7 @@ function value = lowdisc_get (this,key)
   case "haltonf" then
     value     = ldhaltonf_get ( this.sequence , key )
   else
-    errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_get" , this.method);
+    errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_get" , this.method);
     error(errmsg);
   end
 endfunction

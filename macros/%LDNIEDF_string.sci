@@ -13,15 +13,15 @@
 function str = %LDNIEDF_string ( this )
   str = []
   k = 1
-  str(k) = sprintf("Low Discrepancy Sequence: Fast Niederreiter")
+  str(k) = msprintf("Low Discrepancy Sequence: Fast Niederreiter")
   k = k + 1
-  str(k) = sprintf("=========================")
+  str(k) = msprintf("=========================")
   k = k + 1
-  str(k) = sprintf("Base: %s\n", _tostring(this.base))
+  str(k) = msprintf("Base: %s\n", _tostring(this.base))
   k = k + 1
-  str(k) = sprintf("Gfaritfile: %s\n", _tostring(this.gfaritfile))
+  str(k) = msprintf("Gfaritfile: %s\n", _tostring(this.gfaritfile))
   k = k + 1
-  str(k) = sprintf("Gfplysfile: %s\n", _tostring(this.gfplysfile))
+  str(k) = msprintf("Gfplysfile: %s\n", _tostring(this.gfplysfile))
   k = k + 1
   //
   // Get the baseobj string

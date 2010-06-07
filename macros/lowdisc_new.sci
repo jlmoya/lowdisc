@@ -153,7 +153,7 @@ function this = lowdisc_new ( varargin )
   case "haltonf" then
     this.sequence     = ldhaltonf_new ()
   else
-    errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_new" , this.method);
+    errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_new" , this.method);
     error(errmsg);
   end
 endfunction

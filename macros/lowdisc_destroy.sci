@@ -51,7 +51,7 @@ function this = lowdisc_destroy (this)
   case "haltonf" then
     this.sequence     = ldhaltonf_destroy ( this.sequence )
   else
-    errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_destroy" , this.method);
+    errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_destroy" , this.method);
     error(errmsg);
   end
 endfunction

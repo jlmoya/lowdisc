@@ -14,12 +14,12 @@ function this = ldfaure_configure (this,key,value)
     assert_typereal ( value );
     psize = size(value);
     if (psize(1)<>1) then
-      errmsg = sprintf ( gettext ( "%s: The first dimension of the primes list matrix is %d, which is different from 1" ) , ...
+      errmsg = msprintf ( gettext ( "%s: The first dimension of the primes list matrix is %d, which is different from 1" ) , ...
         "lowdisc_configure" , psize(1))
       error(errmsg)
     end    
     if (psize(2)<1) then
-      errmsg = sprintf ( gettext ( "%s: The second dimension of the primes list matrix is %d, which is not positive" ) , ...
+      errmsg = msprintf ( gettext ( "%s: The second dimension of the primes list matrix is %d, which is not positive" ) , ...
         "lowdisc_configure" , psize(2))
       error(errmsg)
     end        

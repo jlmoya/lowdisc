@@ -15,7 +15,7 @@ function this = ldhaltonf_startup (this)
     seed = zeros(1,dimension);
     leap = ones(1,dimension);
     if ( dimension > this.primessize ) then
-      errmsg = sprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"), "ldhaltonf_startup" , this.method,dimension,this.primessize);
+      errmsg = msprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"), "ldhaltonf_startup" , this.method,dimension,this.primessize);
       error(errmsg);
     end
     base = this.primeslist(1:dimension);

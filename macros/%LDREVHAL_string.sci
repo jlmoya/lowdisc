@@ -13,15 +13,15 @@
 function str = %LDREVHAL_string ( this )
   str = []
   k = 1
-  str(k) = sprintf("Low Discrepancy Sequence: Reverse Halton")
+  str(k) = msprintf("Low Discrepancy Sequence: Reverse Halton")
   k = k + 1
-  str(k) = sprintf("=========================")
+  str(k) = msprintf("=========================")
   k = k + 1
   nbp = size(this.primeslist,"*")
   if ( nbp > 10 ) then
-    str(k) = sprintf("Primes List (%d primes): %s %s\n", nbp , _tostring(this.primeslist(1:10)),"...")
+    str(k) = msprintf("Primes List (%d primes): %s %s\n", nbp , _tostring(this.primeslist(1:10)),"...")
   else
-    str(k) = sprintf("Primes List (%d primes): %s\n", nbp , _tostring(this.primeslist))
+    str(k) = msprintf("Primes List (%d primes): %s\n", nbp , _tostring(this.primeslist))
   end
   k = k + 1
   //

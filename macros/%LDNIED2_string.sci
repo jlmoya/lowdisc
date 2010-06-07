@@ -13,9 +13,9 @@
 function str = %LDNIED2_string ( this )
   str = []
   k = 1
-  str(k) = sprintf("Low Discrepancy Sequence: Niederreiter Base 2")
+  str(k) = msprintf("Low Discrepancy Sequence: Niederreiter Base 2")
   k = k + 1
-  str(k) = sprintf("=========================")
+  str(k) = msprintf("=========================")
   k = k + 1
   //
   // Get the baseobj string

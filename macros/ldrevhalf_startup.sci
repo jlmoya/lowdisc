@@ -11,7 +11,7 @@ function this = ldrevhalf_startup (this)
   this.baseobj = ldbase_startup ( this.baseobj )
   dimension = ldbase_cget ( this.baseobj , "-dimension" )
     if (dimension>this.primessize) then
-      errmsg = sprintf( gettext ( "%s: Reverse Halton sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , "ldrevhalf_startup" , dimension);
+      errmsg = msprintf( gettext ( "%s: Reverse Halton sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , "ldrevhalf_startup" , dimension);
       error(errmsg);
     end
   _lowdisc_revhaltfstart ( dimension , this.primeslist(1:dimension) );

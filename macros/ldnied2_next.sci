@@ -140,7 +140,7 @@ function [ this , quasi ] = _next_nieder2 ( this )
   //  Check that we have not passed 2**NBITS calls.
   //
   if ( nbits <= r )
-    error ( sprintf ( gettext ( "%s: Too many calls" ) , "_next_nieder2" ) );
+    error ( msprintf ( gettext ( "%s: Too many calls" ) , "_next_nieder2" ) );
   end
   //
   //  Compute the new numerators in vector NEXTQ.

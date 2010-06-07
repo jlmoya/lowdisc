@@ -15,7 +15,7 @@ function this = ldfaure_startup (this)
     dimension = ldbase_cget ( this.baseobj , "-dimension" )
     k = find(this.primeslist>=dimension,1)
     if (k == []) then
-      errmsg = sprintf( gettext ( "%s: Faure sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , "ldfaure_startup" , dimension);
+      errmsg = msprintf( gettext ( "%s: Faure sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , "ldfaure_startup" , dimension);
       error(errmsg);
     end
   // Skip (i.e. ignore) as many elements as required

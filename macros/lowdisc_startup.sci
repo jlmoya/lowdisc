@@ -69,7 +69,7 @@ function this = lowdisc_startup (this)
   case "haltonf" then
     this.sequence     = ldhaltonf_startup ( this.sequence )
   else
-    errmsg = sprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_startup" , this.method);
+    errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_startup" , this.method);
     error(errmsg);
   end
 endfunction

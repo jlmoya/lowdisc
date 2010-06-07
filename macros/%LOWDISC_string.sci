@@ -13,13 +13,13 @@
 function str = %LOWDISC_string ( this )
   str = []
   k = 1
-  str(k) = sprintf("Low Discrepancy Sequence:")
+  str(k) = msprintf("Low Discrepancy Sequence:")
   k = k + 1
-  str(k) = sprintf("=========================")
+  str(k) = msprintf("=========================")
   k = k + 1
-  str(k) = sprintf("method: %s\n", _tostring(this.method))
+  str(k) = msprintf("method: %s\n", _tostring(this.method))
   k = k + 1
-  str(k) = sprintf("sequence: <a Low Discrepancy Sequence>\n")
+  str(k) = msprintf("sequence: <a Low Discrepancy Sequence>\n")
   k = k + 1
   //
   // Get the sequence string

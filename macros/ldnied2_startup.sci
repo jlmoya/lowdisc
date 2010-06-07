@@ -36,7 +36,7 @@ function this = ldnied2_startup (this)
   //  Initialization.
   //
   if ( maxdim < dim )
-    error ( sprintf ( gettext ( "%s: Dimension %d is greater than maximum %d") , "ldbase_startup" , dim , maxdim ) );
+    error ( msprintf ( gettext ( "%s: Dimension %d is greater than maximum %d") , "ldbase_startup" , dim , maxdim ) );
   end
   seed = 0;
   //

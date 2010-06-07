@@ -19,7 +19,7 @@ function value = ldbase_cget (this,key)
   case "-leap" then
     value = this.leap;
   else
-    errmsg = sprintf(gettext("%s: Unknown key %s"),"ldbase_cget",key);
+    errmsg = msprintf(gettext("%s: Unknown key %s"),"ldbase_cget",key);
     error(errmsg);
   end
 endfunction

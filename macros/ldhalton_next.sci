@@ -114,7 +114,7 @@ endfunction
 //
 function result = _vdc ( i , basis )
   if (basis<2) then
-    errmsg = sprintf ( gettext ( "%s: Unexpected basis" ) , "_vdc" , basis);
+    errmsg = msprintf ( gettext ( "%s: Unexpected basis" ) , "_vdc" , basis);
     error(errmsg);
   end
   current = i;

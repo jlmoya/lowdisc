@@ -13,9 +13,9 @@
 function str = %LDSOBOL_string ( this )
   str = []
   k = 1
-  str(k) = sprintf("Low Discrepancy Sequence: Sobol")
+  str(k) = msprintf("Low Discrepancy Sequence: Sobol")
   k = k + 1
-  str(k) = sprintf("=========================")
+  str(k) = msprintf("=========================")
   k = k + 1
   //
   // Get the baseobj string

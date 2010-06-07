@@ -32,10 +32,10 @@ function this = ldsobol_startup (this)
   //  Check dimension
   //
   if ( dimmax < dim_num )
-    error ( sprintf ( gettext ( "%s: Dimension %d is greater than maximum %d\n" ) , dim_num , dimmax , "ldsobol_startup"));
+    error ( msprintf ( gettext ( "%s: Dimension %d is greater than maximum %d\n" ) , dim_num , dimmax , "ldsobol_startup"));
   end
   if ( dim_num < 1 )
-    error ( sprintf ( gettext ( "%s: Dimension %d is lower than 1\n" ) , dim_num , "ldsobol_startup"));
+    error ( msprintf ( gettext ( "%s: Dimension %d is lower than 1\n" ) , dim_num , "ldsobol_startup"));
   end
   //
   logmax = 30;

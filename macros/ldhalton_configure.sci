@@ -14,11 +14,11 @@ function this = ldhalton_configure (this,key,value)
     assert_typereal ( value );
     psize = size(value);
     if (psize(1)<>1) then
-      errmsg = sprintf ( gettext ( "%s: The first dimension of the primes list matrix is %d, which is different from 1" ) , "ldhalton_configure" , psize(1))
+      errmsg = msprintf ( gettext ( "%s: The first dimension of the primes list matrix is %d, which is different from 1" ) , "ldhalton_configure" , psize(1))
       error(errmsg)
     end    
     if (psize(2)<1) then
-      errmsg = sprintf ( gettext ( "%s: The second dimension of the primes list matrix is %d, which is not positive" ) , "ldhalton_configure" , psize(2))
+      errmsg = msprintf ( gettext ( "%s: The second dimension of the primes list matrix is %d, which is not positive" ) , "ldhalton_configure" , psize(2))
       error(errmsg)
     end        
     this.primeslist = value;

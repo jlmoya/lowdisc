@@ -9,7 +9,7 @@
 
 function this = ldbase_startup (this)
   if (this.startedup) then
-    errmsg = sprintf( gettext ( "%s: Startup can only be run once." ) , "ldbase_startup" );
+    errmsg = msprintf( gettext ( "%s: Startup can only be run once." ) , "ldbase_startup" );
     error(errmsg);
   end
   if (this.verbose) then

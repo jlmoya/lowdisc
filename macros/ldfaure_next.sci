@@ -34,13 +34,13 @@ function [this,next] = ldfaure_next ( varargin )
   // Get the basis
   k = find(this.primeslist>= dimension,1)
   if (k == []) then
-    errmsg = sprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
+    errmsg = msprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
       "_next_faure" , dimension);
     error(errmsg);
   end
   basis  = this.primeslist ( k )
   if (basis < dimension) then
-    errmsg = sprintf( gettext ( "%s: Internal error : the current basis %d is lower than the current dimension %d, which is not consistent with the Faure sequence." ) , ...
+    errmsg = msprintf( gettext ( "%s: Internal error : the current basis %d is lower than the current dimension %d, which is not consistent with the Faure sequence." ) , ...
       "_next_faure" , basis , dimension);
     error(errmsg);
   end
@@ -267,7 +267,7 @@ function digits = _bary ( k , basis , order )
       end
     end
   else
-    error ( sprintf ( gettext ( "%s: Unknown order"  ), ...
+    error ( msprintf ( gettext ( "%s: Unknown order"  ), ...
       "_bary" ) )
   end
 endfunction

@@ -131,7 +131,7 @@ function [ this , quasi ] = _next_sobol ( this )
   //  Check that the user is not calling too many times!
   //
   if ( maxcol < l )
-    error ( sprintf ( gettext ( "%s: Too many calls. maxcol=%d, l=%d") , "_next_sobol" , l , maxcol ));
+    error ( msprintf ( gettext ( "%s: Too many calls. maxcol=%d, l=%d") , "_next_sobol" , l , maxcol ));
   end
   //
   //  Calculate the new components of QUASI.

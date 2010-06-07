@@ -13,21 +13,21 @@
 function str = %LDBASE_string ( this )
   str = []
   k = 1
-  str(k) = sprintf("Abstract Low Discrepancy Sequence:")
+  str(k) = msprintf("Abstract Low Discrepancy Sequence:")
   k = k + 1
-  str(k) = sprintf("=========================")
+  str(k) = msprintf("=========================")
   k = k + 1
-  str(k) = sprintf("Dimension of space: %s\n", _tostring(this.dimension))
+  str(k) = msprintf("Dimension of space: %s\n", _tostring(this.dimension))
   k = k + 1
-  str(k) = sprintf("Index: %s\n", _tostring(this.index))
+  str(k) = msprintf("Index: %s\n", _tostring(this.index))
   k = k + 1
-  str(k) = sprintf("Verbose logging: %s\n", _tostring(this.verbose))
+  str(k) = msprintf("Verbose logging: %s\n", _tostring(this.verbose))
   k = k + 1
-  str(k) = sprintf("Skip: %s\n", _tostring(this.skip))
+  str(k) = msprintf("Skip: %s\n", _tostring(this.skip))
   k = k + 1
-  str(k) = sprintf("Leap: %s\n", _tostring(this.leap))
+  str(k) = msprintf("Leap: %s\n", _tostring(this.leap))
   k = k + 1
-  str(k) = sprintf("Started Up: %s\n", _tostring(this.startedup))
+  str(k) = msprintf("Started Up: %s\n", _tostring(this.startedup))
   k = k + 1
 endfunction
 
