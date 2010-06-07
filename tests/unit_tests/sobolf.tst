@@ -48,71 +48,6 @@ function flag = assert_equal ( computed , expected )
   if flag <> 1 then pause,end
 endfunction
 
-//
-// Test the "hidden" API
-//
-start = _lowdisc_sobolfisstart ( );
-assert_equal ( start , 0 );
-dim = 4;
-seed = 0;
-_lowdisc_sobolfstart ( dim );
-start = _lowdisc_sobolfisstart ( );
-assert_equal ( start , 1 );
-dim2 = _lowdisc_sobolfdimget( );
-assert_equal ( dim2 , dim );
-computed = [];
-// Skip first term
-next = _lowdisc_sobolfnext ( 0 );
-for i = 1 : 11;
-  next = _lowdisc_sobolfnext ( i );
-  computed(i,1:dim) = next;
-end
-expected= [
-   0.500000    0.500000    0.500000    0.500000  
-   0.750000    0.250000    0.750000    0.250000  
-   0.250000    0.750000    0.250000    0.750000  
-   0.375000    0.375000    0.625000    0.125000  
-   0.875000    0.875000    0.125000    0.625000  
-   0.625000    0.125000    0.375000    0.375000  
-   0.125000    0.625000    0.875000    0.875000  
-   0.187500    0.312500    0.312500    0.687500  
-   0.687500    0.812500    0.812500    0.187500  
-   0.937500    0.062500    0.562500    0.937500  
-   0.437500    0.562500    0.062500    0.437500  
-];
-assert_close ( computed , expected , %eps );
-_lowdisc_sobolfstop ( );
-start = _lowdisc_sobolfisstart ( );
-assert_equal ( start , 0 );
-
-//
-// Test the "hidden" API.
-// Get elements 0,1,2,3 then 5,6,7, then 1,2,3
-// i.e. pick arbitrary experiments in the sequence.
-//
-dim = 4;
-seed = 0;
-_lowdisc_sobolfstart ( dim );
-scenario = [0 1 2 3 5 6 7 1 2 3];
-computed = [];
-for k = 1 : size(scenario,"*")
-  seed = scenario(k);
-  computed(k,1:dim) = _lowdisc_sobolfnext ( seed );
-end
-expected= [
-   0.          0.          0.          0.      
-   0.500000    0.500000    0.500000    0.500000  
-   0.750000    0.250000    0.750000    0.250000  
-   0.250000    0.750000    0.250000    0.750000  
-   0.875000    0.875000    0.125000    0.625000  
-   0.625000    0.125000    0.375000    0.375000  
-   0.125000    0.625000    0.875000    0.875000  
-   0.500000    0.500000    0.500000    0.500000  
-   0.750000    0.250000    0.750000    0.250000  
-   0.250000    0.750000    0.250000    0.750000  
-];
-assert_close ( computed , expected , %eps );
-_lowdisc_sobolfstop ( );
 
 //
 // Check the Fast Sobol sequence
@@ -274,6 +209,50 @@ expected = [
 0.789062      0.382812      0.179688      0.101562
 0.289062      0.882812      0.679688      0.601562
 0.414062      0.257812      0.304688      0.476562
+];
+assert_close ( computed , expected , 1.e-5 );
+lds = lowdisc_destroy(lds);
+
+
+// Test skip
+lds = lowdisc_new("sobolf");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-skip",10);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected = [
+    0.4375     0.5625     0.0625     0.4375   
+    0.3125     0.1875     0.9375     0.5625   
+    0.8125     0.6875     0.4375     0.0625   
+    0.5625     0.4375     0.1875     0.8125   
+    0.0625     0.9375     0.6875     0.3125   
+    0.09375    0.46875    0.84375    0.40625  
+    0.59375    0.96875    0.34375    0.90625  
+    0.84375    0.21875    0.09375    0.15625  
+    0.34375    0.71875    0.59375    0.65625  
+    0.46875    0.09375    0.46875    0.28125  
+];
+assert_close ( computed , expected , 1.e-5 );
+lds = lowdisc_destroy(lds);
+
+
+// Test leap
+lds = lowdisc_new("sobolf");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-leap",1);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected = [
+    0.5        0.5        0.5        0.5      
+    0.25       0.75       0.25       0.75     
+    0.875      0.875      0.125      0.625    
+    0.125      0.625      0.875      0.875    
+    0.6875     0.8125     0.8125     0.1875   
+    0.4375     0.5625     0.0625     0.4375   
+    0.8125     0.6875     0.4375     0.0625   
+    0.0625     0.9375     0.6875     0.3125   
+    0.59375    0.96875    0.34375    0.90625  
+    0.34375    0.71875    0.59375    0.65625  
 ];
 assert_close ( computed , expected , 1.e-5 );
 lds = lowdisc_destroy(lds);

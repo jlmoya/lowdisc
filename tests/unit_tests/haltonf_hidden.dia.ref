@@ -42,35 +42,32 @@ function flag = assert_equal ( computed , expected )
   if flag <> 1 then bugmes();quit;end
 endfunction
 //
-// Check the Fast Halton sequence in dimension 2
+// Check the "hidden" API of the Fast Halton sequence
+// Check the result against TOMS 647 data in dimension 4
 //
-lds = lowdisc_new("haltonf");
-lds = lowdisc_configure(lds,"-dimension",2);
-lds = lowdisc_startup (lds);
-// Term #1
-[lds,computed] = lowdisc_next (lds);
-expected = [0.5 1./3.];
-assert_close ( computed, expected, 10 * %eps );
-// Terms #2 to #6
-[lds,computed]=lowdisc_next(lds,5);
-expected= [
-    1./4. 2./3. 
-    3./4. 1./9.    
-    1./8. 4./9. 
-    5./8. 7./9. 
-    3./8. 2./9. 
-];
-assert_close ( computed, expected, 10 * %eps );
-lds = lowdisc_destroy(lds);
-//
-// Check the Fast Halton sequence in dimension 4 against TOMS 647
-//
-lds = lowdisc_new("haltonf");
-lds = lowdisc_configure(lds,"-dimension",4);
-// Skip 1 term, as in the TOMS implementation
-lds = lowdisc_configure(lds,"-skip",1);
-lds = lowdisc_startup (lds);
-[lds,computed]=lowdisc_next(lds,100);
+start = _lowdisc_haltonfisstart ( );
+assert_equal ( start , 0 );
+dim = 4;
+primeslist = lowdisc_primes100 ( );
+base = primeslist(1:dim);
+seed = zeros(1,dim);
+leap = ones(1,dim);
+_lowdisc_haltonfstart ( dim , base , seed , leap );
+start = _lowdisc_haltonfisstart ( );
+assert_equal ( start , 1 );
+// Check get methods
+dim2 = _lowdisc_haltonfdimget ( );
+assert_equal ( dim2 , dim );
+base2 = _lowdisc_haltonfbaseget ( );
+assert_equal ( base2 , base );
+seed2 = _lowdisc_haltonfseedget ( );
+assert_equal ( seed2 , seed );
+leap2 = _lowdisc_haltonfleapget ( );
+assert_equal ( leap2 , leap );
+// Skip the first and second terms
+for i = 1 : 100
+  computed(i,1:dim) = _lowdisc_haltonfnext ( i + 1 );
+end
 expected = [
 0.250000      0.666667      0.400000      0.285714
 0.750000      0.111111      0.600000      0.428571
@@ -173,88 +170,38 @@ expected = [
 0.148438      0.411523      0.032000      0.291545
 0.648438      0.744856      0.232000      0.434402
 ];
-assert_close ( computed, expected, 1.e-5 );
-lds = lowdisc_destroy(lds);
-// test in dimension 1229
-lds = lowdisc_new("haltonf");
-lds = lowdisc_configure(lds,"-dimension",1229);
-prarray = lowdisc_primes10000 ( );
-lds = lowdisc_configure(lds,"-primeslist",prarray);
-lds = lowdisc_startup (lds);
-for i=0:30
-  [lds,computed] = lowdisc_next (lds);
+assert_close ( computed , expected , 1.e-5 );
+_lowdisc_haltonfstop ( );
+start = _lowdisc_haltonfisstart ( );
+assert_equal ( start , 0 );
+//
+// Test the "hidden" API.
+// Get elements 0,1,2,3 then 5,6,7, then 1,2,3
+// i.e. pick arbitrary experiments in the sequence.
+//
+dim = 4;
+primeslist = lowdisc_primes100 ( );
+base = primeslist(1:dim);
+seed = zeros(1,dim);
+leap = ones(1,dim);
+_lowdisc_haltonfstart ( dim , base , seed , leap );
+scenario = [0 1 2 3 5 6 7 1 2 3];
+computed = [];
+for k = 1 : size(scenario,"*")
+  seed = scenario(k);
+  computed(k,1:dim) = _lowdisc_haltonfnext ( seed );
 end
-lds = lowdisc_destroy(lds);
-// test in dimension 2 */
-// should be
-// 0.5 0.333333
-// 0.25 0.666667
-// 0.75 0.111111
-// 0.125 0.444444*/
-lds = lowdisc_new("haltonf");
-lds = lowdisc_configure(lds,"-dimension",2);
-lds = lowdisc_startup (lds);
-[lds,computed] = lowdisc_next (lds);
-[lds,computed] = lowdisc_next (lds);
-[lds,computed] = lowdisc_next (lds);
-assert_close ( computed, [3.0/4.0 1.0/9.0], 10 * %eps );
-[lds,computed] = lowdisc_next (lds);
-assert_close ( computed, [1.0/8.0 4.0/9.0], 10 * %eps );
-lds = lowdisc_destroy(lds);
-// test in dimension 3 */
-lds = lowdisc_new("haltonf");
-lds = lowdisc_configure(lds,"-dimension",3);
-lds = lowdisc_startup (lds);
-[lds,computed] = lowdisc_next (lds);
-[lds,computed] = lowdisc_next (lds);
-[lds,computed] = lowdisc_next (lds);
-assert_close ( computed, [0.75 1.0/9.0 0.6], 10 * %eps );
-[lds,computed] = lowdisc_next (lds);
-assert_close ( computed, [0.125 4.0/9.0 0.8], 10 * %eps );
-lds = lowdisc_destroy(lds);
-//
-// Test leap
-//
-lds = lowdisc_new("haltonf");
-lds = lowdisc_configure(lds,"-dimension",4);
-// Skip 1 term, as in the TOMS implementation
-lds = lowdisc_configure(lds,"-leap",1);
-lds = lowdisc_startup (lds);
-[lds,computed]=lowdisc_next(lds,10);
-expected = [
-  0.5        0.3333333    0.2     0.1428571
-  0.750000      0.111111      0.600000      0.428571
-  0.625000      0.777778      0.040000      0.714286
-  0.875000      0.555556      0.440000      0.020408
-  0.562500      0.037037      0.840000      0.306122
-  0.812500      0.703704      0.280000      0.591837
-  0.687500      0.481481      0.680000      0.877551
-  0.937500      0.259259      0.120000      0.183673
-  0.531250      0.925926      0.520000      0.469388
-  0.781250      0.407407      0.920000      0.755102
+expected= [
+    0.        0.                     0.                     0.      
+    0.5       0.33333333333333331    0.2                    0.14285714285714285  
+    0.25      0.66666666666666663    0.4                    0.28571428571428570  
+    0.75      0.11111111111111110    0.60000000000000009    0.42857142857142855  
+    0.625     0.77777777777777768    0.04                   0.71428571428571419  
+    0.375     0.22222222222222221    0.24000000000000002    0.85714285714285710  
+    0.875     0.55555555555555558    0.44                   0.02040816326530612  
+    0.5       0.33333333333333331    0.2                    0.14285714285714285  
+    0.25      0.66666666666666663    0.4                    0.28571428571428570  
+    0.75      0.11111111111111110    0.60000000000000009    0.42857142857142855  
 ];
-assert_close ( computed, expected, 1.e-5 );
-lds = lowdisc_destroy(lds);
-//
-// Test skip
-//
-lds = lowdisc_new("haltonf");
-lds = lowdisc_configure(lds,"-dimension",4);
-// Skip 1 term, as in the TOMS implementation
-lds = lowdisc_configure(lds,"-skip",10);
-lds = lowdisc_startup (lds);
-[lds,computed]=lowdisc_next(lds,10);
-expected = [
-  0.812500      0.703704      0.280000      0.591837
-  0.187500      0.148148      0.480000      0.734694
-  0.687500      0.481481      0.680000      0.877551
-  0.437500      0.814815      0.880000      0.040816
-  0.937500      0.259259      0.120000      0.183673
-  0.031250      0.592593      0.320000      0.326531
-  0.531250      0.925926      0.520000      0.469388
-  0.281250      0.074074      0.720000      0.612245
-  0.781250      0.407407      0.920000      0.755102
-  0.156250      0.740741      0.160000      0.897959
-];
-assert_close ( computed, expected, 1.e-5 );
-lds = lowdisc_destroy(lds);
+assert_close ( computed , expected , %eps );
+_lowdisc_haltonfstop ( );

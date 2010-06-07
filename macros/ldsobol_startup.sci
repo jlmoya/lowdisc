@@ -1,24 +1,24 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
-// Copyright (C) 2005 - John Burkardt
+// Copyright (C) 2005-2009 - John Burkardt
 // Copyright (C) 1986 - Bennett Fox
 
 // This file must be used under the terms of the GNU LGPL license.
 
 function this = ldsobol_startup (this)
-//   Startup the sobol sequence
-//   This command can only be executed once in the lifetime of the object.
-//
-//  Licensing:
-//    This code is distributed under the GNU LGPL license.
-//
-//  Modified:
-//    17 February 2009
-//
-//   John Burkardt
-//    Scilab version : 
-//       2009 - Digiteo - Michael Baudin
-//
+  //   Startup the sobol sequence
+  //   This command can only be executed once in the lifetime of the object.
+  //
+  //  Licensing:
+  //    This code is distributed under the GNU LGPL license.
+  //
+  //  Modified:
+  //    17 February 2009
+  //
+  //   John Burkardt
+  //    Scilab version : 
+  //       2009 - Digiteo - Michael Baudin
+  //
   
   this.baseobj = ldbase_startup ( this.baseobj )
   //
@@ -26,8 +26,18 @@ function this = ldsobol_startup (this)
   //
   // Extract data
   dim_num = ldbase_cget ( this.baseobj , "-dimension" )
-  
+  //
   dimmax = 40;
+  //
+  //  Check dimension
+  //
+  if ( dimmax < dim_num )
+    error ( sprintf ( gettext ( "%s: Dimension %d is greater than maximum %d\n" ) , dim_num , dimmax , "ldsobol_startup"));
+  end
+  if ( dim_num < 1 )
+    error ( sprintf ( gettext ( "%s: Dimension %d is lower than 1\n" ) , dim_num , "ldsobol_startup"));
+  end
+  //
   logmax = 30;
   //
   //  Initialize (part of) V.
@@ -77,14 +87,6 @@ function this = ldsobol_startup (this)
   193, 137, 145, 143, 241, 157, 185, 167, 229, 171, ...
   213, 191, 253, 203, 211, 239, 247, 285, 369, 299 ];
   //
-  //  Check parameters.
-  //
-  if ( dimmax < dim_num )
-    error ( sprintf ( gettext ( "%s: Dimension %d is greater than maximum %d\n" ) , dim_num , dimmax , "lowdisc_startsobol"));
-  end
-  if ( dim_num < 1 )
-    error ( sprintf ( gettext ( "%s: Dimension %d is lower than 1\n" ) , dim_num , "lowdisc_startsobol"));
-  end
   atmost = 2^logmax - 1;
   //
   //  Find the number of bits in ATMOST.
@@ -162,10 +164,17 @@ function this = ldsobol_startup (this)
   this.sobolcount = count
   this.sobolrecipd = recipd
   //
-  // We drop the first element in the sequence, which is [0.0 0.0] in dimension 2.
-  // Our Sobol sequence starts with [0.5 0.5] in 2 dimensions
+  // We ignore the first element in the sequence, which is [0 0] in dimension 2.
+  // Our Sobol sequence starts with [0.5 0.5] in 2 dimensions.
+  // Temporarily disable the leap to avoid interactions.
+  // Indeed, if leap>0, then this call to next will also ignore leap elements in the 
+  // sequence, which is not expected by the user.
   //
+  leapold = ldbase_cget ( this.baseobj , "-leap" )
+  this.baseobj = ldbase_configure ( this.baseobj , "-leap" , 0 )
   [ this , quasi ] = ldsobol_next ( this );
+  this.baseobj = ldbase_configure ( this.baseobj , "-leap" , leapold )
+  //
   // Skip (i.e. ignore) as many elements as required
   // TODO : skip directly when sequence authorizes it.
   skip = ldbase_cget ( this.baseobj , "-skip" )
@@ -201,14 +210,14 @@ endfunction
 function k = _xor ( i, j )
   k = 0;
   l = 1;
-//
+  //
   i = floor ( i );
   j = floor ( j );
   while ( i ~= 0 | j ~= 0 )
-//
-//  Check the current right-hand bits of I and J.
-//  If they differ, set the appropriate bit of K.
-//
+    //
+    //  Check the current right-hand bits of I and J.
+    //  If they differ, set the appropriate bit of K.
+    //
     i2 = floor ( i / 2 );
     j2 = floor ( j / 2 );
     if ( ...

@@ -10,7 +10,7 @@
 
 
 function [this,next] = ldnied2_next ( varargin )
-
+  
   [lhs,rhs]=argn();
   if ( rhs > 2 ) then
     errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldnied2_next", rhs);
@@ -111,7 +111,7 @@ endfunction
 //    the values of XI(N), multiply by RECIP.
 //
 function [ this , quasi ] = _next_nieder2 ( this )
-
+  
   // Extract data
   NR_cj = this.NR_cj;
   dim = ldbase_cget ( this.baseobj , "-dimension" )
@@ -119,32 +119,32 @@ function [ this , quasi ] = _next_nieder2 ( this )
   NR_seed = this.NR_seed;
   NR_recip = this.NR_recip;
   nbits = this.NR_nbits;
-//
-//  Multiply the numerators in NEXTQ by RECIP to get the next
-//  quasi-random vector.
-//
+  //
+  //  Multiply the numerators in NEXTQ by RECIP to get the next
+  //  quasi-random vector.
+  //
   quasi(1:dim) = NR_nextq(1:dim) * NR_recip;
   quasi = quasi.';
-//
-//  Find the position of the right-hand zero in SEED.  This
-//  is the bit that changes in the Gray-code representation as
-//  we go from SEED to SEED+1.
-//
+  //
+  //  Find the position of the right-hand zero in SEED.  This
+  //  is the bit that changes in the Gray-code representation as
+  //  we go from SEED to SEED+1.
+  //
   r = 0;
   i = NR_seed;
   while ( _divremainder ( i, 2 ) ~= 0 )
     r = r + 1;
     i = floor ( i / 2 );
   end
-//
-//  Check that we have not passed 2**NBITS calls.
-//
+  //
+  //  Check that we have not passed 2**NBITS calls.
+  //
   if ( nbits <= r )
     error ( sprintf ( gettext ( "%s: Too many calls" ) , "_next_nieder2" ) );
   end
-//
-//  Compute the new numerators in vector NEXTQ.
-//
+  //
+  //  Compute the new numerators in vector NEXTQ.
+  //
   for i = 1 : dim
     NR_nextq(i) = _exor ( NR_nextq(i), NR_cj(i,r+1) );
   end
@@ -152,7 +152,7 @@ function [ this , quasi ] = _next_nieder2 ( this )
   // Insert data
   this.NR_nextq = NR_nextq;
   this.NR_seed = NR_seed;
-
+  
 endfunction
 
 
@@ -202,10 +202,10 @@ function k = _exor ( i, j )
   i = floor ( i );
   j = floor ( j );
   while ( i ~= 0 | j ~= 0 )
-//
-//  Check the current right-hand bits of I and J.
-//  If they differ, set the appropriate bit of K.
-//
+    //
+    //  Check the current right-hand bits of I and J.
+    //  If they differ, set the appropriate bit of K.
+    //
     i2 = floor ( i / 2 );
     j2 = floor ( j / 2 );
     if ( ...

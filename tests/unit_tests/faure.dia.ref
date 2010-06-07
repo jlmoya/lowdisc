@@ -301,3 +301,43 @@ lds = lowdisc_startup (lds);
 [lds,next] = lowdisc_next ( lds , 10 );
 assert_equal ( size(next) , [10 150] );
 lds = lowdisc_destroy(lds);
+// Testing skip
+lds = lowdisc_new("faure");
+lds = lowdisc_configure(lds,"-dimension",3);
+lds = lowdisc_configure(lds,"-skip",10);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected = [
+    0.7037037    0.2592593    0.1481481  
+    0.1481481    0.7037037    0.2592593  
+    0.4814815    0.0370370    0.5925926  
+    0.8148148    0.3703704    0.9259259  
+    0.2592593    0.1481481    0.7037037  
+    0.5925926    0.4814815    0.0370370  
+    0.9259259    0.8148148    0.3703704  
+    0.0740741    0.8518519    0.9629630  
+    0.4074074    0.1851852    0.2962963  
+    0.7407407    0.5185185    0.6296296  
+];
+assert_close ( computed , expected , 1.e-5 );
+lds = lowdisc_destroy(lds);
+// Testing leap
+lds = lowdisc_new("faure");
+lds = lowdisc_configure(lds,"-dimension",3);
+lds = lowdisc_configure(lds,"-leap",1);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected = [
+    0.3333333    0.3333333    0.3333333  
+    0.1111111    0.4444444    0.7777778  
+    0.7777778    0.1111111    0.4444444  
+    0.5555556    0.2222222    0.8888889  
+    0.0370370    0.5925926    0.4814815  
+    0.7037037    0.2592593    0.1481481  
+    0.4814815    0.0370370    0.5925926  
+    0.2592593    0.1481481    0.7037037  
+    0.9259259    0.8148148    0.3703704  
+    0.4074074    0.1851852    0.2962963  
+];
+assert_close ( computed , expected , 1.e-5 );
+lds = lowdisc_destroy(lds);

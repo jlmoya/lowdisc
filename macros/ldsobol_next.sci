@@ -6,7 +6,7 @@
 // This file must be used under the terms of the GNU LGPL license.
 
 function [this,next] = ldsobol_next ( varargin )
-
+  
   [lhs,rhs]=argn();
   if ( rhs > 2 ) then
     errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldsobol_next", rhs);
@@ -123,19 +123,19 @@ function [ this , quasi ] = _next_sobol ( this )
   recipd = this.sobolrecipd
   dim_num = ldbase_cget ( this.baseobj , "-dimension" )
   maxcol = this.sobolmaxcol;
-//
-//  Find the position of the right-hand zero in count
-//
-    l = _bitlo0 ( count );
-//
-//  Check that the user is not calling too many times!
-//
+  //
+  //  Find the position of the right-hand zero in count
+  //
+  l = _bitlo0 ( count );
+  //
+  //  Check that the user is not calling too many times!
+  //
   if ( maxcol < l )
     error ( sprintf ( gettext ( "%s: Too many calls. maxcol=%d, l=%d") , "_next_sobol" , l , maxcol ));
   end
-//
-//  Calculate the new components of QUASI.
-//
+  //
+  //  Calculate the new components of QUASI.
+  //
   for i = 1 : dim_num
     quasi(1,i) = lastq(i) * recipd;
     lastq(i) = _xor ( lastq(i), v(i,l) );
@@ -231,14 +231,14 @@ endfunction
 function k = _xor ( i, j )
   k = 0;
   l = 1;
-//
+  //
   i = floor ( i );
   j = floor ( j );
   while ( i ~= 0 | j ~= 0 )
-//
-//  Check the current right-hand bits of I and J.
-//  If they differ, set the appropriate bit of K.
-//
+    //
+    //  Check the current right-hand bits of I and J.
+    //  If they differ, set the appropriate bit of K.
+    //
     i2 = floor ( i / 2 );
     j2 = floor ( j / 2 );
     if ( ...

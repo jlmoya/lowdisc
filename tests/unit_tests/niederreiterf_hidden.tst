@@ -5,6 +5,9 @@
 // you should have received as part of this distribution.  The terms
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
+
+
+
 //
 // assert_close --
 //   Returns 1 if the two real matrices computed and expected are close,
@@ -24,8 +27,9 @@ function flag = assert_close ( computed, expected, epsilon )
   else
     flag = 0;
   end
-  if flag <> 1 then bugmes();quit;end
+  if flag <> 1 then pause,end
 endfunction
+
 //
 // assert_equal --
 //   Returns 1 if the two real matrices computed and expected are equal.
@@ -39,22 +43,54 @@ function flag = assert_equal ( computed , expected )
   else
     flag = 0;
   end
-  if flag <> 1 then bugmes();quit;end
+  if flag <> 1 then pause,end
 endfunction
+
+// A word of caution !
+// In dimension 4, the programs GENIN and GENIN2 do produce the 
+// same results but in different orders:
+// GENIN GENIN2
+// #1    #1    
+// #2    #2    
+// #3    #4    
+// #4    #3    
+// #5    #8
+// #6    #7
+// #7    #5
+// #8    #6
+// etc...
+
 //
-// Check the Fast Niederreiter sequence 
-// Use base 2 - this is the default.
+// Test the "hidden" API
 //
-lds = ldniedf_new();
-lds = ldniedf_configure(lds,"-dimension",4);
-lds = ldniedf_startup (lds);
-// Term #1
-[lds,computed] = ldniedf_next (lds);
-expected = [0.500000      0.500000      0.750000      0.875000];
-assert_close ( computed, expected , 10 * %eps );
-// Terms #2 to #9
-[lds,computed]=ldniedf_next(lds,8);
-expected= [...
+start = _lowdisc_niedfisstart ( );
+assert_equal ( start , 0 );
+dim = 4;
+base = 2;
+skip = 0;
+gfaritfile = fullfile(TMPDIR,"gfarit.txt")
+gfplysfile = fullfile(TMPDIR,"gfplys.txt")
+_lowdisc_niedfstart ( dim , base , skip , gfaritfile , gfplysfile);
+start = _lowdisc_niedfisstart ( );
+assert_equal ( start , 1 );
+dim2 = _lowdisc_niedfdimget( );
+assert_equal ( dim2 , dim );
+base2 = _lowdisc_niedfbaseget( );
+assert_equal ( base2 , base );
+skip2 = _lowdisc_niedfskipget( );
+assert_equal ( skip2 , skip );
+computed = [];
+// Skip first term
+next = _lowdisc_niedfnext ( );
+expected = [0.000000      0.000000      0.000000      0.000000];
+assert_close ( next , expected , %eps );
+for i = 1 : 9;
+  next = _lowdisc_niedfnext ( );
+  computed(i,1:dim) = next;
+end
+// These values are from TOMS 738 / GENIN
+expected= [
+  0.500000      0.500000      0.750000      0.875000
   0.250000      0.750000      0.562500      0.765625
   0.750000      0.250000      0.312500      0.140625
   0.125000      0.625000      0.437500      0.546875
@@ -64,5 +100,10 @@ expected= [...
   0.062500      0.937500      0.953125      0.234375
   0.562500      0.437500      0.203125      0.859375
 ];
-assert_close ( computed, expected , 1.e-4 );
-lds = ldniedf_destroy(lds);
+assert_close ( computed , expected , 1.e-4 );
+_lowdisc_niedfstop ( );
+start = _lowdisc_niedfisstart ( );
+assert_equal ( start , 0 );
+
+
+

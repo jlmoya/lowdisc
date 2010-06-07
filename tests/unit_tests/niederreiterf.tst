@@ -46,65 +46,6 @@ function flag = assert_equal ( computed , expected )
   if flag <> 1 then pause,end
 endfunction
 
-// A word of caution !
-// In dimension 4, the programs GENIN and GENIN2 do produce the 
-// same results but in different orders:
-// GENIN GENIN2
-// #1    #1    
-// #2    #2    
-// #3    #4    
-// #4    #3    
-// #5    #8
-// #6    #7
-// #7    #5
-// #8    #6
-// etc...
-
-//
-// Test the "hidden" API
-//
-start = _lowdisc_niedfisstart ( );
-assert_equal ( start , 0 );
-dim = 4;
-base = 2;
-skip = 0;
-gfaritfile = fullfile(TMPDIR,"gfarit.txt")
-gfplysfile = fullfile(TMPDIR,"gfplys.txt")
-_lowdisc_niedfstart ( dim , base , skip , gfaritfile , gfplysfile);
-start = _lowdisc_niedfisstart ( );
-assert_equal ( start , 1 );
-dim2 = _lowdisc_niedfdimget( );
-assert_equal ( dim2 , dim );
-base2 = _lowdisc_niedfbaseget( );
-assert_equal ( base2 , base );
-skip2 = _lowdisc_niedfskipget( );
-assert_equal ( skip2 , skip );
-computed = [];
-// Skip first term
-next = _lowdisc_niedfnext ( );
-expected = [0.000000      0.000000      0.000000      0.000000];
-assert_close ( next , expected , %eps );
-for i = 1 : 9;
-  next = _lowdisc_niedfnext ( );
-  computed(i,1:dim) = next;
-end
-// These values are from TOMS 738 / GENIN
-expected= [
-  0.500000      0.500000      0.750000      0.875000
-  0.250000      0.750000      0.562500      0.765625
-  0.750000      0.250000      0.312500      0.140625
-  0.125000      0.625000      0.437500      0.546875
-  0.625000      0.125000      0.687500      0.421875
-  0.375000      0.375000      0.875000      0.281250
-  0.875000      0.875000      0.125000      0.656250
-  0.062500      0.937500      0.953125      0.234375
-  0.562500      0.437500      0.203125      0.859375
-];
-assert_close ( computed , expected , 1.e-4 );
-_lowdisc_niedfstop ( );
-start = _lowdisc_niedfisstart ( );
-assert_equal ( start , 0 );
-
 
 //
 // Check the Fast Niederreiter sequence 
@@ -115,12 +56,11 @@ lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_startup (lds);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
-expected = [0.000000      0.000000      0.000000      0.000000];
+expected = [0.500000      0.500000      0.750000      0.875000];
 assert_close ( computed, expected , 10 * %eps );
-// Terms #2 to #6
-[lds,computed]=lowdisc_next(lds,9);
+// Terms #2 to #9
+[lds,computed]=lowdisc_next(lds,8);
 expected= [...
-  0.500000      0.500000      0.750000      0.875000
   0.250000      0.750000      0.562500      0.765625
   0.750000      0.250000      0.312500      0.140625
   0.125000      0.625000      0.437500      0.546875
@@ -143,10 +83,9 @@ lds = lowdisc_configure(lds,"-base",7);
 base = lowdisc_cget(lds,"-base");
 assert_equal ( base , 7 );
 lds = lowdisc_startup (lds);
-// Terms #1 to #10
-[lds,computed]=lowdisc_next(lds,10);
+// Terms #1 to #9
+[lds,computed]=lowdisc_next(lds,9);
 expected= [...
-  0.000000       0.000000       0.000000       0.000000       0.000000       0.000000
   0.142857       0.142857       0.142857       0.142857       0.142857       0.142857
   0.285714       0.285714       0.285714       0.285714       0.285714       0.285714
   0.428571       0.428571       0.428571       0.428571       0.428571       0.428571
@@ -159,4 +98,52 @@ expected= [...
 ];
 assert_close ( computed, expected , 1.e-4 );
 lds = lowdisc_destroy(lds);
+
+//
+// Test skip
+//
+lds = lowdisc_new("niederreiterf");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-skip",10);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected= [
+    0.8125     0.6875     0.640625    0.09375    
+    0.1875     0.3125     0.515625    0.6875     
+    0.6875     0.8125     0.265625    0.3125     
+    0.4375     0.5625     0.078125    0.453125   
+    0.9375     0.0625     0.828125    0.578125   
+    0.03125    0.53125    0.734375    0.3457031  
+    0.53125    0.03125    0.484375    0.7207031  
+    0.28125    0.28125    0.171875    0.6113281  
+    0.78125    0.78125    0.921875    0.4863281  
+    0.15625    0.15625    0.796875    0.8300781  
+];
+assert_close ( computed, expected , 1.e-5 );
+lds = lowdisc_destroy(lds);
+
+//
+// Test leap
+//
+lds = lowdisc_new("niederreiterf");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-leap",1);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected= [
+    0.5        0.5        0.75        0.875      
+    0.75       0.25       0.3125      0.140625   
+    0.625      0.125      0.6875      0.421875   
+    0.875      0.875      0.125       0.65625    
+    0.5625     0.4375     0.203125    0.859375   
+    0.8125     0.6875     0.640625    0.09375    
+    0.6875     0.8125     0.265625    0.3125     
+    0.9375     0.0625     0.828125    0.578125   
+    0.53125    0.03125    0.484375    0.7207031  
+    0.78125    0.78125    0.921875    0.4863281  
+];
+assert_close ( computed, expected , 1.e-5 );
+lds = lowdisc_destroy(lds);
+
+
 

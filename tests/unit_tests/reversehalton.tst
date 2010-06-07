@@ -82,3 +82,45 @@ assert_close ( computed, [0.125 8.0/9.0 0.2], 1e-3 );
 lds = lowdisc_destroy(lds);
 
 
+// test skip
+lds = lowdisc_new("reversehalton");
+lds = lowdisc_configure(lds,"-dimension",3);
+lds = lowdisc_configure(lds,"-skip",10);
+lds = lowdisc_startup (lds);
+[lds,computed] = lowdisc_next (lds);
+expected = [
+    0.8125       0.4074074    0.92   
+    0.1875       0.2962963    0.72   
+    0.6875       0.9629630    0.52   
+    0.4375       0.6296296    0.32   
+    0.9375       0.1851852    0.08   
+    0.03125      0.8518519    0.88   
+    0.53125      0.5185185    0.68   
+    0.28125      0.0370370    0.48   
+    0.78125      0.7037037    0.28   
+    0.15625      0.3703704    0.04   
+];
+assert_close ( computed, computed, 1e-5 );
+lds = lowdisc_destroy(lds);
+
+// test leap
+lds = lowdisc_new("reversehalton");
+lds = lowdisc_configure(lds,"-dimension",3);
+lds = lowdisc_configure(lds,"-leap",10);
+lds = lowdisc_startup (lds);
+[lds,computed] = lowdisc_next (lds);
+expected = [
+    0.5          0.6666667    0.8    
+    0.75         0.2222222    0.4    
+    0.625        0.5555556    0.16   
+    0.875        0.7777778    0.76   
+    0.5625       0.0740741    0.36   
+    0.8125       0.4074074    0.92   
+    0.6875       0.9629630    0.52   
+    0.9375       0.1851852    0.08   
+    0.53125      0.5185185    0.68   
+    0.78125      0.7037037    0.28   
+];
+assert_close ( computed, computed, 1e-5 );
+lds = lowdisc_destroy(lds);
+

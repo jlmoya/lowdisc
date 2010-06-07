@@ -55,12 +55,11 @@ lds = ldniedf_configure(lds,"-dimension",4);
 lds = ldniedf_startup (lds);
 // Term #1
 [lds,computed] = ldniedf_next (lds);
-expected = [0.000000      0.000000      0.000000      0.000000];
+expected = [0.500000      0.500000      0.750000      0.875000];
 assert_close ( computed, expected , 10 * %eps );
-// Terms #2 to #6
-[lds,computed]=ldniedf_next(lds,9);
+// Terms #2 to #9
+[lds,computed]=ldniedf_next(lds,8);
 expected= [...
-  0.500000      0.500000      0.750000      0.875000
   0.250000      0.750000      0.562500      0.765625
   0.750000      0.250000      0.312500      0.140625
   0.125000      0.625000      0.437500      0.546875

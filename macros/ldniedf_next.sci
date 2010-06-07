@@ -41,7 +41,7 @@ function [this,next] = ldniedf_next ( varargin )
     if ( leap > 0 ) then
       for j = 1 : leap
         this.baseobj = ldbase_incr ( this.baseobj )
-        next = _lowdisc_niedfnext ( );
+        onevector = _lowdisc_niedfnext ( );
       end
     end
   end

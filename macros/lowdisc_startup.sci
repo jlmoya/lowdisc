@@ -14,7 +14,12 @@ function this = lowdisc_startup (this)
   //
   // Description
   //   This command can only be executed once in the lifetime of the object.
-  //   This function is sensitive to the "-skip" option.
+  //   This function is sensitive to the "-skip" and "-leap" options.
+  //
+  //   The mathematical definition of some sequences (e.g. Sobol, Niederreiter, Faure) imply
+  //   that the first element of the sequence is the zero vector. 
+  //   In this implementation, this zero vector is ignored at startup and all sequences 
+  //   start with a non-zero vector.
   //
   // Examples
   //   rng = lowdisc_new("halton");

@@ -40,12 +40,11 @@ lds = lowdisc_configure(lds,"-dimension",2);
 lds = lowdisc_startup (lds);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
-expected = [0. 0.];
+expected = [1./2. 1./2.];
 assert_close ( computed, expected , 10 * %eps );
-// Terms #2 to #6
-[lds,computed]=lowdisc_next(lds,5);
+// Terms #2 to #5
+[lds,computed]=lowdisc_next(lds,4);
 expected= [
-    1./2. 1./2. 
     3./4. 1./4. 
     1./4. 3./4. 
     3./8. 3./8. 
@@ -61,10 +60,9 @@ lds = lowdisc_destroy(lds);
 lds = lowdisc_new("niederreiter-base-2");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_startup (lds);
-// Term #1-12
-[lds,computed] = lowdisc_next (lds,12);
+// Term #1-11
+[lds,computed] = lowdisc_next (lds,11);
 expected = [
-   0.000000  0.000000  0.000000  0.000000
    0.500000  0.500000  0.750000  0.875000
    0.750000  0.250000  0.312500  0.140625
    0.250000  0.750000  0.562500  0.765625
@@ -78,10 +76,10 @@ expected = [
    0.437500  0.562500  0.078125  0.453125
 ];
 assert_close ( computed, expected , 10 * %eps );
-// Drop terms 13-95
-[lds,computed]=lowdisc_next(lds,95-13+1);
-// Terms #96 - 111
-[lds,computed]=lowdisc_next(lds,111-96+1);
+// Drop terms 12-94
+[lds,computed]=lowdisc_next(lds,94-12+1);
+// Terms #95 - 110
+[lds,computed]=lowdisc_next(lds,110-95+1);
 expected= [
    0.054688  0.929688  0.101563  0.509766
    0.039063  0.132813  0.464844  0.214844
@@ -102,4 +100,53 @@ expected= [
 ];
 assert_close ( computed, expected , 1.e-5 );
 lds = lowdisc_destroy(lds);
+
+
+//
+// Test skip
+//
+lds = lowdisc_new("niederreiter-base-2");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-skip",10);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected= [
+    0.4375     0.5625     0.078125    0.453125   
+    0.3125     0.1875     0.390625    0.96875    
+    0.8125     0.6875     0.640625    0.09375    
+    0.5625     0.4375     0.203125    0.859375   
+    0.0625     0.9375     0.953125    0.234375   
+    0.09375    0.46875    0.28125     0.3925781  
+    0.59375    0.96875    0.53125     0.5175781  
+    0.84375    0.21875    0.09375     0.2519531  
+    0.34375    0.71875    0.84375     0.6269531  
+    0.46875    0.09375    0.65625     0.1738281  
+];
+assert_close ( computed, expected , 1.e-5 );
+lds = lowdisc_destroy(lds);
+
+//
+// Test leap
+//
+lds = lowdisc_new("niederreiter-base-2");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-leap",1);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected= [
+    0.5        0.5        0.75        0.875      
+    0.25       0.75       0.5625      0.765625   
+    0.875      0.875      0.125       0.65625    
+    0.125      0.625      0.4375      0.546875   
+    0.6875     0.8125     0.265625    0.3125     
+    0.4375     0.5625     0.078125    0.453125   
+    0.8125     0.6875     0.640625    0.09375    
+    0.0625     0.9375     0.953125    0.234375   
+    0.59375    0.96875    0.53125     0.5175781
+    0.34375    0.71875    0.84375     0.6269531  
+];
+assert_close ( computed, expected , 1.e-5 );
+lds = lowdisc_destroy(lds);
+
+
 

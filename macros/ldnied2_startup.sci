@@ -6,21 +6,21 @@
 //    This code is distributed under the GNU LGPL license.
 
 function this = ldnied2_startup (this)
-// lowdisc_nieder2 --
-//  Startup Niederreiter's sequence.
-//
-//  Licensing:
-//    This code is distributed under the GNU LGPL license.
-//
-//  Modified:
-//    31 March 2003
-//
-//  Author:
-//    Original FORTRAN77 version by Paul Bratley, Bennett Fox, Harald Niederreiter.
-//    MATLAB version by John Burkardt
-//    Scilab version : 
-//       2009 - Digiteo - Michael Baudin
-//
+  // lowdisc_nieder2 --
+  //  Startup Niederreiter's sequence.
+  //
+  //  Licensing:
+  //    This code is distributed under the GNU LGPL license.
+  //
+  //  Modified:
+  //    31 March 2003
+  //
+  //  Author:
+  //    Original FORTRAN77 version by Paul Bratley, Bennett Fox, Harald Niederreiter.
+  //    MATLAB version by John Burkardt
+  //    Scilab version : 
+  //       2009 - Digiteo - Michael Baudin
+  //
   
   this.baseobj = ldbase_startup ( this.baseobj )
   //
@@ -28,46 +28,58 @@ function this = ldnied2_startup (this)
   //
   // Extract data
   dim = ldbase_cget ( this.baseobj , "-dimension" )
-
+  
   maxdim = 20;
   nbits = 31;
   NR_recip = 2.0E+00^(-nbits);
-//
-//  Initialization.
-//
-    if ( maxdim < dim )
-      error ( sprintf ( gettext ( "%s: Dimension %d is greater than maximum %d") , "ldbase_startup" , dim , maxdim ) );
-    end
-    seed = 0;
-//
-//  Calculate the C array.
-//
-    NR_cj(1:dim,1:nbits) = _niedercalcc2 ( dim );
-//
-//  Set up NEXTQ appropriately, depending on the Gray code of SEED.
-//
-//  You can do this every time, starting NEXTQ back at 0,
-//  or you can do it once, and then carry the value of NEXTQ
-//  around from the previous computation.
-//
-    gray = _exor ( seed, seed / 2 );
-    NR_nextq(1:dim) = 0;
-    r = 0;
-    while ( gray ~= 0 )
-      if ( rem ( gray, 2 ) ~= 0 )
-        for i = 1 : dim
-          NR_nextq(i) = _exor ( NR_nextq(i), NR_cj(i,r+1) );
-        end
+  //
+  //  Initialization.
+  //
+  if ( maxdim < dim )
+    error ( sprintf ( gettext ( "%s: Dimension %d is greater than maximum %d") , "ldbase_startup" , dim , maxdim ) );
+  end
+  seed = 0;
+  //
+  //  Calculate the C array.
+  //
+  NR_cj(1:dim,1:nbits) = _niedercalcc2 ( dim );
+  //
+  //  Set up NEXTQ appropriately, depending on the Gray code of SEED.
+  //
+  //  You can do this every time, starting NEXTQ back at 0,
+  //  or you can do it once, and then carry the value of NEXTQ
+  //  around from the previous computation.
+  //
+  gray = _exor ( seed, seed / 2 );
+  NR_nextq(1:dim) = 0;
+  r = 0;
+  while ( gray ~= 0 )
+    if ( rem ( gray, 2 ) ~= 0 )
+      for i = 1 : dim
+        NR_nextq(i) = _exor ( NR_nextq(i), NR_cj(i,r+1) );
       end
-      gray = floor ( gray / 2 );
-      r = r + 1;
     end
-    // Insert data
-    this.NR_cj = NR_cj;
-    this.NR_seed = seed;
-    this.NR_nextq = NR_nextq
-    this.NR_recip = NR_recip;
-    this.NR_nbits = nbits;
+    gray = floor ( gray / 2 );
+    r = r + 1;
+  end
+  // Insert data
+  this.NR_cj = NR_cj;
+  this.NR_seed = seed;
+  this.NR_nextq = NR_nextq
+  this.NR_recip = NR_recip;
+  this.NR_nbits = nbits;
+  //
+  // We ignore the first element in the sequence, which is [0 0] in dimension 2.
+  // Our Niederreiter sequence starts with [0.5 0.5] in 2 dimensions.
+  // Temporarily disable the leap to avoid interactions.
+  // Indeed, if leap>0, then this call to next will also ignore leap elements in the 
+  // sequence, which is not expected by the user.
+  //
+  leapold = ldbase_cget ( this.baseobj , "-leap" )
+  this.baseobj = ldbase_configure ( this.baseobj , "-leap" , 0 )
+  [ this , quasi ] = ldnied2_next ( this );
+  this.baseobj = ldbase_configure ( this.baseobj , "-leap" , leapold )
+  //
   // Skip (i.e. ignore) as many elements as required
   // TODO : skip directly when sequence authorizes it.
   skip = ldbase_cget ( this.baseobj , "-skip" )
@@ -138,48 +150,48 @@ function cj = _niedercalcc2 ( dimen )
   maxe = 6;
   nbits = 31;
   maxv = nbits + maxe;
-//
-//  Here we supply the coefficients and the
-//  degrees of the first MAXDIM irreducible polynomials over Z2.
-//
+  //
+  //  Here we supply the coefficients and the
+  //  degrees of the first MAXDIM irreducible polynomials over Z2.
+  //
   irred_deg(1:maxdim) = ...
-    [ 1, 1, 2, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6 ];
+  [ 1, 1, 2, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6 ];
   irred(1:maxdim,1:maxe+1) = [ ...
-    0,1,0,0,0,0,0; ...
-    1,1,0,0,0,0,0; ...
-    1,1,1,0,0,0,0; ...
-    1,1,0,1,0,0,0; ...
-    1,0,1,1,0,0,0; ...
-    1,1,0,0,1,0,0; ...
-    1,0,0,1,1,0,0; ...
-    1,1,1,1,1,0,0; ...
-    1,0,1,0,0,1,0; ...
-    1,0,0,1,0,1,0; ...
-    1,1,1,1,0,1,0; ...
-    1,1,1,0,1,1,0; ...
-    1,1,0,1,1,1,0; ...
-    1,0,1,1,1,1,0; ...
-    1,1,0,0,0,0,1; ...
-    1,0,0,1,0,0,1; ...
-    1,1,1,0,1,0,1; ...
-    1,1,0,1,1,0,1; ...
-    1,0,0,0,0,1,1; ...
-    1,1,1,0,0,1,1];
-//
-//  Prepare to work in Z2.
-//
+  0,1,0,0,0,0,0; ...
+  1,1,0,0,0,0,0; ...
+  1,1,1,0,0,0,0; ...
+  1,1,0,1,0,0,0; ...
+  1,0,1,1,0,0,0; ...
+  1,1,0,0,1,0,0; ...
+  1,0,0,1,1,0,0; ...
+  1,1,1,1,1,0,0; ...
+  1,0,1,0,0,1,0; ...
+  1,0,0,1,0,1,0; ...
+  1,1,1,1,0,1,0; ...
+  1,1,1,0,1,1,0; ...
+  1,1,0,1,1,1,0; ...
+  1,0,1,1,1,1,0; ...
+  1,1,0,0,0,0,1; ...
+  1,0,0,1,0,0,1; ...
+  1,1,1,0,1,0,1; ...
+  1,1,0,1,1,0,1; ...
+  1,0,0,0,0,1,1; ...
+  1,1,1,0,0,1,1];
+  //
+  //  Prepare to work in Z2.
+  //
   [ add, mul, sub ] = _niedersetfld2 ( 0 );
   for i = 1 : dimen
-//
-//  For each dimension, we need to calculate powers of an
-//  appropriate irreducible polynomial:  see Niederreiter
-//  page 65, just below equation (19).
-//
-//  Copy the appropriate irreducible polynomial into PX,
-//  and its degree into E.  Set polynomial B = PX ** 0 = 1.
-//  M is the degree of B.  Subsequently B will hold higher
-//  powers of PX.
-//
+    //
+    //  For each dimension, we need to calculate powers of an
+    //  appropriate irreducible polynomial:  see Niederreiter
+    //  page 65, just below equation (19).
+    //
+    //  Copy the appropriate irreducible polynomial into PX,
+    //  and its degree into E.  Set polynomial B = PX ** 0 = 1.
+    //  M is the degree of B.  Subsequently B will hold higher
+    //  powers of PX.
+    //
     e = irred_deg(i);
     px_deg = irred_deg(i);
     for j = 0 : e
@@ -187,44 +199,44 @@ function cj = _niedercalcc2 ( dimen )
     end
     b_deg = 0;
     b(0+1) = 1;
-//
-//  Niederreiter (page 56, after equation (7), defines two
-//  variables Q and U.  We do not need Q explicitly, but we do need U.
-//
+    //
+    //  Niederreiter (page 56, after equation (7), defines two
+    //  variables Q and U.  We do not need Q explicitly, but we do need U.
+    //
     u = 0;
     for j = 1 : nbits
-//
-//  If U = 0, we need to set B to the next power of PX
-//  and recalculate V.  This is done by subroutine CALCV2.
-//
+      //
+      //  If U = 0, we need to set B to the next power of PX
+      //  and recalculate V.  This is done by subroutine CALCV2.
+      //
       if ( u == 0 )
         [ b_deg, b, v ] = _niedercalcv2 ( maxv, px_deg, px, add, mul, sub, b_deg, b );
       end
-//
-//  Now C is obtained from V.  Niederreiter obtains A from V (page 65,
-//  near the bottom), and then gets C from A (page 56, equation (7)).
-//  However this can be done in one step.  Here CI(J,R) corresponds to
-//  Niederreiter's C(I,J,R).
-//
+      //
+      //  Now C is obtained from V.  Niederreiter obtains A from V (page 65,
+      //  near the bottom), and then gets C from A (page 56, equation (7)).
+      //  However this can be done in one step.  Here CI(J,R) corresponds to
+      //  Niederreiter's C(I,J,R).
+      //
       for r = 0 : nbits-1
         ci(j,r+1) = v(r+u+1);
       end
-//
-//  Increment U.
-//
-//  If U = E, then U = 0 and in Niederreiter's
-//  paper Q = Q + 1.  Here, however, Q is not used explicitly.
-//
+      //
+      //  Increment U.
+      //
+      //  If U = E, then U = 0 and in Niederreiter's
+      //  paper Q = Q + 1.  Here, however, Q is not used explicitly.
+      //
       u = u + 1;
       if ( u == e )
         u = 0;
       end
     end
-//
-//  The array CI now holds the values of C(I,J,R) for this value
-//  of I.  We pack them into array CJ so that CJ(I,R) holds all
-//  the values of C(I,J,R) for J from 1 to NBITS.
-//
+    //
+    //  The array CI now holds the values of C(I,J,R) for this value
+    //  of I.  We pack them into array CJ so that CJ(I,R) holds all
+    //  the values of C(I,J,R) for J from 1 to NBITS.
+    //
     for r = 0 : nbits-1
       term = 0;
       for j = 1 : nbits
@@ -316,51 +328,51 @@ function [ pc_deg, pc, v ] = _niedercalcv2 ( maxv, px_deg, px, add, mul, sub, b_
   arbit = 1;
   nonzer = 1;
   e = px_deg;
-//
-//  The polynomial B is PX**(J-1).
-//
-//  In section 3.3, the values of Hi are defined with a minus sign:
-//  don't forget this if you use them later!
-//
+  //
+  //  The polynomial B is PX**(J-1).
+  //
+  //  In section 3.3, the values of Hi are defined with a minus sign:
+  //  don't forget this if you use them later!
+  //
   bigm = b_deg;
-//
-//  Multiply B by PX to compute PC = PX**J.
-//  In section 2.3, the values of Bi are defined with a minus sign:
-//  don't forget this if you use them later!
-//
+  //
+  //  Multiply B by PX to compute PC = PX**J.
+  //  In section 2.3, the values of Bi are defined with a minus sign:
+  //  don't forget this if you use them later!
+  //
   [ pc_deg, pc ] = _niederplymul2 ( add, mul, px_deg, px, b_deg, b );
   m = pc_deg;
-//
-//  We don't use J explicitly anywhere, but here it is just in case.
-//
+  //
+  //  We don't use J explicitly anywhere, but here it is just in case.
+  //
   j = m / e;
-//
-//  Now choose a value of Kj as defined in section 3.3.
-//  We must have 0 <= Kj < E*J = M.
-//  The limit condition on Kj does not seem very relevant
-//  in this program.
-//
+  //
+  //  Now choose a value of Kj as defined in section 3.3.
+  //  We must have 0 <= Kj < E*J = M.
+  //  The limit condition on Kj does not seem very relevant
+  //  in this program.
+  //
   kj = bigm;
-//
-//  Choose values of V in accordance with the conditions in section 3.3.
-//
+  //
+  //  Choose values of V in accordance with the conditions in section 3.3.
+  //
   for r = 0 : kj-1
     v(r+1) = 0;
   end
   v(kj+1) = 1;
   if ( kj < bigm )
     term = sub ( 0+1, b(kj+1)+1 );
-//
-//  Check the condition of section 3.3,
-//  remembering that the B's have the opposite sign.
-//
+    //
+    //  Check the condition of section 3.3,
+    //  remembering that the B's have the opposite sign.
+    //
     for r = kj+1 : bigm-1
       v(r+1) = arbit;
       term = sub ( term+1, mul ( b(r+1)+1, v(r+1)+1 )+1 );
     end
-//
-//  Now V(BIGM) is anything but TERM.
-//
+    //
+    //  Now V(BIGM) is anything but TERM.
+    //
     v(bigm+1) = add ( nonzer+1, term+1 );
     for r = bigm+1 : m-1
       v(r+1) = arbit;
@@ -370,10 +382,10 @@ function [ pc_deg, pc, v ] = _niedercalcv2 ( maxv, px_deg, px, add, mul, sub, b_
       v(r+1) = arbit;
     end
   end
-//
-//  Calculate the remaining V's using the recursion of section 2.3,
-//  remembering that the PC's have the opposite sign.
-//
+  //
+  //  Calculate the remaining V's using the recursion of section 2.3,
+  //  remembering that the PC's have the opposite sign.
+  //
   for r = 0 : maxv-m
     term = 0;
     for i = 0 : m-1
@@ -525,10 +537,10 @@ function k = _exor ( i, j )
   i = floor ( i );
   j = floor ( j );
   while ( i ~= 0 | j ~= 0 )
-//
-//  Check the current right-hand bits of I and J.
-//  If they differ, set the appropriate bit of K.
-//
+    //
+    //  Check the current right-hand bits of I and J.
+    //  If they differ, set the appropriate bit of K.
+    //
     i2 = floor ( i / 2 );
     j2 = floor ( j / 2 );
     if ( ...

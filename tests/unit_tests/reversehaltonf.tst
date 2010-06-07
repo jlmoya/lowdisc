@@ -48,69 +48,6 @@ endfunction
 
 
 
-
-//
-// Test "hidden" Reverse Halton API
-//
-start = _lowdisc_revhaltfisstart ( );
-assert_equal ( start , 0 );
-dim = 2;
-primelist = lowdisc_primes100();
-_lowdisc_revhaltfstart ( dim , primelist(1:dim) );
-start = _lowdisc_revhaltfisstart ( );
-assert_equal ( start , 1 );
-dim2 = _lowdisc_revhaltfdimget ( );
-assert_equal ( dim , dim2 );
-prime2 = _lowdisc_revhaltfbaseget ( );
-assert_equal ( primelist(1:dim) , prime2 );
-computed = [];
-for i = 1 : 6
-  computed(i,1:dim) = _lowdisc_revhaltfnext ( i );
-end
-expected= [
-    0.5 2./3.
-    1./4. 1./3. 
-    3./4. 2./9.    
-    1./8. 8./9. 
-    5./8. 5./9. 
-    3./8. 1./9. 
-];
-assert_close ( computed, expected , 10 * %eps );
-_lowdisc_revhaltfstop ( );
-start = _lowdisc_revhaltfisstart ( );
-assert_equal ( start , 0 );
-
-
-//
-// Test the "hidden" API.
-// Get elements 0,1,2,3 then 5,6,7, then 1,2,3
-// i.e. pick arbitrary experiments in the sequence.
-//
-dim = 4;
-primelist = lowdisc_primes100();
-_lowdisc_revhaltfstart ( dim , primelist(1:dim) );
-scenario = [0 1 2 3 5 6 7 1 2 3];
-computed = [];
-for k = 1 : size(scenario,"*")
-  seed = scenario(k);
-  computed(k,1:dim) = _lowdisc_revhaltfnext ( seed );
-end
-expected= [
-    0.                     0.                     0.                     0.      
-    0.5       0.6666667    0.8     0.8571429  
-    0.25      0.3333333    0.6     0.7142857  
-    0.75      0.2222222    0.4     0.5714286  
-    0.625     0.5555556    0.16    0.2857143  
-    0.375     0.1111111    0.96    0.1428571  
-    0.875     0.7777778    0.76    0.1224490  
-    0.5       0.6666667    0.8     0.8571429  
-    0.25      0.3333333    0.6     0.7142857  
-    0.75      0.2222222    0.4     0.5714286  
-];
-assert_close ( computed , expected , 1.e-7 );
-_lowdisc_revhaltfstop ( );
-
-
 //
 // Check the Fast Reverse Halton sequence
 //
@@ -163,4 +100,45 @@ assert_close ( computed, [0.75 2.0/9.0 0.4], 1.e-3 );
 assert_close ( computed, [0.125 8.0/9.0 0.2], 1e-3 );
 lds = lowdisc_destroy(lds);
 
+// test skip
+lds = lowdisc_new("reversehaltonf");
+lds = lowdisc_configure(lds,"-dimension",3);
+lds = lowdisc_configure(lds,"-skip",10);
+lds = lowdisc_startup (lds);
+[lds,computed] = lowdisc_next (lds);
+expected = [
+    0.8125       0.4074074    0.92   
+    0.1875       0.2962963    0.72   
+    0.6875       0.9629630    0.52   
+    0.4375       0.6296296    0.32   
+    0.9375       0.1851852    0.08   
+    0.03125      0.8518519    0.88   
+    0.53125      0.5185185    0.68   
+    0.28125      0.0370370    0.48   
+    0.78125      0.7037037    0.28   
+    0.15625      0.3703704    0.04   
+];
+assert_close ( computed, computed, 1e-5 );
+lds = lowdisc_destroy(lds);
+
+// test leap
+lds = lowdisc_new("reversehaltonf");
+lds = lowdisc_configure(lds,"-dimension",3);
+lds = lowdisc_configure(lds,"-leap",10);
+lds = lowdisc_startup (lds);
+[lds,computed] = lowdisc_next (lds);
+expected = [
+    0.5          0.6666667    0.8    
+    0.75         0.2222222    0.4    
+    0.625        0.5555556    0.16   
+    0.875        0.7777778    0.76   
+    0.5625       0.0740741    0.36   
+    0.8125       0.4074074    0.92   
+    0.6875       0.9629630    0.52   
+    0.9375       0.1851852    0.08   
+    0.53125      0.5185185    0.68   
+    0.78125      0.7037037    0.28   
+];
+assert_close ( computed, computed, 1e-5 );
+lds = lowdisc_destroy(lds);
 

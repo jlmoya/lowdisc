@@ -45,7 +45,7 @@ function [this,next] = ldfauref_next ( varargin )
       for j = 1 : leap
         this.baseobj = ldbase_incr ( this.baseobj )
         index = ldbase_get ( this.baseobj , "-index" )
-        next = _lowdisc_faurefnext ( index );
+        onevector = _lowdisc_faurefnext ( index );
       end
     end
   end

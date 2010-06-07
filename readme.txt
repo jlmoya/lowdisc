@@ -39,13 +39,13 @@ following hierarchy.
    low discrepancy sequence. Each sequence is independent of the others.
    Each sequence has its specific options, but all must implement the 
    following methods : new, destroy, configure, cget, get, startup and next.
+ * tested the skip and leap for all sequences
 
 See the overview in the help provided with this toolbox.
 
 TODO
 
  * check the maximal dimension available for Fast Niederreiter (is that 50 ?)
- * test the skip and leap
  * improve the performance of skip and leap
  * Add scrambling algorithms
  * Add algorithms to compute the discrepancy
@@ -53,6 +53,13 @@ TODO
  * Update the help page : Niederreiter base 2 is slow while Niederreiter arbitrary base is fast
  * Tell Burkardt about the bug in Niederreiter : size of the table
  * remove _mlist_isfield where unused
+ * replace sprintf by msprintf
+ * create this = lowdisc_autosetup ( this ) :
+   * function to suggest skip parameter for sobol : http://people.sc.fsu.edu/~burkardt/m_src/sobol/tau_sobol.m
+   * suggest number of simulations for sobol : a power of 2 larger than nbsim
+   * suggest skip parameter for faure : base^4
+   * number of simulations for faure : a power of the base larger than nbsim
+   * suggest initial base for Niederreiter : (OPTBAS(I), I = 2,MAXDIM) / 2,3,3,5,7,7,9,9,11,11,13/
 
 Author
 
