@@ -22,8 +22,10 @@ function this = ldnied2_new ()
     "NR_nextq"
     "NR_recip"
     "NR_nbits"
+    "dimmax"
     ])
   this.baseobj = ldbase_new ()
+  this.dimmax = 20
 endfunction
 
 

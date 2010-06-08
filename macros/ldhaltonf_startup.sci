@@ -12,13 +12,15 @@ function this = ldhaltonf_startup (this)
   this.baseobj = ldbase_startup ( this.baseobj )
   //
     dimension = ldbase_cget ( this.baseobj , "-dimension" )
-    seed = zeros(1,dimension);
-    leap = ones(1,dimension);
     if ( dimension > this.primessize ) then
-      errmsg = msprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"), "ldhaltonf_startup" , this.method,dimension,this.primessize);
+      errmsg = msprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"), "ldhaltonf_startup" , "fast reverse Halton",dimension,this.primessize);
       error(errmsg);
     end
+    //
     base = this.primeslist(1:dimension);
+    seed = zeros(1,dimension);
+    leap = ones(1,dimension);
+    //
     _lowdisc_haltonfstart ( dimension , base , seed , leap );
   // Skip (i.e. ignore) as many elements as required
   // TODO : skip directly when sequence authorizes it.

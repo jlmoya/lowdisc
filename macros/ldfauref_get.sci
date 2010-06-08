@@ -19,6 +19,8 @@ function value = ldfauref_get (this,key)
       error(errmsg);
     end
     value  = this.primeslist ( k )
+  case "-dimmax" then
+    value = this.primeslist ( this.primessize )
   else
     // Delegate to ldbase
     value = ldbase_get ( this.baseobj , key )

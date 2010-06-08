@@ -23,14 +23,14 @@ function value = lowdisc_cget (this,key)
   //   which has been configured with the lowdisc_configure command.
   //
   // Examples
-  //   rng = lowdisc_new("faure");
-  //   rng = lowdisc_configure(rng,"-dimension",3);
-  //   method = lowdisc_cget(rng,"-method")
-  //   nbdim = lowdisc_cget(rng,"-dimension")
-  //   i = lowdisc_cget(rng,"-sequenceindex")
-  //   verbose = lowdisc_cget(rng,"-verbose")
-  //   rng
-  //   rng = lowdisc_destroy(rng);
+  //   lds = lowdisc_new("faure");
+  //   lds = lowdisc_configure(lds,"-dimension",3);
+  //   method = lowdisc_cget(lds,"-method")
+  //   nbdim = lowdisc_cget(lds,"-dimension")
+  //   i = lowdisc_cget(lds,"-sequenceindex")
+  //   verbose = lowdisc_cget(lds,"-verbose")
+  //   lds
+  //   lds = lowdisc_destroy(lds);
   //
   // Authors
   //   Michael Baudin - 2010 - DIGITEO

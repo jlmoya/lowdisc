@@ -68,9 +68,10 @@ assert_equal ( start , 0 );
 dim = 4;
 base = 2;
 skip = 0;
-gfaritfile = fullfile(TMPDIR,"gfarit.txt")
-gfplysfile = fullfile(TMPDIR,"gfplys.txt")
-_lowdisc_niedfstart ( dim , base , skip , gfaritfile , gfplysfile);
+gfaritfile = fullfile(TMPDIR,"gfarit.txt");
+gfplysfile = fullfile(TMPDIR,"gfplys.txt");
+init = 1;
+_lowdisc_niedfstart ( dim , base , skip , gfaritfile , gfplysfile , init );
 start = _lowdisc_niedfisstart ( );
 assert_equal ( start , 1 );
 dim2 = _lowdisc_niedfdimget( );

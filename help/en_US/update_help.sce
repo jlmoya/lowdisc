@@ -142,8 +142,10 @@ function helpupdate ( funarray , helpdir , macrosdir , demosdir , modulename )
   end
 endfunction
 //
+cwd = get_absolute_file_path("update_help.sce");
+//
 // Generate the object-oriented library help
-helpdir = get_absolute_file_path('update_help.sce');
+helpdir = cwd;
 funarray = [
   "lowdisc_cget"
   "lowdisc_get"
@@ -160,15 +162,16 @@ modulename = "lowdisc";
 helpupdate ( funarray , helpdir , macrosdir , demosdir , modulename )
 //
 // Generate the static functions help
-helpdir = fullfile(get_absolute_file_path('update_help.sce'),"staticfunctions");
+helpdir = fullfile(cwd,"staticfunctions");
 funarray = [
   "lowdisc_primes100"
   "lowdisc_primes1000"
   "lowdisc_primes10000"
   "lowdisc_stopall"
+  "lowdisc_methods"
   ];
-macrosdir = helpdir +"../../macros";
-demosdir = helpdir +"../../demos";
+macrosdir = cwd +"../../macros";
+demosdir = cwd +"../../demos";
 modulename = "lowdisc";
 helpupdate ( funarray , helpdir , macrosdir , demosdir , modulename )
 

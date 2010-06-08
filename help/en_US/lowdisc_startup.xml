@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 03-Jun-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 08-Jun-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -44,7 +44,13 @@
    <title>Description</title>
    <para>
 This command can only be executed once in the lifetime of the object.
-This function is sensitive to the "-skip" option.
+This function is sensitive to the "-skip" and "-leap" options.
+   </para>
+   <para>
+The mathematical definition of some sequences (e.g. Sobol, Niederreiter, Faure) imply
+that the first element of the sequence is the zero vector.
+In this implementation, this zero vector is ignored at startup and all sequences
+start with a non-zero vector.
    </para>
    <para>
 </para>
@@ -53,25 +59,25 @@ This function is sensitive to the "-skip" option.
 <refsection>
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
-rng = lowdisc_new("halton");
-rng = lowdisc_startup (rng);
+lds = lowdisc_new("halton");
+lds = lowdisc_startup (lds);
 // Term #1
-[rng,computed] = lowdisc_next (rng);
+[lds,computed] = lowdisc_next (lds);
 // Term #2
-[rng,computed] = lowdisc_next (rng);
-rng
-rng = lowdisc_destroy(rng);
+[lds,computed] = lowdisc_next (lds);
+lds
+lds = lowdisc_destroy(lds);
 
 // See the -skip option in action
-rng = lowdisc_new("halton");
-rng = lowdisc_configure(rng,"-skip",12);
-rng = lowdisc_startup (rng);
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-skip",12);
+lds = lowdisc_startup (lds);
 // Term #13
-[rng,computed] = lowdisc_next (rng);
+[lds,computed] = lowdisc_next (lds);
 // Term #14
-[rng,computed] = lowdisc_next (rng);
-rng
-rng = lowdisc_destroy(rng);
+[lds,computed] = lowdisc_next (lds);
+lds
+lds = lowdisc_destroy(lds);
 
    ]]></programlisting>
 </refsection>

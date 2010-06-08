@@ -7,13 +7,13 @@ prarray = lowdisc_primes1000 ( );
 size(prarray)
 halt()   // Press return to continue
  
-rng = lowdisc_new("faure");
+lds = lowdisc_new("faure");
 prarray = lowdisc_primes1000 ( );
-rng = lowdisc_configure(rng,"-primeslist",prarray);
-rng = lowdisc_configure(rng,"-dimension",150);
-[rng,next] = lowdisc_next ( rng );
+lds = lowdisc_configure(lds,"-primeslist",prarray);
+lds = lowdisc_configure(lds,"-dimension",150);
+[lds,next] = lowdisc_next ( lds );
 next
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 halt()   // Press return to continue
  
 //========= E N D === O F === D E M O =========//

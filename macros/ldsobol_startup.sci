@@ -27,15 +27,17 @@ function this = ldsobol_startup (this)
   // Extract data
   dim_num = ldbase_cget ( this.baseobj , "-dimension" )
   //
-  dimmax = 40;
+  dimmax = this.dimmax;
   //
   //  Check dimension
   //
-  if ( dimmax < dim_num )
-    error ( msprintf ( gettext ( "%s: Dimension %d is greater than maximum %d\n" ) , dim_num , dimmax , "ldsobol_startup"));
+  if ( dimmax < dim_num ) then
+    errmsg = msprintf ( gettext ( "%s: Dimension %d is greater than maximum %d.\n" ) , "ldsobol_startup" , dim_num , dimmax );
+    error ( errmsg )
   end
-  if ( dim_num < 1 )
-    error ( msprintf ( gettext ( "%s: Dimension %d is lower than 1\n" ) , dim_num , "ldsobol_startup"));
+  if ( dim_num < 1 ) then
+    errmsg = msprintf ( gettext ( "%s: Dimension %d is lower than 1.\n" ) , "ldsobol_startup" , dim_num );
+    error ( errmsg )
   end
   //
   logmax = 30;

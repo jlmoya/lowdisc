@@ -24,13 +24,13 @@ function m = lowdisc_primes10000 ( )
   //   prarray = lowdisc_primes10000 ( );
   //   size(prarray)
   //
-  //   rng = lowdisc_new("faure");
+  //   lds = lowdisc_new("faure");
   //   prarray = lowdisc_primes10000 ( );
-  //   rng = lowdisc_configure(rng,"-primeslist",prarray);
-  //   rng = lowdisc_configure(rng,"-dimension",1500);
-  //   [rng,next] = lowdisc_next ( rng );
+  //   lds = lowdisc_configure(lds,"-primeslist",prarray);
+  //   lds = lowdisc_configure(lds,"-dimension",1500);
+  //   [lds,next] = lowdisc_next ( lds );
   //   next
-  //   rng = lowdisc_destroy(rng);
+  //   lds = lowdisc_destroy(lds);
   //
   // Bibliography
   //   http://primes.utm.edu/

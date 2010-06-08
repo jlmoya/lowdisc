@@ -21,9 +21,9 @@ function this = lowdisc_destroy (this)
   //   and an output argument.
   //
   // Examples
-  //   rng = lowdisc_new("faure");
-  //   rng
-  //   rng = lowdisc_destroy(rng);
+  //   lds = lowdisc_new("faure");
+  //   lds
+  //   lds = lowdisc_destroy(lds);
   //
   // Authors
   //   Michael Baudin - 2008-2009 - INRIA

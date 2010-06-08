@@ -15,8 +15,7 @@ function this = ldhalton_startup (this)
   //
     dimension = ldbase_cget ( this.baseobj , "-dimension" )
     if ( dimension > this.primessize ) then
-      errmsg = msprintf( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes" ),...
-      "ldhalton_startup" , this.method,dimension,this.primessize);
+      errmsg = msprintf( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes" ), "ldhalton_startup" , "halton",dimension,this.primessize);
       error(errmsg);
     end
   // Skip (i.e. ignore) as many elements as required

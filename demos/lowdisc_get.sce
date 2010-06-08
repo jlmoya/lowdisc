@@ -5,36 +5,36 @@ mode(1)
 
 halt()   // Press return to continue
  
-rng = lowdisc_new("faure");
-rng = lowdisc_configure(rng,"-dimension",4);
+lds = lowdisc_new("faure");
+lds = lowdisc_configure(lds,"-dimension",4);
 // Skip qs^4 - 1 terms, as in TOMS implementation
-qs = lowdisc_get ( rng , "-faureprime" );
-rng = lowdisc_configure(rng,"-skip", qs^4 - 2);
-rng
-rng = lowdisc_startup (rng);
+qs = lowdisc_get ( lds , "-faureprime" );
+lds = lowdisc_configure(lds,"-skip", qs^4 - 2);
+lds
+lds = lowdisc_startup (lds);
 // Terms #1 to #100
-[rng,computed]=lowdisc_next(rng,100);
+[lds,computed]=lowdisc_next(lds,100);
 for i = 1:100
 mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
 end
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 halt()   // Press return to continue
  
 // See the -skip option in action in the Faure fast sequence.
-rng = lowdisc_new("fauref");
-rng = lowdisc_configure(rng,"-dimension",4);
+lds = lowdisc_new("fauref");
+lds = lowdisc_configure(lds,"-dimension",4);
 // Skip qs^4 - 1 terms, as in TOMS implementation
-qs = lowdisc_get ( rng , "-faurefprime" );
-rng = lowdisc_configure(rng,"-skip", qs^4 - 2);
-rng
-rng = lowdisc_startup (rng);
-[rng,computed]=lowdisc_next(rng);
+qs = lowdisc_get ( lds , "-faurefprime" );
+lds = lowdisc_configure(lds,"-skip", qs^4 - 2);
+lds
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds);
 // Terms #1 to #100
-[rng,computed]=lowdisc_next(rng,100);
+[lds,computed]=lowdisc_next(lds,100);
 for i = 1:100
 mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
 end
-rng = lowdisc_destroy(rng);
+lds = lowdisc_destroy(lds);
 halt()   // Press return to continue
  
 //========= E N D === O F === D E M O =========//

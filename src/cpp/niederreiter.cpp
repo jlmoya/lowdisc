@@ -127,8 +127,19 @@ int nieder_NFIGS;
 int nieder_QPOW[nieder_FIG_MAX];
 double nieder_RECIP;
 bool nieder_startup = false;
+//    NPOLS, the number of precalculated irreducible polynomials.
+//    One different polynomial is used for each dimension.
+//    Hence, NPOLS  = DIM_MAX
+const int nieder_NPOLS = nieder_DIM_MAX;
+//    We need nieder_DIM_MAX irreducible polynomials over GF(Q).
+//    MAXE is the highest degree among these.
+// MB, 03/06/2010 : updated from maxe=5 to maxe=7. On line #25 of irrtabs.dat, e=7 and 1  1  0  0  0  0  0  1 corresponds to px[1] to px[8]
+// MB, 08/06/2010 : updated to MAXE=8. This is the largest degree of the polynomial associated with base 2.
+const int nieder_MAXE = 8;
+
+
 //****************************************************************************80
-void niederreiter_start ( int dim_num, int base, int skip , char * gfaritfile , char * gfplysfile )
+void niederreiter_start ( int dim_num, int base, int skip , char * gfaritfile , char * gfplysfile , bool init )
 // niederreiter_start
 //   Startup the Niederreiter sequence.
 //   TODO : allocate the memory instead of static arrays
@@ -139,6 +150,15 @@ void niederreiter_start ( int dim_num, int base, int skip , char * gfaritfile , 
 //
 //    Input, int BASE, the base to use for the Niederreiter sequence.
 //    The base should be a prime, or a power of a prime.
+//
+//    skip : the number of elements to skip in the sequence
+//
+//    gfaritfile : the gfarit.txt file to use
+//
+//    gfplysfile : the gfplys.txt file to use
+//
+//    init : if true, then the two strings are stored and the gfarit.txt and gfplys.txt are created.
+//           If false, the two strings are stored, but the files are expected to already exist on disk.
 //
 //    ierr: 0 in case of error, 1 if OK.
 //
@@ -155,18 +175,18 @@ void niederreiter_start ( int dim_num, int base, int skip , char * gfaritfile , 
 	}
 	nieder_startup = true;
 	//
-	// Does not handle a field of prime-power order.
-	//	 Hence, we do not need the gfarit data file.
-	ierr = GFARIT ( gfaritfile );
-	if ( ierr==0 ) {
-		return;
+	if ( init ) {
+		ierr = GFARIT ( gfaritfile );
+		if ( ierr==0 ) {
+			return;
+		}
+		//
+		ierr = GFPLYS ( gfaritfile , gfplysfile );
+		if ( ierr==0 ) {
+			return;
+		}
 	}
 	//
-	ierr = GFPLYS ( gfaritfile , gfplysfile );
-	if ( ierr==0 ) {
-		return;
-	}
-	//	
 	nieder_BASE = base;
 	nieder_SKIP = skip;
 	ierr = inlo ( dim_num, base, skip , gfaritfile , gfplysfile );
@@ -258,17 +278,14 @@ int calcc ( char * gfplysfile )
 //    Local, int NPOLS, the number of precalculated irreducible polynomials.
 //
 {
-	// MB, 03/06 : updated from maxe=5 to maxe=7. On line #25 of irrtabs.dat, e=7 and 1  1  0  0  0  0  0  1 corresponds to px[1] to px[8]
-	const int maxe = 7;
-	const int v_max = nieder_FIG_MAX + maxe;
+	const int v_max = nieder_FIG_MAX + nieder_MAXE;
 	int b[nieder_DEG_MAX+2];
 	int e;
 	ifstream input;
 	int i;
 	int j;
 	int k;
-	const int npols = 25;
-	int px[maxe+2];
+	int px[nieder_MAXE+2];
 	int r;
 	int u;
 	int v[v_max+1];
@@ -299,7 +316,7 @@ int calcc ( char * gfplysfile )
 		{
 			break;
 		}
-		for ( j = 1; j <= npols; j++ )
+		for ( j = 1; j <= nieder_NPOLS; j++ )
 		{
 			input >> e;
 			for ( k = 0; k <= e; k++ )
@@ -1696,7 +1713,6 @@ int irred ( ofstream &output, int q_init , char * gfaritfile )
 	int l;
 	int monpol[SIEVE_MAX];
 	int n;
-	int npols = 25;
 	int *pi;
 	int *pj;
 	int *pk;
@@ -1707,7 +1723,7 @@ int irred ( ofstream &output, int q_init , char * gfaritfile )
 		ostringstream msg;
 		msg << "\n";
 		msg << "niederreiter - IRRED - Fatal error!\n";
-		msg << "  Bad value of Q = " << q_init << "\n";
+		msg << "  Bad value of Q = " << q_init << " is greater than Q_MAX = " << nieder_Q_MAX << "\n";
 		lowdisc_error(msg.str());
 		return 0;
 	}
@@ -1766,7 +1782,7 @@ int irred ( ofstream &output, int q_init , char * gfaritfile )
 			}
 			output << "\n";
 			n = n + 1;
-			if ( n == npols )
+			if ( n == nieder_NPOLS )
 			{
 				delete [] pi;
 				return 1;
@@ -1793,7 +1809,7 @@ int irred ( ofstream &output, int q_init , char * gfaritfile )
 	msg << "niederreiter - IRRED - Warning!\n";
 	msg << "  The sieve size SIEVE_MAX is too small.\n";
 	msg << "  Number of irreducible polynomials found: " << n << "\n";
-	msg << "  Number needed: " << npols << "\n";
+	msg << "  Number needed: " << nieder_NPOLS << "\n";
 	lowdisc_error(msg.str());
 	return 0;
 # undef SIEVE_MAX

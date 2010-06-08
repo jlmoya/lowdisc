@@ -8,7 +8,12 @@
 
 
 function value = ldrevhalf_get (this,key)
+  select key
+  case "-dimmax" then
+    value = this.primessize
+  else
     // Delegate to ldbase
     value = ldbase_get ( this.baseobj , key )
+  end
 endfunction
 

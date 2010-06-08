@@ -12,8 +12,10 @@ function this = ldsobolf_new ()
   this = tlist([
     "LDSOBOLF"
     "baseobj"
+    "dimmax"
     ])
   this.baseobj = ldbase_new ()
+  this.dimmax = 1111
 endfunction
 
 

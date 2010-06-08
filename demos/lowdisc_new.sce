@@ -3,9 +3,9 @@ mode(1)
 // Demo of lowdisc_new.sci
 //
 
-rng = lowdisc_new("faure");
-rng
-rng = lowdisc_destroy(rng);
+lds = lowdisc_new("faure");
+lds
+lds = lowdisc_destroy(lds);
 halt()   // Press return to continue
  
 //========= E N D === O F === D E M O =========//

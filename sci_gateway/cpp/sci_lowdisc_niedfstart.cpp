@@ -17,7 +17,7 @@ extern "C" {
 #include "niederreiter.h" 
 
 
-// _lowdisc_niedfstart ( dim , base , skip , gfaritfile , gfplysfile )
+// _lowdisc_niedfstart ( dim , base , skip , gfaritfile , gfplysfile , init )
 //   Start the Niederreiter sequence.
 // Parameters
 //   dim : 1 x 1 matrix of doubles, the number of dimensions (e.g. 1)
@@ -25,6 +25,11 @@ extern "C" {
 //   skip : 1 x 1 matrix of doubles, the number of elements to skip (e.g. 0). 
 //   gfaritfile : the data file to write, a tables of addition and multiplication (Handle a field of prime-power order).
 //   gfplysfile : the data file to write, a table of irreducible polynomials.
+//   init : if 1, then the two strings are stored and the gfarit.txt and gfplys.txt are created.
+//          If 0, the two strings are stored, but the files are expected to already exist on disk.
+// Description
+//   If the two files already exist on disk (maybe from a previous sequence),
+//   there is no need to generate them again. In this case, init should be set to 0.
 //
 int sci_lowdisc_niedfstart (char *fname) {
 	int dim;
@@ -37,8 +42,10 @@ int sci_lowdisc_niedfstart (char *fname) {
 	char * gfplysfile;
 	int nCols;
 	int nRows;
+	int intinit;
+	bool init;
 	
-	CheckRhs(5,5) ;
+	CheckRhs(6,6) ;
 	CheckLhs(0,1) ;
 	//
 	// Get dim
@@ -90,9 +97,21 @@ int sci_lowdisc_niedfstart (char *fname) {
 		return 0;
 	}
 	gfplysfile = gfplysdata[0];
+	//	
+	// Get init
+	
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 6 , &intinit );
+	if ( ierr==0 ) {
+		return 0;
+	}
+	if ( intinit == 1 ) {
+		init = true;
+	} else {
+		init = false;
+	}
 	//
 	// Start the sequence
-	niederreiter_start ( dim, base, skip , gfaritfile , gfplysfile );
+	niederreiter_start ( dim, base, skip , gfaritfile , gfplysfile , init );
 	//
 	lowdisc_CreateLhsInteger ( 1 , 0 );
 	return 0;

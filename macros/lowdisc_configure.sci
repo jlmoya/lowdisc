@@ -28,19 +28,6 @@ function this = lowdisc_configure (this,key,value)
   //   <listitem>"-dimension" : a positive floating point integer, 
   //     the dimension of the space, i.e.
   //     the size of the vector returned by the command lowdisc_next (default = 1).</listitem>
-  //   <listitem>"-vandercorputbasis" : a positive floating point integer, greater or equal to 2, 
-  //     the basis used in the Van Der Corput sequence (default = 2).
-  //     The value is expected to be . It should be a prime number, but that
-  //     is not checked by the configure method.</listitem>
-  //   <listitem>"-primeslist" : a row array of positive floating point integers, 
-  //     at matrix of prime numbers used in the several low discrepancy sequences.
-  //     The expected matrix must have a 1xn shape, with n an integer greater than 2.
-  //     The default list is made of the 100 first prime numbers, from 2 to 541, which
-  //     enables the user to generate sequences up to 100 dimensions.
-  //     If a larger dimension problem is to process, that feature should enable users to
-  //     customize the list to meet the required dimension.
-  //     The user should be warned that the Halton sequence may produce poor convergence
-  //     rate if the dimension is larger than 15.</listitem>
   //   <listitem>"-sequenceindex" : a positive floating point integer,
   //     the starting index of the low discrepancy sequences.
   //     When a sequence is created this setting is initialized to 0.
@@ -64,7 +51,7 @@ function this = lowdisc_configure (this,key,value)
   //     For example, Fox recommends to skip the qs^4 - 2 first terms in the 
   //     Faure sequence, where qs is the prime number associated with the 
   //     sequence. This number can be retrieved with 
-  //     qs = lowdisc_get ( rng , "-faureprime" ).</listitem>
+  //     qs = lowdisc_get ( lds , "-faureprime" ).</listitem>
   //   <listitem>"-leap" : a positive floating point integer, 
   //     the number of elements to ignore from element to element (default = 0).
   //     Each time the lowdisc_next function is called, the immediate element
@@ -73,6 +60,22 @@ function this = lowdisc_configure (this,key,value)
   //     discarded. This option allows to generate alternative 
   //     sequences based on the same basic generator.</listitem>
   //  </itemizedlist>
+  //
+  // Some sequences can be configured in order to increase their maximum
+  // dimension. These sequences accept the following "-primeslist" option.
+  //  <itemizedlist>
+  //   <listitem>"-primeslist" : a row array of positive floating point integers, 
+  //     at matrix of prime numbers used in the several low discrepancy sequences.
+  //     The expected matrix must have a 1xn shape, with n an integer greater than 2.
+  //     The default list is made of the 100 first prime numbers, from 2 to 541, which
+  //     enables the user to generate sequences up to 100 dimensions.
+  //     If a larger dimension problem is to process, that feature should enable users to
+  //     customize the list to meet the required dimension.
+  //     The user should be warned that the Halton sequence may produce poor convergence
+  //     rate if the dimension is larger than 15.</listitem>
+  //  </itemizedlist>
+  //  The sequences which are sensitive to this option are : "halton", "haltonf", "faure", "fauref", 
+  //  "reversehalton", "reversehaltonf".
   //
   //   Because of the limitation of floating point integers, 
   //   the lowdisc_next function is able to generate at most 
@@ -93,14 +96,14 @@ function this = lowdisc_configure (this,key,value)
   //   See the specific settings of each sequence below for detail.
   //
   // Examples
-  //   rng = lowdisc_new("faure");
-  //   rng = lowdisc_configure(rng,"-dimension",3);
-  //   method = lowdisc_cget(rng,"-method")
-  //   nbdim = lowdisc_cget(rng,"-dimension")
-  //   i = lowdisc_cget(rng,"-sequenceindex")
-  //   verbose = lowdisc_cget(rng,"-verbose")
-  //   rng
-  //   rng = lowdisc_destroy(rng);
+  //   lds = lowdisc_new("faure");
+  //   lds = lowdisc_configure(lds,"-dimension",3);
+  //   method = lowdisc_cget(lds,"-method")
+  //   nbdim = lowdisc_cget(lds,"-dimension")
+  //   i = lowdisc_cget(lds,"-sequenceindex")
+  //   verbose = lowdisc_cget(lds,"-verbose")
+  //   lds
+  //   lds = lowdisc_destroy(lds);
   //
   // Authors
   //   Michael Baudin - 2008-2009 - INRIA

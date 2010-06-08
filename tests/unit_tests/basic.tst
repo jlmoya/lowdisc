@@ -77,6 +77,9 @@ for sequencename = sequencearray'
   leap = lowdisc_cget(lds,"-leap");
   assert_equal ( leap , leap );
   //
+  dimmax = lowdisc_get(lds,"-dimmax");
+  assert_equal ( dimmax > 0 , %t );
+  //
   // Test printing system
   string(lds)
   lds
