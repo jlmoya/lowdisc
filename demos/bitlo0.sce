@@ -139,3 +139,10 @@ for i = 1:size(ilist,"*")
 end
 assert_equal ( computed , expected );
 
+//
+// Load this script into the editor
+//
+filename = "bitlo0.sce";
+dname = get_absolute_file_path(filename);
+editor ( dname + filename );
+

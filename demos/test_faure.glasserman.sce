@@ -20,4 +20,10 @@ for i = 1:9
   mprintf ("%8d %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) )
 end
 
+//
+// Load this script into the editor
+//
+filename = "test_faure.glasserman.sce";
+dname = get_absolute_file_path(filename);
+editor ( dname + filename );
 

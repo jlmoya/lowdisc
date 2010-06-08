@@ -134,3 +134,10 @@ for k = 1 : size ( ilist , "r" )
 end
 assert_equal ( computed , expected );
 
+//
+// Load this script into the editor
+//
+filename = "exor.sce";
+dname = get_absolute_file_path(filename);
+editor ( dname + filename );
+

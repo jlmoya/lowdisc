@@ -23,4 +23,10 @@ for i = 1:100
 end
 rng = lowdisc_destroy(rng);
 mclose(fd)
+//
+// Load this script into the editor
+//
+filename = "test_faure.dim4.sce";
+dname = get_absolute_file_path(filename);
+editor ( dname + filename );
 

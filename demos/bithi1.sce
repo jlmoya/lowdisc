@@ -122,7 +122,7 @@ endfunction
 //
 //    Output, integer BIT, the number of bits base 2.
 //
-function bit = _bithi1 ( n )
+function bit = lowdisc_bithi1 ( n )
   i = floor ( n );
   bit = 0;
   while ( 1 )
@@ -167,4 +167,11 @@ for i = 1:size(ilist,"*")
   computed ( $ + 1 ) = lowdisc_bithi1 (j );
 end
 assert_equal ( computed , expected );
+
+//
+// Load this script into the editor
+//
+filename = "bithi1.sce";
+dname = get_absolute_file_path(filename);
+editor ( dname + filename );
 

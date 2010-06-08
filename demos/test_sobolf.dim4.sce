@@ -12,10 +12,16 @@ rng = lowdisc_startup (rng);
 [rng,computed]=lowdisc_next(rng);
 mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", 0 , computed(1) , computed(2) , computed(3) , computed(4) )
 // Terms #1 to #100
-[rng,computed]=lowdisc_terms(rng,100);
+[rng,computed]=lowdisc_next(rng,100);
 for i = 1:100
   mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
 end
 rng = lowdisc_destroy(rng);
 
+//
+// Load this script into the editor
+//
+filename = "test_sobolf.dim4.sce";
+dname = get_absolute_file_path(filename);
+editor ( dname + filename );
 

@@ -65,3 +65,10 @@ computed = lowdisc_rem ( -3 , 2 );
 expected = -1;
 assert_close ( computed, expected , %eps );
 
+//
+// Load this script into the editor
+//
+filename = "divisionrem.sce";
+dname = get_absolute_file_path(filename);
+editor ( dname + filename );
+
