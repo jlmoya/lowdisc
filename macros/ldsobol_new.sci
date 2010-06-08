@@ -22,9 +22,11 @@ function this = ldsobol_new ()
     "sobolrecipd"
     "sobolcount"
     "dimmax"
+    "nbsimmax"
     ])
   this.baseobj = ldbase_new ()
   this.dimmax = 40
+  this.nbsimmax = 2^30 - 1
 endfunction
 
 

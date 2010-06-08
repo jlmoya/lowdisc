@@ -99,31 +99,31 @@ endfunction
 //    Local, real RECIP is the multiplier which changes the
 //    integers in NEXTQ into the required real values in QUASI.
 //
-//    Local, integer NR_cj(MAXDIM,NBITS), the packed values of
+//    Local, integer cj(MAXDIM,NBITS), the packed values of
 //    Niederreiter's C(I,J,R).
 //
 //    Local, integer NR_dim, the spatial dimension of the sequence
 //    as specified on an initialization call.
 //
-//    Local, integer NR_nextq(MAXDIM), the numerators of the next item in the
+//    Local, integer nextq(MAXDIM), the numerators of the next item in the
 //    series.  These are like Niederreiter's XI(N) (page 54) except that
-//    N is implicit, and the NR_nextq are integers.  To obtain
+//    N is implicit, and the nextq are integers.  To obtain
 //    the values of XI(N), multiply by RECIP.
 //
 function [ this , quasi ] = _next_nieder2 ( this )
   
   // Extract data
-  NR_cj = this.NR_cj;
+  cj = this.cj;
   dim = ldbase_cget ( this.baseobj , "-dimension" )
-  NR_nextq = this.NR_nextq;
-  NR_seed = this.NR_seed;
-  NR_recip = this.NR_recip;
-  nbits = this.NR_nbits;
+  nextq = this.nextq;
+  seed = this.seed;
+  recip = this.recip;
+  nbits = this.nbits;
   //
   //  Multiply the numerators in NEXTQ by RECIP to get the next
   //  quasi-random vector.
   //
-  quasi(1:dim) = NR_nextq(1:dim) * NR_recip;
+  quasi(1:dim) = nextq(1:dim) * recip;
   quasi = quasi.';
   //
   //  Find the position of the right-hand zero in SEED.  This
@@ -131,7 +131,7 @@ function [ this , quasi ] = _next_nieder2 ( this )
   //  we go from SEED to SEED+1.
   //
   r = 0;
-  i = NR_seed;
+  i = seed;
   while ( _divremainder ( i, 2 ) ~= 0 )
     r = r + 1;
     i = floor ( i / 2 );
@@ -146,12 +146,12 @@ function [ this , quasi ] = _next_nieder2 ( this )
   //  Compute the new numerators in vector NEXTQ.
   //
   for i = 1 : dim
-    NR_nextq(i) = _exor ( NR_nextq(i), NR_cj(i,r+1) );
+    nextq(i) = _exor ( nextq(i), cj(i,r+1) );
   end
-  NR_seed = NR_seed + 1;
+  seed = seed + 1;
   // Insert data
-  this.NR_nextq = NR_nextq;
-  this.NR_seed = NR_seed;
+  this.nextq = nextq;
+  this.seed = seed;
   
 endfunction
 

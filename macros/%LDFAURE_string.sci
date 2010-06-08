@@ -24,6 +24,8 @@ function str = %LDFAURE_string ( this )
     str(k) = msprintf("Primes List (%d primes): %s\n", nbp , _tostring(this.primeslist))
   end
   k = k + 1
+  str(k) = msprintf("Maximum number of simulations = %e",this.nbsimmax)
+  k = k + 1
   //
   // Get the baseobj string
   str(k) = ""

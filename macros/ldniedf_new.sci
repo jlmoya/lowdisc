@@ -18,6 +18,7 @@ function this = ldniedf_new ()
     "gfaritfile"
     "gfplysfile"
     "dimmax"
+    "nbsimmax"
     ])
   this.baseobj = ldbase_new ()
   //
@@ -26,6 +27,7 @@ function this = ldniedf_new ()
   this.gfaritfile = fullfile(TMPDIR,"gfarit.txt")
   this.gfplysfile = fullfile(TMPDIR,"gfplys.txt")
   this.dimmax = 50
+  this.nbsimmax = 2^31 - 1
 endfunction
 
 

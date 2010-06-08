@@ -39,21 +39,16 @@ following hierarchy.
    low discrepancy sequence. Each sequence is independent of the others.
    Each sequence has its specific options, but all must implement the 
    following methods : new, destroy, configure, cget, get, startup and next.
- * tested the skip and leap for all sequences
- * replaced sprintf by msprintf
- * with the Fast Niederreiter sequence, if the gfarit and gfplsys files already exist, do not generate anymore.
 
 See the overview in the help provided with this toolbox.
 
 TODO
 
- * check the maximal dimension available for Fast Niederreiter (is that 50 ?)
  * improve the performance of skip and leap
  * Add scrambling algorithms
  * Add algorithms to compute the discrepancy
  * Add test cases on integrals as in Bratley and Fox
  * Update the help page : Niederreiter base 2 is slow while Niederreiter arbitrary base is fast
- * Tell Burkardt about the bug in Niederreiter : size of the table
  * remove _mlist_isfield where unused
  * create this = lowdisc_autosetup ( this ) :
    * function to suggest skip parameter for sobol : http://people.sc.fsu.edu/~burkardt/m_src/sobol/tau_sobol.m
@@ -63,6 +58,13 @@ TODO
    * suggest initial base for Niederreiter : (OPTBAS(I), I = 2,MAXDIM) / 2,3,3,5,7,7,9,9,11,11,13/
    * suggest number of simulations for Niederreiter : a power of the base : BASE ** POWER(BASE), BASE ** ((POWER(BASE) + 1)), BASE ** ((POWER(BASE) + 2)), BASE ** ((POWER(BASE) + 3))
  * document the largest number of simulations available with Sobol sequence : ATMOST
+
+DONE
+ * tested the skip and leap for all sequences
+ * replaced sprintf by msprintf
+ * with the Fast Niederreiter sequence, if the gfarit and gfplsys files already exist, do not generate anymore.
+ * checked the maximal dimension available for Fast Niederreiter : fixed bug in the source
+
 
 Author
 

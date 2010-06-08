@@ -27,7 +27,7 @@ function this = lowdisc_new ( varargin )
   //  <listitem>"halton" : the Halton low discrepancy sequence.
   //    This sequence is sensitive to the "-primeslist" option.
   //    By default, it is able to generate experiments in dimension at most 100.
-  //    This sequence is able to generate at most 2^52  = 4 503 599 627 370 496 experiments.
+  //    This sequence is able to generate at most 2^52 - 1 = 4 503 599 627 370 495 experiments.
   //    To extend the number of dimensions, please configure the "-primeslist" option.
   //    The maximum dimension which can be obtained is equal to the number of 
   //    different primes in the prime table. 
@@ -35,7 +35,7 @@ function this = lowdisc_new ( varargin )
   //  <listitem>"haltonf" : the fast Halton sequence. 
   //    This sequence is sensitive to the "-primeslist" option.
   //    By default, it is able to generate experiments in dimension at most 100.
-  //    This sequence is able to generate at most 2^32 - 1  = 4 294 967 295 experiments.
+  //    This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
   //    To extend the number of dimensions, please configure the "-primeslist" option.
   //    The maximum dimension which can be obtained is equal to the number of 
   //    different primes in the prime table. 
@@ -43,7 +43,7 @@ function this = lowdisc_new ( varargin )
   //  <listitem>"faure" : the Faure low discrepancy sequence. 
   //    This sequence is sensitive to the "-primeslist" option.
   //    By default, it is able to generate experiments in dimension at most 541.
-  //    This sequence is able to generate at most 2^52  = 4 503 599 627 370 496 experiments.
+  //    This sequence is able to generate at most 2^52 - 1 = 4 503 599 627 370 495 experiments.
   //    To extend the number of dimensions, please configure the "-primeslist" option.
   //    The maximum dimension which can be obtained is equal to the maximum 
   //    prime number in the prime table. 
@@ -51,7 +51,7 @@ function this = lowdisc_new ( varargin )
   //  <listitem>"fauref" : the fast Faure sequence.
   //    This sequence is sensitive to the "-primeslist" option.
   //    By default, it is able to generate experiments in dimension at most 541.
-  //    This sequence is able to generate at most 2^32 - 1  = 4 294 967 295 experiments.
+  //    This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
   //    To extend the number of dimensions, please configure the "-primeslist" option.
   //    The maximum dimension which can be obtained is equal to the maximum 
   //    prime number in the prime table. 
@@ -59,7 +59,7 @@ function this = lowdisc_new ( varargin )
   //  <listitem>"reversehalton" : the Reverse Halton sequence of Vandewoestyne and Cools.
   //    This sequence is sensitive to the "-primeslist" option.
   //    By default, it is able to generate experiments in dimension at most 100.
-  //    This sequence is able to generate at most 2^52  = 4 503 599 627 370 496 experiments.
+  //    This sequence is able to generate at most 2^52 - 1 = 4 503 599 627 370 495 experiments.
   //    To extend the number of dimensions, please configure the "-primeslist" option.
   //    The maximum dimension which can be obtained is equal to the number of 
   //    different primes in the prime table. 
@@ -67,14 +67,14 @@ function this = lowdisc_new ( varargin )
   //  <listitem>"reversehaltonf" : the fast Reverse Halton sequence of Vandewoestyne and Cools.
   //    This sequence is sensitive to the "-primeslist" option.
   //    By default, it is able to generate experiments in dimension at most 100.
-  //    This sequence is able to generate at most 2^32 - 1  = 4 294 967 295 experiments.
+  //    This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
   //    To extend the number of dimensions, please configure the "-primeslist" option.
   //    The maximum dimension which can be obtained is equal to the number of 
   //    different primes in the prime table. 
   //    This fast algorithm is based on a compiled C source code. </listitem>
   //  <listitem>"sobol" : the Sobol sequence. 
   //    It is able to generate experiments in dimension at most 40.
-  //    This sequence is able to generate at most 2^30-1  = 1 073 741 823 experiments.
+  //    This sequence is able to generate at most 2^30-1  = 1 073 741 823 experiments.TODO : check this (why not 2^31 - 1 ?).
   //    There is no way to extend the number of dimensions or the number of 
   //    experiments.
   //    This is a macro-based algorithm. 
@@ -83,7 +83,7 @@ function this = lowdisc_new ( varargin )
   //    </listitem>
   //  <listitem>"sobolf" : the fast Sobol sequence. 
   //    It is able to generate experiments in dimension at most 1111.
-  //    This sequence is able to generate at most 2^30-1  = 1 073 741 823 experiments.
+  //    This sequence is able to generate at most 2^30-1  = 1 073 741 823 experiments. TODO : check this (why not 2^31 - 1 ?).
   //    There is no way to extend the number of dimensions or the number of 
   //    experiments.
   //    This fast algorithm is based on a compiled C source code. 
@@ -93,7 +93,7 @@ function this = lowdisc_new ( varargin )
   //  <listitem>"niederreiter-base-2" : The Niederreiter Base 2 sequence. 
   //    This is a macro-based algorithm. 
   //    It is able to generate experiments in dimension at most 20.
-  //    This sequence is able to generate at most 2^32 - 1  = 4 294 967 295 experiments.
+  //    This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
   //    There is no way to extend the number of dimensions or the number of 
   //    experiments.
   //    The implementation is a Scilab port of the Matlab source code by John Burkardt.
@@ -106,6 +106,7 @@ function this = lowdisc_new ( varargin )
   //    been updated to present a uniform API. The library generates two temporary 
   //    files gfarit and gfplys when the library is started up.
   //    The maximum dimension for this sequence is 50.
+  //    This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
   //    The base can be configured with the -base option. By default, the base is 2. 
   //    The base is expected to be a prime or a power of a prime. If the base is a power of a 
   //    prime, it must be one of the following :  4 = 2^2, 8 = 2^3, 9 = 3^2, 16 = 2^4, 25 = 5^2, 

@@ -13,9 +13,11 @@ function this = ldsobolf_new ()
     "LDSOBOLF"
     "baseobj"
     "dimmax"
+    "nbsimmax"
     ])
   this.baseobj = ldbase_new ()
   this.dimmax = 1111
+  this.nbsimmax = 2^30 - 1
 endfunction
 
 

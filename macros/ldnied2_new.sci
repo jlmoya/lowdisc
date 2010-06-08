@@ -7,8 +7,8 @@
 
 
 
-// TODO : rename the "NR_cj", "NR_seed", "NR_nextq", "NR_recip", "NR_nbits" fields
-// TODO : remove the field NR_seed, which should be replaced by the index
+// TODO : rename the "cj", "seed", "nextq", "recip", "nbits" fields
+// TODO : remove the field seed, which should be replaced by the index
 
 function this = ldnied2_new ()
   // Create a new Niederreiter Base 2 object.
@@ -17,15 +17,18 @@ function this = ldnied2_new ()
   this = tlist([
     "LDNIED2"
     "baseobj"
-    "NR_cj"
-    "NR_seed"
-    "NR_nextq"
-    "NR_recip"
-    "NR_nbits"
+    "cj"
+    "seed"
+    "nextq"
+    "recip"
+    "nbits"
     "dimmax"
+    "nbsimmax"
     ])
   this.baseobj = ldbase_new ()
   this.dimmax = 20
+  this.nbits = 31
+  this.nbsimmax = 2^(this.nbits) - 1
 endfunction
 
 

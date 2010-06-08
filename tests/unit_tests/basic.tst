@@ -80,6 +80,9 @@ for sequencename = sequencearray'
   dimmax = lowdisc_get(lds,"-dimmax");
   assert_equal ( dimmax > 0 , %t );
   //
+  nbsimmax = lowdisc_get(lds,"-nbsimmax");
+  assert_equal ( nbsimmax > 0 , %t );
+  //
   // Test printing system
   string(lds)
   lds

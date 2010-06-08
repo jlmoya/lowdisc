@@ -11,6 +11,8 @@ function value = ldhaltonf_get (this,key)
   select key
   case "-dimmax" then
     value = this.primessize
+  case "-nbsimmax" then
+    value = this.nbsimmax
   else
     // Delegate to ldbase
     value = ldbase_get ( this.baseobj , key )

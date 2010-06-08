@@ -20,6 +20,8 @@ function value = ldfaure_get (this,key)
     value  = this.primeslist ( k )
   case "-dimmax" then
     value = this.primeslist ( this.primessize )
+  case "-nbsimmax" then
+    value = this.nbsimmax
   else
     // Delegate to ldbase
     value = ldbase_get ( this.baseobj , key )

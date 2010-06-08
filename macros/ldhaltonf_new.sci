@@ -14,6 +14,7 @@ function this = ldhaltonf_new ()
     "baseobj"
     "primeslist"
     "primessize"
+    "nbsimmax"
     ])
   this.baseobj = ldbase_new ()
   //
@@ -23,6 +24,7 @@ function this = ldhaltonf_new ()
   //
   // Non Configurable options
   this.primessize = size(this.primeslist,2)
+  this.nbsimmax = 2^31 - 1
 endfunction
 
 

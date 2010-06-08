@@ -29,9 +29,9 @@ function this = ldnied2_startup (this)
   // Extract data
   dim = ldbase_cget ( this.baseobj , "-dimension" )
   
-  maxdim = 20;
+  maxdim = this.dimmax;
   nbits = 31;
-  NR_recip = 2.0E+00^(-nbits);
+  recip = 2.0E+00^(-nbits);
   //
   //  Initialization.
   //
@@ -42,7 +42,7 @@ function this = ldnied2_startup (this)
   //
   //  Calculate the C array.
   //
-  NR_cj(1:dim,1:nbits) = _niedercalcc2 ( dim );
+  cj(1:dim,1:nbits) = _niedercalcc2 ( dim );
   //
   //  Set up NEXTQ appropriately, depending on the Gray code of SEED.
   //
@@ -51,23 +51,23 @@ function this = ldnied2_startup (this)
   //  around from the previous computation.
   //
   gray = _exor ( seed, seed / 2 );
-  NR_nextq(1:dim) = 0;
+  nextq(1:dim) = 0;
   r = 0;
   while ( gray ~= 0 )
     if ( rem ( gray, 2 ) ~= 0 )
       for i = 1 : dim
-        NR_nextq(i) = _exor ( NR_nextq(i), NR_cj(i,r+1) );
+        nextq(i) = _exor ( nextq(i), cj(i,r+1) );
       end
     end
     gray = floor ( gray / 2 );
     r = r + 1;
   end
   // Insert data
-  this.NR_cj = NR_cj;
-  this.NR_seed = seed;
-  this.NR_nextq = NR_nextq
-  this.NR_recip = NR_recip;
-  this.NR_nbits = nbits;
+  this.cj = cj;
+  this.seed = seed;
+  this.nextq = nextq
+  this.recip = recip;
+  this.nbits = nbits;
   //
   // We ignore the first element in the sequence, which is [0 0] in dimension 2.
   // Our Niederreiter sequence starts with [0.5 0.5] in 2 dimensions.
@@ -146,7 +146,7 @@ endfunction
 //    fixed-point integer.
 //
 function cj = _niedercalcc2 ( dimen )
-  maxdim = 20;
+  maxdim = this.dimmax;
   maxe = 6;
   nbits = 31;
   maxv = nbits + maxe;
