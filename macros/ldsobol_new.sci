@@ -3,12 +3,7 @@
 //
 // This file must be used under the terms of the GNU LGPL license.
 
-
-
-
-
-// TODO : rename the fields "sobolv", "sobolmaxcol", "sobollastq", "sobolrecipd", "sobolcount"
-// TODO : remove the field sobolcount, which should be replaced by the index
+// TODO : remove the field count, which should be replaced by the index
 function this = ldsobol_new ()
   // Create a new Sobol object.
   //
@@ -16,11 +11,11 @@ function this = ldsobol_new ()
   this = tlist([
     "LDSOBOL"
     "baseobj"
-    "sobolv"
-    "sobolmaxcol"
-    "sobollastq"
-    "sobolrecipd"
-    "sobolcount"
+    "v"
+    "maxcol"
+    "lastq"
+    "recipd"
+    "count"
     "dimmax"
     "nbsimmax"
     ])

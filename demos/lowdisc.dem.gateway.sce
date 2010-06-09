@@ -1,5 +1,5 @@
 // This file is released into the public domain
-// This help file was generated using helpupdate at 2010/6/8 - 16:45:5
+// This help file was generated using helpupdate at 2010/6/9 - 16:3:21
 demopath = get_absolute_file_path("lowdisc.dem.gateway.sce");
 subdemolist = [
 "test_sobolf.dim4", "test_sobolf.dim4.sce"; ..
@@ -31,11 +31,16 @@ subdemolist = [
 "lowdisc_destroy", "lowdisc_destroy.sce"; ..
 "lowdisc_configure", "lowdisc_configure.sce"; ..
 "lowdisc_cget", "lowdisc_cget.sce"; ..
+"lowdisc_bitxor", "lowdisc_bitxor.sce"; ..
+"lowdisc_bitlo0", "lowdisc_bitlo0.sce"; ..
+"lowdisc_bithi1", "lowdisc_bithi1.sce"; ..
 "lowdisc_binomialmod", "lowdisc_binomialmod.sce"; ..
 "lowdisc_binomial", "lowdisc_binomial.sce"; ..
+"lowdisc_bary", "lowdisc_bary.sce"; ..
 "exor", "exor.sce"; ..
 "divisionrem", "divisionrem.sce"; ..
 "bitlo0", "bitlo0.sce"; ..
 "bithi1", "bithi1.sce"; ..
+"", ".sce"; ..
 ];
 subdemolist(:,2) = demopath + subdemolist(:,2)

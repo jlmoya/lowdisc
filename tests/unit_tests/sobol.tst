@@ -33,6 +33,21 @@ function flag = assert_close ( computed, expected, epsilon )
   if flag <> 1 then pause,end
 endfunction
 //
+// assert_equal --
+//   Returns 1 if the two real matrices computed and expected are equal.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_equal ( computed , expected )
+  if computed==expected then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then pause,end
+endfunction
+//
 // Check the Sobol sequence in 2 dimensions
 //
 lds = lowdisc_new("sobol");
@@ -257,4 +272,26 @@ expected = [
 ];
 assert_close ( computed , expected , 1.e-5 );
 lds = lowdisc_destroy(lds);
+
+// Check performance for large values of skip
+t1 = timer();
+lds = lowdisc_new("sobol");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-skip", 1.e3);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+lds = lowdisc_destroy(lds);
+t2 = timer();
+assert_equal ( (t2-t1)<1. , %t );
+
+// Check performance for large values of leap
+t1 = timer();
+lds = lowdisc_new("sobol");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-leap", 1.e2);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+lds = lowdisc_destroy(lds);
+t2 = timer();
+assert_equal ( (t2-t1)<1. , %t );
 

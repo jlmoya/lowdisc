@@ -3,10 +3,6 @@
 //
 // This file must be used under the terms of the GNU LGPL license.
 
-
-
-
-
 function value = ldsobol_cget (this,key)
   // Delegate to ldbase
   value = ldbase_cget ( this.baseobj , key )

@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 08-Jun-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 09-Jun-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -47,6 +47,23 @@ to reset all "lost" sequences.
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
 lowdisc_stopall ( )
+
+// Example of what can go wrong...
+// We create a Fast Reverse Halton sequence.
+lds = lowdisc_new("reversehaltonf");
+lds = lowdisc_startup (lds);
+// We create a Fast Reverse Halton sequence again.
+lds = lowdisc_new("reversehaltonf");
+lds = lowdisc_startup (lds);
+// This creates the error message :
+// "Low Discrepancy Module Error ! revhal_startup is already done."
+// It would suffice to call lowdisc_destroy(lds).
+// But we can use a more brutal function, which resets all sequences.
+lowdisc_stopall ( );
+// Now it works again.
+lds = lowdisc_new("reversehaltonf");
+lds = lowdisc_startup (lds);
+lds = lowdisc_destroy(lds);
 
    ]]></programlisting>
 </refsection>

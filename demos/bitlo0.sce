@@ -106,7 +106,7 @@ endfunction
 
 
 //
-// Check the bithi1 function
+// Check the bitlo0 function
 //
 computed = [];
 ilist =  [

@@ -53,14 +53,10 @@ function [this,next] = ldfaure_next ( varargin )
     index = ldbase_get ( this.baseobj , "-index" )
     onevector = _fauresequence ( dimension , index , basis )
     next(i,1:dimension) = onevector
-    // Leap over (i.e. ignore) as many elements as required
-    // TODO : improve this to leap the elements without actually generating them
     if ( leap > 0 ) then
-      for j = 1 : leap
-        this.baseobj = ldbase_incr ( this.baseobj )
-        index = ldbase_get ( this.baseobj , "-index" )
-        onevector = _fauresequence ( dimension , index , basis )
-      end
+      // Leap over (i.e. ignore) as many elements as required
+      // Directly set the index.
+      this.baseobj = ldbase_indexset ( this.baseobj , index + leap )
     end
   end
 endfunction
@@ -89,7 +85,7 @@ endfunction
 //   Monte-Carlo methods in Financial Engineering, Paul Glasserman
 //
 function next = _fauresequence ( dimension , index , basis )
-  digits = _bary ( index , basis , "bigendian" )
+  digits = lowdisc_bary ( index , basis , "bigendian" )
   digits = digits'
   r = size ( digits , 1 )
   // Compute a vector made of 1/b, 1/b^2, etc...
@@ -214,61 +210,5 @@ function b = _binomial ( n , k )
     b = round ( b )
   end
 endfunction
-//
-// _bary --
-//   Returns the list of digits of the decomposition of 
-//   k in base b, i.e. decompose k as 
-//   k = d0 b^jmax + d1 b^{jmax-1} + ... + d{jmax+1} b^0.
-//   The order is little endian order, i.e. the first 
-//   digit is associated with b^jmax, and the last digit
-//   is associated with b^0.
-// Arguments
-//   k : the integer to decompose
-//   basis : the basis
-// References
-//   Monte-Carlo methods in Financial Engineering, Paul Glasserman
-// Test : 
-//   _bary (4,2)                      // [1 0 0]
-//   _bary (4,2,"bigendian")          // [0 0 1]
-//   _bary ( 4 , 2 )                  // [1 0 0]
-//   _bary ( 4 , 2 , "littleendian" ) // [1 0 0]
-//   _bary ( 4 , 2 , "bigendian" )    // [0 0 1]
-//
-function digits = _bary ( k , basis , order )
-  if (~isdef('order','local')) then
-    order = "littleendian";
-  end
-  select order
-  case "littleendian"
-    if (k==0) then
-      digits = zeros(1,1);
-    else
-      jmax = int(log(k)/log(basis));
-      q = int(basis^jmax);
-      for j=1:jmax+1
-        aj = int(k/q);
-        digits(1,j) = aj;
-        k = k - q * aj;
-        q = q/basis;
-      end
-    end
-  case "bigendian"
-    if k==0 then
-      digits = zeros(1,1);
-    else
-      jmax = int(log(k)/log(basis));
-      current = k
-      j = 1;
-      while ( current > 0 )
-        digit = modulo ( current , basis )
-        digits(1,j) =digit
-        current = int ( current / basis )
-        j = j + 1
-      end
-    end
-  else
-    error ( msprintf ( gettext ( "%s: Unknown order"  ), ...
-      "_bary" ) )
-  end
-endfunction
+
 

@@ -3,10 +3,6 @@
 //
 // This file must be used under the terms of the GNU LGPL license.
 
-
-
-
-
 function value = ldfaure_get (this,key)
   select key
   case "-faureprime" then

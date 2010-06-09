@@ -48,22 +48,25 @@ TODO
  * Add scrambling algorithms
  * Add algorithms to compute the discrepancy
  * Add test cases on integrals as in Bratley and Fox
- * Update the help page : Niederreiter base 2 is slow while Niederreiter arbitrary base is fast
- * remove _mlist_isfield where unused
  * create this = lowdisc_autosetup ( this ) :
-   * function to suggest skip parameter for sobol : http://people.sc.fsu.edu/~burkardt/m_src/sobol/tau_sobol.m
-   * suggest number of simulations for sobol : a power of 2 larger than nbsim
+   * suggest skip parameter for sobol : http://people.sc.fsu.edu/~burkardt/m_src/sobol/tau_sobol.m
    * suggest skip parameter for faure : base^4
-   * number of simulations for faure : a power of the base larger than nbsim
-   * suggest initial base for Niederreiter : (OPTBAS(I), I = 2,MAXDIM) / 2,3,3,5,7,7,9,9,11,11,13/
+   * suggest skip parameter for Niederreiter : BASE ** POWER(BASE) where (POWER(I), I = 2,MAXBAS) / 12,8,8,6,6,6,4,4,4,4,4,4 /
+   * suggest number of simulations for sobol : a power of 2 larger than nbsim, N = 2**K WHERE K .GE. (TAUS+S-1) FOR INTEGRATION AND K .GT. TAUS FOR GLOBAL OPTIMIZATION. TAU/0,0,1,3,5,8,11,15,19,23,27,31,35/
+   * suggest number of simulations for faure : a power of the base larger than nbsim
    * suggest number of simulations for Niederreiter : a power of the base : BASE ** POWER(BASE), BASE ** ((POWER(BASE) + 1)), BASE ** ((POWER(BASE) + 2)), BASE ** ((POWER(BASE) + 3))
- * document the largest number of simulations available with Sobol sequence : ATMOST
+   * suggest initial base for Niederreiter : (OPTBAS(I), I = 2,MAXDIM) / 2,3,3,5,7,7,9,9,11,11,13/
+ * check that the maximum dimension is checked for all sequences
+ * add the reference implementation in the comments of lowdisc_new
 
 DONE
  * tested the skip and leap for all sequences
  * replaced sprintf by msprintf
  * with the Fast Niederreiter sequence, if the gfarit and gfplsys files already exist, do not generate anymore.
  * checked the maximal dimension available for Fast Niederreiter : fixed bug in the source
+ * removed _mlist_isfield where unused
+ * Update the help page : Niederreiter base 2 is slow while Niederreiter arbitrary base is fast
+ * added -nbsimmax to know the maximum number of simulations for all sequences
 
 
 Author

@@ -3,10 +3,6 @@
 //
 // This file must be used under the terms of the GNU LGPL license.
 
-
-
-
-
 function this = ldbase_indexset ( this , index )
   this.index = index
 endfunction

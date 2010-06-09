@@ -226,6 +226,30 @@ assert_close ( computed, [0.125 4.0/9.0 0.8], 10 * %eps );
 lds = lowdisc_destroy(lds);
 
 //
+// Test skip
+//
+lds = lowdisc_new("haltonf");
+lds = lowdisc_configure(lds,"-dimension",4);
+// Skip 1 term, as in the TOMS implementation
+lds = lowdisc_configure(lds,"-skip",10);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected = [
+  0.812500      0.703704      0.280000      0.591837
+  0.187500      0.148148      0.480000      0.734694
+  0.687500      0.481481      0.680000      0.877551
+  0.437500      0.814815      0.880000      0.040816
+  0.937500      0.259259      0.120000      0.183673
+  0.031250      0.592593      0.320000      0.326531
+  0.531250      0.925926      0.520000      0.469388
+  0.281250      0.074074      0.720000      0.612245
+  0.781250      0.407407      0.920000      0.755102
+  0.156250      0.740741      0.160000      0.897959
+];
+assert_close ( computed, expected, 1.e-5 );
+lds = lowdisc_destroy(lds);
+
+//
 // Test leap
 //
 lds = lowdisc_new("haltonf");
@@ -249,27 +273,26 @@ expected = [
 assert_close ( computed, expected, 1.e-5 );
 lds = lowdisc_destroy(lds);
 
-//
-// Test skip
-//
+// Check performance for large values of skip
+t1 = timer();
 lds = lowdisc_new("haltonf");
 lds = lowdisc_configure(lds,"-dimension",4);
-// Skip 1 term, as in the TOMS implementation
-lds = lowdisc_configure(lds,"-skip",10);
+lds = lowdisc_configure(lds,"-skip", 1.e7);
 lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
-expected = [
-  0.812500      0.703704      0.280000      0.591837
-  0.187500      0.148148      0.480000      0.734694
-  0.687500      0.481481      0.680000      0.877551
-  0.437500      0.814815      0.880000      0.040816
-  0.937500      0.259259      0.120000      0.183673
-  0.031250      0.592593      0.320000      0.326531
-  0.531250      0.925926      0.520000      0.469388
-  0.281250      0.074074      0.720000      0.612245
-  0.781250      0.407407      0.920000      0.755102
-  0.156250      0.740741      0.160000      0.897959
-];
-assert_close ( computed, expected, 1.e-5 );
 lds = lowdisc_destroy(lds);
+t2 = timer();
+assert_equal ( (t2-t1)<1. , %t );
+
+// Check performance for large values of leap
+t1 = timer();
+lds = lowdisc_new("haltonf");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-leap", 1.e7);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+lds = lowdisc_destroy(lds);
+t2 = timer();
+assert_equal ( (t2-t1)<1. , %t );
+
 

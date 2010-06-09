@@ -38,12 +38,10 @@ function [this,next] = ldhalton_next ( varargin )
     index = ldbase_get ( this.baseobj , "-index" )
     onevector = _haltonsequence ( dimension , index , this.primeslist )
     next(i,1:dimension) = onevector
-    // Leap over (i.e. ignore) as many elements as required
-    // TODO : improve this to leap the elements without actually generating them
-    for j = 1 : leap
-      this.baseobj = ldbase_incr ( this.baseobj )
-      index = ldbase_get ( this.baseobj , "-index" )
-      onevector = _haltonsequence ( dimension , index , this.primeslist )
+    if ( leap > 0 ) then
+      // Leap over (i.e. ignore) as many elements as required
+      // Directly set the index.
+      this.baseobj = ldbase_indexset ( this.baseobj , index + leap )
     end
   end
 endfunction

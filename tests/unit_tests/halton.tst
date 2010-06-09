@@ -238,7 +238,30 @@ assert_equal ( size(next) , [10 150] );
 lds = lowdisc_destroy(lds);
 
 //
-// Check the leaped Halton sequence in dimension 4
+// Check skip
+//
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-skip", 10);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected = [
+    0.8125     0.7037037    0.28    0.5918367  
+    0.1875     0.1481481    0.48    0.7346939  
+    0.6875     0.4814815    0.68    0.8775510  
+    0.4375     0.8148148    0.88    0.0408163  
+    0.9375     0.2592593    0.12    0.1836735  
+    0.03125    0.5925926    0.32    0.3265306  
+    0.53125    0.9259259    0.52    0.4693878  
+    0.28125    0.0740741    0.72    0.6122449  
+    0.78125    0.4074074    0.92    0.7551020  
+    0.15625    0.7407407    0.16    0.8979592  
+];
+assert_close ( computed , expected , 1.e-5 );
+lds = lowdisc_destroy(lds);
+
+//
+// Check leap
 //
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
@@ -260,26 +283,26 @@ expected = [
 assert_close ( computed , expected , 1.e-5 );
 lds = lowdisc_destroy(lds);
 
-//
-// Check the leaped Halton sequence in dimension 4
-//
+// Check performance for large values of skip
+t1 = timer();
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
-lds = lowdisc_configure(lds,"-skip", 10);
+lds = lowdisc_configure(lds,"-skip", 1.e7);
 lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
-expected = [
-    0.8125     0.7037037    0.28    0.5918367  
-    0.1875     0.1481481    0.48    0.7346939  
-    0.6875     0.4814815    0.68    0.8775510  
-    0.4375     0.8148148    0.88    0.0408163  
-    0.9375     0.2592593    0.12    0.1836735  
-    0.03125    0.5925926    0.32    0.3265306  
-    0.53125    0.9259259    0.52    0.4693878  
-    0.28125    0.0740741    0.72    0.6122449  
-    0.78125    0.4074074    0.92    0.7551020  
-    0.15625    0.7407407    0.16    0.8979592  
-];
-assert_close ( computed , expected , 1.e-5 );
 lds = lowdisc_destroy(lds);
+t2 = timer();
+assert_equal ( (t2-t1)<1. , %t );
+
+// Check performance for large values of leap
+t1 = timer();
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-leap", 1.e7);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+lds = lowdisc_destroy(lds);
+t2 = timer();
+assert_equal ( (t2-t1)<1. , %t );
+
 

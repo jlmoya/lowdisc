@@ -129,3 +129,23 @@ expected = [
 ];
 assert_close ( computed, computed, 1e-5 );
 lds = lowdisc_destroy(lds);
+// Check performance for large values of skip
+t1 = timer();
+lds = lowdisc_new("reversehaltonf");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-skip", 1.e7);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+lds = lowdisc_destroy(lds);
+t2 = timer();
+assert_equal ( (t2-t1)<1. , %t );
+// Check performance for large values of leap
+t1 = timer();
+lds = lowdisc_new("reversehaltonf");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-leap", 1.e7);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+lds = lowdisc_destroy(lds);
+t2 = timer();
+assert_equal ( (t2-t1)<1. , %t );

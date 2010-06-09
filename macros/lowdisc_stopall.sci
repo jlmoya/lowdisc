@@ -20,6 +20,23 @@ function lowdisc_stopall ( )
   // Examples
   //   lowdisc_stopall ( )
   //
+  //   // Example of what can go wrong...
+  //   // We create a Fast Reverse Halton sequence.
+  //   lds = lowdisc_new("reversehaltonf");
+  //   lds = lowdisc_startup (lds);
+  //   // We create a Fast Reverse Halton sequence again.
+  //   lds = lowdisc_new("reversehaltonf");
+  //   lds = lowdisc_startup (lds);
+  //   // This creates the error message : 
+  //   // "Low Discrepancy Module Error ! revhal_startup is already done."
+  //   // It would suffice to call lowdisc_destroy(lds). 
+  //   // But we can use a more brutal function, which resets all sequences.
+  //   lowdisc_stopall ( );
+  //   // Now it works again.
+  //   lds = lowdisc_new("reversehaltonf");
+  //   lds = lowdisc_startup (lds);
+  //   lds = lowdisc_destroy(lds);
+  //
   // Authors
   //   Michael Baudin - 2010 - DIGITEO
 
