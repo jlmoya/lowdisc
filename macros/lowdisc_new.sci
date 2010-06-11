@@ -31,7 +31,14 @@ function this = lowdisc_new ( varargin )
   //    To extend the number of dimensions, please configure the "-primeslist" option.
   //    The maximum dimension which can be obtained is equal to the number of 
   //    different primes in the prime table. 
-  //    This is a macro-based algorithm.</listitem>
+  //
+  //    For the Halton sequence, the skip and leap option is fast, that is, large 
+  //    values of the skip or leap parameter do not reduce the performance.
+  //
+  //    This is a macro-based algorithm.
+  //    This implementation is based on the book by Paul Glasserman, 
+  //    "Monte-Carlo methods in Financial Engineering".
+  //    </listitem>
   //  <listitem>"haltonf" : the fast Halton sequence. 
   //    This sequence is sensitive to the "-primeslist" option.
   //    By default, it is able to generate experiments in dimension at most 100.
@@ -39,7 +46,13 @@ function this = lowdisc_new ( varargin )
   //    To extend the number of dimensions, please configure the "-primeslist" option.
   //    The maximum dimension which can be obtained is equal to the number of 
   //    different primes in the prime table. 
-  //    This fast algorithm is based on a compiled C source code. </listitem>
+  //
+  //    For the Halton sequence, the skip and leap option is fast, that is, large 
+  //    values of the skip or leap parameter do not reduce the performance.
+  //
+  //    This fast algorithm is based on a compiled C source code. 
+  //    The implementation is a modification of the C source code by John Burkardt.
+  //    </listitem>
   //  <listitem>"faure" : the Faure low discrepancy sequence. 
   //    This sequence is sensitive to the "-primeslist" option.
   //    By default, it is able to generate experiments in dimension at most 541.
@@ -47,7 +60,14 @@ function this = lowdisc_new ( varargin )
   //    To extend the number of dimensions, please configure the "-primeslist" option.
   //    The maximum dimension which can be obtained is equal to the maximum 
   //    prime number in the prime table. 
-  //    This is a macro-based algorithm.</listitem>
+  //
+  //    For the Faure sequence, the skip and leap option is fast, that is, large 
+  //    values of the skip or leap parameter do not reduce the performance.
+  //
+  //    This is a macro-based algorithm.
+  //    This implementation is based on the book by Paul Glasserman, 
+  //    "Monte-Carlo methods in Financial Engineering".
+  //    </listitem>
   //  <listitem>"fauref" : the fast Faure sequence.
   //    This sequence is sensitive to the "-primeslist" option.
   //    By default, it is able to generate experiments in dimension at most 541.
@@ -55,7 +75,15 @@ function this = lowdisc_new ( varargin )
   //    To extend the number of dimensions, please configure the "-primeslist" option.
   //    The maximum dimension which can be obtained is equal to the maximum 
   //    prime number in the prime table. 
-  //    This fast algorithm is based on a compiled C source code. </listitem>
+  //
+  //    For the Faure sequence, the skip and leap option is fast, that is, large 
+  //    values of the skip or leap parameter do not reduce the performance.
+  //
+  //    This fast algorithm is based on a compiled C source code. 
+  //    The implementation is a modification of the C source code by John Burkardt.
+  //    Original Fortran 77 version by Bennett Fox in "Algorithm 647: Implementation and Relative Efficiency of
+  //    Quasirandom Sequence Generators".
+  //    </listitem>
   //  <listitem>"reversehalton" : the Reverse Halton sequence of Vandewoestyne and Cools.
   //    This sequence is sensitive to the "-primeslist" option.
   //    By default, it is able to generate experiments in dimension at most 100.
@@ -63,7 +91,14 @@ function this = lowdisc_new ( varargin )
   //    To extend the number of dimensions, please configure the "-primeslist" option.
   //    The maximum dimension which can be obtained is equal to the number of 
   //    different primes in the prime table. 
-  //    This is a macro-based algorithm. </listitem>
+  //
+  //    For the Reverse Halton sequence, the skip and leap option is fast, that is, large 
+  //    values of the skip or leap parameter do not reduce the performance.
+  //
+  //    This is a macro-based algorithm. 
+  //    This implementation is based on the paper "Good permutations for deterministic scrambled
+  //    Halton sequences in terms of L2-discrepancy" by B. Vandewoestyne and R. Cools.
+  //    </listitem>
   //  <listitem>"reversehaltonf" : the fast Reverse Halton sequence of Vandewoestyne and Cools.
   //    This sequence is sensitive to the "-primeslist" option.
   //    By default, it is able to generate experiments in dimension at most 100.
@@ -71,24 +106,46 @@ function this = lowdisc_new ( varargin )
   //    To extend the number of dimensions, please configure the "-primeslist" option.
   //    The maximum dimension which can be obtained is equal to the number of 
   //    different primes in the prime table. 
-  //    This fast algorithm is based on a compiled C source code. </listitem>
+  //
+  //    For the Reverse Halton sequence, the skip and leap option is fast, that is, large 
+  //    values of the skip or leap parameter do not reduce the performance.
+  //
+  //    This fast algorithm is based on a compiled C source code. 
+  //    This implementation is based on the paper "Good permutations for deterministic scrambled
+  //    Halton sequences in terms of L2-discrepancy" by B. Vandewoestyne and R. Cools.
+  //    </listitem>
   //  <listitem>"sobol" : the Sobol sequence. 
   //    It is able to generate experiments in dimension at most 40.
   //    This sequence is able to generate at most 2^30-1  = 1 073 741 823 experiments.TODO : check this (why not 2^31 - 1 ?).
   //    There is no way to extend the number of dimensions or the number of 
   //    experiments.
+  //
+  //    For the Sobol sequence, the skip and leap option is slow, that is, large 
+  //    values of the skip or leap parameter leads to increased CPU time.
+  //    This is because generating the new vector implies to update iteratively
+  //    the lastq vector.
+  //
   //    This is a macro-based algorithm. 
   //    The current implementation is a Scilab port of the source code in Matlab 
-  //    by John Burkardt. The original source code was created by Bennett Fox in Fortran.
+  //    by John Burkardt. The original source code was created by Bennett Fox in Fortran 
+  //    in "Algorithm 647: Implementation and Relative Efficiency of
+  //    Quasirandom Sequence Generators".
   //    </listitem>
   //  <listitem>"sobolf" : the fast Sobol sequence. 
   //    It is able to generate experiments in dimension at most 1111.
   //    This sequence is able to generate at most 2^30-1  = 1 073 741 823 experiments. TODO : check this (why not 2^31 - 1 ?).
   //    There is no way to extend the number of dimensions or the number of 
   //    experiments.
+  //
+  //    For the Sobol sequence, the skip and leap option is slow, that is, large 
+  //    values of the skip or leap parameter leads to increased CPU time.
+  //    This is because generating the new vector implies to update iteratively
+  //    the lastq vector.
+  //
   //    This fast algorithm is based on a compiled C source code. 
   //    The implementation is a modification of the C source code by John Burkardt.
-  //    Original Fortran 77 version by Bennett Fox.
+  //    Original Fortran 77 version by Bennett Fox in "Algorithm 647: Implementation and Relative Efficiency of
+  //    Quasirandom Sequence Generators".
   //    </listitem>
   //  <listitem>"niederreiter-base-2" : The Niederreiter Base 2 sequence. 
   //    This is a macro-based algorithm. 
@@ -96,21 +153,36 @@ function this = lowdisc_new ( varargin )
   //    This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
   //    There is no way to extend the number of dimensions or the number of 
   //    experiments.
+  //
+  //    For the Niederreiter sequence, the skip and leap option is slow, that is, large 
+  //    values of the skip or leap parameter leads to increased CPU time.
+  //    This is because generating the new vector implies to update iteratively
+  //    the nextq vector.
+  //
   //    The implementation is a Scilab port of the Matlab source code by John Burkardt.
-  //    Original Fortran 77 version by Paul Bratley, Bennett Fox, Harald Niederreiter.
+  //    Original Fortran 77 version by Paul Bratley, Bennett Fox, Harald Niederreiter
+  //    in "Algorithm 738: Programs to generate Niederreiter's low-discrepancy
+  //    sequences".
   //    </listitem>
   //  <listitem>"niederreiterf" : The fast Niederreiter sequence in arbitrary base. 
-  //    This fast algorithm is based on a compiled C source code. 
-  //    This is a C port of Algorithm 738 (1994) by Paul Bratley, Bennett Fox, Harald Niederreiter. 
-  //    The C port has been done by John Burkardt in 2005-2009. The library has 
-  //    been updated to present a uniform API. The library generates two temporary 
-  //    files gfarit and gfplys when the library is started up.
   //    The maximum dimension for this sequence is 50.
   //    This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
   //    The base can be configured with the -base option. By default, the base is 2. 
   //    The base is expected to be a prime or a power of a prime. If the base is a power of a 
   //    prime, it must be one of the following :  4 = 2^2, 8 = 2^3, 9 = 3^2, 16 = 2^4, 25 = 5^2, 
   //    27 = 3^3, 32 = 2^5, 49 = 7^2.
+  //
+  //    For the Niederreiter sequence, the skip and leap option is slow, that is, large 
+  //    values of the skip or leap parameter leads to increased CPU time.
+  //    This is because generating the new vector implies to update iteratively
+  //    the nextq vector.
+  //
+  //    The library generates two temporary files gfarit and gfplys when the sequence is started up.
+  //    This fast algorithm is based on a compiled C source code. 
+  //    This is a C port of "Algorithm 738: Programs to generate Niederreiter's low-discrepancy
+  //    sequences" (1994) by Paul Bratley, Bennett Fox, Harald Niederreiter. 
+  //    The C port has been done by John Burkardt in 2005-2009. The library has 
+  //    been updated to present a uniform API. 
   //    </listitem>
   //  </itemizedlist>
   //
