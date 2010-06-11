@@ -171,6 +171,7 @@ funmat = [
   "lowdisc_bitlo0"
   "lowdisc_bithi1"
   "lowdisc_bitxor"
+  "lowdisc_dec2bin"
   ];
 macrosdir = cwd +"../../macros";
 demosdir = cwd +"../../demos";

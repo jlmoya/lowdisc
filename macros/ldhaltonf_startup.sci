@@ -15,16 +15,15 @@ function this = ldhaltonf_startup (this)
   //
   base = this.primeslist(1:dimension)
   leap = ones(1,dimension)
+  seed = zeros(1,dimension)
+  _lowdisc_haltonfstart ( dimension , base , seed , leap )
   //
   skip = ldbase_cget ( this.baseobj , "-skip" )
   if ( skip > 0 ) then
     // Skip (i.e. ignore) as many elements as required
     // Set the seed accordingly and skip directly the elements.
-    seed = ones(1,dimension) * skip
-    _lowdisc_haltonfstart ( dimension , base , seed , leap )
+    this.baseobj = ldbase_indexset ( this.baseobj , skip )
   else
-    seed = zeros(1,dimension)
-    _lowdisc_haltonfstart ( dimension , base , seed , leap )
   end
 endfunction
 

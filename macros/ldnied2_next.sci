@@ -11,9 +11,9 @@
 
 function [this,next] = ldnied2_next ( varargin )
   
-  [lhs,rhs]=argn();
+  [lhs,rhs]=argn()
   if ( rhs > 2 ) then
-    errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldnied2_next", rhs);
+    errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldnied2_next", rhs)
     error(errmsg)
   end
   //
@@ -26,7 +26,7 @@ function [this,next] = ldnied2_next ( varargin )
   //
   // Check that the object is started up
   if ( ~ldbase_get ( this.baseobj , "-startedup" ) ) then
-    errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldnied2_startup first."), "ldnied2_next");
+    errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldnied2_startup first."), "ldnied2_next")
     error(errmsg)
   end
   //
@@ -38,15 +38,14 @@ function [this,next] = ldnied2_next ( varargin )
   //
   for i=1:imax
     this.baseobj = ldbase_incr ( this.baseobj )
-    [ this , onevector ] = _next_nieder2 ( this );
-    next(i,1:dimension) = onevector
-    // Leap over (i.e. ignore) as many elements as required
-    // TODO : improve this to leap the elements without actually generating them
+    [ this.seed , this.nextq , onevector ] = _next_nieder2 ( dimension , this.cj , this.nextq , this.seed , this.recip , this.nbits )
+    next(i,1:dimension) = onevector'
     if ( leap > 0 ) then
-      for j = 1 : leap
-        this.baseobj = ldbase_incr ( this.baseobj )
-        [ this , onevector ] = _next_nieder2 ( this );
-      end
+      // Leap over (i.e. ignore) as many elements as required
+      // Vectorized call to lowdisc_bitxor : this is the best that we can do.
+      [ this.seed , this.nextq ] = _nieder2skip ( dimension , this.cj , this.nextq , this.seed , this.nbits , leap )
+      index = ldbase_get ( this.baseobj , "-index" )
+      this.baseobj = ldbase_indexset ( this.baseobj , index + leap )
     end
   end
 endfunction
@@ -110,59 +109,69 @@ endfunction
 //    N is implicit, and the nextq are integers.  To obtain
 //    the values of XI(N), multiply by RECIP.
 //
-function [ this , quasi ] = _next_nieder2 ( this )
-  
-  // Extract data
-  cj = this.cj;
-  dim = ldbase_cget ( this.baseobj , "-dimension" )
-  nextq = this.nextq;
-  seed = this.seed;
-  recip = this.recip;
-  nbits = this.nbits;
+function [ seed , nextq , quasi ] = _next_nieder2 ( dimension , cj , nextq , seed , recip , nbits )
   //
   //  Multiply the numerators in NEXTQ by RECIP to get the next
   //  quasi-random vector.
   //
-  quasi(1:dim) = nextq(1:dim) * recip;
-  quasi = quasi.';
+  quasi(1:dimension) = nextq(1:dimension) * recip
   //
   //  Find the position of the right-hand zero in SEED.  This
   //  is the bit that changes in the Gray-code representation as
   //  we go from SEED to SEED+1.
   //
-  r = 0;
-  i = seed;
+  r = 0
+  i = seed
   while ( _divremainder ( i, 2 ) ~= 0 )
-    r = r + 1;
-    i = floor ( i / 2 );
+    r = r + 1
+    i = floor ( i / 2 )
   end
   //
   //  Check that we have not passed 2**NBITS calls.
   //
   if ( nbits <= r )
-    error ( msprintf ( gettext ( "%s: Too many calls" ) , "_next_nieder2" ) );
+    error ( msprintf ( gettext ( "%s: Too many calls" ) , "_next_nieder2" ) )
   end
   //
   //  Compute the new numerators in vector NEXTQ.
+  //  Call to lowdisc_bitxor is vectorized.
   //
-  for i = 1 : dim
-    nextq(i) = lowdisc_bitxor ( nextq(i), cj(i,r+1) );
-  end
-  seed = seed + 1;
-  // Insert data
-  this.nextq = nextq;
-  this.seed = seed;
+  nextq = lowdisc_bitxor ( nextq, cj(1 : dimension,r+1) )
+  seed = seed + 1
+endfunction
+
+function [ seed , nextq ] = _nieder2skip ( dimension , cj , nextq , seed , nbits , skip )
+  // _nieder2skip
+  //   Discard (i.e. ignore) skip elements in the sequence.
+  //   The only difference with next is that we do not generate the quasi vector.
+  // Parameters
+  //   dimension : the current dimension
+  //   cj : the values of Niederreiter's C(I,J,R)
+  //   seed : sequence number of this call. By default, seed  should be set to zero, i.e. we start from the 0-th element of the sequence. If elements of the sequence are to be skipped, set seed accordingly. 
+  //   nextq : The numerators of the next item in the series.  These are like Niederreiter's XI(N) (page 54) except that N is implicit, and the NEXTQ are integers.  
+  //   nbits : the number of bits in a fixed-point integer, not counting the sign.
   
+  for i = 1 : skip
+    //
+    //  Find the position of the right-hand zero in SEED.  This
+    //  is the bit that changes in the Gray-code representation as
+    //  we go from SEED to SEED+1.
+    //  TODO : vectorize this
+    //
+    r = lowdisc_bitlo0 ( seed ) - 1
+    //
+    //  Check that we have not passed 2**NBITS calls.
+    //
+    if ( nbits <= r )
+      error ( msprintf ( gettext ( "%s: Too many calls" ) , "_next_nieder2" ) )
+    end
+    //
+    //  Compute the new numerators in vector NEXTQ.
+    //  Call to lowdisc_bitxor is vectorized.
+    //
+    nextq = lowdisc_bitxor ( nextq, cj(1 : dimension,r+1) )
+    seed = seed + 1
+  end
 endfunction
-
-
-// _divremainder --
-//  Remainder after division.
-// TODO : isn't that modulo ? modulop ?
-//
-function r = _divremainder ( X , Y )
-  r = X - fix ( X ./ Y ) .* Y
-endfunction
-
 
 

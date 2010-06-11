@@ -15,11 +15,11 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 09-Jun-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 11-Jun-2010 $</pubdate>
   </info>
 
   <refnamediv>
-    <refname>lowdisc_bithi1</refname><refpurpose>Returns the position of the high 1 bit base 2 in an integer.</refpurpose>
+    <refname>lowdisc_bithi1</refname><refpurpose>Returns the position of the high one bit base 2 in an integer.</refpurpose>
   </refnamediv>
 
 
@@ -67,7 +67,6 @@ end
 
 Author:
 
-2005 - John Burkardt
 2008-2009 - INRIA - Michael Baudin (Scilab version)
 2010 - Digiteo - Michael Baudin
 

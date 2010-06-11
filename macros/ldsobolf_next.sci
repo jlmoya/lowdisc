@@ -39,13 +39,10 @@ function [this,next] = ldsobolf_next ( varargin )
     index = ldbase_get ( this.baseobj , "-index" )
     onevector = _lowdisc_sobolfnext ( index )
     next(i,1:dimension) = onevector
-    // Leap over (i.e. ignore) as many elements as required
     if ( leap > 0 ) then
-      for j = 1 : leap
-        this.baseobj = ldbase_incr ( this.baseobj )
-        index = ldbase_get ( this.baseobj , "-index" )
-        onevector = _lowdisc_sobolfnext ( index )
-      end
+      // Leap over (i.e. ignore) as many elements as required
+      // Directly set the index.
+      this.baseobj = ldbase_indexset ( this.baseobj , index + leap )
     end
   end
 endfunction

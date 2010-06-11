@@ -52,7 +52,7 @@ function [this,next] = ldfaure_next ( varargin )
     this.baseobj = ldbase_incr ( this.baseobj )
     index = ldbase_get ( this.baseobj , "-index" )
     onevector = _fauresequence ( dimension , index , basis )
-    next(i,1:dimension) = onevector
+    next(i,1:dimension) = onevector'
     if ( leap > 0 ) then
       // Leap over (i.e. ignore) as many elements as required
       // Directly set the index.
@@ -68,9 +68,10 @@ endfunction
 //   dimension : the number of variables
 //   index : the number of the element in the sequence
 //   basis : the basis used in the sequence
+//   next : the n x 1 vector of elements
 //
 // Examples
-//   _fauresequence ( 3 , 4 , 3 ) = [4/9 7/9 1/9]
+//   _fauresequence ( 3 , 4 , 3 ) = [4/9 7/9 1/9]'
 //
 // Description
 //   This implementation is not protected against overflow.
@@ -86,21 +87,20 @@ endfunction
 //
 function next = _fauresequence ( dimension , index , basis )
   digits = lowdisc_bary ( index , basis , "bigendian" )
-  digits = digits'
-  r = size ( digits , 1 )
+  r = size ( digits , "r" )
   // Compute a vector made of 1/b, 1/b^2, etc...
   ib = 1.0/basis
   for i = 1:r
     bpwrs(i) = ib
     ib = ib / basis
   end
-  // Compute the element #i in the sequence
+  // Compute the element #index in the sequence
   for idim = 1 : dimension
     ci = _fauremat ( r , idim - 1 )
     y = ci * digits
     ymodb = modulo ( y , basis )
-    // Compute the component #idim of sequence
-    next(1,idim) = ymodb' * bpwrs
+    // Compute the dimension #idim of element
+    next(idim) = ymodb' * bpwrs
   end
 endfunction
 //

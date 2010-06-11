@@ -26,6 +26,8 @@ function digits = lowdisc_bary ( varargin )
   //   digit is associated with b^jmax, and the last digit
   //   is associated with b^0.
   //
+  // This function is not vectorized, that is, it converts only one integer at a time.
+  //
   // Examples
   //   lowdisc_bary ( 4 , 2 )                  // [1 0 0]'
   //   lowdisc_bary ( 4 , 2 , "bigendian" )    // [0 0 1]'

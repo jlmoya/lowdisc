@@ -106,6 +106,8 @@ lds = lowdisc_new("niederreiterf");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip",10);
 lds = lowdisc_startup (lds);
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 10 );
 [lds,computed]=lowdisc_next(lds,10);
 expected= [
     0.8125     0.6875     0.640625    0.09375    
@@ -120,6 +122,8 @@ expected= [
     0.15625    0.15625    0.796875    0.8300781  
 ];
 assert_close ( computed, expected , 1.e-5 );
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 //
@@ -129,6 +133,8 @@ lds = lowdisc_new("niederreiterf");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap",1);
 lds = lowdisc_startup (lds);
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 0 );
 [lds,computed]=lowdisc_next(lds,10);
 expected= [
     0.5        0.5        0.75        0.875      
@@ -143,7 +149,32 @@ expected= [
     0.78125    0.78125    0.921875    0.4863281  
 ];
 assert_close ( computed, expected , 1.e-5 );
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 
+// Check performance for large values of skip
+// This is not so fast : nextq has to be updated.
+t1 = timer();
+lds = lowdisc_new("niederreiter-base-2");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-skip", 1.e2);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+lds = lowdisc_destroy(lds);
+t2 = timer();
+assert_equal ( (t2-t1)<1. , %t );
+
+// Check performance for large values of leap
+// This is not so fast : nextq has to be updated.
+t1 = timer();
+lds = lowdisc_new("niederreiter-base-2");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-leap", 1.e2);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+lds = lowdisc_destroy(lds);
+t2 = timer();
+assert_equal ( (t2-t1)<1.e1 , %t );
 

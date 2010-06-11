@@ -30,6 +30,21 @@ function flag = assert_close ( computed, expected, epsilon )
   end
   if flag <> 1 then pause,end
 endfunction
+//
+// assert_equal --
+//   Returns 1 if the two real matrices computed and expected are equal.
+// Arguments
+//   computed, expected : the two matrices to compare
+//   epsilon : a small number
+//
+function flag = assert_equal ( computed , expected )
+  if computed==expected then
+    flag = 1;
+  else
+    flag = 0;
+  end
+  if flag <> 1 then pause,end
+endfunction
 
 
 //
@@ -109,6 +124,8 @@ lds = lowdisc_new("niederreiter-base-2");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip",10);
 lds = lowdisc_startup (lds);
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 10 );
 [lds,computed]=lowdisc_next(lds,10);
 expected= [
     0.4375     0.5625     0.078125    0.453125   
@@ -123,6 +140,8 @@ expected= [
     0.46875    0.09375    0.65625     0.1738281  
 ];
 assert_close ( computed, expected , 1.e-5 );
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 //
@@ -132,6 +151,8 @@ lds = lowdisc_new("niederreiter-base-2");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap",1);
 lds = lowdisc_startup (lds);
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 0 );
 [lds,computed]=lowdisc_next(lds,10);
 expected= [
     0.5        0.5        0.75        0.875      
@@ -146,7 +167,32 @@ expected= [
     0.34375    0.71875    0.84375     0.6269531  
 ];
 assert_close ( computed, expected , 1.e-5 );
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 
+// Check performance for large values of skip
+// This is not so fast : nextq has to be updated.
+t1 = timer();
+lds = lowdisc_new("niederreiter-base-2");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-skip", 1.e2);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+lds = lowdisc_destroy(lds);
+t2 = timer();
+assert_equal ( (t2-t1)<1. , %t );
+
+// Check performance for large values of leap
+// This is not so fast : nextq has to be updated.
+t1 = timer();
+lds = lowdisc_new("niederreiter-base-2");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-leap", 1.e2);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+lds = lowdisc_destroy(lds);
+t2 = timer();
+assert_equal ( (t2-t1)<1.e1 , %t );
 

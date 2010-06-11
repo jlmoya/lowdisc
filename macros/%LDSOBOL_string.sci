@@ -21,6 +21,14 @@ function str = %LDSOBOL_string ( this )
   k = k + 1
   str(k) = msprintf("Maximum number of simulations = %e",this.nbsimmax)
   k = k + 1
+  str(k) = msprintf("count = %d",this.count)
+  k = k + 1
+  str(k) = msprintf("maxcol = %d",this.maxcol)
+  k = k + 1
+  str(k) = msprintf("lastq = %s",_tostring ( this.lastq ))
+  k = k + 1
+  str(k) = msprintf("recipd = %e",this.recipd)
+  k = k + 1
   //
   // Get the baseobj string
   str(k) = ""

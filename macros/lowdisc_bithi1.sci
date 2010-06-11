@@ -1,11 +1,10 @@
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2005 - John Burkardt
 //
 // This file must be used under the terms of the GNU LGPL license.
 
 function bit = lowdisc_bithi1 ( n )
-  // Returns the position of the high 1 bit base 2 in an integer.
+  // Returns the position of the high one bit base 2 in an integer.
   //
   // Calling Sequence
   //   bit = lowdisc_bithi1 ( n )
@@ -37,19 +36,11 @@ function bit = lowdisc_bithi1 ( n )
   //
   //  Author:
   //
-  //    2005 - John Burkardt
   //    2008-2009 - INRIA - Michael Baudin (Scilab version)
   //    2010 - Digiteo - Michael Baudin
   //
   
-  i = floor ( n );
-  bit = 0;
-  while ( 1 )
-    if ( i <= 0 )
-      break;
-    end
-    bit = bit + 1;
-    i = floor ( i / 2 );
-  end
+  d = lowdisc_bary(n)
+  bit = size(d,"*")
 endfunction
 

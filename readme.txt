@@ -42,9 +42,19 @@ following hierarchy.
 
 See the overview in the help provided with this toolbox.
 
+DONE
+ * tested the skip and leap for all sequences
+ * replaced sprintf by msprintf
+ * with the Fast Niederreiter sequence, if the gfarit and gfplsys files already exist, do not generate anymore.
+ * checked the maximal dimension available for Fast Niederreiter : fixed bug in the source
+ * removed _mlist_isfield where unused
+ * Update the help page : Niederreiter base 2 is slow while Niederreiter arbitrary base is fast
+ * added -nbsimmax to know the maximum number of simulations for all sequences
+ * removed _divremainder : this is modulo
+ * improved the performance of skip and leap
+
 TODO
 
- * improve the performance of skip and leap
  * Add scrambling algorithms
  * Add algorithms to compute the discrepancy
  * Add test cases on integrals as in Bratley and Fox
@@ -56,17 +66,12 @@ TODO
    * suggest number of simulations for faure : a power of the base larger than nbsim
    * suggest number of simulations for Niederreiter : a power of the base : BASE ** POWER(BASE), BASE ** ((POWER(BASE) + 1)), BASE ** ((POWER(BASE) + 2)), BASE ** ((POWER(BASE) + 3))
    * suggest initial base for Niederreiter : (OPTBAS(I), I = 2,MAXDIM) / 2,3,3,5,7,7,9,9,11,11,13/
- * check that the maximum dimension is checked for all sequences
+ * check that the maximum dimension is checked in configure for all sequences 
  * add the reference implementation in the comments of lowdisc_new
-
-DONE
- * tested the skip and leap for all sequences
- * replaced sprintf by msprintf
- * with the Fast Niederreiter sequence, if the gfarit and gfplsys files already exist, do not generate anymore.
- * checked the maximal dimension available for Fast Niederreiter : fixed bug in the source
- * removed _mlist_isfield where unused
- * Update the help page : Niederreiter base 2 is slow while Niederreiter arbitrary base is fast
- * added -nbsimmax to know the maximum number of simulations for all sequences
+ * make some support routine available publicly
+ * fill lowdisc_new and specify for each sequence if the skip and leap options is direct (faster) or one-by-one (slower)
+ * check interaction between skip and leap for all sequences
+ * vectorize the call to the fast sequences, so that we can get several elements at the same time
 
 
 Author

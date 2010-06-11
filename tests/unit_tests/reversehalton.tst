@@ -102,7 +102,9 @@ lds = lowdisc_new("reversehalton");
 lds = lowdisc_configure(lds,"-dimension",3);
 lds = lowdisc_configure(lds,"-skip",10);
 lds = lowdisc_startup (lds);
-[lds,computed] = lowdisc_next (lds);
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 10 );
+[lds,computed] = lowdisc_next (lds,10);
 expected = [
     0.8125       0.4074074    0.92   
     0.1875       0.2962963    0.72   
@@ -116,14 +118,18 @@ expected = [
     0.15625      0.3703704    0.04   
 ];
 assert_close ( computed, computed, 1e-5 );
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 // test leap
 lds = lowdisc_new("reversehalton");
 lds = lowdisc_configure(lds,"-dimension",3);
-lds = lowdisc_configure(lds,"-leap",10);
+lds = lowdisc_configure(lds,"-leap",1);
 lds = lowdisc_startup (lds);
-[lds,computed] = lowdisc_next (lds);
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 0 );
+[lds,computed] = lowdisc_next (lds,10);
 expected = [
     0.5          0.6666667    0.8    
     0.75         0.2222222    0.4    
@@ -137,6 +143,8 @@ expected = [
     0.78125      0.7037037    0.28   
 ];
 assert_close ( computed, computed, 1e-5 );
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 // Check performance for large values of skip

@@ -24,7 +24,6 @@ halt()   // Press return to continue
 Author:
 halt()   // Press return to continue
  
-2005 - John Burkardt
 2008-2009 - INRIA - Michael Baudin (Scilab version)
 2010 - Digiteo - Michael Baudin
 halt()   // Press return to continue

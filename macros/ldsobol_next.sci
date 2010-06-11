@@ -39,11 +39,9 @@ function [this,next] = ldsobol_next ( varargin )
     if ( leap > 0 ) then
       // Leap over (i.e. ignore) as many elements as required
       // Vectorized call to lowdisc_bitxor : this is the best that we can do.
-      for count =  (1 : leap) + this.count - 1
-        l = lowdisc_bitlo0 ( count )
-        this.lastq = lowdisc_bitxor ( this.lastq, this.v(1 : dimension,l) )
-      end
-      this.count = this.count + leap
+      [ this.count , this.lastq ] = _sobolskip ( leap , this.lastq , dimension , this.count , this.v )
+      index = ldbase_get ( this.baseobj , "-index" )
+      this.baseobj = ldbase_indexset ( this.baseobj , index + leap )
     end
   end
 endfunction
@@ -135,4 +133,23 @@ function [ quasi , lastq , count ] = _next_sobol ( count , maxcol , dim_num , la
   count = count + 1
 endfunction
 
+
+function [ count , lastq ] = _sobolskip ( skip , lastq , dimension , count , v )
+  // _sobolskip --
+  //   Discard (i.e. ignore) skip elements in the sequence.
+  //   The only difference with _next_sobol is that we do not generate the 
+  //   vector quasi.
+  //
+  // Parameters
+  //   skip : the number of elements to discard
+  //   dimension : the current dimension
+  //   lastq : the numerators of the last vector generated
+  //   count : the index of the element in the sequence
+  //
+  for i = 1 : skip
+    l = lowdisc_bitlo0 ( count )
+    lastq = lowdisc_bitxor ( lastq, v(1 : dimension,l) )
+    count = count + 1
+  end
+endfunction
 

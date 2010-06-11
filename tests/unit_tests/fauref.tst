@@ -315,6 +315,8 @@ lds = lowdisc_new("fauref");
 lds = lowdisc_configure(lds,"-dimension",3);
 lds = lowdisc_configure(lds,"-skip",10);
 lds = lowdisc_startup ( lds );
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 10 );
 [lds,computed] = lowdisc_next ( lds , 10 );
 expected = [
     0.7037037    0.2592593    0.1481481  
@@ -336,6 +338,8 @@ lds = lowdisc_new("fauref");
 lds = lowdisc_configure(lds,"-dimension",3);
 lds = lowdisc_configure(lds,"-leap",1);
 lds = lowdisc_startup ( lds );
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 0 );
 [lds,computed] = lowdisc_next ( lds , 10 );
 expected = [
     0.3333333    0.3333333    0.3333333  
@@ -350,6 +354,8 @@ expected = [
     0.4074074    0.1851852    0.2962963  
 ];
 assert_close ( computed , expected , 1.e-5 );
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 // Check performance for large values of skip

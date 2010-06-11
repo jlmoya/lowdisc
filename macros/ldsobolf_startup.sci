@@ -12,11 +12,11 @@ function this = ldsobolf_startup (this)
   this.baseobj = ldbase_startup ( this.baseobj )
   dimension = ldbase_cget ( this.baseobj , "-dimension" )
   _lowdisc_sobolfstart ( dimension );
-  // Skip (i.e. ignore) as many elements as required
-  // TODO : skip directly when sequence authorizes it.
   skip = ldbase_cget ( this.baseobj , "-skip" )
   if ( skip > 0 ) then
-    [ this , result ] = ldsobolf_next ( this , skip )
+    // Skip (i.e. ignore) as many elements as required
+    // Directly set the index.
+    this.baseobj = ldbase_indexset ( this.baseobj , skip )
   end
 endfunction
 

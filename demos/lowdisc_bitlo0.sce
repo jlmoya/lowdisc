@@ -22,8 +22,8 @@ end
 halt()   // Press return to continue
  
 Author:
-2005 - John Burkardt
-2009 - Digiteo - Michael Baudin (Scilab version)
+2008-2009 - INRIA - Michael Baudin (Scilab version)
+2010 - Digiteo - Michael Baudin
 halt()   // Press return to continue
  
 //========= E N D === O F === D E M O =========//

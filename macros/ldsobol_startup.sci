@@ -49,25 +49,18 @@ function this = ldsobol_startup (this)
   //
   // We ignore the first element in the sequence, which is [0 0] in dimension 2.
   // Our Sobol sequence starts with [0.5 0.5] in 2 dimensions.
-  // Temporarily disable the leap to avoid interactions.
-  // Indeed, if leap>0, then this call to next will also ignore leap elements in the 
-  // sequence, which is not expected by the user.
+  // Avoid interactions by directly skipping one element (does not change the index and 
+  // avoid interactions with leap).
   //
-  leapold = ldbase_cget ( this.baseobj , "-leap" )
-  this.baseobj = ldbase_configure ( this.baseobj , "-leap" , 0 )
-  [ this , quasi ] = ldsobol_next ( this )
-  this.baseobj = ldbase_configure ( this.baseobj , "-leap" , leapold )
+  [ this.count , this.lastq ] = _sobolskip ( 1 , this.lastq , dimension , this.count , this.v )
   //
   skip = ldbase_cget ( this.baseobj , "-skip" )
   if ( skip > 0 ) then
     // Skip (i.e. ignore) as many elements as required.
     // This is as fast as it can be (based only on macros).
     // Vectorized call to lowdisc_bitxor : this is the best that we can do.
-    for count = 1 : skip
-      l = lowdisc_bitlo0 ( count )
-      this.lastq = lowdisc_bitxor ( this.lastq, this.v(1 : dimension,l) )
-    end
-    this.count = skip + 1
+    [ this.count , this.lastq ] = _sobolskip ( skip , this.lastq , dimension , this.count , this.v )
+    this.baseobj = ldbase_indexset ( this.baseobj , skip )
   end
 endfunction
 
@@ -76,11 +69,12 @@ function [ v , maxcol , lastq , count , recipd ] = _sobolstartup ( dimension , d
   //   Initialize the Sobol sequence.
   // 
   // Parameters
+  //   dimension : the current dimension
   //   dimmax : the maximum dimension for the Sobol sequence. This is expected to be equal to 40, since no more that 40 polynomials are stored in the database.
   //   v : table of direction numbers. Each row corresponds to a primitive polynomial. The numbers in v are actually binary fractions.
   //   maxcol : number of bits in atmost.
   //   lastq : the numerators of the last vector generated
-  //   count : sequence number of this call
+  //   count : the index of the element in the sequence
   //   recipd : (1/denominator) for the numerators lastq
   //
   // Description
@@ -207,5 +201,22 @@ function [ v , maxcol , lastq , count , recipd ] = _sobolstartup ( dimension , d
   lastq(1:dimension) = 0
 endfunction
 
-
+function [ count , lastq ] = _sobolskip ( skip , lastq , dimension , count , v )
+  // _sobolskip --
+  //   Discard (i.e. ignore) skip elements in the sequence.
+  //   The only difference with _next_sobol is that we do not generate the 
+  //   vector quasi.
+  //
+  // Parameters
+  //   skip : the number of elements to discard
+  //   dimension : the current dimension
+  //   lastq : the numerators of the last vector generated
+  //   count : the index of the element in the sequence
+  //
+  for i = 1 : skip
+    l = lowdisc_bitlo0 ( count )
+    lastq = lowdisc_bitxor ( lastq, v(1 : dimension,l) )
+    count = count + 1
+  end
+endfunction
 

@@ -56,8 +56,8 @@ for sequencename = sequencearray'
   nbdim = lowdisc_cget(lds,"-dimension");
   assert_equal ( nbdim , 12 );
   //
-  i = lowdisc_get(lds,"-index");
-  assert_equal ( i , 0 );
+  index = lowdisc_get(lds,"-index");
+  assert_equal ( index , 0 );
   //
   verbose = lowdisc_cget(lds,"-verbose");
   assert_equal ( verbose , %f );

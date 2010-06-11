@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 09-Jun-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 11-Jun-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -57,6 +57,9 @@ n = d0 b^jmax + d1 b^{jmax-1} + ... + d{jmax+1} b^0.
 The order is little endian order, i.e. the first
 digit is associated with b^jmax, and the last digit
 is associated with b^0.
+   </para>
+   <para>
+This function is not vectorized, that is, it converts only one integer at a time.
    </para>
    <para>
 </para>

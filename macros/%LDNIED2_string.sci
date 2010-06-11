@@ -17,11 +17,19 @@ function str = %LDNIED2_string ( this )
   k = k + 1
   str(k) = msprintf("=========================")
   k = k + 1
-  str(k) = msprintf("nbits = %d",this.nbits)
-  k = k + 1
   str(k) = msprintf("Maximum dimension = %d",this.dimmax)
   k = k + 1
   str(k) = msprintf("Maximum number of simulations = %e",this.nbsimmax)
+  k = k + 1
+  str(k) = msprintf("nbits = %d",this.nbits)
+  k = k + 1
+  str(k) = msprintf("seed = %d",this.seed)
+  k = k + 1
+  str(k) = msprintf("nextq = %s",_tostring(this.nextq))
+  k = k + 1
+  str(k) = msprintf("recip = %s",_tostring(this.recip))
+  k = k + 1
+  str(k) = msprintf("maxe = %s",_tostring(this.maxe))
   k = k + 1
   //
   // Get the baseobj string

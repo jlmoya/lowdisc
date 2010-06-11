@@ -37,8 +37,8 @@ function [this,next] = ldniedf_next ( varargin )
     this.baseobj = ldbase_incr ( this.baseobj )
     onevector = _lowdisc_niedfnext ( );
     next(i,1:dimension) = onevector
-    // Leap over (i.e. ignore) as many elements as required
     if ( leap > 0 ) then
+      // Leap over (i.e. ignore) as many elements as required
       for j = 1 : leap
         this.baseobj = ldbase_incr ( this.baseobj )
         onevector = _lowdisc_niedfnext ( );

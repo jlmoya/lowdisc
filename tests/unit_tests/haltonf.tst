@@ -230,9 +230,10 @@ lds = lowdisc_destroy(lds);
 //
 lds = lowdisc_new("haltonf");
 lds = lowdisc_configure(lds,"-dimension",4);
-// Skip 1 term, as in the TOMS implementation
 lds = lowdisc_configure(lds,"-skip",10);
 lds = lowdisc_startup (lds);
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 10 );
 [lds,computed]=lowdisc_next(lds,10);
 expected = [
   0.812500      0.703704      0.280000      0.591837
@@ -247,6 +248,8 @@ expected = [
   0.156250      0.740741      0.160000      0.897959
 ];
 assert_close ( computed, expected, 1.e-5 );
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 //
@@ -254,9 +257,10 @@ lds = lowdisc_destroy(lds);
 //
 lds = lowdisc_new("haltonf");
 lds = lowdisc_configure(lds,"-dimension",4);
-// Skip 1 term, as in the TOMS implementation
 lds = lowdisc_configure(lds,"-leap",1);
 lds = lowdisc_startup (lds);
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 0 );
 [lds,computed]=lowdisc_next(lds,10);
 expected = [
   0.5        0.3333333    0.2     0.1428571
@@ -271,6 +275,8 @@ expected = [
   0.781250      0.407407      0.920000      0.755102
 ];
 assert_close ( computed, expected, 1.e-5 );
+index = lowdisc_get ( lds , "-index" );
+assert_equal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 // Check performance for large values of skip

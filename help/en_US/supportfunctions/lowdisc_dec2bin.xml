@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * 
+ * This help file was generated from lowdisc_dec2bin.sci using help_from_sci().
+ * 
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_dec2bin" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <info>
+    <pubdate>$LastChangedDate: 11-Jun-2010 $</pubdate>
+  </info>
+
+  <refnamediv>
+    <refname>lowdisc_dec2bin</refname><refpurpose></refpurpose>
+  </refnamediv>
+
+
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   y = lowdisc_dec2bin ( x )
+   y = lowdisc_dec2bin ( x , n )
+   y = lowdisc_dec2bin ( x , n , m )
+   
+   </synopsis>
+</refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>x :</term>
+      <listitem><para> a  scalar/vector/matix of positives floating point integers, the decimal values to convert.</para></listitem></varlistentry>
+   <varlistentry><term>n :</term>
+      <listitem><para> (optionnal) a floating point integer, the number of bits in the generated binary string. Default is n=[], which means no padding.</para></listitem></varlistentry>
+   <varlistentry><term>m :</term>
+      <listitem><para> a floating point integer, the mode. The type of the output matrix. If m=1, then a string is returned. If m = 2, then a matrix of floating point integers is returned. Default m = 1.</para></listitem></varlistentry>
+   <varlistentry><term>y :</term>
+      <listitem><para> a vector of strings (positives)</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+Given x, a positive (or a vector/matix of integers) integer, this function returns a
+string (or a column vector of strings) which is the binary representation of x.
+If dimension of x is superior than 1 then each component of the colums vector str is
+the binary representation of the x components (i.e str(i) is the binary representation of x(i)).
+If the components length of str is less than n ( i.e length str(i) &lt; n ), then add to
+str components the characters '0' on the left in order to have componants length equal to n.
+   </para>
+   <para>
+If m=2, then all floating point integers have the same number of bits, equal to the maximum
+number of digits necessary to represent the largest integer.
+If m=2, then the result y is always row-by-row, where y(i,:) stores the bits which
+represent the digits of x(i).
+If m=2, and n&lt;&gt;[], then zeros are inserted at the head so that the matrix has n columns.
+   </para>
+   <para>
+This function is vectorized, that is, takes matrices of inputs x and returns matrices of output y.
+It can convert many integers x at a time.
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+// example 1
+x=86
+str=dec2bin(x)
+
+// example 2
+// the binary representation of 86 is: '1010110'
+// its length is 7(less than n), so we add to str, 8 times the character '0'  (on the left)
+x=86
+n=15
+str=dec2bin(x,n)
+
+// example 3
+x=[12 45 135]
+z=dec2bin(x)
+x=[12 45 135]'
+z=dec2bin(x)
+
+// example 4 : returns integers, instead of string
+x=[12 45 135]
+z=dec2bin(x,[],2)
+// See that the result does not depend on the orientation of x.
+x=[12 45 135]'
+z=dec2bin(x,[],2)
+
+// example 4 : returns integers, instead of string and pad to 8 bits
+x=[12 45 135]
+z=dec2bin(x,8,2)
+// See that the result does not depend on the orientation of x.
+x=[12 45 135]'
+z=dec2bin(x,8,2)
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>INRIA - F.Belahcene</member>
+   <member>2010 - DIGITEO - Michael Baudin</member>
+   </simplelist>
+</refsection>
+</refentry>

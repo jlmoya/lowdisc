@@ -24,11 +24,13 @@ function this = ldnied2_new ()
     "nbits"
     "dimmax"
     "nbsimmax"
+    "maxe"
     ])
   this.baseobj = ldbase_new ()
   this.dimmax = 20
   this.nbits = 31
   this.nbsimmax = 2^(this.nbits) - 1
+  this.maxe = 6
 endfunction
 
 

@@ -32,7 +32,6 @@ function this = ldniedf_startup (this)
   _lowdisc_niedfstart ( dimension , this.base , skip + 1 , this.gfaritfile , this.gfplysfile , init );
   //
   // Initialize the sequence at the right place
-  // TODO : test this
   this.baseobj = ldbase_indexset ( this.baseobj , skip )
 endfunction
 
