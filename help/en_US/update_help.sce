@@ -158,6 +158,12 @@ funmat = [
   "lowdisc_primes10000"
   "lowdisc_stopall"
   "lowdisc_methods"
+  "lowdisc_haltonsuggest"
+  "lowdisc_fauresuggest"
+  "lowdisc_sobolsuggest"
+  "lowdisc_soboltau"
+  "lowdisc_niedersuggest"
+  "lowdisc_niederbase"
   ];
 macrosdir = cwd +"../../macros";
 demosdir = cwd +"../../demos";

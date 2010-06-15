@@ -3,7 +3,6 @@
 //
 // This file must be used under the terms of the GNU LGPL license.
 
-// TODO : remove the field count, which should be replaced by the index
 function this = ldsobol_new ()
   // Create a new Sobol object.
   //
@@ -22,6 +21,11 @@ function this = ldsobol_new ()
   this.baseobj = ldbase_new ()
   this.dimmax = 40
   this.nbsimmax = 2^30 - 1
+  this.v = []
+  this.maxcol = 0
+  this.lastq = []
+  this.recipd = 0
+  this.count = 0
 endfunction
 
 

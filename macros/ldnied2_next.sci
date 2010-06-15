@@ -120,12 +120,7 @@ function [ seed , nextq , quasi ] = _next_nieder2 ( dimension , cj , nextq , see
   //  is the bit that changes in the Gray-code representation as
   //  we go from SEED to SEED+1.
   //
-  r = 0
-  i = seed
-  while ( _divremainder ( i, 2 ) ~= 0 )
-    r = r + 1
-    i = floor ( i / 2 )
-  end
+  r = lowdisc_bitlo0 ( seed ) - 1
   //
   //  Check that we have not passed 2**NBITS calls.
   //

@@ -91,10 +91,6 @@
 
     <para><itemizedlist>
         <listitem>
-          <para>The Van Der Corput sequence. </para>
-        </listitem>
-
-        <listitem>
           <para>The Halton sequence.</para>
         </listitem>
 
@@ -111,7 +107,7 @@
         </listitem>
 
         <listitem>
-          <para>The Niederreiter Base 2 sequence. </para>
+          <para>The Niederreiter base 2 and arbitrary base sequence. </para>
         </listitem>
 
       </itemizedlist></para>
@@ -121,15 +117,50 @@
     <title>TODO</title>
 
     <para><itemizedlist>
-        <listitem>
-          <para>Add scrambling algorithms</para>
-        </listitem>
-
-        <listitem>
-          <para>Add algorithms to compute the discrepancy</para>
-        </listitem>
-      </itemizedlist></para>
+        <listitem> <para> Add scrambling algorithms : RR2 from Kocis and Whiten, Matousek. Can we program Reverse Halton as a scrambling ? Can let the user define its scrambling function ?</para> </listitem>
+        <listitem> <para> Add algorithms to compute the discrepancy</para> </listitem>
+        <listitem> <para> Add test cases on integrals as in Bratley and Fox</para> </listitem>
+        <listitem> <para> check interaction between skip and leap for all sequences</para> </listitem>
+        <listitem> <para> vectorize the call to the fast sequences, so that we can get several elements at the same time</para> </listitem>
+        <listitem> <para> replace dim_num by dim everywhere in the macros</para> </listitem>
+        <listitem> <para> update the name of the next routines of the C library : i4_sobol > i4_sobol_next, etc... Review all the .h to be sure of this update.</para> </listitem>
+        <listitem> <para> see if the Gray code of the index can be computed directly, so that the skip and leap options of Sobol sequence is faster</para> </listitem>
+        <listitem> <para> replace basis by base where appropriate in Faure sequence</para> </listitem>
+        <listitem> <para> create a graycode function</para> </listitem>
+      </itemizedlist>
+    </para>
   </refsection>
+
+  <refsection>
+    <title>DONE</title>
+
+    <para><itemizedlist>
+        <listitem> <para> many other things before... </para> </listitem>
+        <listitem> <para> tested the skip and leap for all sequences </para> </listitem>
+        <listitem> <para> replaced sprintf by msprintf </para> </listitem>
+        <listitem> <para> with the Fast Niederreiter sequence, if the gfarit and gfplsys files already exist, do not generate anymore. </para> </listitem>
+        <listitem> <para> checked the maximal dimension available for Fast Niederreiter : fixed bug in the source </para> </listitem>
+        <listitem> <para> removed _mlist_isfield where unused </para> </listitem>
+        <listitem> <para> Update the help page : Niederreiter base 2 is slow while Niederreiter arbitrary base is fast </para> </listitem>
+        <listitem> <para> added -nbsimmax to know the maximum number of simulations for all sequences </para> </listitem>
+        <listitem> <para> removed _divremainder : this is modulo </para> </listitem>
+        <listitem> <para> improved the performance of skip and leap </para> </listitem>
+        <listitem> <para> add the reference implementation in the comments of lowdisc_new </para> </listitem>
+        <listitem> <para> check that the maximum dimension is checked in lowdisc_configure for all sequences  </para> </listitem>
+        <listitem> <para> made some support routine available publicly : lowdisc_bary, lowdisc_bitlo0, lowdisc_hi1. </para> </listitem>
+        <listitem> <para> fill lowdisc_new and specify for each sequence if the skip and leap options are direct (faster) or one-by-one (slower) </para> </listitem>
+        <listitem> <para> created lowdisc_soboltau to suggest a skip parameter for Sobol : http://people.sc.fsu.edu/~burkardt/m_src/sobol/tau_sobol.m </para> </listitem>
+        <listitem> <para> created lowdisc_sobolsuggest to suggest number of simulations for Sobol : a power of 2 larger than nbsim, N = 2**K WHERE K .GE. (TAUS+S-1) FOR INTEGRATION AND K .GT. TAUS FOR GLOBAL OPTIMIZATION. TAU/0,0,1,3,5,8,11,15,19,23,27,31,35/ </para> </listitem>
+        <listitem> <para> created lowdisc_fauresuggest to suggest skip parameter for Faure : skip = base^4 - 2. </para> </listitem>
+        <listitem> <para> created lowdisc_fauresuggest to suggest number of simulations for Faure : a power of the base larger than nbsim </para> </listitem>
+        <listitem> <para> created lowdisc_niedersuggest to suggest skip parameter for Niederreiter : BASE ** POWER(BASE) where (POWER(I), I = 2,MAXBAS) / 12,8,8,6,6,6,4,4,4,4,4,4 / </para> </listitem>
+        <listitem> <para> created lowdisc_niedersuggest to suggest number of simulations for Niederreiter : a power of the base : BASE ** POWER(BASE), BASE ** ((POWER(BASE) + 1)), BASE ** ((POWER(BASE) + 2)), BASE ** ((POWER(BASE) + 3)) </para> </listitem>
+        <listitem> <para> created lowdisc_niedersuggest to suggest initial base for Niederreiter : (OPTBAS(I), I = 2,MAXDIM) / 2,3,3,5,7,7,9,9,11,11,13/ </para> </listitem>
+        <listitem> <para> created lowdisc_haltonsuggest to suggest number of simulations, skip and leap for Halton </para> </listitem>
+      </itemizedlist>
+    </para>
+  </refsection>
+
 
   <refsection>
     <title>Authors</title>
@@ -139,6 +170,8 @@
       <member>2008-2009 - INRIA - Michael Baudin</member>
       <member>2003 - John Burkardt</member>
       <member>1994 - Paul Bratley, Bennett Fox, Harald Niederreiter</member>
+      <member>1988 - Bennett Fox</member>
+      <member>1986 - Bennett Fox</member>
     </simplelist>
   </refsection>
 
@@ -193,6 +226,11 @@
     Generator", Stephen Joe, Frances Kuo, ACM Transactions on Mathematical
     Software, Volume 29, Number 1, March 2003, pages 49-57.</para>
 
+    <para>"Implementation and Tests of Low Discrepancy Sequences",
+    Paul Bratley, Bennett Fox, Harald Niederreiter,
+    ACM Transactions on Modeling and Computer Simulation,
+    Volume 2, Number 3, July 1992, pages 195-213.</para>
+
     <para>"Algorithm 738: Programs to generate Niederreiter's low-discrepancy
     sequences", P. Bratley, B. L. Fox, and H. Niederreiter, 1994. ACM Trans.
     Math. Softw. 20, 4 (Dec. 1994), 494-495.</para>
@@ -221,6 +259,11 @@
     266-294.</para>
 
     <para>"Gnu Scientific Library - The Reverse Halton Sequence", Olivier Teytaud, 2007</para>
+    
+    <para>"USSR Computational Mathematics and Mathematical Physics", Ilya Sobol, Volume 16, pages 236-242, 1977.</para>
+
+    <para>"The Production of Points Uniformly Distributed in a Multidimensional Cube" (in Russian), Ilya Sobol, YL Levitan, Preprint IPM Akad. Nauk SSSR, Number 40, Moscow 1976.</para>
+
   </refsection>
 </refentry>
 

@@ -52,6 +52,10 @@ sequencearray = lowdisc_methods ();
 for sequencename = sequencearray'
   lds = lowdisc_new(sequencename);
   //
+  // Test the display before startup
+  string(lds)
+  lds
+  //
   lds = lowdisc_configure(lds,"-dimension",12);
   nbdim = lowdisc_cget(lds,"-dimension");
   assert_equal ( nbdim , 12 );
@@ -83,7 +87,7 @@ for sequencename = sequencearray'
   nbsimmax = lowdisc_get(lds,"-nbsimmax");
   assert_equal ( nbsimmax > 0 , %t );
   //
-  // Test printing system
+  // Test printing system (after startup)
   string(lds)
   lds
   lds.sequence

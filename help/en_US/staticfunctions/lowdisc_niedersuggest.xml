@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * 
+ * This help file was generated from lowdisc_niedersuggest.sci using help_from_sci().
+ * 
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_niedersuggest" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <info>
+    <pubdate>$LastChangedDate: 15-Jun-2010 $</pubdate>
+  </info>
+
+  <refnamediv>
+    <refname>lowdisc_niedersuggest</refname><refpurpose>Returns favorable parameters for Niederreiter sequence.</refpurpose>
+  </refnamediv>
+
+
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   [nsim,skip,leap] = lowdisc_niedersuggest ( dim )
+   [nsim,skip,leap] = lowdisc_niedersuggest ( dim , base )
+   [nsim,skip,leap] = lowdisc_niedersuggest ( dim , base , nsimmin )
+   
+   </synopsis>
+</refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>dim :</term>
+      <listitem><para> a floating point integer, the spatial dimension.</para></listitem></varlistentry>
+   <varlistentry><term>base :</term>
+      <listitem><para> a floating point integer, the optimal base to be used in Niederreiter's sequence. Default base = 2.</para></listitem></varlistentry>
+   <varlistentry><term>nsimmin :</term>
+      <listitem><para> a floating point integer, the minimum required number of simulations. Default nsimmin = 1.</para></listitem></varlistentry>
+   <varlistentry><term>nsim :</term>
+      <listitem><para> a floating point integer, the number of simulations to perform, with nsim &gt;= nsimmin.</para></listitem></varlistentry>
+   <varlistentry><term>skip :</term>
+      <listitem><para> a floating point integer, the number of initial elements to skip in the sequence.</para></listitem></varlistentry>
+   <varlistentry><term>leap :</term>
+      <listitem><para> a floating point integer, the number of elements to ignore each time an element is generated.</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+This routine provides favorable parameters to be used with a Niederreiter sequence.
+   </para>
+   <para>
+We use suggestions from :
+   </para>
+   <para>
+"Algorithm 738: Programs to generate Niederreiter's low-discrepancy
+sequences", P. Bratley, B. L. Fox, and H. Niederreiter, 1994. ACM Trans.
+Math. Softw. 20, 4 (Dec. 1994), 494-495.
+   </para>
+   <para>
+which is based on the paper :
+   </para>
+   <para>
+"Implementation and Tests of Low Discrepancy Sequences",
+Paul Bratley, Bennett Fox, Harald Niederreiter,
+ACM Transactions on Modeling and Computer Simulation,
+Volume 2, Number 3, July 1992, pages 195-213.
+   </para>
+   <para>
+The citation p. 203, section "The Leading Zeros Phenomenon", is the following.
+"This leading zeros phenomenon can be alleviated by throwing away
+a certain number of initial terms of the sequence q1, q2, ... Clearly, the
+number thus skipped should be some power of b. The argument in the previous
+paragraph indicates that this power should be at least the maximum value of e,
+which grows like log(s) as noted earlier."
+   </para>
+   <para>
+The reference cited is :
+   </para>
+   <para>
+"Low-discrepancy and low-dispersion sequences",
+Harald Niederreiter, Journal of Number Theory,
+Volume 30, Issue 1, September 1988, Pages 51-70
+   </para>
+   <para>
+We use the table of powers [0 12,8,8,6,6,6,4,4,4,4,4,4] from Algorithm 738.
+If the base is smaller than 13, we set pb = power_table(base). If not, we set pb = 4.
+We compute k = max ( [ pb , ceil(log(nsimmin)/log(base)) ] ) so that the
+number of simulations is greater than nsimmin.
+We compute nsim = b^k.
+If the base is lower than 13, we compute skip = base ^ pb. If not, we compute skip = 10000.
+We return leap = 0.
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+
+// See the suggested number of simulations in dimension 4.
+// See "Algorithm 659", p97, Table II
+dim = 4;
+// See with default base = 2.
+[nsim,skip,leap] = lowdisc_niedersuggest ( dim );
+// See with base = 5.
+base = 5;
+[nsim,skip,leap] = lowdisc_niedersuggest ( dim , base );
+[nsim,skip,leap] = lowdisc_niedersuggest ( dim , base , 10000 );
+[nsim,skip,leap] = lowdisc_niedersuggest ( dim , base , 50000 );
+[nsim,skip,leap] = lowdisc_niedersuggest ( dim , base , 100000 );
+// Set the number of simulations, but use default base
+[nsim,skip,leap] = lowdisc_niedersuggest ( dim , [] , 100000 );
+
+// Use the fast Niederreiter in arbitrary base,
+// optimal base, minimum number of simulations in dimension 4.
+dim = 4;
+base = lowdisc_niederbase ( dim );
+[nsim,skip,leap] = lowdisc_niedersuggest ( dim , base );
+lds = lowdisc_new("niederreiterf");
+lds = lowdisc_configure(lds,"-dimension",dim);
+lds = lowdisc_configure(lds,"-base",base);
+lds = lowdisc_configure(lds,"-skip",skip);
+lds = lowdisc_configure(lds,"-leap",leap);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,nsim);
+lds = lowdisc_destroy(lds);
+
+// Use the slow Base 2 Niederreiter and minimum number of simulations in dimension 4.
+dim = 4;
+[nsim,skip,leap] = lowdisc_niedersuggest ( dim );
+lds = lowdisc_new("niederreiter-base-2");
+lds = lowdisc_configure(lds,"-dimension",dim);
+lds = lowdisc_configure(lds,"-skip",skip);
+lds = lowdisc_configure(lds,"-leap",leap);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,nsim);
+lds = lowdisc_destroy(lds);
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>Michael Baudin - 2010 - DIGITEO</member>
+   <member>Paul Bratley, Bennett Fox, Harald Niederreiter - 1994</member>
+   </simplelist>
+</refsection>
+</refentry>

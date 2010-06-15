@@ -14,6 +14,13 @@ The current prototype has the following features :
 * skips a given number of elements in the sequence,
 * leaps (i.e. ignores) a given number of elements from call to call.
 
+Overview of sequences
+ * The Halton sequence.
+ * The Faure sequence.
+ * The Reverse Halton sequence of Vandewoestyne and Cools.
+ * The Sobol sequence.
+ * The Niederreiter base 2 and arbitrary base sequence.
+
 This module currently provides the following functions:
 * lowdisc_cget : Returns the value associated with the given key for the given object.
 * lowdisc_configure : Update one option of the current object and returns an updated object.
@@ -21,6 +28,19 @@ This module currently provides the following functions:
 * lowdisc_new : Creates and returns a new sequence.
 * lowdisc_next : Returns the next vector in the sequence.
 * lowdisc_startup : Startup a random number object.
+
+Provides the following functions to extend the maximum dimension of the Halton sequences
+* lowdisc_primes100 ? Returns a matrix containing the 100 first primes.
+* lowdisc_primes1000 ? Returns a matrix containing the 1000 first primes.
+* lowdisc_primes10000 ? Returns a matrix containing the 10000 first primes.
+
+Provides the following functions to suggest expert settings for the sequences :
+ * lowdisc_fauresuggest ? Returns favorable parameters for Faure sequences.
+ * lowdisc_haltonsuggest ? Returns favorable parameters for Halton sequence.
+ * lowdisc_niederbase ? Returns optimal base for Niederreiter sequence.
+ * lowdisc_niedersuggest ? Returns favorable parameters for Niederreiter sequence.
+ * lowdisc_sobolsuggest ? Returns favorable parameters for Sobol sequences.
+ * lowdisc_soboltau ? Returns favorable starting seeds for Sobol sequences.
 
 This component currently provides the following sequences:
 * "slow" sequences based on macros : vandercorput, halton, faure, reversehalton, sobol, niederreiter-base-2,
@@ -41,38 +61,6 @@ following hierarchy.
    following methods : new, destroy, configure, cget, get, startup and next.
 
 See the overview in the help provided with this toolbox.
-
-DONE
- * tested the skip and leap for all sequences
- * replaced sprintf by msprintf
- * with the Fast Niederreiter sequence, if the gfarit and gfplsys files already exist, do not generate anymore.
- * checked the maximal dimension available for Fast Niederreiter : fixed bug in the source
- * removed _mlist_isfield where unused
- * Update the help page : Niederreiter base 2 is slow while Niederreiter arbitrary base is fast
- * added -nbsimmax to know the maximum number of simulations for all sequences
- * removed _divremainder : this is modulo
- * improved the performance of skip and leap
- * add the reference implementation in the comments of lowdisc_new
- * check that the maximum dimension is checked in lowdisc_configure for all sequences 
- * made some support routine available publicly : lowdisc_bary, lowdisc_bitlo0, lowdisc_hi1.
- * fill lowdisc_new and specify for each sequence if the skip and leap options are direct (faster) or one-by-one (slower)
-
-TODO
-
- * Add scrambling algorithms
- * Add algorithms to compute the discrepancy
- * Add test cases on integrals as in Bratley and Fox
- * create this = lowdisc_autosetup ( this ) :
-   * suggest skip parameter for sobol : http://people.sc.fsu.edu/~burkardt/m_src/sobol/tau_sobol.m
-   * suggest skip parameter for faure : base^4
-   * suggest skip parameter for Niederreiter : BASE ** POWER(BASE) where (POWER(I), I = 2,MAXBAS) / 12,8,8,6,6,6,4,4,4,4,4,4 /
-   * suggest number of simulations for sobol : a power of 2 larger than nbsim, N = 2**K WHERE K .GE. (TAUS+S-1) FOR INTEGRATION AND K .GT. TAUS FOR GLOBAL OPTIMIZATION. TAU/0,0,1,3,5,8,11,15,19,23,27,31,35/
-   * suggest number of simulations for faure : a power of the base larger than nbsim
-   * suggest number of simulations for Niederreiter : a power of the base : BASE ** POWER(BASE), BASE ** ((POWER(BASE) + 1)), BASE ** ((POWER(BASE) + 2)), BASE ** ((POWER(BASE) + 3))
-   * suggest initial base for Niederreiter : (OPTBAS(I), I = 2,MAXDIM) / 2,3,3,5,7,7,9,9,11,11,13/
- * check interaction between skip and leap for all sequences
- * vectorize the call to the fast sequences, so that we can get several elements at the same time
-
 
 Author
 

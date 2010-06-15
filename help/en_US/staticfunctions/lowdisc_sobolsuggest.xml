@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * 
+ * This help file was generated from lowdisc_sobolsuggest.sci using help_from_sci().
+ * 
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_sobolsuggest" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <info>
+    <pubdate>$LastChangedDate: 15-Jun-2010 $</pubdate>
+  </info>
+
+  <refnamediv>
+    <refname>lowdisc_sobolsuggest</refname><refpurpose>Returns favorable parameters for Sobol sequences.</refpurpose>
+  </refnamediv>
+
+
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   [nsim,skip,leap] = lowdisc_sobolsuggest ( dim )
+   [nsim,skip,leap] = lowdisc_sobolsuggest ( dim , nsimmin )
+   [nsim,skip,leap] = lowdisc_sobolsuggest ( dim , nsimmin , purpose )
+   
+   </synopsis>
+</refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>dim :</term>
+      <listitem><para> a floating point integer, the spatial dimension.</para></listitem></varlistentry>
+   <varlistentry><term>nsimmin :</term>
+      <listitem><para> a floating point integer, the minimum required number of simulations. Default nsimmin = 1.</para></listitem></varlistentry>
+   <varlistentry><term>purpose :</term>
+      <listitem><para> a floating point integer, the purpose of the simulation. If purpose = 1, then the target is integration. If purpose = 2; then the target is global optimization. Default purpose = 1.</para></listitem></varlistentry>
+   <varlistentry><term>nsim :</term>
+      <listitem><para> a floating point integer, the number of simulations to perform, with nsim &gt;= nsimmin.</para></listitem></varlistentry>
+   <varlistentry><term>skip :</term>
+      <listitem><para> a floating point integer, the number of initial elements to skip in the sequence.</para></listitem></varlistentry>
+   <varlistentry><term>leap :</term>
+      <listitem><para> a floating point integer, the number of elements to ignore each time an element is generated.</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+This routine provides favorable parameters to be used with a Sobol sequence.
+   </para>
+   <para>
+We use settings suggested in :
+"Algorithm 647: Implementation and Relative Efficiency of Quasirandom
+Sequence Generators", B. L. Fox, ACM Transactions on Mathematical Software,
+Volume 12, Number 4, pages 362-376, 1986.
+   </para>
+   <para>
+We compute tau from the lowdisc_soboltau function.
+For spatial dimensions 1 through 13, tau is non-trivial. For other dimensions, tau=0
+and a warning is generated.
+For integration problems, we take k = max ( ceil(log2(nsimmin)) , 2*dim , tau + dim - 1 )
+For optimization problems, we take k = max ( ceil(log2(nsimmin)) , tau + 1 ).
+We consider nsim = 2**k.
+   </para>
+   <para>
+We return skip = 0 and leap = 0.
+   </para>
+   <para>
+We might also be interested by the experiments in :
+"Computational investigations of low-discrepancy sequences", Kocis,
+L. and Whiten, W. J. 1997. ACM Trans. Math. Softw. 23, 2 (Jun. 1997),
+266-294. Especially p. 277.
+The citation p. 277 is the following.
+"Experimenting with the Sobol sequence resulted in finding that the
+Sobol sequence leaped can be created with leaps satisfying condition leap=2^m
+where m is positive integer. The first coordinate of the Antonov-Saleev version
+of the Sobol sequence leaped generated this way has to be either omitted,
+or scaled as x1 -&gt; x1*(L/2), and the second coordinate of the Sobol sequence
+leaped is either omitted or scaled as x2 -&gt; x2 * 2."
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+
+// See the minimum number of simulations for integration in dimension 4.
+[nsim,skip,leap] = lowdisc_sobolsuggest ( 4 )
+// See the number of simulations larger than 1000 for integration in dimension 4
+[nsim,skip,leap] = lowdisc_sobolsuggest ( 4 , 1000 )
+// See the number of simulations larger than 100 for global optimization in dimension 4
+[nsim,skip,leap] = lowdisc_sobolsuggest ( 4 , 100 , 2 )
+// In dimension 14, the value of tau is not available
+[nsim,skip,leap] = lowdisc_sobolsuggest ( 14 , [] , 1 )
+// Caution : with global optimization purpose and default minimum number of simulations,
+// this generates a very small number of simulations
+[nsim,skip,leap] = lowdisc_sobolsuggest ( 14 , [] , 2 )
+
+// See the recommended number of simulations in dimension 4
+mprintf("%20s %20s\n","N Min","N Recommended");
+for nsimmin = logspace(1,10,10)
+[nsim,skip,leap] = lowdisc_sobolsuggest ( 4 , nsimmin );
+mprintf("%20.0f %20.0f\n",nsimmin,nsim);
+end
+
+// Use the minimum recommended number of simulations for integration in dimension 4.
+// Use Sobol
+dim = 4;
+[nsim,skip,leap] = lowdisc_sobolsuggest ( dim );
+lds = lowdisc_new("sobol");
+lds = lowdisc_configure(lds,"-dimension",dim);
+lds = lowdisc_configure(lds,"-skip",skip);
+lds = lowdisc_configure(lds,"-leap",leap);
+lds = lowdisc_startup (lds);
+[lds,experiments]=lowdisc_next(lds,nsim);
+lds = lowdisc_destroy(lds);
+disp(computed)
+
+// Use the minimum recommended number of simulations for integration in dimension 4.
+// Use fast Sobol
+dim = 4;
+[nsim,skip,leap] = lowdisc_sobolsuggest ( dim );
+lds = lowdisc_new("sobolf");
+lds = lowdisc_configure(lds,"-dimension",dim);
+lds = lowdisc_configure(lds,"-skip",skip);
+lds = lowdisc_configure(lds,"-leap",leap);
+lds = lowdisc_startup (lds);
+[lds,experiments]=lowdisc_next(lds,nsim);
+lds = lowdisc_destroy(lds);
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>Michael Baudin - 2010 - DIGITEO</member>
+   <member>Bennett Fox - 1988</member>
+   </simplelist>
+</refsection>
+</refentry>

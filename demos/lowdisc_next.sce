@@ -7,10 +7,13 @@ lds = lowdisc_new("halton");
 lds = lowdisc_startup (lds);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
+disp(computed)
 // Term #2
 [lds,computed] = lowdisc_next (lds);
+disp(computed)
 // Term #3, etc...
 [lds,computed] = lowdisc_next (lds);
+disp(computed)
 lds
 lds = lowdisc_destroy(lds);
 halt()   // Press return to continue

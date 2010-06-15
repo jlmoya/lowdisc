@@ -17,24 +17,45 @@ function [this,next] = lowdisc_next ( varargin )
   // Parameters
   //   this: the current object
   //   imax: the number of terms to retrieve (default = 1)
-  //   next : a matrix of size imax x s, the next vector in the sequence
+  //   next : a matrix of size imax x s, the next vector in the sequence. The experiment #i is stored at next(i,:) for 1<=i<=imax. The component #j of experiment #i is stored in next(i,j) with 1<=j<=dimension.
   //
   // Description
-  //   Returns a matrix of values with shape 1 x s, where s is the
-  //   dimension of the space.
   //   The current object is updated after the call to next :
   //   both this and next are mandatory output arguments.
   //   This function is sensitive to the "-leap" option.
+  //
+  //   Because of the limitation of floating point integers, 
+  //   the lowdisc_next function is able to generate at most 
+  //   2^52  = 4 503 599 627 370 496 experiments.
+  //   Fast sequences are based on the intermediate storage of the 
+  //   iteration index on a 32 bits C int. This implies 
+  //   that these sequences are able to generate at most 
+  //   2^32-1 = 4 294 967 295 experiments. 
+  //
+  //  The number of simulations might be computed so that it 
+  //  improves the discrepancy of the sequence.
+  //  This is especially true for the Sobol, Faure and Niederreiter sequences.
+  //  This can lead to some trouble for non-experts.
+  //  For that purpose, we designed the following functions.
+  //  <itemizedlist>
+  //  <listitem> lowdisc_haltonsuggest : provides settings for the Halton sequence,</listitem>
+  //  <listitem> lowdisc_fauresuggest : provides settings for the Faure sequence,</listitem>
+  //  <listitem> lowdisc_sobolsuggest : provides settings for the Sobol sequence,</listitem>
+  //  <listitem> lowdisc_niedersuggest : provides settings for the Niederreiter sequence.</listitem>
+  //  </itemizedlist>
   //
   // Examples
   //   lds = lowdisc_new("halton");
   //   lds = lowdisc_startup (lds);
   //   // Term #1
   //   [lds,computed] = lowdisc_next (lds);
+  //   disp(computed)
   //   // Term #2
   //   [lds,computed] = lowdisc_next (lds);
+  //   disp(computed)
   //   // Term #3, etc...
   //   [lds,computed] = lowdisc_next (lds);
+  //   disp(computed)
   //   lds
   //   lds = lowdisc_destroy(lds);
   //

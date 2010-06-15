@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 11-Jun-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 15-Jun-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -107,13 +107,38 @@ The sequences which are sensitive to this option are : "halton", "haltonf", "fau
 "reversehalton", "reversehaltonf".
    </para>
    <para>
-Because of the limitation of floating point integers,
-the lowdisc_next function is able to generate at most
-2^52  = 4 503 599 627 370 496 experiments.
-Fast sequences are based on the intermediate storage of the
-iteration index on a 32 bits C int. This implies
-that these sequences are able to generate at most
-2^32-1 = 4 294 967 295 experiments.
+For the Fast Niederreiter sequence in arbitrary base, we can configure the
+base.
+<itemizedlist>
+<listitem>"-base" : a floating point number, greater than 2.
+The base can be an odd or even integer.
+The default value is 2.
+It may be the smallest prime larger than the dimension as in the
+Faure sequence, although it does not guarantee that this
+leads to a lower discrepancy.
+See the lowdisc_niederbase function for a suggestion of the optimal
+base, depending on the dimension.
+</listitem>
+</itemizedlist>
+   </para>
+   <para>
+Some expertise is required to configure the skip and leap options.
+The skip option can improve the Faure, Sobol and Niederreiter sequences.
+The leap option can improve the Halton sequence, although
+Kocis and Whiten also tried to leap the Faure and Sobol sequences.
+This can lead to some trouble for non-experts.
+For that purpose, we designed the following functions.
+<itemizedlist>
+<listitem> lowdisc_haltonsuggest : provides settings for the Halton sequence,</listitem>
+<listitem> lowdisc_fauresuggest : provides settings for the Faure sequence,</listitem>
+<listitem> lowdisc_sobolsuggest : provides settings for the Sobol sequence,</listitem>
+<listitem> lowdisc_niedersuggest : provides settings for the Niederreiter sequence.</listitem>
+</itemizedlist>
+These functions have been designed to include suggestions by various authors to improve
+the sequences.
+In the situation where we have no knowledge of the settings to use, these
+functions may be used. Still, these have not been included as defaults,
+which authorizes a more aware choice of the parameters.
    </para>
    <para>
 Some sequences are limited in the maximum number of dimensions,

@@ -9,6 +9,7 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 function y = lowdisc_dec2bin ( varargin )
+  // Convert a decimal floating point integer into binary.
   //
   // Calling Sequence
   //   y = lowdisc_dec2bin ( x )
@@ -77,7 +78,7 @@ function y = lowdisc_dec2bin ( varargin )
   rhs = argn(2)
   // check the number of input arguments
   if ( rhs<1 | rhs>3 ) then
-    error(msprintf(gettext("%s: Wrong number of input argument(s): %d or %d expected.\n"),"dec2bin",1,2))
+    error(msprintf(gettext("%s: Wrong number of input argument(s): %d or %d expected.\n"),"lowdisc_dec2bin",1,2))
   end
   // Get arguments
   x = varargin(1)
@@ -93,14 +94,14 @@ function y = lowdisc_dec2bin ( varargin )
   end
   // check type and size of the input arguments
   if ( or(type(x)<>8) & (or(type(x)<>1) | or(x<0)) ) then
-    error(msprintf(gettext("%s: Wrong value for input argument #%d: Scalar/vector/matrix of positive integers expected.\n"),"dec2bin",1))
+    error(msprintf(gettext("%s: Wrong value for input argument #%d: Scalar/vector/matrix of positive integers expected.\n"),"lowdisc_dec2bin",1))
   end
   if ( rhs==2 & ((type(n)<>8 & (type(n)<>1 | n<0)) | prod(size(n))<>1) ) then
-    error(msprintf(gettext("%s: Wrong value for input argument #%d: A positive integer expected"),"dec2bin",2))
+    error(msprintf(gettext("%s: Wrong value for input argument #%d: A positive integer expected"),"lowdisc_dec2bin",2))
   end
   // Check the m parameter
   if ( and ( m <> [1 2] ) ) then
-    error(msprintf(gettext("%s: Wrong value for input argument #%d: Either 1 or 2 is expected, but got %d."),"dec2bin",2,m))
+    error(msprintf(gettext("%s: Wrong value for input argument #%d: Either 1 or 2 is expected, but got %d."),"lowdisc_dec2bin",2,m))
   end
   //
   // Case #1 : x=empty matrix

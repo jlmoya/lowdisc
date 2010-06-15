@@ -15,11 +15,11 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 11-Jun-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 15-Jun-2010 $</pubdate>
   </info>
 
   <refnamediv>
-    <refname>lowdisc_dec2bin</refname><refpurpose></refpurpose>
+    <refname>lowdisc_dec2bin</refname><refpurpose>Convert a decimal floating point integer into binary.</refpurpose>
   </refnamediv>
 
 

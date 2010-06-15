@@ -303,5 +303,5 @@ lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();
-assert_equal ( (t2-t1)<1. , %t );
+assert_equal ( (t2-t1)<10. , %t );
 

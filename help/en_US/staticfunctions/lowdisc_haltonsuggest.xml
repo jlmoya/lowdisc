@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * 
+ * This help file was generated from lowdisc_haltonsuggest.sci using help_from_sci().
+ * 
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_haltonsuggest" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <info>
+    <pubdate>$LastChangedDate: 15-Jun-2010 $</pubdate>
+  </info>
+
+  <refnamediv>
+    <refname>lowdisc_haltonsuggest</refname><refpurpose>Returns favorable parameters for Halton sequence.</refpurpose>
+  </refnamediv>
+
+
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   [nsim,skip,leap] = lowdisc_haltonsuggest ( dim , nsimmin )
+   
+   </synopsis>
+</refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>dim :</term>
+      <listitem><para> a floating point integer, the spatial dimension.</para></listitem></varlistentry>
+   <varlistentry><term>nsimmin :</term>
+      <listitem><para> a floating point integer, the minimum required number of simulations. Default nsimmin = 1.</para></listitem></varlistentry>
+   <varlistentry><term>nsim :</term>
+      <listitem><para> a floating point integer, the number of simulations to perform, with nsim &gt;= nsimmin.</para></listitem></varlistentry>
+   <varlistentry><term>skip :</term>
+      <listitem><para> a floating point integer, the number of initial elements to skip in the sequence.</para></listitem></varlistentry>
+   <varlistentry><term>leap :</term>
+      <listitem><para> a floating point integer, the number of elements to ignore each time an element is generated.</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+This routine provides favorable parameters to be used with a Halton sequence.
+There are very few suggestions to use with this sequence.
+   </para>
+   <para>
+We use settings suggested in :
+"Computational investigations of low-discrepancy sequences", Kocis,
+L. and Whiten, W. J. 1997. ACM Trans. Math. Softw. 23, 2 (Jun. 1997),
+266-294. Especially p. 274.
+The citation p. 274 is the following.
+"The values of L, s and N were varied in range 3-3000, 1-400 and 10-10^5,
+respectively. The best leaps values found were 31, 61, 149, 409 and 1949.
+From dimensions 1-100, it was difficult to choose the optimal leap from
+these values, because the error of integration depended on the function
+used and because the sum of the maximum errors of the integration was almost
+the same for the five leaps listed. However, in the range of s 100-400,
+the best value found was clearly L=409."
+   </para>
+   <para>
+We return nsim = nsimmin.
+We return skip = 0.
+If dimension is smaller than 400, we return leap = 409. If not we return leap = 0.
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+
+// See the suggestions in dimension 4.
+dim = 8;
+nsimmin = 1000;
+[nsim,skip,leap] = lowdisc_haltonsuggest ( dim , nsimmin )
+// In dimension 500, we do not have any leap to suggest
+dim = 500;
+nsimmin = 1000;
+[nsim,skip,leap] = lowdisc_haltonsuggest ( dim , nsimmin )
+
+// Use the Halton sequence in dimension 4.
+dim = 4;
+nsimmin = 1000;
+[nsim,skip,leap] = lowdisc_haltonsuggest ( dim , nsimmin );
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-dimension",dim);
+lds = lowdisc_configure(lds,"-skip",skip);
+lds = lowdisc_configure(lds,"-leap",leap);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,nsim);
+lds = lowdisc_destroy(lds);
+
+// Use the fast Halton sequence in dimension 4.
+dim = 4;
+nsimmin = 1000;
+[nsim,skip,leap] = lowdisc_haltonsuggest ( dim , nsimmin );
+lds = lowdisc_new("haltonf");
+lds = lowdisc_configure(lds,"-dimension",dim);
+lds = lowdisc_configure(lds,"-skip",skip);
+lds = lowdisc_configure(lds,"-leap",leap);
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,nsim);
+lds = lowdisc_destroy(lds);
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>Michael Baudin - 2010 - DIGITEO</member>
+   <member>Bennett Fox - 1988</member>
+   </simplelist>
+</refsection>
+</refentry>
