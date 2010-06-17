@@ -22,7 +22,8 @@
   <refsection>
     <title>Purpose</title>
 
-    <para>The goal of this toolbox is to provide a collection of low
+    <para>
+    The goal of this toolbox is to provide a collection of low
     discrepancy sequences. These sequences try to produce numbers which favor
     the convergence of a Monte-Carlo simulation by reducing the discrepancy. 
     These random numbers are designed to be used in a
@@ -33,7 +34,12 @@
 
     <para>Low Discrepancy sequences are designed to be able to produce
     real values uniform in the [0,1[^s interval, where s is the dimension of
-    the space.</para>
+    the space.
+    </para>
+
+    <para>
+    See the provided demonstrations for sample examples of this library.
+    </para>
 
   </refsection>
 
