@@ -10,7 +10,7 @@
 
 mprintf("Start Low Discrepancy\n");
 
-etc_tlbx  = get_absolute_file_path("lowdiscrepancy.start");
+etc_tlbx  = get_absolute_file_path("lowdisc.start");
 etc_tlbx  = getshortpathname(etc_tlbx);
 root_tlbx = strncpy( etc_tlbx, length(etc_tlbx)-length("\etc\") );
 
@@ -19,17 +19,15 @@ root_tlbx = strncpy( etc_tlbx, length(etc_tlbx)-length("\etc\") );
 
 mprintf("\tLoad macros\n");
 pathmacros = pathconvert( root_tlbx ) + "macros" + filesep();
-numberlib  = lib(pathmacros);
+lowdisclib = lib(pathmacros);
 clear pathmacros;
 
 // load gateways
 // =============================================================================
 
-if ( %t ) then
-  mprintf("\tLoad gateways\n");
-  ilib_verbose(0);
-  exec( pathconvert(root_tlbx+"/sci_gateway/loader_gateway.sce",%f));
-end
+mprintf("\tLoad gateways\n");
+ilib_verbose(0);
+exec( pathconvert(root_tlbx+"/sci_gateway/loader_gateway.sce",%f));
 
 // Load and add help chapter
 // =============================================================================
@@ -47,13 +45,12 @@ end
 // add demos
 // =============================================================================
 
-if ( %t ) then
+
 if or(getscilabmode() == ["NW";"STD"]) then
     mprintf("\tLoad demos\n");
     pathdemos = pathconvert(root_tlbx+"/demos/lowdisc.dem.gateway.sce",%f,%t);
     add_demo("Low Discrepancy",pathdemos);
     clear pathdemos ;
-end
 end
 
 // =============================================================================
