@@ -1,6 +1,6 @@
-changelog of the Monte-Carlo Scilab Toolbox
+changelog of the Low Discrepancy Toolbox
 
-montecarlo (0.1)
+lowdisc (0.1)
     * Initial version
- -- Michaël Baudin <michael.baudin@scilab.org>  12 Dec 2008
+ -- Michael Baudin <michael.baudin@scilab.org>  12 Dec 2008
 

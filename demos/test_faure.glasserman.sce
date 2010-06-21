@@ -1,4 +1,8 @@
-// Copyright (C) 2008 - INRIA - Michael Baudin
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2009-2010 - DIGITEO - Michael Baudin
+//
+// This file must be used under the terms of the GNU LGPL license.
+//
 
 //
 // Prints the elements of Faure sequence, as presented in the following 

@@ -1,4 +1,7 @@
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
+//
+// This file must be used under the terms of the GNU LGPL license.
+//
 
 function test_runfromdemo ( demoscript , modulename )
   // Launch the unit tests of the module from the demonstrations.
