@@ -14,6 +14,7 @@
 #include <ctime>
 #include <sstream>
 #include <fstream>
+#include <cstring>
 
 using namespace std;
 
