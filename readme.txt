@@ -67,5 +67,7 @@ Acknowledgements
 
 Michael Baudin thanks John Burkardt for his help during 
 the development of this library.
+Thanks to Alan Cornet, Pierre Marechal for the technical help
+for this project.
 
 
