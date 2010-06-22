@@ -57,7 +57,7 @@ Author
 2008-2009 - INRIA - Michael Baudin
 2003-2009 - John Burkardt
 1994 - Paul Bratley, Bennett Fox, Harald Niederreiter
-1986-1986 - Bennett Fox
+1986-1988 - Bennett Fox
 
 Licence
 
