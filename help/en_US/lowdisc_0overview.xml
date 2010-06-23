@@ -316,29 +316,6 @@
   </refsection>
 
   <refsection>
-    <title>See Also</title>
-
-    <simplelist type="inline">
-      <member><link
-      linkend="lowdisc_sequences">lowdisc_sequences</link></member>
-
-      <member><link linkend="lowdisc_new">lowdisc_new</link></member>
-
-      <member><link linkend="lowdisc_cget">lowdisc_cget</link></member>
-
-      <member><link linkend="lowdisc_configure">lowdisc_configure</link></member>
-
-      <member><link linkend="lowdisc_display">lowdisc_display</link></member>
-
-      <member><link linkend="lowdisc_next">lowdisc_next</link></member>
-
-      <member><link linkend="lowdisc_terms">lowdisc_terms</link></member>
-
-      <member><link linkend="lowdisc_destroy">lowdisc_destroy</link></member>
-    </simplelist>
-  </refsection>
-
-  <refsection>
     <title>Acknowledgements</title>
     
     <para>
