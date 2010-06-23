@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * 
+ * This help file was generated from lowdisc_bitand.sci using help_from_sci().
+ * 
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_bitand" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <info>
+    <pubdate>$LastChangedDate: 23-Jun-2010 $</pubdate>
+  </info>
+
+  <refnamediv>
+    <refname>lowdisc_bitand</refname><refpurpose>Bitwise AND.</refpurpose>
+  </refnamediv>
+
+
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   z = lowdisc_bitand(x,y)
+   
+   </synopsis>
+</refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>x, y :</term>
+      <listitem><para>  scalars/vectors/matices/hypermatices of positives integers, x and y must have the same size</para></listitem></varlistentry>
+   <varlistentry><term>z :</term>
+      <listitem><para> scalar/vector/matrix/hypermatice</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+Given x,y two positives integers this function returns the decimal
+number whose the binary form is the AND of the binary representations
+of x and y.
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+// example 1 :
+// '1010110' : is the binary representation of 86
+// '1011011' : is the binary representation of 91
+// '1010010' : is the binary representation for the AND of binary representation 86 and 91
+// so the decimal number corresponding to the AND  applied to binary forms 86 and 91 is : 82
+x=86;
+lowdisc_dec2bin(x)
+y=91;
+lowdisc_dec2bin(y)
+z=bitand(x,y)
+lowdisc_dec2bin(z)
+// example 2 : the function is vectorized
+x=[12,45];
+y=[25,49];
+z=bitand(x,y)
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>INRIA - Farid BELAHCENE</member>
+   <member>2008 - INRIA - Pierre MARECHAL</member>
+   <member>2010 - DIGITEO - Michael Baudin</member>
+   </simplelist>
+</refsection>
+</refentry>
