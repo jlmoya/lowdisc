@@ -38,7 +38,7 @@ endfunction
 //   epsilon : a small number
 //
 function flag = assert_equal ( computed , expected )
-  if computed==expected then
+  if ( and ( computed==expected ) ) then
     flag = 1;
   else
     flag = 0;
