@@ -180,6 +180,8 @@ funmat = [
   "lowdisc_dec2bin"
   "lowdisc_bitor"
   "lowdisc_bitand"
+  "lowdisc_proj2d"
+  "lowdisc_ldgen"
   ];
 macrosdir = cwd +"../../macros";
 demosdir = cwd +"../../demos";

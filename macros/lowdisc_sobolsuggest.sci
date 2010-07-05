@@ -35,7 +35,13 @@ function [nsim,skip,leap] = lowdisc_sobolsuggest ( varargin )
   //    For integration problems, we take k = max ( ceil(log2(nsimmin)) , 2*dim , tau + dim - 1 )
   //    For optimization problems, we take k = max ( ceil(log2(nsimmin)) , tau + 1 ).
   //    We consider nsim = 2**k.
- //    
+  //
+  //    When the number of dimensions is greater than 6, the number 
+  //    of suggested simulations is huge. For example, in dimension 10,
+  //    the recommended number of simulations is ~10^9.
+  //    In this case, the user might want to use nsim = 2^ceil(log2(nsimmin))
+  //    instead.
+  //
   //    We return skip = 0 and leap = 0.
   //
   //    We might also be interested by the experiments in :
@@ -52,15 +58,19 @@ function [nsim,skip,leap] = lowdisc_sobolsuggest ( varargin )
   //
   // Examples
   //
-  // // See the minimum number of simulations for integration in dimension 4.
+  // // See the minimum number of simulations 
+  // // for integration in dimension 4.
   // [nsim,skip,leap] = lowdisc_sobolsuggest ( 4 )
-  // // See the number of simulations larger than 1000 for integration in dimension 4
+  // // See the number of simulations larger than 1000 
+  // // for integration in dimension 4
   // [nsim,skip,leap] = lowdisc_sobolsuggest ( 4 , 1000 )
-  // // See the number of simulations larger than 100 for global optimization in dimension 4
+  // // See the number of simulations larger than 100 
+  // // for global optimization in dimension 4
   // [nsim,skip,leap] = lowdisc_sobolsuggest ( 4 , 100 , 2 )
   // // In dimension 14, the value of tau is not available
   // [nsim,skip,leap] = lowdisc_sobolsuggest ( 14 , [] , 1 )
-  // // Caution : with global optimization purpose and default minimum number of simulations, 
+  // // Caution : with global optimization purpose and 
+  // // default minimum number of simulations, 
   // // this generates a very small number of simulations
   // [nsim,skip,leap] = lowdisc_sobolsuggest ( 14 , [] , 2 )
   //
@@ -71,7 +81,8 @@ function [nsim,skip,leap] = lowdisc_sobolsuggest ( varargin )
   //    mprintf("%20.0f %20.0f\n",nsimmin,nsim);
   //  end
   //
-  // // Use the minimum recommended number of simulations for integration in dimension 4.
+  // // Use the minimum recommended number of simulations 
+  // // for integration in dimension 4.
   // // Use Sobol
   // dim = 4;
   // [nsim,skip,leap] = lowdisc_sobolsuggest ( dim );
@@ -84,7 +95,8 @@ function [nsim,skip,leap] = lowdisc_sobolsuggest ( varargin )
   // lds = lowdisc_destroy(lds);
   // disp(computed)
   //
-  // // Use the minimum recommended number of simulations for integration in dimension 4.
+  // // Use the minimum recommended number of simulations 
+  // // for integration in dimension 4.
   // // Use fast Sobol
   // dim = 4;
   // [nsim,skip,leap] = lowdisc_sobolsuggest ( dim );
@@ -95,6 +107,17 @@ function [nsim,skip,leap] = lowdisc_sobolsuggest ( varargin )
   // lds = lowdisc_startup (lds);
   // [lds,experiments]=lowdisc_next(lds,nsim);
   // lds = lowdisc_destroy(lds);
+  //
+  // // Display recommended number of simulations 
+  // // for integration in various dimensions.
+  // // It grows extremely fast.
+  // mprintf("%-10s %-10s %-10s %-10s\n", ..
+  //   "dim", "nsim", "skip", "leap");
+  // for dim = 1:14; 
+  //   [nsim,skip,leap] = lowdisc_sobolsuggest ( dim , [] , 1 );
+  //   mprintf("%-10s %-10s %-10s %-10s\n", ..
+  //     string(dim), string(nsim), string(skip), string(leap));
+  // end
   //
   //  Authors
   //    Michael Baudin - 2010 - DIGITEO
