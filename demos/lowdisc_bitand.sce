@@ -12,12 +12,12 @@ x=86;
 lowdisc_dec2bin(x)
 y=91;
 lowdisc_dec2bin(y)
-z=bitand(x,y)
+z=lowdisc_bitand(x,y)
 lowdisc_dec2bin(z)
 // example 2 : the function is vectorized
 x=[12,45];
 y=[25,49];
-z=bitand(x,y)
+z=lowdisc_bitand(x,y)
 halt()   // Press return to continue
  
 //========= E N D === O F === D E M O =========//

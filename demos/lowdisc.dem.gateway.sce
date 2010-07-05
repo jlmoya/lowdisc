@@ -1,5 +1,5 @@
 // This file is released into the public domain
-// This help file was generated using helpupdate at 2010/6/23 - 13:16:57
+// This help file was generated using helpupdate at 2010/7/5 - 16:14:9
 demopath = get_absolute_file_path("lowdisc.dem.gateway.sce");
 subdemolist = [
 "test_sobolf.dim4", "test_sobolf.dim4.sce"; ..
@@ -22,6 +22,7 @@ subdemolist = [
 "lowdisc_ridigits", "lowdisc_ridigits.sce"; ..
 "lowdisc_reset", "lowdisc_reset.sce"; ..
 "lowdisc_radicalinv", "lowdisc_radicalinv.sce"; ..
+"lowdisc_proj2d", "lowdisc_proj2d.sce"; ..
 "lowdisc_primes10000", "lowdisc_primes10000.sce"; ..
 "lowdisc_primes1000", "lowdisc_primes1000.sce"; ..
 "lowdisc_primes100", "lowdisc_primes100.sce"; ..
@@ -31,6 +32,7 @@ subdemolist = [
 "lowdisc_next", "lowdisc_next.sce"; ..
 "lowdisc_new", "lowdisc_new.sce"; ..
 "lowdisc_methods", "lowdisc_methods.sce"; ..
+"lowdisc_ldgen", "lowdisc_ldgen.sce"; ..
 "lowdisc_haltonsuggest", "lowdisc_haltonsuggest.sce"; ..
 "lowdisc_get", "lowdisc_get.sce"; ..
 "lowdisc_fauresuggest", "lowdisc_fauresuggest.sce"; ..
@@ -46,5 +48,6 @@ subdemolist = [
 "lowdisc_binomialmod", "lowdisc_binomialmod.sce"; ..
 "lowdisc_binomial", "lowdisc_binomial.sce"; ..
 "lowdisc_bary", "lowdisc_bary.sce"; ..
+"bench_ldgen", "bench_ldgen.sce"; ..
 ];
 subdemolist(:,2) = demopath + subdemolist(:,2)

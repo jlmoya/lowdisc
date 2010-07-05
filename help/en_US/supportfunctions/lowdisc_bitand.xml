@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 23-Jun-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 05-Jul-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -48,6 +48,7 @@
 Given x,y two positives integers this function returns the decimal
 number whose the binary form is the AND of the binary representations
 of x and y.
+If dimension of x (and y) is superior than 1 then z(i) is equal to bitand(x(i),y(i)).
    </para>
    <para>
 </para>
@@ -65,12 +66,12 @@ x=86;
 lowdisc_dec2bin(x)
 y=91;
 lowdisc_dec2bin(y)
-z=bitand(x,y)
+z=lowdisc_bitand(x,y)
 lowdisc_dec2bin(z)
 // example 2 : the function is vectorized
 x=[12,45];
 y=[25,49];
-z=bitand(x,y)
+z=lowdisc_bitand(x,y)
 
    ]]></programlisting>
 </refsection>

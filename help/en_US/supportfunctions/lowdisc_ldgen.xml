@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * 
+ * This help file was generated from lowdisc_ldgen.sci using help_from_sci().
+ * 
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_ldgen" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <info>
+    <pubdate>$LastChangedDate: 05-Jul-2010 $</pubdate>
+  </info>
+
+  <refnamediv>
+    <refname>lowdisc_ldgen</refname><refpurpose>Returns uniform numbers from a low discrepancy sequence.</refpurpose>
+  </refnamediv>
+
+
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   [ evalf , u ] = intprb_ldgen ( callf , n )
+   [ evalf , u ] = intprb_ldgen ( callf , n , ldseq )
+   [ evalf , u ] = intprb_ldgen ( callf , n , ldseq , strict )
+   [ evalf , u ] = intprb_ldgen ( callf , n , ldseq , strict , verbose )
+   
+   </synopsis>
+</refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>callf :</term>
+      <listitem><para> a 1 x 1 matrix of floating point integers, the number of calls to the function.</para></listitem></varlistentry>
+   <varlistentry><term>n:</term>
+      <listitem><para> a 1 x 1 matrix of floating point integers, the spatial dimension.</para></listitem></varlistentry>
+   <varlistentry><term>ldseq :</term>
+      <listitem><para> a 1 x 1 matrix of strings, the name of the sequence.</para></listitem></varlistentry>
+   <varlistentry><term>strict :</term>
+      <listitem><para> a 1 x 1 matrix of boolean, set to %t to make so that evalf==callf. (default = %f)</para></listitem></varlistentry>
+   <varlistentry><term>verbose :</term>
+      <listitem><para> a 1 x 1 matrix of boolean, set to %t to enable verbose messages. (default = %f)</para></listitem></varlistentry>
+   <varlistentry><term>evalf :</term>
+      <listitem><para> a 1 x 1 matrix of floating point integers, the actual number of function evaluations. We have evalf &gt;= callf.</para></listitem></varlistentry>
+   <varlistentry><term>u :</term>
+      <listitem><para> a evalf x n matrix of doubles, the uniform random numbers in [0,1]^n.</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+In dimension n, generate more than callf experiments with
+low discrepancy sequence ldseq.
+   </para>
+   <para>
+Returns the number of suggested function evaluations evalf
+and the uniform numbers u in [0,1]^n.
+   </para>
+   <para>
+If strict is false, then the optimum number of simulations evalf is
+used. If strict is true, the number of simulations is equal to
+the required one, that is, we have evalf == callf.
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+// Generate more than 100 points from a Halton sequence in dimension 4
+callf = 100
+n = 4
+ldseq = "halton"
+[ evalf , u ] = ldgen ( callf , n , ldseq )
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>Michael Baudin - 2010 - DIGITEO</member>
+   </simplelist>
+</refsection>
+</refentry>

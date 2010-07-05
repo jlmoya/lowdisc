@@ -41,6 +41,15 @@ lds = lowdisc_startup (lds);
 lds = lowdisc_destroy(lds);
 halt()   // Press return to continue
  
+// See the number of simulations as the product of the
+// primes used in the Halton sequence.
+// It is assumed that leap = 0, skip = 0.
+prmat = lowdisc_primes100 ( );
+for n = 1 : 15
+disp([n prod(1:n)])
+end
+halt()   // Press return to continue
+ 
 //========= E N D === O F === D E M O =========//
 //
 // Load this script into the editor

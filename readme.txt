@@ -52,8 +52,8 @@ This component currently provides the following sequences:
 See the overview in the help provided with this toolbox.
 
 TODO 
- * change assert_typereal to assert_type with variable name and variable index
  * update the next to get all elements in one call
+ * change assert_typereal to assert_type with variable name and variable index
 
 Author
 

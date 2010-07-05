@@ -12,12 +12,12 @@ x=48;
 lowdisc_dec2bin(x)
 y=37;
 lowdisc_dec2bin(y)
-z=bitor(x,y)
+z=lowdisc_bitor(x,y)
 lowdisc_dec2bin(z)
 // example 2 : the function is vectorized
 x=[12,45];
 y=[25,49];
-z=bitor(x,y)
+z=lowdisc_bitor(x,y)
 halt()   // Press return to continue
  
 //========= E N D === O F === D E M O =========//

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * 
+ * This help file was generated from lowdisc_proj2d.sci using help_from_sci().
+ * 
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_proj2d" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <info>
+    <pubdate>$LastChangedDate: 05-Jul-2010 $</pubdate>
+  </info>
+
+  <refnamediv>
+    <refname>lowdisc_proj2d</refname><refpurpose>Plots 2 dimensional projections.</refpurpose>
+  </refnamediv>
+
+
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   lowdisc_proj2d ( nsim , n , u , dimensions )
+   
+   </synopsis>
+</refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>nsim :</term>
+      <listitem><para> a floating point integer, the number of experiments.</para></listitem></varlistentry>
+   <varlistentry><term>n :</term>
+      <listitem><para> a floating point integer, the spatial dimension.</para></listitem></varlistentry>
+   <varlistentry><term>u :</term>
+      <listitem><para> a nsim x n matrix of doubles, the numbers in the interval [0,1]^n</para></listitem></varlistentry>
+   <varlistentry><term>dimensions :</term>
+      <listitem><para> a p x 1 matrix of floating point integers, dimensions to plot.</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+Plots the 2 dimensionnal projections of u,
+with size nsim x n, where nsim is the number of
+simulations and n is the dimension of the space.
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+callf = 1.e2;
+n = 6;
+ldseq = "haltonf";
+strict = %t;
+[ evalf , u ] = intprb_ldgen ( callf , n , ldseq , strict );
+plot2Dproj ( u , 1 : n )
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>Michael Baudin - 2010 - DIGITEO</member>
+   </simplelist>
+</refsection>
+</refentry>

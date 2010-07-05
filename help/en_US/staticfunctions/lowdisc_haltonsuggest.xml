@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 23-Jun-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 05-Jul-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -74,6 +74,17 @@ We return skip = 0.
 If dimension is smaller than 400, we return leap = 409. If not we return leap = 0.
    </para>
    <para>
+Other authors has suggested to consider the number of
+simulations as a product of the bases.
+See "On the Optimal Halton Sequence", Chi, Mascagni and Warknock, Mathematics and
+Computers in Simulation 70 (2005) 9?21.
+In low dimensions, we could use "nsim = prod ( prmat ( 1 : n ) )"
+where n is the number of dimensions and prmat is a matrix of primes, as
+computed from "prmat = lowdisc_primes100 ( )".
+The problem is that this function grows extremely fast, and
+becomes unusable for n greater than 10.
+   </para>
+   <para>
 </para>
 </refsection>
 
@@ -113,6 +124,14 @@ lds = lowdisc_configure(lds,"-leap",leap);
 lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,nsim);
 lds = lowdisc_destroy(lds);
+
+// See the number of simulations as the product of the
+// primes used in the Halton sequence.
+// It is assumed that leap = 0, skip = 0.
+prmat = lowdisc_primes100 ( );
+for n = 1 : 15
+disp([n prod(1:n)])
+end
 
    ]]></programlisting>
 </refsection>
