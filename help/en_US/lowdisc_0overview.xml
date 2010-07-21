@@ -107,6 +107,21 @@
   </refsection>
 
   <refsection>
+    <title>Quick Start</title>
+
+    <para>The following example creates 1000 points from the Sobol sequence.</para>
+
+   <programlisting role="example"><![CDATA[
+rng = lowdisc_new("sobolf");
+rng = lowdisc_configure(rng,"-dimension",4);
+rng = lowdisc_startup (rng);
+[rng,computed]=lowdisc_next(rng,1000);
+rng = lowdisc_destroy(rng);
+   ]]></programlisting>
+
+  </refsection>
+
+  <refsection>
     <title>Sources of Sequences</title>
 
     <para>Although the random number toolbox provides the same interface for
@@ -252,6 +267,40 @@
 
       </itemizedlist></para>
   </refsection>
+
+  <refsection>
+    <title>Efficiency of Quasi Monte-Carlo</title>
+<para>
+The actual efficiency of quasi-Monte-Carlo methods over crude Monte-Carlo
+may depend on the nature of the function to be integrated and
+the number of variables n.
+          </para>
+
+<para>
+In "A primer for the Monte-Carlo method", Sobol suggests 
+the following. If all the variables are
+equally important and n is large (say, n>15), then there is no
+advantage in switching to quasi-Monte-Carlo. However, if all the
+variables are independent or if the dependence on xi decreases as
+i increases (in other words, the initial coordinates are the leading ones),
+one can expect a considerable benefit for QMC, even if n is
+large (from n=10 to n=100, may be 1000).
+          </para>
+
+<para>
+Caflish, Morokoff and Owen defined the effective dimension of a function
+in the superposition or in the truncation sense. Both these definitions
+are making use of the functional ANOVA decomposition and lead
+to global sensitivity indices, which normalized versions were defined
+by Sobol.
+Functions with a small effective dimension dT are easy to integrate as long
+as the point set used has good properties for its projections over the first dT
+coordinates. The original Halton sequence should be quite sensitive to the
+effective dimension dT, since we know its projections deteriorate quickly as
+the dimension increases.
+          </para>
+  </refsection>
+
 
   <refsection>
     <title>TODO</title>
