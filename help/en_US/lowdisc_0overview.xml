@@ -109,7 +109,7 @@
   <refsection>
     <title>Quick Start</title>
 
-    <para>The following example creates 1000 points from the Sobol sequence.</para>
+    <para>The following example creates 1000 points in dimension 4 from the Sobol sequence.</para>
 
    <programlisting role="example"><![CDATA[
 rng = lowdisc_new("sobolf");
