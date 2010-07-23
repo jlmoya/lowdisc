@@ -2,7 +2,7 @@ changelog of the Low Discrepancy Toolbox
 
 lowdisc (0.1)
     * Initial version
- -- Michael Baudin <michael.baudin@scilab.org>  12 Dec 2008
+ -- Michael Baudin <michael.baudin@scilab.org>  June 2010
 
 lowdisc (0.2)
     * Improved the computation of Faure generator matrix (vectorization).
