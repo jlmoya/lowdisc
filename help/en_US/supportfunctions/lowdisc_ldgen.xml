@@ -77,11 +77,16 @@ the required one, that is, we have evalf == callf.
 <refsection>
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
-// Generate more than 100 points from a Halton sequence in dimension 4
+// Generate more than 100 points from a fast Halton sequence in dimension 4
 callf = 100
 n = 4
-ldseq = "halton"
+ldseq = "haltonf"
 [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq )
+
+// Generate the suggested number of points from the fast Faure sequence.
+[ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "fauref" )
+// Generate exactly 100 points (this is not recommended, it may increase the discrepancy).
+[ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "fauref" , %t )
 
    ]]></programlisting>
 </refsection>
