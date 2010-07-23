@@ -114,11 +114,26 @@ endfunction
 //     The binomial coefficients are computed modulo basis
 // References
 //   Monte-Carlo methods in Financial Engineering, Paul Glasserman
+// Note
+//   If i = 1, we get the Upper Triangular Pascal matrix.
 // Test : 
-// faurematrix(3,2) = [1 2 4; 0 1 4; 0 0 1]
-// faurematrix(2,1) = [1 1; 0 1]
-// faurematrix(2,2) = [1 2; 0 1]
-// faurematrix ( 5 , 1 );
+// _fauremat(3,2) 
+// expected = [
+//   1 2 4
+//   0 1 4
+//   0 0 1
+// ]
+// _fauremat(2,1) 
+// expected = [
+//   1 1
+//   0 1
+// ]
+// _fauremat(2,2) 
+// expected = [
+//   1 2 
+//   0 1
+// ]
+// _fauremat(5,1)
 // expected = [
 //     1.    1.    1.    1.    1.                        
 //     0.    1.    2.    3.    4.  
@@ -126,22 +141,19 @@ endfunction
 //     0.    0.    0.    1.    4.  
 //     0.    0.    0.    0.    1.                        
 // ];
-// faurematrix ( 5 , 1 );
+// _fauremat(5,2)
 // expected = [
-//     1.    1.    1.    1.    1.                        
-//     0.    1.    2.    3.    4.  
-//     0.    0.    1.    3.    6.  
-//     0.    0.    0.    1.    4.  
-//     0.    0.    0.    0.    1.                        
+//    1    2    4    8     16  
+//    0    1    4    12    32  
+//    0    0    1    6     24  
+//    0    0    0    1     8   
+//    0    0    0    0     1   
 // ];
 //
 function c = _fauremat ( r , i )
+  c = zeros(r,r)
   for m = 1:r
-    for n = 1:r
-      if ( m <= n ) then
-        c(m,n) = i^(n-m) * _binomial ( n-1 , m-1 );
-      end
-    end
+    c(m,m:r) = i.^((m:r)-m) .* _binomial ( (m:r)-1 , m-1 )
   end
 endfunction
 
@@ -197,6 +209,7 @@ endfunction
 // c = lowdisc_binomial ( 17 , -1 ) // 0
 // c = lowdisc_binomial ( 1.5 , 0.5 ) // 1.5
 // c = lowdisc_binomial ( 10000 , 134 ) // 2.050083865024873735e307
+// _binomial ( 5 , 0:5 ) // [1,5,10,10,5,1]
 //
 function b = _binomial ( n , k )
   if ( ( k < 0 ) | ( k > n ) ) then 
