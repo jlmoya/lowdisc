@@ -7,7 +7,7 @@ mode(1)
 callf = 100
 n = 4
 ldseq = "halton"
-[ evalf , u ] = ldgen ( callf , n , ldseq )
+[ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq )
 halt()   // Press return to continue
  
 //========= E N D === O F === D E M O =========//

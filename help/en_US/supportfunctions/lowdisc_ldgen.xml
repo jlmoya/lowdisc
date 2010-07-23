@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 06-Jul-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 23-Jul-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -27,10 +27,10 @@
 <refsynopsisdiv>
    <title>Calling Sequence</title>
    <synopsis>
-   [ evalf , u ] = intprb_ldgen ( callf , n )
-   [ evalf , u ] = intprb_ldgen ( callf , n , ldseq )
-   [ evalf , u ] = intprb_ldgen ( callf , n , ldseq , strict )
-   [ evalf , u ] = intprb_ldgen ( callf , n , ldseq , strict , verbose )
+   [ evalf , u ] = lowdisc_ldgen ( callf , n )
+   [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq )
+   [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq , strict )
+   [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq , strict , verbose )
    
    </synopsis>
 </refsynopsisdiv>
@@ -81,7 +81,7 @@ the required one, that is, we have evalf == callf.
 callf = 100
 n = 4
 ldseq = "halton"
-[ evalf , u ] = ldgen ( callf , n , ldseq )
+[ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq )
 
    ]]></programlisting>
 </refsection>

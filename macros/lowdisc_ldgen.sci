@@ -2,14 +2,14 @@
 //
 // This file must be used under the terms of the GNU LGPL license.
 
-function [ evalf , u ] = intprb_ldgen ( varargin )
+function [ evalf , u ] = lowdisc_ldgen ( varargin )
   // Returns uniform numbers from a low discrepancy sequence.
   //
   // Calling Sequence
-  //   [ evalf , u ] = intprb_ldgen ( callf , n )
-  //   [ evalf , u ] = intprb_ldgen ( callf , n , ldseq )
-  //   [ evalf , u ] = intprb_ldgen ( callf , n , ldseq , strict )
-  //   [ evalf , u ] = intprb_ldgen ( callf , n , ldseq , strict , verbose )
+  //   [ evalf , u ] = lowdisc_ldgen ( callf , n )
+  //   [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq )
+  //   [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq , strict )
+  //   [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq , strict , verbose )
   //
   // Parameters
   //   callf : a 1 x 1 matrix of floating point integers, the number of calls to the function.
@@ -36,14 +36,14 @@ function [ evalf , u ] = intprb_ldgen ( varargin )
   // callf = 100
   // n = 4
   // ldseq = "halton"
-  // [ evalf , u ] = ldgen ( callf , n , ldseq )
+  // [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq )
   //
   // Authors
   //   Michael Baudin - 2010 - DIGITEO
   
   [lhs, rhs] = argn();
   if ( rhs < 2 | rhs > 5 ) then
-    errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from %d to %d are expected."), "intprb_ldgen", rhs,2,5);
+    errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from %d to %d are expected."), "lowdisc_ldgen", rhs,2,5);
     error(errmsg)
   end
   //
@@ -99,7 +99,7 @@ function [ evalf , u ] = intprb_ldgen ( varargin )
     // Nothing to do
   else
     lds = lowdisc_destroy(lds);
-    msg = msprintf(gettext("%s: Cannot compute base: Unexpected sequence %s.") , "intprb_ldgen" ,ldseq);
+    msg = msprintf(gettext("%s: Cannot compute base: Unexpected sequence %s.") , "lowdisc_ldgen" ,ldseq);
     error ( msg )
   end
   if ( strict ) then
@@ -126,16 +126,16 @@ function [ evalf , u ] = intprb_ldgen ( varargin )
       leap = 0
     else
       lds = lowdisc_destroy(lds);
-      msg = msprintf(gettext("%s: Cannot compute [evalf,skip,leap] Unexpected sequence %s.") , "intprb_ldgen",ldseq);
+      msg = msprintf(gettext("%s: Cannot compute [evalf,skip,leap] Unexpected sequence %s.") , "lowdisc_ldgen",ldseq);
       error ( msg )
     end
   end
   if ( verbose ) then
-    mprintf(gettext("%s: Ldseq = %s.\n"), "intprb_ldgen" , string(ldseq) );
-    mprintf(gettext("%s: Evalf = %s.\n"), "intprb_ldgen" , string(evalf) );
-    mprintf(gettext("%s: Skip = %s.\n"), "intprb_ldgen" , string(skip) );
-    mprintf(gettext("%s: Leap = %s.\n"), "intprb_ldgen" , string(leap) );
-    mprintf(gettext("%s: Strict = %s.\n"), "intprb_ldgen" , string(strict) );
+    mprintf(gettext("%s: Ldseq = %s.\n"), "lowdisc_ldgen" , string(ldseq) );
+    mprintf(gettext("%s: Evalf = %s.\n"), "lowdisc_ldgen" , string(evalf) );
+    mprintf(gettext("%s: Skip = %s.\n"), "lowdisc_ldgen" , string(skip) );
+    mprintf(gettext("%s: Leap = %s.\n"), "lowdisc_ldgen" , string(leap) );
+    mprintf(gettext("%s: Strict = %s.\n"), "lowdisc_ldgen" , string(strict) );
   end
   lds = lowdisc_configure(lds,"-skip",skip);
   lds = lowdisc_configure(lds,"-leap",leap);

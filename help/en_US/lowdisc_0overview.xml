@@ -115,8 +115,34 @@
 rng = lowdisc_new("sobolf");
 rng = lowdisc_configure(rng,"-dimension",4);
 rng = lowdisc_startup (rng);
+// Get first point
+[rng,computed]=lowdisc_next(rng);
+// Get second point
+[rng,computed]=lowdisc_next(rng);
+// Get 1000 points
 [rng,computed]=lowdisc_next(rng,1000);
 rng = lowdisc_destroy(rng);
+   ]]></programlisting>
+
+    <para>Generate more than 100 points from a Halton sequence in dimension 4.</para>
+
+   <programlisting role="example"><![CDATA[
+   [ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "haltonf" )
+   [ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "fauref" )
+   ]]></programlisting>
+
+
+    <para>
+    The parameter evalf is the actual number of points in the sequence.
+    In order to reduce the discrepancy of the point set, it may be smaller
+    than the given number of calls.
+    In order to get the exact number of calls, activate the "strict" option.
+    While this is not recommended (it may increase the discrepancy of the
+    generated point set), it might be useful in some situations.
+    </para>
+
+   <programlisting role="example"><![CDATA[
+   [ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "fauref" , %t )
    ]]></programlisting>
 
   </refsection>
