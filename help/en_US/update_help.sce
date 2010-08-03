@@ -183,7 +183,7 @@ funmat = [
   "lowdisc_proj2d"
   "lowdisc_ldgen"
   "lowdisc_vandercorput"
-  "lowdisc_halton"
+  "lowdisc_haltonnext"
   "lowdisc_corrcoef"
   "lowdisc_sobolstart"
   ];
