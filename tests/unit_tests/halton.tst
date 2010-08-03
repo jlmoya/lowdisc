@@ -80,11 +80,11 @@ assert_close ( computed, expected, %eps );
 // Terms #2 to #6
 [lds,computed]=lowdisc_next(lds,5);
 expected= [
-    1./4. 2./3. 
-    3./4. 1./9.    
-    1./8. 4./9. 
-    5./8. 7./9. 
-    3./8. 2./9. 
+    1/4 2/3 
+    3/4 1/9    
+    1/8 4/9 
+    5/8 7/9 
+    3/8 2/9 
 ];
 assert_close ( computed, expected, %eps );
 lds = lowdisc_destroy(lds);

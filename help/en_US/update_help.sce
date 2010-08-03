@@ -182,6 +182,10 @@ funmat = [
   "lowdisc_bitand"
   "lowdisc_proj2d"
   "lowdisc_ldgen"
+  "lowdisc_vandercorput"
+  "lowdisc_halton"
+  "lowdisc_corrcoef"
+  "lowdisc_sobolstart"
   ];
 macrosdir = cwd +"../../macros";
 demosdir = cwd +"../../demos";

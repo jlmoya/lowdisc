@@ -32,16 +32,16 @@ function [ evalf , u ] = lowdisc_ldgen ( varargin )
   // the required one, that is, we have evalf == callf.
   //
   // Examples
-  // // Generate more than 100 points from a fast Halton sequence in dimension 4
-  // callf = 100
+  // // Generate more than 20 points from a fast Halton sequence in dimension 4
+  // callf = 20
   // n = 4
   // ldseq = "haltonf"
   // [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq )
   //
   // // Generate the suggested number of points from the fast Faure sequence.
-  // [ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "fauref" )
-  // // Generate exactly 100 points (this is not recommended, it may increase the discrepancy).
-  // [ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "fauref" , %t )
+  // [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "fauref" )
+  // // Generate exactly 20 points (this is not recommended, it may increase the discrepancy).
+  // [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "fauref" , %t )
   //
   // Authors
   //   Michael Baudin - 2010 - DIGITEO

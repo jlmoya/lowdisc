@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ * Ajouter ici d'éventuels commentaires sur le fichier XML
+-->
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_projections" xml:lang="fr"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns4="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <refnamediv>
+    <refname>Projections</refname>
+
+    <refpurpose>An overview of bad 2D projections.</refpurpose>
+  </refnamediv>
+
+  <refsection>
+    <title>Purpose</title>
+
+    <para>
+    The goal of this page is to gather experiments showing bad 2D projections 
+    for famous Low Disrepancy sequences.
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Halton Sequence</title>
+
+    <para>
+    The Halton sequence is known for having bad 2D projections.
+    </para>
+
+   <programlisting role="example"><![CDATA[
+// See the projection of dimensions (28,29)
+// as in "On the optimal Halton sequence", 
+// Chi, Mascagnib, Warnock
+// Mathematics and Computers in Simulation 70 (2005) 9?21
+// The paper contains an error : the faulty projection is 
+// (28,29) (primes 107,109) and not (27,28) (primes 103,107).
+lds = lowdisc_new("haltonf");
+lds = lowdisc_configure(lds,"-dimension",29);
+lds = lowdisc_startup (lds);
+[lds,u] = lowdisc_next (lds,4096);
+lds = lowdisc_destroy(lds);
+scf(); 
+lowdisc_proj2d ( u , [28 29] );
+// Compute the correlation coefficient for dimensions (28,29)
+lowdisc_corrcoef ( [u(:,28) u(:,29)] )
+// See our Leaped - Halton projection:
+// there is no obvious problem.
+[ evalf , u ] = lowdisc_ldgen ( 4096 , 29 , "haltonf" );
+scf(); 
+lowdisc_proj2d ( u , [28 29] );
+
+// See the projection of Halton sequence in dimensions (39,40)
+// as in "Computational Investigations of Low-Discrepancy Sequences", 
+// Kocis, Whiten
+// ACM Transactions on Mathematical Software, Vol. 23, No. 2, June 1997, Pages 266-294.
+lds = lowdisc_new("haltonf");
+lds = lowdisc_configure(lds,"-dimension",40);
+lds = lowdisc_startup (lds);
+[lds,u] = lowdisc_next (lds,2000);
+lds = lowdisc_destroy(lds);
+scf();
+lowdisc_proj2d ( u , [39 40] );
+// Compute the correlation coefficient for dimensions (39,40)
+lowdisc_corrcoef ( [u(:,39) u(:,40)] )
+// See our Leaped-Halton
+[ evalf , u ] = lowdisc_ldgen ( 2000 , 40 , "haltonf" );
+scf();
+lowdisc_proj2d ( u , [39 40] );
+
+// Search the worst Halton projection
+// for 2000 points in dimensions 40.
+lds = lowdisc_new("haltonf");
+lds = lowdisc_configure(lds,"-dimension",40);
+lds = lowdisc_startup (lds);
+[lds,u] = lowdisc_next (lds,2000);
+lds = lowdisc_destroy(lds);
+// Compute correlation coefficients
+c = lowdisc_corrcoef ( u );
+// Get the maximum correlation coefficient 
+// but remove the diagonal (unity) terms
+[m,k] = max(abs(c-eye(c)))
+// This is projection (35,36) :
+k
+// Get the correlation coefficient for this projection
+c(k(1),k(2))
+// Print this projection
+scf();
+lowdisc_proj2d ( u , k );
+   ]]></programlisting>
+  </refsection>
+
+  <refsection>
+    <title>Faure Sequence</title>
+
+   <programlisting role="example"><![CDATA[
+// Search the worst Faure projection
+lds = lowdisc_new("fauref");
+lds = lowdisc_configure(lds,"-dimension",40);
+lds = lowdisc_startup (lds);
+[lds,u] = lowdisc_next (lds,2000);
+lds = lowdisc_destroy(lds);
+// Compute correlation coefficients
+c = lowdisc_corrcoef ( u );
+// Get the maximum correlation coefficient 
+// but remove the diagonal (unity) terms
+[m,k] = max(abs(c-eye(c)))
+// This is projection (20,21) :
+k
+// Get the correlation coefficient for this projection
+c(k(1),k(2))
+// Print this projection
+scf();
+lowdisc_proj2d ( u , k );
+
+// See the projection of Faure sequence for 
+// 300 points in dimensions (39,40)
+// as in "Computational Investigations of Low-Discrepancy Sequences", 
+// Kocis, Whiten
+// ACM Transactions on Mathematical Software, Vol. 23, No. 2, June 1997, Pages 266-294.
+lds = lowdisc_new("fauref");
+lds = lowdisc_configure(lds,"-dimension",40);
+lds = lowdisc_startup (lds);
+[lds,u] = lowdisc_next (lds,300);
+lds = lowdisc_destroy(lds);
+scf();
+lowdisc_proj2d ( u , [39 40] );
+   ]]></programlisting>
+
+  </refsection>
+
+</refentry>
+

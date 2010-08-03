@@ -1,5 +1,5 @@
 // This file is released into the public domain
-// This help file was generated using helpupdate at 2010/7/23 - 11:19:4
+// This help file was generated using helpupdate at 2010/8/3 - 16:56:14
 demopath = get_absolute_file_path("lowdisc.dem.gateway.sce");
 subdemolist = [
 "test_sobolf.dim4", "test_sobolf.dim4.sce"; ..
@@ -15,6 +15,7 @@ subdemolist = [
 "test_faure.dim4", "test_faure.dim4.sce"; ..
 "test_faure.dim3", "test_faure.dim3.sce"; ..
 "runtests", "runtests.sce"; ..
+"lowdisc_vandercorput", "lowdisc_vandercorput.sce"; ..
 "lowdisc_stopall", "lowdisc_stopall.sce"; ..
 "lowdisc_startup", "lowdisc_startup.sce"; ..
 "lowdisc_soboltau", "lowdisc_soboltau.sce"; ..
@@ -34,10 +35,12 @@ subdemolist = [
 "lowdisc_methods", "lowdisc_methods.sce"; ..
 "lowdisc_ldgen", "lowdisc_ldgen.sce"; ..
 "lowdisc_haltonsuggest", "lowdisc_haltonsuggest.sce"; ..
+"lowdisc_halton", "lowdisc_halton.sce"; ..
 "lowdisc_get", "lowdisc_get.sce"; ..
 "lowdisc_fauresuggest", "lowdisc_fauresuggest.sce"; ..
 "lowdisc_destroy", "lowdisc_destroy.sce"; ..
 "lowdisc_dec2bin", "lowdisc_dec2bin.sce"; ..
+"lowdisc_corrcoef", "lowdisc_corrcoef.sce"; ..
 "lowdisc_configure", "lowdisc_configure.sce"; ..
 "lowdisc_cget", "lowdisc_cget.sce"; ..
 "lowdisc_bitxor", "lowdisc_bitxor.sce"; ..

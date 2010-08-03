@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 23-Jul-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 03-Aug-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -74,7 +74,7 @@ We return skip = 0.
 If dimension is smaller than 400, we return leap = 409. If not we return leap = 0.
    </para>
    <para>
-Other authors has suggested to consider the number of
+Other authors have suggested to consider the number of
 simulations as a product of the bases.
 See "On the Optimal Halton Sequence", Chi, Mascagni and Warknock, Mathematics and
 Computers in Simulation 70 (2005) 9?21.

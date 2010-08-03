@@ -38,7 +38,7 @@ function [nsim,skip,leap] = lowdisc_haltonsuggest ( varargin )
   //    We return skip = 0.
   //    If dimension is smaller than 400, we return leap = 409. If not we return leap = 0.
   //
-  //    Other authors has suggested to consider the number of 
+  //    Other authors have suggested to consider the number of 
   //    simulations as a product of the bases.
   //    See "On the Optimal Halton Sequence", Chi, Mascagni and Warknock, Mathematics and 
   //    Computers in Simulation 70 (2005) 9?21.

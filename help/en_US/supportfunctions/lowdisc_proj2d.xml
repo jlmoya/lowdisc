@@ -15,7 +15,7 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 23-Jul-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 03-Aug-2010 $</pubdate>
   </info>
 
   <refnamediv>
@@ -27,7 +27,7 @@
 <refsynopsisdiv>
    <title>Calling Sequence</title>
    <synopsis>
-   lowdisc_proj2d ( nsim , n , u , dimensions )
+   lowdisc_proj2d ( u , dimensions )
    
    </synopsis>
 </refsynopsisdiv>
@@ -35,10 +35,6 @@
 <refsection>
    <title>Parameters</title>
    <variablelist>
-   <varlistentry><term>nsim :</term>
-      <listitem><para> a floating point integer, the number of experiments.</para></listitem></varlistentry>
-   <varlistentry><term>n :</term>
-      <listitem><para> a floating point integer, the spatial dimension.</para></listitem></varlistentry>
    <varlistentry><term>u :</term>
       <listitem><para> a nsim x n matrix of doubles, the numbers in the interval [0,1]^n</para></listitem></varlistentry>
    <varlistentry><term>dimensions :</term>
@@ -49,9 +45,11 @@
 <refsection>
    <title>Description</title>
    <para>
-Plots the 2 dimensionnal projections of u,
+Plots the required two dimensionnal projections of u,
 with size nsim x n, where nsim is the number of
 simulations and n is the dimension of the space.
+This function allows to see all the 2 dimensionnal projections
+of a multivariate vector u.
    </para>
    <para>
 </para>
@@ -64,8 +62,18 @@ callf = 1.e2;
 n = 6;
 ldseq = "haltonf";
 strict = %t;
-[ evalf , u ] = intprb_ldgen ( callf , n , ldseq , strict );
-plot2Dproj ( u , 1 : n )
+[ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq );
+// See all possible projections.
+lowdisc_proj2d ( u , 1:n )
+// See all projections for dimensions 2,3,6.
+scf();
+lowdisc_proj2d ( u , [2,3,6] )
+// See projection (3,6)
+scf();
+lowdisc_proj2d ( u , [3,6] )
+// In this case, we could also use :
+scf();
+plot( u(:,3) , u(:,6) )
 
    ]]></programlisting>
 </refsection>
