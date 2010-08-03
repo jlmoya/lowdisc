@@ -407,6 +407,10 @@ the dimension increases.
     Thanks to Alan Cornet, Pierre Marechal for the technical help
     for this project.
     </para>
+    <para>
+    Thanks to Jean-Philippe Chancelier for finding bugs in the
+    source code of the gateway.
+    </para>
 
   </refsection>
 

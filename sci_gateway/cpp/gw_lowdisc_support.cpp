@@ -70,39 +70,39 @@ int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type )
 {
 	if ( GetType(ivar) != expected_type )
 	{
-		if ( expected_type = sci_strings ) {
+		if ( expected_type == sci_strings ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: String expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_matrix ) {
+		} else if ( expected_type == sci_matrix ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: Matrix expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_poly ) {
+		} else if ( expected_type == sci_poly ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: Polynomial expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_boolean ) {
+		} else if ( expected_type == sci_boolean ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: Boolean expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_sparse ) {
+		} else if ( expected_type == sci_sparse ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: Sparse expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_matlab_sparse ) {
+		} else if ( expected_type == sci_matlab_sparse ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: Matlab Sparse expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_ints ) {
+		} else if ( expected_type == sci_ints ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: Integer expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_handles ) {
+		} else if ( expected_type == sci_handles ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: Handle expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_u_function ) {
+		} else if ( expected_type == sci_u_function ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: U-Function expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_c_function ) {
+		} else if ( expected_type == sci_c_function ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: C-Function expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_lib ) {
+		} else if ( expected_type == sci_lib ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: Library expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_list ) {
+		} else if ( expected_type == sci_list ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: List expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_tlist ) {
+		} else if ( expected_type == sci_tlist ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: TList expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_mlist ) {
+		} else if ( expected_type == sci_mlist ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: MList expected.\n"),fname,ivar);
-		} else if ( expected_type = sci_lufact_pointer ) {
+		} else if ( expected_type == sci_lufact_pointer ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: LUFACT expected.\n"),fname,ivar);
-		//} else if ( expected_type = sci_implicit_poly ) {
+		//} else if ( expected_type == sci_implicit_poly ) {
 			//Scierror(204,_("%s: Wrong type for input argument #%d: Implicit polynomial expected.\n"),fname,ivar);
-		//} else if ( expected_type = sci_intrinsic_function ) {
+		//} else if ( expected_type == sci_intrinsic_function ) {
 			//Scierror(204,_("%s: Wrong type for input argument #%d: Intrinsic function expected.\n"),fname,ivar);
 		} else {
 			Scierror(204,_("%s: Wrong type for input argument #%d: <Unknown data type> expected.\n"),fname,ivar);
