@@ -7,7 +7,7 @@
 
 
 
-function this = ldbase_new ()
+function this = ldbase_new ( speed )
 
   this = tlist([
     "LDBASE"
@@ -17,6 +17,7 @@ function this = ldbase_new ()
     "startedup"
     "skip"
     "leap"
+    "speed"
     ])
   //
   // Configurable options
@@ -26,6 +27,16 @@ function this = ldbase_new ()
   this.skip = 0
   this.leap = 0
   this.startedup = %f
+  assert_typestring ( speed )
+  this.speed = speed
 endfunction
 
+
+// Generates an error if the given variable is not of type string
+function assert_typestring ( var )
+  if ( type ( var ) <> 10 ) then
+    errmsg = msprintf(gettext("%s: Expected string variable but got %s instead"),"assert_typestring", typeof(var) );
+    error(errmsg);
+  end
+endfunction
 

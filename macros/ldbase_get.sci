@@ -13,6 +13,8 @@ function value = ldbase_get ( this , key )
     value = this.startedup
   case "-index" then
     value = this.index
+  case "-speed" then
+    value = this.speed;
   else
     errmsg = msprintf(gettext("%s: Unknown key %s"),"ldbase_get",key);
     error(errmsg);

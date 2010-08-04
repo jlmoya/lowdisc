@@ -15,7 +15,7 @@ function this = ldsobolf_new ()
     "dimmax"
     "nbsimmax"
     ])
-  this.baseobj = ldbase_new ()
+  this.baseobj = ldbase_new ( "fast" )
   this.dimmax = 1111
   this.nbsimmax = 2^30 - 1
 endfunction

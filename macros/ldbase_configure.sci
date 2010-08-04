@@ -25,8 +25,7 @@ function this = ldbase_configure (this,key,value)
     assert_positive ( value ); 
     this.leap = value;
   else
-    errmsg = msprintf ( gettext ( "%s: Unknown key %s" ) , ...
-    "ldfaure_configure" , key)
+    errmsg = msprintf ( gettext ( "%s: Unknown key %s" ) , "ldbase_configure" , key)
     error(errmsg)
   end
 endfunction

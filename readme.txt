@@ -54,7 +54,8 @@ See the overview in the help provided with this toolbox.
 TODO 
  * update the next to get all elements in one call
  * change assert_typereal to assert_type with variable name and variable index
- * update lowdisc_ldgen from the intprb module.
+ * synchronize the lowdisc_ldgen against the inprb_ldgen function in the intprb module : make a apifun module and make it depend on it.
+ * create separate functions for the slow (macros) versions of Reverse Halton, Niederreiter and Faure.
 
 Author
 

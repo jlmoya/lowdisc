@@ -29,6 +29,8 @@ function str = %LDBASE_string ( this )
   k = k + 1
   str(k) = msprintf("Started Up: %s\n", _tostring(this.startedup))
   k = k + 1
+  str(k) = msprintf("Speed: %s\n", _tostring(this.speed))
+  k = k + 1
 endfunction
 
 function s = _tostring ( x )

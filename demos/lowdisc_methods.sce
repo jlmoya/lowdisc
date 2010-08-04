@@ -3,20 +3,22 @@ mode(1)
 // Demo of lowdisc_methods.sci
 //
 
-halt()   // Press return to continue
- 
+// Get all the available sequences.
 seqmat = lowdisc_methods ()
 halt()   // Press return to continue
  
-// Get the maximum dimension for all sequences
+// Get the speed, maximum dimension and
+// maximum number of calls for all sequences
 seqmat = lowdisc_methods ();
+mprintf("%-20s %-10s %-10s %-10s\n", "Name" , ..
+"Speed" , "Max Dim" , "Max Call" );
 for seqname = seqmat'
 lds = lowdisc_new(seqname);
+speed = lowdisc_get(lds,"-speed");
 dimmax = lowdisc_get(lds,"-dimmax");
-mprintf("Sequence = %-20s\n", seqname );
-mprintf( "Maximum Dimension = %5d\n", dimmax );
 nbsimmax = lowdisc_get(lds,"-nbsimmax");
-mprintf( "Maximum Number of simulations = %5d\n", nbsimmax );
+mprintf("%-20s %-10s  %-10d %-10d\n", seqname , ..
+speed , dimmax , nbsimmax );
 lds = lowdisc_destroy(lds);
 end
 halt()   // Press return to continue

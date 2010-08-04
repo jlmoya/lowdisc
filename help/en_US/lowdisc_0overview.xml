@@ -130,25 +130,84 @@ rng = lowdisc_startup (rng);
 rng = lowdisc_destroy(rng);
    ]]></programlisting>
 
-    <para>Generate more than 100 points from a Halton sequence in dimension 4.</para>
+    <para>
+    The following example generates more than 100 points from a Halton and 
+    Faure sequences in dimension 4.
+    This is a simplified use of the library, where we know in advance the number
+    of experiments to perform.
+    The generated low discrepancy sequence tries to use "optimal" settings,
+    based on the parameters suggested in the bibliography.
+    </para>
 
    <programlisting role="example"><![CDATA[
    [ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "haltonf" )
    [ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "fauref" )
    ]]></programlisting>
 
-
     <para>
     The parameter evalf is the actual number of points in the sequence.
-    In order to reduce the discrepancy of the point set, it may be smaller
+    In order to reduce the discrepancy of the point set, it may be larger 
     than the given number of calls.
     In order to get the exact number of calls, activate the "strict" option.
     While this is not recommended (it may increase the discrepancy of the
     generated point set), it might be useful in some situations.
+    This is done in the following example, where we generate
+    exactly 100 points from the Faure sequence.
     </para>
 
    <programlisting role="example"><![CDATA[
    [ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "fauref" , %t )
+   ]]></programlisting>
+
+    <para>
+    There are currently 5 sequences available in two flavors:
+    slow sequences are based on macros and fast sequences are based
+    on compiled source code.
+    The function lowdisc_methods returns the list of available
+    sequences. The following script displays the available sequences
+    and a table displaying the speed, maximum dimension and
+    maximum number of calls for all sequences.
+    </para>
+
+   <programlisting role="example"><![CDATA[
+// Get all the available sequences.
+seqmat = lowdisc_methods ()
+
+// Get the speed, maximum dimension and
+// maximum number of calls for all sequences
+seqmat = lowdisc_methods ();
+mprintf("%-20s %-10s %-10s %-10s\n", "Name" , ..
+"Speed" , "Max Dim" , "Max Call" );
+for seqname = seqmat'
+lds = lowdisc_new(seqname);
+speed = lowdisc_get(lds,"-speed");
+dimmax = lowdisc_get(lds,"-dimmax");
+nbsimmax = lowdisc_get(lds,"-nbsimmax");
+mprintf("%-20s %-10s  %-10d %-10d\n", seqname , ..
+speed , dimmax , nbsimmax );
+lds = lowdisc_destroy(lds);
+end
+   ]]></programlisting>
+
+    <para>
+    The previous script produces the following output.
+    When the maximum number of calls is equal to -1, this means
+    that there is, in principle, no limit in the number of
+    elements which can be generated.
+    </para>
+
+   <programlisting role="example"><![CDATA[
+Name                 Speed      Max Dim    Max Call  
+halton               slow        100        -1        
+haltonf              fast        100        2147483647
+faure                slow        541        -1        
+fauref               fast        541        2147483647
+reversehalton        slow        100        -1        
+reversehaltonf       fast        100        2147483647
+sobol                slow        40         1073741823
+sobolf               fast        1111       1073741823
+niederreiter-base-2  slow        20         2147483647
+niederreiterf        fast        50         2147483647
    ]]></programlisting>
 
   </refsection>

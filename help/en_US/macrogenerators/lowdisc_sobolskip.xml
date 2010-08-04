@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * 
+ * This help file was generated from lowdisc_sobolskip.sci using help_from_sci().
+ * 
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_sobolskip" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <info>
+    <pubdate>$LastChangedDate: 04-Aug-2010 $</pubdate>
+  </info>
+
+  <refnamediv>
+    <refname>lowdisc_sobolskip</refname><refpurpose>Skip elements in the Sobol sequence.</refpurpose>
+  </refnamediv>
+
+
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>skip :</term>
+      <listitem><para> a 1 x 1 matrix of floating point integers, the number of elements to discard</para></listitem></varlistentry>
+   <varlistentry><term>dim_num :</term>
+      <listitem><para> a 1 x 1 matrix of floating point integers, the number of dimensions</para></listitem></varlistentry>
+   <varlistentry><term>lastq :</term>
+      <listitem><para> a dim_num x 1 matrix of floating point integers, the numerators of the last vector generated</para></listitem></varlistentry>
+   <varlistentry><term>count :</term>
+      <listitem><para> a 1 x 1 matrix of floating point integers, the index of the element in the sequence</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+The only difference with lowdisc_sobolnext is that we do not generate the
+vector quasi.
+   </para>
+   <para>
+This routine is designed to be used with the lowdisc_sobolnext() and lowdisc_sobolstart()
+functions.
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>Michael Baudin - 2008-2009 - INRIA</member>
+   <member>Michael Baudin - 2010 - DIGITEO</member>
+   </simplelist>
+</refsection>
+</refentry>

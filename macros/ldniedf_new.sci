@@ -20,7 +20,7 @@ function this = ldniedf_new ()
     "dimmax"
     "nbsimmax"
     ])
-  this.baseobj = ldbase_new ()
+  this.baseobj = ldbase_new ( "fast" )
   //
   // Configurable options
   this.base = 2

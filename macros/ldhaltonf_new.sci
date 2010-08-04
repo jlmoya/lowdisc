@@ -16,7 +16,7 @@ function this = ldhaltonf_new ()
     "primessize"
     "nbsimmax"
     ])
-  this.baseobj = ldbase_new ()
+  this.baseobj = ldbase_new ( "fast" )
   //
   // Configurable options
   // This makes the component available up to dimension 100

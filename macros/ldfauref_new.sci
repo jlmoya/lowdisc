@@ -18,7 +18,7 @@ function this = ldfauref_new ()
     ])
   //
   // Configurable options
-  this.baseobj = ldbase_new ()
+  this.baseobj = ldbase_new ( "fast" )
   // This makes the component available up to dimension 100
   this.primeslist = lowdisc_primes100 ( )
   //

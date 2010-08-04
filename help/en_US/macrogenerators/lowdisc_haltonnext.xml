@@ -2,11 +2,11 @@
 
 <!--
  * 
- * This help file was generated from lowdisc_halton.sci using help_from_sci().
+ * This help file was generated from lowdisc_haltonnext.sci using help_from_sci().
  * 
  -->
 
-<refentry version="5.0-subset Scilab" xml:id="lowdisc_halton" xml:lang="en"
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_haltonnext" xml:lang="en"
           xmlns="http://docbook.org/ns/docbook"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           xmlns:svg="http://www.w3.org/2000/svg"
@@ -15,11 +15,11 @@
           xmlns:db="http://docbook.org/ns/docbook">
 
   <info>
-    <pubdate>$LastChangedDate: 03-Aug-2010 $</pubdate>
+    <pubdate>$LastChangedDate: 04-Aug-2010 $</pubdate>
   </info>
 
   <refnamediv>
-    <refname>lowdisc_halton</refname><refpurpose>Returns the next element of the Halton sequence.</refpurpose>
+    <refname>lowdisc_haltonnext</refname><refpurpose>Returns the next element of the Halton sequence.</refpurpose>
   </refnamediv>
 
 
@@ -27,7 +27,7 @@
 <refsynopsisdiv>
    <title>Calling Sequence</title>
    <synopsis>
-   next = lowdisc_halton ( dimension , index , primemat )
+   next = lowdisc_haltonnext ( dimension , index , primemat )
    
    </synopsis>
 </refsynopsisdiv>
@@ -62,15 +62,15 @@ Generates the next element of the Halton sequence.
 primemat = lowdisc_primes100 ( );
 dimension = 2;
 // Generate element #0 of the Halton sequence in dimension 2
-next = lowdisc_halton ( dimension , 0 , primemat )
+next = lowdisc_haltonnext ( dimension , 0 , primemat )
 // Generate element #1 of the Halton sequence in dimension 2
-next = lowdisc_halton ( dimension , 1 , primemat )
+next = lowdisc_haltonnext ( dimension , 1 , primemat )
 // Generate element #2 of the Halton sequence in dimension 2
-next = lowdisc_halton ( dimension , 2 , primemat )
+next = lowdisc_haltonnext ( dimension , 2 , primemat )
 
 // Generate some elements
 for i = 0 : 2^7-1
-next(i+1,1:dimension) = lowdisc_halton ( dimension , i , primemat );
+next(i+1,1:dimension) = lowdisc_haltonnext ( dimension , i , primemat );
 end
 // Plot them
 plot ( next(:,1) , next(:,2) , "bo" )

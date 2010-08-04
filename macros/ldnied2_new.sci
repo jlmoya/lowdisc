@@ -19,7 +19,7 @@ function this = ldnied2_new ()
     "nbsimmax"
     "maxe"
     ])
-  this.baseobj = ldbase_new ()
+  this.baseobj = ldbase_new ( "slow" )
   this.dimmax = 20
   this.nbits = 31
   this.nbsimmax = 2^(this.nbits) - 1

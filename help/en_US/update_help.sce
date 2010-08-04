@@ -182,10 +182,22 @@ funmat = [
   "lowdisc_bitand"
   "lowdisc_proj2d"
   "lowdisc_ldgen"
+  "lowdisc_corrcoef"
+  ];
+macrosdir = cwd +"../../macros";
+demosdir = cwd +"../../demos";
+modulename = "lowdisc";
+helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename )
+
+//
+// Generate the macros-based generator help
+helpdir = fullfile(cwd,"macrogenerators");
+funmat = [
   "lowdisc_vandercorput"
   "lowdisc_haltonnext"
-  "lowdisc_corrcoef"
   "lowdisc_sobolstart"
+  "lowdisc_sobolskip"
+  "lowdisc_sobolnext"
   ];
 macrosdir = cwd +"../../macros";
 demosdir = cwd +"../../demos";

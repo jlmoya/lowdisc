@@ -18,7 +18,7 @@ function this = ldsobol_new ()
     "dimmax"
     "nbsimmax"
     ])
-  this.baseobj = ldbase_new ()
+  this.baseobj = ldbase_new ( "slow" )
   this.dimmax = 40
   this.nbsimmax = 2^30 - 1
   this.v = []
