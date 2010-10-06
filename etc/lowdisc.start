@@ -10,6 +10,11 @@
 
 mprintf("Start Low Discrepancy\n");
 
+if ( isdef("lowdisclib") ) then
+	warning("	Library is already loaded");
+        return;
+end
+
 etc_tlbx  = get_absolute_file_path("lowdisc.start");
 etc_tlbx  = getshortpathname(etc_tlbx);
 root_tlbx = strncpy( etc_tlbx, length(etc_tlbx)-length("\etc\") );
