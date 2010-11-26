@@ -2,11 +2,11 @@
 
 <!--
  * 
- * This help file was generated from lowdisc_destroy.sci using help_from_sci().
+ * This help file was generated from lowdisc_cget.sci using help_from_sci().
  * 
  -->
 
-<refentry version="5.0-subset Scilab" xml:id="lowdisc_destroy" xml:lang="en"
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_cget" xml:lang="en"
           xmlns="http://docbook.org/ns/docbook"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           xmlns:svg="http://www.w3.org/2000/svg"
@@ -14,12 +14,9 @@
           xmlns:mml="http://www.w3.org/1998/Math/MathML"
           xmlns:db="http://docbook.org/ns/docbook">
 
-  <info>
-    <pubdate>$LastChangedDate: 04-Aug-2010 $</pubdate>
-  </info>
 
   <refnamediv>
-    <refname>lowdisc_destroy</refname><refpurpose>Destroy the current object.</refpurpose>
+    <refname>lowdisc_cget</refname><refpurpose>Returns the value associated with the given key.</refpurpose>
   </refnamediv>
 
 
@@ -27,7 +24,7 @@
 <refsynopsisdiv>
    <title>Calling Sequence</title>
    <synopsis>
-   this = lowdisc_destroy (this)
+   value = lowdisc_cget (this,key)
    
    </synopsis>
 </refsynopsisdiv>
@@ -37,14 +34,18 @@
    <variablelist>
    <varlistentry><term>this:</term>
       <listitem><para> the current object</para></listitem></varlistentry>
+   <varlistentry><term>key:</term>
+      <listitem><para> a string. The name of the option to get. All options which can be set with lowdisc_configure can be get with lowdisc_cget.</para></listitem></varlistentry>
+   <varlistentry><term>value:</term>
+      <listitem><para> the value associated with the key.</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
 <refsection>
    <title>Description</title>
    <para>
-This function requires to take the current object both as an input
-and an output argument.
+This command allows to get the current state of the object,
+which has been configured with the lowdisc_configure command.
    </para>
    <para>
 </para>
@@ -54,6 +55,11 @@ and an output argument.
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
 lds = lowdisc_new("faure");
+lds = lowdisc_configure(lds,"-dimension",3);
+method = lowdisc_cget(lds,"-method")
+nbdim = lowdisc_cget(lds,"-dimension")
+i = lowdisc_cget(lds,"-sequenceindex")
+verbose = lowdisc_cget(lds,"-verbose")
 lds
 lds = lowdisc_destroy(lds);
 
@@ -63,7 +69,6 @@ lds = lowdisc_destroy(lds);
 <refsection>
    <title>Authors</title>
    <simplelist type="vert">
-   <member>Michael Baudin - 2008-2009 - INRIA</member>
    <member>Michael Baudin - 2010 - DIGITEO</member>
    </simplelist>
 </refsection>

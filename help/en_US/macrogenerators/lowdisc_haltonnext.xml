@@ -14,9 +14,6 @@
           xmlns:mml="http://www.w3.org/1998/Math/MathML"
           xmlns:db="http://docbook.org/ns/docbook">
 
-  <info>
-    <pubdate>$LastChangedDate: 04-Aug-2010 $</pubdate>
-  </info>
 
   <refnamediv>
     <refname>lowdisc_haltonnext</refname><refpurpose>Returns the next element of the Halton sequence.</refpurpose>

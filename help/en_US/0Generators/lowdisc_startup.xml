@@ -2,11 +2,11 @@
 
 <!--
  * 
- * This help file was generated from lowdisc_cget.sci using help_from_sci().
+ * This help file was generated from lowdisc_startup.sci using help_from_sci().
  * 
  -->
 
-<refentry version="5.0-subset Scilab" xml:id="lowdisc_cget" xml:lang="en"
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_startup" xml:lang="en"
           xmlns="http://docbook.org/ns/docbook"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           xmlns:svg="http://www.w3.org/2000/svg"
@@ -14,12 +14,9 @@
           xmlns:mml="http://www.w3.org/1998/Math/MathML"
           xmlns:db="http://docbook.org/ns/docbook">
 
-  <info>
-    <pubdate>$LastChangedDate: 04-Aug-2010 $</pubdate>
-  </info>
 
   <refnamediv>
-    <refname>lowdisc_cget</refname><refpurpose>Returns the value associated with the given key.</refpurpose>
+    <refname>lowdisc_startup</refname><refpurpose>Startup the sequence.</refpurpose>
   </refnamediv>
 
 
@@ -27,7 +24,7 @@
 <refsynopsisdiv>
    <title>Calling Sequence</title>
    <synopsis>
-   value = lowdisc_cget (this,key)
+   this = lowdisc_startup (this)
    
    </synopsis>
 </refsynopsisdiv>
@@ -37,18 +34,20 @@
    <variablelist>
    <varlistentry><term>this:</term>
       <listitem><para> the current object</para></listitem></varlistentry>
-   <varlistentry><term>key:</term>
-      <listitem><para> a string. The name of the option to get. All options which can be set with lowdisc_configure can be get with lowdisc_cget.</para></listitem></varlistentry>
-   <varlistentry><term>value:</term>
-      <listitem><para> the value associated with the key.</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
 <refsection>
    <title>Description</title>
    <para>
-This command allows to get the current state of the object,
-which has been configured with the lowdisc_configure command.
+This command can only be executed once in the lifetime of the object.
+This function is sensitive to the "-skip" and "-leap" options.
+   </para>
+   <para>
+The mathematical definition of some sequences (e.g. Sobol, Niederreiter, Faure) imply
+that the first element of the sequence is the zero vector.
+In this implementation, this zero vector is ignored at startup and all sequences
+start with a non-zero vector.
    </para>
    <para>
 </para>
@@ -57,12 +56,23 @@ which has been configured with the lowdisc_configure command.
 <refsection>
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
-lds = lowdisc_new("faure");
-lds = lowdisc_configure(lds,"-dimension",3);
-method = lowdisc_cget(lds,"-method")
-nbdim = lowdisc_cget(lds,"-dimension")
-i = lowdisc_cget(lds,"-sequenceindex")
-verbose = lowdisc_cget(lds,"-verbose")
+lds = lowdisc_new("halton");
+lds = lowdisc_startup (lds);
+// Term #1
+[lds,computed] = lowdisc_next (lds);
+// Term #2
+[lds,computed] = lowdisc_next (lds);
+lds
+lds = lowdisc_destroy(lds);
+
+// See the -skip option in action
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-skip",12);
+lds = lowdisc_startup (lds);
+// Term #13
+[lds,computed] = lowdisc_next (lds);
+// Term #14
+[lds,computed] = lowdisc_next (lds);
 lds
 lds = lowdisc_destroy(lds);
 
@@ -72,6 +82,7 @@ lds = lowdisc_destroy(lds);
 <refsection>
    <title>Authors</title>
    <simplelist type="vert">
+   <member>Michael Baudin - 2008-2009 - INRIA</member>
    <member>Michael Baudin - 2010 - DIGITEO</member>
    </simplelist>
 </refsection>

@@ -111,6 +111,35 @@
     <title>Quick Start</title>
 
     <para>
+    The following example generates more than 20 points from a Halton and 
+    Faure sequences in dimension 4.
+    This is a simplified use of the library, where we know in advance the number
+    of experiments to perform.
+    The generated low discrepancy sequence tries to use "optimal" settings,
+    based on the parameters suggested in the bibliography.
+    </para>
+
+   <programlisting role="example"><![CDATA[
+   [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "haltonf" )
+   [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "fauref" )
+   ]]></programlisting>
+
+    <para>
+    The parameter evalf is the actual number of points in the sequence.
+    In order to reduce the discrepancy of the point set, it may be larger 
+    than the given number of calls.
+    In order to get the exact number of calls, activate the "strict" option.
+    While this is not recommended (it may increase the discrepancy of the
+    generated point set), it might be useful in some situations.
+    This is done in the following example, where we generate
+    exactly 20 points from the Faure sequence.
+    </para>
+
+   <programlisting role="example"><![CDATA[
+   [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "fauref" , %t )
+   ]]></programlisting>
+
+    <para>
     The following example creates 1000 points in dimension 4 from the Sobol sequence.
     This way of using the library allows to get a complete control over the 
     parameters of the sequence.
@@ -129,35 +158,6 @@ rng = lowdisc_startup (rng);
 // Get 1000 points
 [rng,computed]=lowdisc_next(rng,1000);
 rng = lowdisc_destroy(rng);
-   ]]></programlisting>
-
-    <para>
-    The following example generates more than 100 points from a Halton and 
-    Faure sequences in dimension 4.
-    This is a simplified use of the library, where we know in advance the number
-    of experiments to perform.
-    The generated low discrepancy sequence tries to use "optimal" settings,
-    based on the parameters suggested in the bibliography.
-    </para>
-
-   <programlisting role="example"><![CDATA[
-   [ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "haltonf" )
-   [ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "fauref" )
-   ]]></programlisting>
-
-    <para>
-    The parameter evalf is the actual number of points in the sequence.
-    In order to reduce the discrepancy of the point set, it may be larger 
-    than the given number of calls.
-    In order to get the exact number of calls, activate the "strict" option.
-    While this is not recommended (it may increase the discrepancy of the
-    generated point set), it might be useful in some situations.
-    This is done in the following example, where we generate
-    exactly 100 points from the Faure sequence.
-    </para>
-
-   <programlisting role="example"><![CDATA[
-   [ evalf , u ] = lowdisc_ldgen ( 100 , 4 , "fauref" , %t )
    ]]></programlisting>
 
     <para>

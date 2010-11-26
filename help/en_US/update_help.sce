@@ -3,99 +3,176 @@
 // Updates the .xml files by deleting existing files and 
 // creating them again from the .sci with help_from_sci.
 
-function helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename )
+function b = isContentUptodate ( content , filename )
+  // Check if a content matches a file.
+  // 
+  // Calling Sequence
+  //   b = isContentUptodate ( content , filename )
+  //
+  // Parameters
+  //   content : a 1x1 matrix of strings, the new content
+  //   filename : a 1x1 matrix of strings, the file to be checked.
+  //   b : a 1x1 matrix of booleans
+  //
+  // Description
+  //   Returns true if the <literal>filename</literal> is up-to-date, that is,
+  //   if the file does not require to be changed.
+  //   The file is to be updated if one of the following conditions is satisfied.
+  // <itemizedlist>
+  //   <listitem>
+  //     The file does not exist.
+  //   </listitem>
+  //   <listitem>
+  //     The file exists, but its content is not equal to <literal>content</literal>.
+  //     The content comparison ignores the leading and trailing blanks.
+  //   </listitem>
+  // </itemizedlist>
+  //   Last update : 02/09/2010.
+  //
+  // Example
+  //   // TODO...
+  //
+  // Author
+  //   2010 - DIGITEO - Michael Baudin
+  //   
+  
+  b = %t
+  if ( fileinfo(filename) == [] ) then
+    b = %f
+  else
+    txt = mgetl(filename)
+    if ( or ( stripblanks(content) <> stripblanks(txt) ) ) then
+      b = %f
+    end
+  end
+endfunction
+
+function b = fileUpdateIfNeeded ( content , filename )
+  // Update a file if this is needed.
+  //
+  // Calling Sequence
+  //   b = fileUpdateIfNeeded ( content , filename )
+  //
+  // Parameters
+  //   content : a 1x1 matrix of strings, the new content
+  //   filename : a 1x1 matrix of strings, the file to be checked.
+  //   b : a 1x1 matrix of booleans
+  //
+  // Description
+  //   Returns true if the <literal>filename</literal> is up-to-date, that is,
+  //   if the file was not changed.
+  //   Returns false if the file was changed.
+  //   The file is to be updated according to the rules of <literal>isContentUptodate</literal>.
+  //   Generates an error if the file was to be changed, but that was not possible.
+  //   Last update : 02/09/2010.
+  //
+  // Example
+  //   // TODO...
+  //
+  // Author
+  //   2010 - DIGITEO - Michael Baudin
+  //   
+
+  b = isContentUptodate ( content , filename )
+  if ( ~b ) then
+    r = mputl ( content , filename )
+    if ( ~r ) then
+      error(sprintf(gettext("%s: Unable to write xml file: %s\n"),"fileUpdateIfNeeded",filename));
+    end
+  end
+endfunction
+
+function helpupdate ( funarray , helpdir , macrosdir , demosdir , modulename , verbose )
   // Update the help and the demos from the .sci files.
   //
   // Calling Sequence
-  //   updatehelp ( funmat , helpdir , macrosdir , demosdir )
+  //   updatehelp ( funarray , helpdir , macrosdir , demosdir , modulename , verbose )
   //
   // Parameters
-  //   funmat : column matrix of strings. The list of functions to update
+  //   funarray : column matrix of strings. The list of functions to update
   //   helpdir : the help directory
   //   macrosdir : the macros directory
   //   demosdir : the demonstration directory
+  //   modulename: a 1x1 matrix of strings, the name of the module to update
+  //   verbose: a 1x1 matrix of booleans, verbose = %t prints messages
   //   modulename : the name of the module
   //
   // Description
   //   Update the .xml help files and the demos scripts
   //   from the macros corresponding to the function array
-  //   of strings funmat.
+  //   of strings funarray.
   //   The existing .xml files in the help dir which 
-  //   correspond to file in the funmat are deleted (Caution !).
+  //   correspond to file in the funarray are deleted (Caution !).
   //   Generates the .xml and the .sce files from the help_from_sci function.
   //   Generates a demonstration gateway.
   //
+  //   If demosdir is an empty matrix, do not generate the demonstrations.
+  //   Last update : 04/10/2010.
+  //
   // Author
   //   2010, Michael Baudin
-
+  
   if ( fileinfo ( helpdir ) == [] ) then
     error(sprintf(gettext("%s: Wrong help directory: %s does not exist.\n"),"updatehelp",helpdir));
   end
   if ( fileinfo ( macrosdir ) == [] ) then
     error(sprintf(gettext("%s: Wrong macros directory: %s does not exist.\n"),"updatehelp",macrosdir));
   end
-  if ( fileinfo ( demosdir ) == [] ) then
-    error(sprintf(gettext("%s: Wrong demos directory: %s does not exist.\n"),"updatehelp",demosdir));
-  end
-  //
-  // Count the number of files to be processed.
-  tobeprocessed = size(funmat,"*")
-  //
-  // 1. Delete the existing .xml help files in the helpdir
-  // which correspond to given function names.
-  filemat = ls(helpdir)';
-  for f = filemat
-    isxml = regexp(f,"/(.*).xml/");
-    kf = find(funmat==basename(f))
-    if ( isxml <> [] & kf <> [] ) then
-      xmlfile = fullfile ( helpdir , f )
-      mprintf("Deleting %s\n",xmlfile);
-      r = deletefile(xmlfile);
-      if ( ~r ) then
-        error(sprintf(gettext("%s: Unable to delete xml file: %s\n"),"updatehelp",xmlfile));
-      end
+  if ( demosdir <> [] ) then
+    if ( fileinfo ( demosdir ) == [] ) then
+      error(sprintf(gettext("%s: Wrong demos directory: %s does not exist.\n"),"updatehelp",demosdir));
     end
   end
+  
   //
   // 2. Generate each .xml and each .sce from the .sci
-  for funname = funmat'
-      scifile = fullfile ( macrosdir , funname + ".sci" )
-      mprintf("Processing %s\n",scifile);
-      [helptxt,demotxt]= help_from_sci (scifile)
+  flist = ls(macrosdir)';
+  for f = flist
+    issci = regexp(f,"/(.*).sci/");
+    kf = find(funarray==basename(f))
+    if ( issci <> [] & kf <> [] ) then
+      scifile = fullfile ( macrosdir , f )
+      if ( verbose ) then
+        mprintf("Processing %s\n",scifile);
+      end
+      funname = funarray(kf)
       xmlfile = fullfile ( helpdir , funname + ".xml" )
-      mprintf("  Writing xml %s\n",xmlfile);
-      r = mputl ( helptxt , xmlfile )
-      if ( ~r ) then
-        error(sprintf(gettext("%s: Unable to write xml file: %s\n"),"updatehelp",xmlfile));
+      // Generate the xml and the demo content
+      [helptxt,demotxt]= help_from_sci (scifile)
+      // Delete the "info" tag, containing the date (3 lines)
+      k = find(stripblanks(helptxt)=="<info>")
+      helptxt(k:k+2) = []
+      // Update the xml file, if necessary
+      isuptodate = fileUpdateIfNeeded ( helptxt , xmlfile )
+      if ( ~isuptodate & verbose ) then
+        changetxt = "XML Changed"
+        mprintf("  %s %s\n",changetxt,xmlfile);
       end
-      demofile = fullfile ( demosdir , funname + ".sce" )
-      mprintf("  Writing demo %s\n",demofile);
-      r = mputl ( demotxt , demofile )
-      if ( ~r ) then
-        error(sprintf(gettext("%s: Unable to write demo file: %s\n"),"updatehelp",demofile));
+      // Create the demo
+      if ( demosdir <> [] ) then
+        demofile = fullfile ( demosdir , funname + ".sce" )
+        // Update the demo script
+        header = []
+        header($+1) = "//"
+        header($+1) = "// This help file was automatically generated from "+funname+".sci using help_from_sci()."
+        header($+1) = "// PLEASE DO NOT EDIT"
+        header($+1) = "//"
+        footer = []
+        footer($+1) = msprintf("//\n");
+        footer($+1) = msprintf("// Load this script into the editor\n");
+        footer($+1) = msprintf("//\n");
+        footer($+1) = msprintf("filename = ""%s"";\n",funname + ".sce");
+        footer($+1) = msprintf("dname = get_absolute_file_path(filename);\n");
+        footer($+1) = msprintf("editor ( fullfile(dname,filename) );\n");
+        demotxt = [header;demotxt;footer]
+        // Update the demo file, if necessary
+        isuptodate = fileUpdateIfNeeded ( demotxt , demofile )
+        if ( ~isuptodate & verbose ) then
+          changetxt = "SCE Changed"
+          mprintf("  %s %s\n",changetxt,demofile);
+        end
       end
-  end
-  //
-  // 2.1 Update the demo script to include the editor command.
-  // This lets the user see the script.
-  //
-  for funname = funmat'
-      demofile = fullfile ( demosdir , funname + ".sce" )
-      mprintf("Updating %s\n",demofile);
-      [fd,err]=mopen(demofile ,"a")
-      if ( err <> 0 ) then
-        error(sprintf(gettext("%s: Unable to open demo file %s for update\n"),"updatehelp",demofile));
-      end
-      mfprintf(fd,"//\n");
-      mfprintf(fd,"// Load this script into the editor\n");
-      mfprintf(fd,"//\n");
-      mfprintf(fd,"filename = ""%s"";\n",funname + ".sce");
-      mfprintf(fd,"dname = get_absolute_file_path(filename);\n");
-      mfprintf(fd,"editor ( dname + filename );\n");
-      err=mclose(fd)
-      if ( err <> 0 ) then
-        error(sprintf(gettext("%s: Unable to close demo file %s for update\n"),"updatehelp",demofile));
-      end
+    end
   end
   //
   // 3. Generates the Demonstration gateway
@@ -103,39 +180,51 @@ function helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename )
   // handcrafted scripts which might have been written
   // by the user (and not generated by this function).
   // To make so, use the list of .sce files in the demo dir and 
-  /// not simply the funmat.
-  template = []
-  template ($+1) = "// This file is released into the public domain"
-  w=getdate()
-  strdate = sprintf("%d/%d/%d - %d:%d:%d",w(1),w(2),w(6),w(7),w(8),w(9))
-  template ($+1) = "// This help file was generated using helpupdate at " + strdate
-  template ($+1) = "demopath = get_absolute_file_path(""" + modulename + ".dem.gateway.sce"");"
-  template ($+1) = "subdemolist = ["
-  filemat = ls(demosdir)';
-  for f = filemat
-    issce = regexp(f,"/(.*).sce/");
-    isgateway = regexp(f,"/(.*).gateway.sce/");
-    if ( issce <> [] & isgateway == [] ) then
-      flen = length(f)
-      funname = part(f,[1:flen-4])
-      template($+1) = """" + funname + """, """ + funname + ".sce""; .."
+  /// not simply the funarray.
+  if ( demosdir <> [] ) then
+    gatetxt = []
+    gatetxt ($+1) = "// This help file was automatically generated using helpupdate"
+    gatetxt ($+1) = "// PLEASE DO NOT EDIT"
+    gatetxt ($+1) = "demopath = get_absolute_file_path(""" + modulename + ".dem.gateway.sce"");"
+    gatetxt ($+1) = "subdemolist = ["
+    flist = ls(demosdir)';
+    for f = flist
+      issce = regexp(f,"/(.*).sce/");
+      isgateway = regexp(f,"/(.*).gateway.sce/");
+      if ( issce <> [] & isgateway == [] ) then
+        flen = length(f)
+        funname = part(f,[1:flen-4])
+        gatetxt($+1) = """" + funname + """, """ + funname + ".sce""; .."
+      end
+    end
+    //
+    gatetxt ($+1) = "];"
+    gatetxt ($+1) = "subdemolist(:,2) = demopath + subdemolist(:,2)"
+    gatefile = fullfile ( demosdir , modulename+".dem.gateway.sce" )
+    // Update the gateway file, if necessary
+    isuptodate = fileUpdateIfNeeded ( gatetxt , gatefile )
+    if ( ~isuptodate & verbose ) then
+      changetxt = "SCE Gateway Changed"
+      mprintf("%s %s\n",changetxt,gatefile);
     end
   end
-  //
-  template ($+1) = "];"
-  template ($+1) = "subdemolist(:,2) = demopath + subdemolist(:,2)"
-  gatefile = fullfile ( demosdir , modulename+".dem.gateway.sce" )
-  mprintf("Writing demo Gateway %s\n",gatefile);
-  r = mputl ( template , gatefile )
-  if ( ~r ) then
-    error(sprintf(gettext("%s: Unable to write demo file: %s\n"),"updatehelp",demofile));
-  end
 endfunction
+
 //
 cwd = get_absolute_file_path("update_help.sce");
 //
 // Generate the object-oriented library help
 helpdir = cwd;
+funmat = [
+  "lowdisc_ldgen"
+  ];
+macrosdir = helpdir +"../../macros";
+demosdir = helpdir +"../../demos";
+modulename = "lowdisc";
+helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t )
+//
+// Generate the object-oriented library help
+helpdir = fullfile(cwd,"0generators");
 funmat = [
   "lowdisc_cget"
   "lowdisc_get"
@@ -145,10 +234,10 @@ funmat = [
   "lowdisc_next"
   "lowdisc_startup"
   ];
-macrosdir = helpdir +"../../macros";
-demosdir = helpdir +"../../demos";
+macrosdir = cwd +"../../macros";
+demosdir = cwd +"../../demos";
 modulename = "lowdisc";
-helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename )
+helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t )
 //
 // Generate the static functions help
 helpdir = fullfile(cwd,"staticfunctions");
@@ -168,7 +257,7 @@ funmat = [
 macrosdir = cwd +"../../macros";
 demosdir = cwd +"../../demos";
 modulename = "lowdisc";
-helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename )
+helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t )
 //
 // Generate the support functions help
 helpdir = fullfile(cwd,"supportfunctions");
@@ -187,7 +276,7 @@ funmat = [
 macrosdir = cwd +"../../macros";
 demosdir = cwd +"../../demos";
 modulename = "lowdisc";
-helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename )
+helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t )
 
 //
 // Generate the macros-based generator help
@@ -202,5 +291,5 @@ funmat = [
 macrosdir = cwd +"../../macros";
 demosdir = cwd +"../../demos";
 modulename = "lowdisc";
-helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename )
+helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t )
 
