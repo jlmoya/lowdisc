@@ -40,7 +40,7 @@
    <varlistentry><term>n:</term>
       <listitem><para> a 1 x 1 matrix of floating point integers, the spatial dimension.</para></listitem></varlistentry>
    <varlistentry><term>ldseq :</term>
-      <listitem><para> a 1 x 1 matrix of strings, the name of the sequence.</para></listitem></varlistentry>
+      <listitem><para> a 1 x 1 matrix of strings, the name of the sequence. (default ldseq = "sobolf"). The method can be equal to : "halton", "haltonf", "faure", "fauref", "reversehalton", "reversehaltonf", "sobol", "sobolf", "niederreiter-base-2", "niederreiterf". See below for details.</para></listitem></varlistentry>
    <varlistentry><term>strict :</term>
       <listitem><para> a 1 x 1 matrix of boolean, set to %t to make so that evalf==callf. (default = %f)</para></listitem></varlistentry>
    <varlistentry><term>verbose :</term>
@@ -64,8 +64,12 @@ and the uniform numbers u in [0,1]^n.
    </para>
    <para>
 If strict is false, then the optimum number of simulations evalf is
-used. If strict is true, the number of simulations is equal to
+used.
+If strict is true, the number of simulations is equal to
 the required one, that is, we have evalf == callf.
+   </para>
+   <para>
+The sequences which are available are described in depth in the lowdisc_new function.
    </para>
    <para>
 </para>

@@ -1,3 +1,7 @@
+//
+// This help file was automatically generated from lowdisc_bitxor.sci using help_from_sci().
+// PLEASE DO NOT EDIT
+//
 mode(1)
 //
 // Demo of lowdisc_bitxor.sci
@@ -49,4 +53,4 @@ halt()   // Press return to continue
 //
 filename = "lowdisc_bitxor.sce";
 dname = get_absolute_file_path(filename);
-editor ( dname + filename );
+editor ( fullfile(dname,filename) );

@@ -1,4 +1,6 @@
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
+//
+// This file must be used under the terms of the GNU LGPL license.
 
 // Updates the .xml files by deleting existing files and 
 // creating them again from the .sci with help_from_sci.

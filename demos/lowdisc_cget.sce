@@ -1,3 +1,7 @@
+//
+// This help file was automatically generated from lowdisc_cget.sci using help_from_sci().
+// PLEASE DO NOT EDIT
+//
 mode(1)
 //
 // Demo of lowdisc_cget.sci
@@ -19,4 +23,4 @@ halt()   // Press return to continue
 //
 filename = "lowdisc_cget.sce";
 dname = get_absolute_file_path(filename);
-editor ( dname + filename );
+editor ( fullfile(dname,filename) );

@@ -1,6 +1,5 @@
-// Scilab ( http://www.scilab.org/ ) - This file is part of Scilab
-// Copyright (C) 2008 - INRIA - Michael Baudin
 // Copyright (C) 2008 - INRIA - Allan CORNET
+// Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
@@ -8,64 +7,82 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
-mprintf("Start Low Discrepancy\n");
+function root_tlbx = loadlowdisclib ()
+
+    modulename = "Lowdisc"
+    mprintf("Start %s\n",modulename);
+
+    if ( isdef("lowdisclib") ) then
+        warning("	Library is already loaded");
+        return;
+    end
+
+    etc_tlbx  = get_absolute_file_path("lowdisc.start");
+    etc_tlbx  = getshortpathname(etc_tlbx);
+    root_tlbx = strncpy( etc_tlbx, length(etc_tlbx)-length("\etc\") );
+
+    //Load  functions library
+    // =============================================================================
+
+    if ( %t ) then
+        mprintf("\tLoad macros\n");
+        pathmacros = pathconvert( root_tlbx ) + "macros" + filesep();
+        lowdisclib  = lib(pathmacros);
+    end
+
+    // load gateways
+    // =============================================================================
+
+    if ( %t ) then
+        mprintf("\tLoad gateways\n");
+        ilib_verbose(0);
+        exec( pathconvert(root_tlbx+"/sci_gateway/loader_gateway.sce",%f));
+    end
+
+    // Load and add help chapter
+    // =============================================================================
+
+    if or(getscilabmode() == ["NW";"STD"]) then
+        mprintf("\tLoad help\n");
+        path_addchapter = pathconvert(root_tlbx+"/jar");
+        if ( isdir(path_addchapter) <> [] ) then
+            add_help_chapter(modulename, path_addchapter, %F);
+        end
+    end
+
+    // add demos
+    // =============================================================================
+
+    if or(getscilabmode() == ["NW";"STD"]) then
+        mprintf("\tLoad demos\n");
+        pathdemos = pathconvert(root_tlbx+"/demos/lowdisc.dem.gateway.sce",%f,%t);
+        add_demo(modulename,pathdemos);
+    end
+
+    // =============================================================================
+    
+    _lowdisc_startup()
+
+    // ====================================================================
+    // A Welcome message.
+
+    mprintf("\tType ""help lowdisc_overview"" for quick start.\n");
+    mprintf("\tType ""demo_gui()"" and search for ""%s"" for Demonstrations.\n",modulename);
+
+    // =============================================================================
+    // Create variables at level #0
+
+    lowdisclib = resume(lowdisclib)
+
+endfunction
 
 if ( isdef("lowdisclib") ) then
-	warning("	Library is already loaded");
-        return;
+    warning("	Library is already loaded (""ulink(); clear lowdisclib;"" to unload.)");
+    return;
 end
 
-etc_tlbx  = get_absolute_file_path("lowdisc.start");
-etc_tlbx  = getshortpathname(etc_tlbx);
-root_tlbx = strncpy( etc_tlbx, length(etc_tlbx)-length("\etc\") );
+loadlowdisclib();
+clear loadlowdisclib;
 
-//Load  functions library
-// =============================================================================
-
-mprintf("\tLoad macros\n");
-pathmacros = pathconvert( root_tlbx ) + "macros" + filesep();
-lowdisclib = lib(pathmacros);
-clear pathmacros;
-
-// load gateways
-// =============================================================================
-
-mprintf("\tLoad gateways\n");
-ilib_verbose(0);
-exec( pathconvert(root_tlbx+"/sci_gateway/loader_gateway.sce",%f));
-
-// Load and add help chapter
-// =============================================================================
-
-if or(getscilabmode() == ["NW";"STD"]) then
-    mprintf("\tLoad help\n");
-    path_addchapter = pathconvert(root_tlbx+"/jar");
-    if ( isdir(path_addchapter) <> [] ) then
-        add_help_chapter("Low Discrepancy", path_addchapter, %F);
-    clear add_help_chapter;
-    clear path_addchapter;
-    end
-end
-
-// add demos
-// =============================================================================
-
-
-if or(getscilabmode() == ["NW";"STD"]) then
-    mprintf("\tLoad demos\n");
-    pathdemos = pathconvert(root_tlbx+"/demos/lowdisc.dem.gateway.sce",%f,%t);
-    add_demo("Low Discrepancy",pathdemos);
-    clear pathdemos ;
-end
-
-// =============================================================================
-
-clear root_tlbx;
-clear etc_tlbx;
-
-// =============================================================================
-// Startup the library
-
-_lowdisc_startup()
 
 

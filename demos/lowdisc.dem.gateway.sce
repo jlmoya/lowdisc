@@ -1,5 +1,5 @@
-// This file is released into the public domain
-// This help file was generated using helpupdate at 2010/8/4 - 11:30:55
+// This help file was automatically generated using helpupdate
+// PLEASE DO NOT EDIT
 demopath = get_absolute_file_path("lowdisc.dem.gateway.sce");
 subdemolist = [
 "test_sobolf.dim4", "test_sobolf.dim4.sce"; ..

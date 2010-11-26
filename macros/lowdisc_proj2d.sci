@@ -37,7 +37,7 @@ function lowdisc_proj2d ( u , dimensions )
   // lowdisc_proj2d ( u , [3,6] )
   // // In this case, we could also use :
   // scf();
-  // plot( u(:,3) , u(:,6) )
+  // plot( u(:,3) , u(:,6) , "bo" )
   //
   // Authors
   //   Michael Baudin - 2010 - DIGITEO

@@ -1,3 +1,7 @@
+//
+// This help file was automatically generated from lowdisc_bitand.sci using help_from_sci().
+// PLEASE DO NOT EDIT
+//
 mode(1)
 //
 // Demo of lowdisc_bitand.sci
@@ -26,4 +30,4 @@ halt()   // Press return to continue
 //
 filename = "lowdisc_bitand.sce";
 dname = get_absolute_file_path(filename);
-editor ( dname + filename );
+editor ( fullfile(dname,filename) );

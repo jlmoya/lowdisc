@@ -12,7 +12,7 @@ function [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_nu
   // Calling Sequence
   //   [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_num , lastq , v , recipd )
   //
-  // Arguments
+  // Parameters
   //   count : a 1 x 1 matrix of floating point integers. On input : the index of the element to compute. On output, the updated value of the index of the element.
   //   maxcol : a 1 x 1 matrix of floating point integers,number of bits in atmost
   //   dim_num : a 1 x 1 matrix of floating point integers, the current number of dimensions. We expect to have 1<= dim_num<= 40, since no more that 40 polynomials are stored in the database.
@@ -29,6 +29,9 @@ function [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_nu
   //    values of DIM_NUM should start at 1, not 2!  17 February 2009.
   //
   //  Examples
+  // // See the source code
+  // edit lowdisc_sobolnext
+  // 
   //    // Generates elements of the Sobol sequence in dimension 4
   //    dim_num = 4
   //    [ v , maxcol , lastq , count , recipd ] = lowdisc_sobolstart ( dim_num );

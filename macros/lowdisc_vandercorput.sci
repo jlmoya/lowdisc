@@ -47,6 +47,9 @@ function result = lowdisc_vandercorput ( i , basis )
   //   https://people.scs.fsu.edu/~burkardt/m_src/van_der_corput/van_der_corput.html
   //
   // Examples
+  // // See the algorithm
+  // edit lowdisc_vandercorput
+  //
   // lowdisc_vandercorput ( 0 , 2 ) // 0.0
   // lowdisc_vandercorput ( 1 , 2 ) // 0.5
   // lowdisc_vandercorput ( 2 , 2 ) // 0.25

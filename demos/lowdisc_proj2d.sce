@@ -1,3 +1,7 @@
+//
+// This help file was automatically generated from lowdisc_proj2d.sci using help_from_sci().
+// PLEASE DO NOT EDIT
+//
 mode(1)
 //
 // Demo of lowdisc_proj2d.sci
@@ -18,7 +22,7 @@ scf();
 lowdisc_proj2d ( u , [3,6] )
 // In this case, we could also use :
 scf();
-plot( u(:,3) , u(:,6) )
+plot( u(:,3) , u(:,6) , "bo" )
 halt()   // Press return to continue
  
 //========= E N D === O F === D E M O =========//
@@ -27,4 +31,4 @@ halt()   // Press return to continue
 //
 filename = "lowdisc_proj2d.sce";
 dname = get_absolute_file_path(filename);
-editor ( dname + filename );
+editor ( fullfile(dname,filename) );

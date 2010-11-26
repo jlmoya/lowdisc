@@ -19,6 +19,9 @@ function next = lowdisc_haltonnext ( dimension , index , primemat )
   //   Generates the next element of the Halton sequence.
   //
   // Examples
+  // // See the source code
+  // edit lowdisc_haltonnext
+  // 
   // // Get a matrix of 100 primes
   // primemat = lowdisc_primes100 ( );
   // dimension = 2;

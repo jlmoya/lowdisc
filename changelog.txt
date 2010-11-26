@@ -1,14 +1,16 @@
 changelog of the Low Discrepancy Toolbox
 
-lowdisc (0.1)
-    * Initial version
- -- Michael Baudin <michael.baudin@scilab.org>  June 2010
-
-lowdisc (0.2)
+lowdisc (not released yet)
+    * Fixed sobol_startup.
     * Improved the computation of Faure generator matrix (vectorization).
     * Created lowdisc_ldgen function to simplify the generation of sequences.
     * Updated the overview with a list of available sequences.
     * Separated Halton and Sobol sequences as stand-alons functions.
     * Created a separate .xml page for bad 2D projections.
     * Added "speed" field for ldbase, so that the speed of each sequence can be known.
+
+lowdisc (0.1)
+    * Initial version
+ -- Michael Baudin <michael.baudin@scilab.org>  June 2010
+
 

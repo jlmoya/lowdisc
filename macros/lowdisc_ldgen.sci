@@ -14,7 +14,7 @@ function [ evalf , u ] = lowdisc_ldgen ( varargin )
   // Parameters
   //   callf : a 1 x 1 matrix of floating point integers, the number of calls to the function.
   //   n: a 1 x 1 matrix of floating point integers, the spatial dimension.
-  //   ldseq : a 1 x 1 matrix of strings, the name of the sequence.
+  //   ldseq : a 1 x 1 matrix of strings, the name of the sequence. (default ldseq = "sobolf"). The method can be equal to : "halton", "haltonf", "faure", "fauref", "reversehalton", "reversehaltonf", "sobol", "sobolf", "niederreiter-base-2", "niederreiterf". See below for details.
   //   strict : a 1 x 1 matrix of boolean, set to %t to make so that evalf==callf. (default = %f)
   //   verbose : a 1 x 1 matrix of boolean, set to %t to enable verbose messages. (default = %f)
   //   evalf : a 1 x 1 matrix of floating point integers, the actual number of function evaluations. We have evalf >= callf.
@@ -28,8 +28,11 @@ function [ evalf , u ] = lowdisc_ldgen ( varargin )
   // and the uniform numbers u in [0,1]^n.
   //
   // If strict is false, then the optimum number of simulations evalf is
-  // used. If strict is true, the number of simulations is equal to 
+  // used. 
+  // If strict is true, the number of simulations is equal to
   // the required one, that is, we have evalf == callf.
+  //
+  // The sequences which are available are described in depth in the lowdisc_new function.
   //
   // Examples
   // // Generate more than 20 points from a fast Halton sequence in dimension 4

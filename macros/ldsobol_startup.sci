@@ -45,7 +45,7 @@ function this = ldsobol_startup (this)
     error ( errmsg )
   end
   //
-  [ this.v , this.maxcol , this.lastq , this.count , this.recipd ] = lowdisc_sobolstart ( dimension , dimmax )
+  [ this.v , this.maxcol , this.lastq , this.count , this.recipd ] = lowdisc_sobolstart ( dimension )
   //
   // We ignore the first element in the sequence, which is [0 0] in dimension 2.
   // Our Sobol sequence starts with [0.5 0.5] in 2 dimensions.
