@@ -272,7 +272,6 @@ funmat = [
   "lowdisc_bitor"
   "lowdisc_bitand"
   "lowdisc_proj2d"
-  "lowdisc_ldgen"
   "lowdisc_corrcoef"
   ];
 macrosdir = cwd +"../../macros";

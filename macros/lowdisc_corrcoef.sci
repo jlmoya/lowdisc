@@ -11,6 +11,9 @@ function r = lowdisc_corrcoef ( x )
   // Returns a matrix r of correlation coefficients calculated from an input matrix X whose rows are observations and whose columns are variables. 
   // The matrix r = corrcoef(x) is related to the covariance matrix c = cov(X) by
   // r(i,j) = c(i,j) / sqrt(c(i,i) * c(j,j)).
+  //
+  // The cov function comes from Stixbox.
+  //
   // TODO : return p-values
   //
   // Examples

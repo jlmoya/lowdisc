@@ -1,6 +1,7 @@
 Low Discrepancy toolbox
 
 Purpose
+-------
 
 The goal of this toolbox is to provide a collection of low discrepancy
 sequences. These random numbers are designed to be used in a Monte-Carlo
@@ -25,12 +26,12 @@ Overview of sequences
  * The Niederreiter base 2 and arbitrary base sequence.
 
 This module currently provides the following functions:
-* lowdisc_cget : Returns the value associated with the given key for the given object.
-* lowdisc_configure : Update one option of the current object and returns an updated object.
-* lowdisc_destroy : Destroy the current object and returns an updated object.
-* lowdisc_new : Creates and returns a new sequence.
-* lowdisc_next : Returns the next vector in the sequence.
-* lowdisc_startup : Startup a random number object.
+ * lowdisc_cget : Returns the value associated with the given key for the given object.
+ * lowdisc_configure : Update one option of the current object and returns an updated object.
+ * lowdisc_destroy : Destroy the current object and returns an updated object.
+ * lowdisc_new : Creates and returns a new sequence.
+ * lowdisc_next : Returns the next vector in the sequence.
+ * lowdisc_startup : Startup a random number object.
 
 Provides the following functions to extend the maximum dimension of the Halton and Faure sequences
 * lowdisc_primes100 : Returns a matrix containing the 100 first primes.
@@ -51,13 +52,20 @@ This component currently provides the following sequences:
 
 See the overview in the help provided with this toolbox.
 
+Dependencies
+------------
+
+ * This module depends on the Stixbox (function cov).
+
 TODO 
+----
  * update the next to get all elements in one call
  * change assert_typereal to assert_type with variable name and variable index
  * synchronize the lowdisc_ldgen against the inprb_ldgen function in the intprb module : make a apifun module and make it depend on it.
  * create separate functions for the slow (macros) versions of Reverse Halton, Niederreiter and Faure.
 
 Author
+------
 
 2009-2010 - DIGITEO - Michael Baudin
 2008-2009 - INRIA - Michael Baudin
@@ -66,10 +74,12 @@ Author
 1986-1988 - Bennett Fox
 
 Licence
+-------
 
 This toolbox is distributed under the GNU LGPL license.
 
 Acknowledgements
+----------------
 
 Michael Baudin thanks John Burkardt for his help during 
 the development of this library.
