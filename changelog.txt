@@ -1,6 +1,6 @@
 changelog of the Low Discrepancy Toolbox
 
-lowdisc (not released yet)
+lowdisc (0.2)
     * Fixed sobol_startup.
     * Improved the computation of Faure generator matrix (vectorization).
     * Created lowdisc_ldgen function to simplify the generation of sequences.
