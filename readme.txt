@@ -98,11 +98,11 @@ TODO
 Author
 ------
 
-2009-2010 - DIGITEO - Michael Baudin
-2008-2009 - INRIA - Michael Baudin
-2003-2009 - John Burkardt
-1994 - Paul Bratley, Bennett Fox, Harald Niederreiter
-1986-1988 - Bennett Fox
+ * 2009-2011 - DIGITEO - Michael Baudin
+ * 2008-2009 - INRIA - Michael Baudin
+ * 2003-2009 - John Burkardt
+ * 1994 - Paul Bratley, Bennett Fox, Harald Niederreiter
+ * 1986-1988 - Bennett Fox
 
 Licence
 -------
