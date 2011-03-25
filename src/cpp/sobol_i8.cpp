@@ -191,6 +191,13 @@ static long long int i8sobol_seed_save = - 1;
 static long long int i8sobol_v[I8SOBOL_DIM_MAX2][I8SOBOL_LOG_MAX];
 
 //****************************************************************************80
+// Disable optimization. 
+// The table V is too large to be optimized.
+// Takes too long time or even fails to compile.
+
+#pragma optimize( "", off )
+
+//****************************************************************************80
 
 void i8_sobol_start ( int dim_num )
 
@@ -344,7 +351,9 @@ void i8_sobol_start ( int dim_num )
 	return;
 }
 //****************************************************************************80
+#pragma optimize( "", on ) 
 
+//****************************************************************************80
 void i8_sobol_stop ( )
 
 //****************************************************************************80

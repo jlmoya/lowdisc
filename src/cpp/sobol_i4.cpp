@@ -194,6 +194,13 @@ static int i4sobol_v[I4SOBOL_DIM_MAX2][I4SOBOL_LOG_MAX];
 
 
 //****************************************************************************80
+// Disable optimization. 
+// The table V is too large to be optimized.
+// Takes too long time or even fails to compile.
+
+#pragma optimize( "", off )
+
+//****************************************************************************80
 
 void i4_sobol_start ( int dim_num )
 
@@ -346,6 +353,8 @@ void i4_sobol_start ( int dim_num )
 	i4sobol_recipd = ( float ) 1.0E+00 / ( ( float ) ( 2 * l ) );
 	return;
 }
+//****************************************************************************80
+#pragma optimize( "", on ) 
 //****************************************************************************80
 
 void i4_sobol_stop ( )
