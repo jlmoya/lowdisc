@@ -1,59 +1,23 @@
-// This help file was automatically generated using helpupdate
-// PLEASE DO NOT EDIT
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
+//
+// This file must be used under the terms of the GNU LGPL license.
+
 demopath = get_absolute_file_path("lowdisc.dem.gateway.sce");
 subdemolist = [
-"test_sobolf.dim4", "test_sobolf.dim4.sce"; ..
-"test_sobol.dim4", "test_sobol.dim4.sce"; ..
-"test_niedf.base7.dim6", "test_niedf.base7.dim6.sce"; ..
-"test_niedf.base2.dim6", "test_niedf.base2.dim6.sce"; ..
-"test_niedf.base2.dim4", "test_niedf.base2.dim4.sce"; ..
-"test_nied2.dim4", "test_nied2.dim4.sce"; ..
-"test_haltonf.dim4", "test_haltonf.dim4.sce"; ..
-"test_halton.dim4", "test_halton.dim4.sce"; ..
-"test_fauref.dim4", "test_fauref.dim4.sce"; ..
-"test_faure.glasserman", "test_faure.glasserman.sce"; ..
-"test_faure.dim4", "test_faure.dim4.sce"; ..
-"test_faure.dim3", "test_faure.dim3.sce"; ..
-"runtests", "runtests.sce"; ..
-"lowdisc_vandercorput", "lowdisc_vandercorput.sce"; ..
-"lowdisc_stopall", "lowdisc_stopall.sce"; ..
-"lowdisc_startup", "lowdisc_startup.sce"; ..
-"lowdisc_soboltau", "lowdisc_soboltau.sce"; ..
-"lowdisc_sobolsuggest", "lowdisc_sobolsuggest.sce"; ..
-"lowdisc_sobolstart", "lowdisc_sobolstart.sce"; ..
-"lowdisc_sobolskip", "lowdisc_sobolskip.sce"; ..
-"lowdisc_sobolnext", "lowdisc_sobolnext.sce"; ..
-"lowdisc_ridigits", "lowdisc_ridigits.sce"; ..
-"lowdisc_reset", "lowdisc_reset.sce"; ..
-"lowdisc_radicalinv", "lowdisc_radicalinv.sce"; ..
-"lowdisc_proj2d", "lowdisc_proj2d.sce"; ..
-"lowdisc_primes10000", "lowdisc_primes10000.sce"; ..
-"lowdisc_primes1000", "lowdisc_primes1000.sce"; ..
-"lowdisc_primes100", "lowdisc_primes100.sce"; ..
-"lowdisc_pascal", "lowdisc_pascal.sce"; ..
-"lowdisc_niedersuggest", "lowdisc_niedersuggest.sce"; ..
-"lowdisc_niederbase", "lowdisc_niederbase.sce"; ..
-"lowdisc_next", "lowdisc_next.sce"; ..
-"lowdisc_new", "lowdisc_new.sce"; ..
-"lowdisc_methods", "lowdisc_methods.sce"; ..
-"lowdisc_ldgen", "lowdisc_ldgen.sce"; ..
-"lowdisc_haltonsuggest", "lowdisc_haltonsuggest.sce"; ..
-"lowdisc_haltonnext", "lowdisc_haltonnext.sce"; ..
-"lowdisc_get", "lowdisc_get.sce"; ..
-"lowdisc_fauresuggest", "lowdisc_fauresuggest.sce"; ..
-"lowdisc_destroy", "lowdisc_destroy.sce"; ..
-"lowdisc_dec2bin", "lowdisc_dec2bin.sce"; ..
-"lowdisc_corrcoef", "lowdisc_corrcoef.sce"; ..
-"lowdisc_configure", "lowdisc_configure.sce"; ..
-"lowdisc_cget", "lowdisc_cget.sce"; ..
-"lowdisc_bitxor", "lowdisc_bitxor.sce"; ..
-"lowdisc_bitor", "lowdisc_bitor.sce"; ..
-"lowdisc_bitlo0", "lowdisc_bitlo0.sce"; ..
-"lowdisc_bithi1", "lowdisc_bithi1.sce"; ..
-"lowdisc_bitand", "lowdisc_bitand.sce"; ..
-"lowdisc_binomialmod", "lowdisc_binomialmod.sce"; ..
-"lowdisc_binomial", "lowdisc_binomial.sce"; ..
-"lowdisc_bary", "lowdisc_bary.sce"; ..
 "bench_ldgen", "bench_ldgen.sce"; ..
+"runtests", "runtests.sce"; ..
+"test_faure.dim3", "test_faure.dim3.sce"; ..
+"test_faure.dim4", "test_faure.dim4.sce"; ..
+"test_faure.glasserman", "test_faure.glasserman.sce"; ..
+"test_fauref.dim4", "test_fauref.dim4.sce"; ..
+"test_halton.dim4", "test_halton.dim4.sce"; ..
+"test_haltonf.dim4", "test_haltonf.dim4.sce"; ..
+"test_nied2.dim4", "test_nied2.dim4.sce"; ..
+"test_niedf.base2.dim4", "test_niedf.base2.dim4.sce"; ..
+"test_niedf.base2.dim6", "test_niedf.base2.dim6.sce"; ..
+"test_niedf.base7.dim6", "test_niedf.base7.dim6.sce"; ..
+"test_sobol.dim4", "test_sobol.dim4.sce"; ..
+"test_sobolf.dim4", "test_sobolf.dim4.sce"; ..
 ];
 subdemolist(:,2) = demopath + subdemolist(:,2)
