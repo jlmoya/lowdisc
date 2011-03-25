@@ -10,6 +10,8 @@ lowdisc (not released yet)
     * Added "speed" field for ldbase, so that the speed of each sequence can be known.
 	* Disabled optimization of source code for Sobol sequence.
 	  This lead to failure to compile on some operating systems.
+	* Updated tests to rely on assert module.
+	* Fixed startup/shutdown of fast sequence in case of error.
 
 lowdisc (0.1)
     * Initial version
