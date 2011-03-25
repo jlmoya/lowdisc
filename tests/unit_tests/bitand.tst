@@ -1,55 +1,10 @@
-// =============================================================================
-// Scilab ( http://www.scilab.org/ ) - This file is part of Scilab
 // Copyright (C) 2008 - INRIA - Pierre MARECHAL <pierre.marechal@inria.fr>
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
-// This file must be used under the terms of the CeCILL.
-// This source file is licensed as described in the file COPYING, which
-// you should have received as part of this distribution.  The terms
-// are also available at
-// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
-
-// =============================================================================
+// This file must be used under the terms of the GNU LGPL license.
+// 
 
 // <-- JVM NOT MANDATORY -->
-
-//
-// assert_close --
-//   Returns 1 if the two real matrices computed and expected are close,
-//   i.e. if the relative distance between computed and expected is lesser than epsilon.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_close ( computed, expected, epsilon )
-  if expected==0.0 then
-    shift = norm(computed-expected);
-  else
-    shift = norm(computed-expected)/norm(expected);
-  end
-  if shift < epsilon then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
-//
-// assert_equal --
-//   Returns 1 if the two real matrices computed and expected are equal.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_equal ( computed , expected )
-  if ( and ( computed==expected ) ) then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
-
 
 // Tests 1
 // =============================================================================
@@ -60,9 +15,9 @@ A = [0 1 0 1];
 B = [0 0 1 1];
 C = [0 0 0 1];
 
-assert_equal ( lowdisc_bitand(A, B) , C);
-assert_equal ( typeof(C) , typeof(A));
-assert_equal ( typeof(C) , typeof(B));
+assert_checkequal ( lowdisc_bitand(A, B) , C);
+assert_checkequal ( typeof(C) , typeof(A));
+assert_checkequal ( typeof(C) , typeof(B));
 
 // test 1.2
 
@@ -70,9 +25,9 @@ A = uint8([0 1 0 1]);
 B = uint8([0 0 1 1]);
 C = uint8([0 0 0 1]);
 
-assert_equal ( lowdisc_bitand(A, B) , C);
-assert_equal ( typeof(C) , typeof(A));
-assert_equal ( typeof(C) , typeof(B));
+assert_checkequal ( lowdisc_bitand(A, B) , C);
+assert_checkequal ( typeof(C) , typeof(A));
+assert_checkequal ( typeof(C) , typeof(B));
 
 // test 1.3
 
@@ -80,9 +35,9 @@ A = uint16([0 1 0 1]);
 B = uint16([0 0 1 1]);
 C = uint16([0 0 0 1]);
 
-assert_equal ( lowdisc_bitand(A, B) , C);
-assert_equal ( typeof(C) , typeof(A));
-assert_equal ( typeof(C) , typeof(B));
+assert_checkequal ( lowdisc_bitand(A, B) , C);
+assert_checkequal ( typeof(C) , typeof(A));
+assert_checkequal ( typeof(C) , typeof(B));
 
 // test 1.4
 
@@ -90,9 +45,9 @@ A = uint32([0 1 0 1]);
 B = uint32([0 0 1 1]);
 C = uint32([0 0 0 1]);
 
-assert_equal ( lowdisc_bitand(A, B) , C);
-assert_equal ( typeof(C) , typeof(A));
-assert_equal ( typeof(C) , typeof(B));
+assert_checkequal ( lowdisc_bitand(A, B) , C);
+assert_checkequal ( typeof(C) , typeof(A));
+assert_checkequal ( typeof(C) , typeof(B));
 
 // test 1.5
 
@@ -100,9 +55,9 @@ A = [0 1 ; 0 1];
 B = [0 0 ; 1 1];
 C = [0 0 ; 0 1];
 
-assert_equal ( lowdisc_bitand(A, B) , C);
-assert_equal ( typeof(C) , typeof(A));
-assert_equal ( typeof(C) , typeof(B));
+assert_checkequal ( lowdisc_bitand(A, B) , C);
+assert_checkequal ( typeof(C) , typeof(A));
+assert_checkequal ( typeof(C) , typeof(B));
 
 // test 1.6
 
@@ -110,9 +65,9 @@ A = uint8([0 1 ; 0 1]);
 B = uint8([0 0 ; 1 1]);
 C = uint8([0 0 ; 0 1]);
 
-assert_equal ( lowdisc_bitand(A, B) , C);
-assert_equal ( typeof(C) , typeof(A));
-assert_equal ( typeof(C) , typeof(B));
+assert_checkequal ( lowdisc_bitand(A, B) , C);
+assert_checkequal ( typeof(C) , typeof(A));
+assert_checkequal ( typeof(C) , typeof(B));
 
 // test 1.7
 
@@ -120,9 +75,9 @@ A = uint16([0 1 ; 0 1]);
 B = uint16([0 0 ; 1 1]);
 C = uint16([0 0 ; 0 1]);
 
-assert_equal ( lowdisc_bitand(A, B) , C);
-assert_equal ( typeof(C) , typeof(A));
-assert_equal ( typeof(C) , typeof(B));
+assert_checkequal ( lowdisc_bitand(A, B) , C);
+assert_checkequal ( typeof(C) , typeof(A));
+assert_checkequal ( typeof(C) , typeof(B));
 
 // test 1.8
 
@@ -130,9 +85,9 @@ A = uint32([0 1 ; 0 1]);
 B = uint32([0 0 ; 1 1]);
 C = uint32([0 0 ; 0 1]);
 
-assert_equal ( lowdisc_bitand(A, B) , C);
-assert_equal ( typeof(C) , typeof(A));
-assert_equal ( typeof(C) , typeof(B));
+assert_checkequal ( lowdisc_bitand(A, B) , C);
+assert_checkequal ( typeof(C) , typeof(A));
+assert_checkequal ( typeof(C) , typeof(B));
 
 // test 1.9
 
@@ -140,9 +95,9 @@ A = [0 ; 1 ; 0 ; 1];
 B = [0 ; 0 ; 1 ; 1];
 C = [0 ; 0 ; 0 ; 1];
 
-assert_equal ( lowdisc_bitand(A, B) , C);
-assert_equal ( typeof(C) , typeof(A));
-assert_equal ( typeof(C) , typeof(B));
+assert_checkequal ( lowdisc_bitand(A, B) , C);
+assert_checkequal ( typeof(C) , typeof(A));
+assert_checkequal ( typeof(C) , typeof(B));
 
 // test 1.6
 
@@ -150,9 +105,9 @@ A = uint8([0 ; 1 ; 0 ; 1]);
 B = uint8([0 ; 0 ; 1 ; 1]);
 C = uint8([0 ; 0 ; 0 ; 1]);
 
-assert_equal ( lowdisc_bitand(A, B) , C);
-assert_equal ( typeof(C) , typeof(A));
-assert_equal ( typeof(C) , typeof(B));
+assert_checkequal ( lowdisc_bitand(A, B) , C);
+assert_checkequal ( typeof(C) , typeof(A));
+assert_checkequal ( typeof(C) , typeof(B));
 
 // test 1.7
 
@@ -160,9 +115,9 @@ A = uint16([0 ; 1 ; 0 ; 1]);
 B = uint16([0 ; 0 ; 1 ; 1]);
 C = uint16([0 ; 0 ; 0 ; 1]);
 
-assert_equal ( lowdisc_bitand(A, B) , C);
-assert_equal ( typeof(C) , typeof(A));
-assert_equal ( typeof(C) , typeof(B));
+assert_checkequal ( lowdisc_bitand(A, B) , C);
+assert_checkequal ( typeof(C) , typeof(A));
+assert_checkequal ( typeof(C) , typeof(B));
 
 // test 1.8
 
@@ -170,9 +125,9 @@ A = uint32([0 ; 1 ; 0 ; 1]);
 B = uint32([0 ; 0 ; 1 ; 1]);
 C = uint32([0 ; 0 ; 0 ; 1]);
 
-assert_equal ( lowdisc_bitand(A, B) , C);
-assert_equal ( typeof(C) , typeof(A));
-assert_equal ( typeof(C) , typeof(B));
+assert_checkequal ( lowdisc_bitand(A, B) , C);
+assert_checkequal ( typeof(C) , typeof(A));
+assert_checkequal ( typeof(C) , typeof(B));
 
 
 // Tests 2
@@ -183,28 +138,28 @@ assert_equal ( typeof(C) , typeof(B));
 A = [0 1 0 1];
 B = uint8([0 0 1 1]);
 
-assert_equal ( execstr("lowdisc_bitand(A, B);","errcatch") , 10000 );
+assert_checkequal ( execstr("lowdisc_bitand(A, B);","errcatch") , 10000 );
 
 // test 2.1
 
 A = uint8([0 1 0 1]);
 B = uint16([0 0 1 1]);
 
-assert_equal ( execstr("lowdisc_bitand(A, B);","errcatch") , 10000 );
+assert_checkequal ( execstr("lowdisc_bitand(A, B);","errcatch") , 10000 );
 
 // test 2.1
 
 A = uint16([0 1 0 1]);
 B = uint32([0 0 1 1]);
 
-assert_equal ( execstr("lowdisc_bitand(A, B);","errcatch") , 10000 );
+assert_checkequal ( execstr("lowdisc_bitand(A, B);","errcatch") , 10000 );
 
 // test 2.1
 
 A = uint32([0 1 0 1]);
 B = [0 0 1 1];
 
-assert_equal ( execstr("lowdisc_bitand(A, B);","errcatch") , 10000 );
+assert_checkequal ( execstr("lowdisc_bitand(A, B);","errcatch") , 10000 );
 
 
 // Tests 3
@@ -216,7 +171,7 @@ A = abs(floor(1000 * rand(100,20)));
 B = abs(floor(1000 * rand(100,20)));
 C = lowdisc_bitand(A,B);
 
-assert_equal ( size(A) , size(B));
+assert_checkequal ( size(A) , size(B));
 
 // test 3.2
 
@@ -224,7 +179,7 @@ A = uint8(abs(floor(1000 * rand(100,20))));
 B = uint8(abs(floor(1000 * rand(100,20))));
 C = lowdisc_bitand(A,B);
 
-assert_equal ( size(A) , size(B) );
+assert_checkequal ( size(A) , size(B) );
 
 // test 3.3
 
@@ -232,7 +187,7 @@ A = uint16(abs(floor(1000 * rand(100,20))));
 B = uint16(abs(floor(1000 * rand(100,20))));
 C = lowdisc_bitand(A,B);
 
-assert_equal ( size(A) , size(B) );
+assert_checkequal ( size(A) , size(B) );
 
 // test 3.4
 
@@ -240,7 +195,7 @@ A = uint32(abs(floor(1000 * rand(100,20))));
 B = uint32(abs(floor(1000 * rand(100,20))));
 C = lowdisc_bitand(A,B);
 
-assert_equal ( size(A) , size(B) );
+assert_checkequal ( size(A) , size(B) );
 
 // Test 4
 // =============================================================================
@@ -551,5 +506,5 @@ B = [ ..
     644.    680.    640.    770.    257.    529.    592.    0.      290.    8.      644.    512.    128.    273.    768.    20.     24.     272.    961.    162.  ; ..
     648.    822.    35.     770.    72.     529.    980.    276.    774.    12.     272.    629.    13.     54.     6.      259.    128.    264.    904.    10.   ];
 
-assert_equal ( lowdisc_bitand(A,B) , C );
+assert_checkequal ( lowdisc_bitand(A,B) , C );
 

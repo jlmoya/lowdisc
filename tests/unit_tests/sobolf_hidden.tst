@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2009-2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 
 //
 // This file must be used under the terms of the GNU LGPL license.
@@ -9,54 +9,17 @@
 // <-- ENGLISH IMPOSED -->
 
 //
-// assert_close --
-//   Returns 1 if the two real matrices computed and expected are close,
-//   i.e. if the relative distance between computed and expected is lesser than epsilon.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_close ( computed, expected, epsilon )
-  if expected==0.0 then
-    shift = norm(computed-expected);
-  else
-    shift = norm(computed-expected)/norm(expected);
-  end
-  if shift < epsilon then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
-//
-// assert_equal --
-//   Returns 1 if the two real matrices computed and expected are equal.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_equal ( computed , expected )
-  if ( and ( computed==expected ) ) then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
-
-//
 // Test the "hidden" API
 //
 start = _lowdisc_sobolfisstart ( );
-assert_equal ( start , 0 );
+assert_checkequal ( start , 0 );
 dim = 4;
 seed = 0;
 _lowdisc_sobolfstart ( dim );
 start = _lowdisc_sobolfisstart ( );
-assert_equal ( start , 1 );
+assert_checkequal ( start , 1 );
 dim2 = _lowdisc_sobolfdimget( );
-assert_equal ( dim2 , dim );
+assert_checkequal ( dim2 , dim );
 computed = [];
 // Skip first term
 next = _lowdisc_sobolfnext ( 0 );
@@ -77,10 +40,10 @@ expected= [
    0.937500    0.062500    0.562500    0.937500  
    0.437500    0.562500    0.062500    0.437500  
 ];
-assert_close ( computed , expected , %eps );
+assert_checkalmostequal ( computed , expected , %eps );
 _lowdisc_sobolfstop ( );
 start = _lowdisc_sobolfisstart ( );
-assert_equal ( start , 0 );
+assert_checkequal ( start , 0 );
 
 //
 // Test the "hidden" API.
@@ -108,7 +71,7 @@ expected= [
    0.750000    0.250000    0.750000    0.250000  
    0.250000    0.750000    0.250000    0.750000  
 ];
-assert_close ( computed , expected , %eps );
+assert_checkalmostequal ( computed , expected , %eps );
 _lowdisc_sobolfstop ( );
 
 

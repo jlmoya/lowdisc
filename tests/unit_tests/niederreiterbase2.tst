@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2009-2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 
 //
 // This file must be used under the terms of the GNU LGPL license.
@@ -7,44 +7,6 @@
 
 // <-- JVM NOT MANDATORY -->
 // <-- ENGLISH IMPOSED -->
-
-//
-// assert_close --
-//   Returns 1 if the two real matrices computed and expected are close,
-//   i.e. if the relative distance between computed and expected is lesser than epsilon.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_close ( computed, expected, epsilon )
-  if expected==0.0 then
-    shift = norm(computed-expected);
-  else
-    shift = norm(computed-expected)/norm(expected);
-  end
-  if shift < epsilon then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
-//
-// assert_equal --
-//   Returns 1 if the two real matrices computed and expected are equal.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_equal ( computed , expected )
-  if ( and ( computed==expected ) ) then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
-
 
 //
 // Check the Niederreiter base 2 sequence
@@ -55,7 +17,7 @@ lds = lowdisc_startup (lds);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
 expected = [1./2. 1./2.];
-assert_close ( computed, expected , 10 * %eps );
+assert_checkalmostequal ( computed, expected , 10 * %eps );
 // Terms #2 to #5
 [lds,computed]=lowdisc_next(lds,4);
 expected= [
@@ -64,7 +26,7 @@ expected= [
     3./8. 3./8. 
     7./8. 7./8. 
 ];
-assert_close ( computed, expected , 10 * %eps );
+assert_checkalmostequal ( computed, expected , 10 * %eps );
 lds = lowdisc_destroy(lds);
 
 
@@ -89,7 +51,7 @@ expected = [
    0.937500  0.062500  0.828125  0.578125
    0.437500  0.562500  0.078125  0.453125
 ];
-assert_close ( computed, expected , 10 * %eps );
+assert_checkalmostequal ( computed, expected , 10 * %eps );
 // Drop terms 12-94
 [lds,computed]=lowdisc_next(lds,94-12+1);
 // Terms #95 - 110
@@ -112,7 +74,7 @@ expected= [
    0.851563  0.570313  0.824219  0.183594
    0.601563  0.320313  0.261719  0.917969
 ];
-assert_close ( computed, expected , 1.e-5 );
+assert_checkalmostequal ( computed, expected , 1.e-5 );
 lds = lowdisc_destroy(lds);
 
 
@@ -124,7 +86,7 @@ lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip",10);
 lds = lowdisc_startup (lds);
 index = lowdisc_get ( lds , "-index" );
-assert_equal ( index , 10 );
+assert_checkequal ( index , 10 );
 [lds,computed]=lowdisc_next(lds,10);
 expected= [
     0.4375     0.5625     0.078125    0.453125   
@@ -138,9 +100,9 @@ expected= [
     0.34375    0.71875    0.84375     0.6269531  
     0.46875    0.09375    0.65625     0.1738281  
 ];
-assert_close ( computed, expected , 1.e-5 );
+assert_checkalmostequal ( computed, expected , 1.e-5 );
 index = lowdisc_get ( lds , "-index" );
-assert_equal ( index , 20 );
+assert_checkequal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 //
@@ -151,7 +113,7 @@ lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap",1);
 lds = lowdisc_startup (lds);
 index = lowdisc_get ( lds , "-index" );
-assert_equal ( index , 0 );
+assert_checkequal ( index , 0 );
 [lds,computed]=lowdisc_next(lds,10);
 expected= [
     0.5        0.5        0.75        0.875      
@@ -165,9 +127,9 @@ expected= [
     0.59375    0.96875    0.53125     0.5175781
     0.34375    0.71875    0.84375     0.6269531  
 ];
-assert_close ( computed, expected , 1.e-5 );
+assert_checkalmostequal ( computed, expected , 1.e-5 );
 index = lowdisc_get ( lds , "-index" );
-assert_equal ( index , 20 );
+assert_checkequal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 
@@ -181,7 +143,7 @@ lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();
-assert_equal ( (t2-t1)<1. , %t );
+assert_checkequal ( (t2-t1)<1. , %t );
 
 // Check performance for large values of leap
 // This is not so fast : nextq has to be updated.
@@ -193,5 +155,5 @@ lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();
-assert_equal ( (t2-t1)<1.e1 , %t );
+assert_checkequal ( (t2-t1)<1.e1 , %t );
 

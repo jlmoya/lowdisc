@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2009-2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 
 //
 // This file must be used under the terms of the GNU LGPL license.
@@ -7,44 +7,6 @@
 
 // <-- JVM NOT MANDATORY -->
 // <-- ENGLISH IMPOSED -->
-
-//
-// assert_close --
-//   Returns 1 if the two real matrices computed and expected are close,
-//   i.e. if the relative distance between computed and expected is lesser than epsilon.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_close ( computed, expected, epsilon )
-  if expected==0.0 then
-    shift = norm(computed-expected);
-  else
-    shift = norm(computed-expected)/norm(expected);
-  end
-  if shift < epsilon then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
-//
-// assert_equal --
-//   Returns 1 if the two real matrices computed and expected are equal.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_equal ( computed , expected )
-  if ( and ( computed==expected ) ) then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
-
 
 //
 // Check the sequences for all their available range of dimensions.
@@ -78,8 +40,25 @@ end
 //
 // Check the error messages when the sequences go beyond their available range of dimensions.
 //
+// Map from sequence name to error message
+name2error = [
+"halton"                "ldhalton_startup: The halton method is not available for 101 dimension because the database contains only 100 primes"
+"haltonf"               "ldhaltonf_startup: The fast reverse Halton method is not available for 101 dimension because the database contains only 100 primes"
+"faure"                 "ldfaure_startup: Faure sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
+"fauref"                "ldfauref_startup: Faure Fast sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
+"reversehalton"         "ldrevhal_startup: The reverse Halton method is not available for 101 dimension because the database contains only 100 primes"
+"reversehaltonf"        "ldrevhalf_startup: Reverse Halton sequence : the dimension 101 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
+"sobol"                 "ldsobol_startup: Dimension 41 is greater than maximum 40."
+"sobolf"                "Lowdisc: Error at the library level:sobol - i4_sobol_start - Fatal Error  The spatial dimension DIM_NUM should satisfy    1 <= DIM_NUM <= 1111  But this input value is DIM_NUM = 1112"
+"niederreiter-base-2"   "ldbase_startup: Dimension 21 is greater than maximum 20"
+"niederreiterf"         "Lowdisc: Error at the library level:niederreiter - INLO - Error!  Bad spatial dimension."
+];        
+
 seqmat = lowdisc_methods ();
 for seqname = seqmat'
+for k = 1 : 2
+// Test two times, to check that destroying works well,
+// even in case of error.
   mprintf("==============================\n")
   lds = lowdisc_new(seqname);
   dimmax = lowdisc_get(lds,"-dimmax");
@@ -88,9 +67,12 @@ for seqname = seqmat'
   lds = lowdisc_configure(lds,"-dimension",dimension);
   cmd = "lds = lowdisc_startup (lds);";
   ierr = execstr(cmd,"errcatch");
-  assert_equal ( or(ierr==[10000 999]) , %t );
+  assert_checkequal ( or(ierr==[10000 999]) , %t );
   errmsg = lasterror();
   mprintf("Error (code=%d): %s\n",ierr,errmsg);
+  k = find(seqname==name2error(:,1));
+  expected = name2error(k,2);
+  assert_checkequal(errmsg,expected);
   lds = lowdisc_destroy(lds);
 end
-
+end

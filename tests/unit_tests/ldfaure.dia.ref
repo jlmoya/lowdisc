@@ -1,81 +1,33 @@
-// Copyright (C) 2008 - INRIA - Michael Baudin
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 //
-// This file must be used under the terms of the CeCILL.
-// This source file is licensed as described in the file COPYING, which
-// you should have received as part of this distribution.  The terms
-// are also available at
-// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
-//
-// assert_close --
-//   Returns 1 if the two real matrices computed and expected are close,
-//   i.e. if the relative distance between computed and expected is lesser than epsilon.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_close ( computed, expected, epsilon )
-  if expected==0.0 then
-    shift = norm(computed-expected);
-  else
-    shift = norm(computed-expected)/norm(expected);
-  end
-  if shift < epsilon then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then bugmes();quit;end
-endfunction
-//
-// assert_equal --
-//   Returns 1 if the two real matrices computed and expected are equal.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_equal ( computed , expected )
-  if computed==expected then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then bugmes();quit;end
-endfunction
+// This file must be used under the terms of the GNU LGPL license.
+// 
+// <-- JVM NOT MANDATORY -->
+// <-- ENGLISH IMPOSED -->
 ld = ldfaure_new();
 ld
  ld  =
  
 Low Discrepancy Sequence: Faure
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 4.503600e+015
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 1
-
 Index: 0
-
 Verbose logging: F
-
 Skip: 0
-
 Leap: 0
-
 Started Up: F
-
+Speed: slow
 ld = ldfaure_configure ( ld , "-dimension" , 3 );
 ld = ldfaure_startup ( ld );
 [ld,computed] = ldfaure_next (ld);
 expected = [1/3 1/3 1/3];
-assert_close ( computed, expected, %eps );
+assert_checkalmostequal ( computed, expected, %eps );
 [ld,computed]=ldfaure_next(ld,7);
 expected= [
     2/3 2/3 2/3 
@@ -86,5 +38,5 @@ expected= [
     5/9 2/9 8/9 
     8/9 5/9 2/9
 ];
-assert_close ( computed, expected, %eps );
+assert_checkalmostequal ( computed, expected, %eps );
 ld = ldfaure_destroy ( ld );

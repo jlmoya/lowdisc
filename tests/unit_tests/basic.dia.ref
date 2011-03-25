@@ -1,46 +1,10 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2009-2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 // 
 // <-- JVM NOT MANDATORY -->
 // <-- ENGLISH IMPOSED -->
-//
-// assert_close --
-//   Returns 1 if the two real matrices computed and expected are close,
-//   i.e. if the relative distance between computed and expected is lesser than epsilon.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_close ( computed, expected, epsilon )
-  if expected==0.0 then
-    shift = norm(computed-expected);
-  else
-    shift = norm(computed-expected)/norm(expected);
-  end
-  if shift < epsilon then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then bugmes();quit;end
-endfunction
-//
-// assert_equal --
-//   Returns 1 if the two real matrices computed and expected are equal.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_equal ( computed , expected )
-  if computed==expected then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then bugmes();quit;end
-endfunction
 //
 // Check the configure/cget methods.
 //
@@ -54,34 +18,34 @@ for sequencename = sequencearray'
   //
   lds = lowdisc_configure(lds,"-dimension",12);
   nbdim = lowdisc_cget(lds,"-dimension");
-  assert_equal ( nbdim , 12 );
+  assert_checkequal ( nbdim , 12 );
   //
   index = lowdisc_get(lds,"-index");
-  assert_equal ( index , 0 );
+  assert_checkequal ( index , 0 );
   //
   verbose = lowdisc_cget(lds,"-verbose");
-  assert_equal ( verbose , %f );
+  assert_checkequal ( verbose , %f );
   //
   lds = lowdisc_configure(lds,"-verbose",%T);
   verbose = lowdisc_cget(lds,"-verbose");
-  assert_equal ( verbose , %T );
+  assert_checkequal ( verbose , %T );
   //
   method = lowdisc_cget(lds,"-method");
-  assert_equal ( method , sequencename );
+  assert_checkequal ( method , sequencename );
   //
   lds = lowdisc_configure(lds,"-skip",12);
   skip = lowdisc_cget(lds,"-skip");
-  assert_equal ( skip , 12 );
+  assert_checkequal ( skip , 12 );
   //
   lds = lowdisc_configure(lds,"-leap",12);
   leap = lowdisc_cget(lds,"-leap");
-  assert_equal ( leap , leap );
+  assert_checkequal ( leap , leap );
   //
   dimmax = lowdisc_get(lds,"-dimmax");
-  assert_equal ( dimmax > 0 , %t );
+  assert_checkequal ( dimmax > 0 , %t );
   //
   nbsimmax = lowdisc_get(lds,"-nbsimmax");
-  assert_equal ( nbsimmax > 0 , %t );
+  assert_checkequal ( nbsimmax > 0 , %t );
   //
   // Test printing system (after startup)
   string(lds)
@@ -126,44 +90,29 @@ end
 !Leap: 0                                                    !
 !                                                           !
 !Started Up: F                                              !
+!                                                           !
+!Speed: slow                                                !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: halton
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Halton
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 4.503600e+015
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 1
-
 Index: 0
-
 Verbose logging: F
-
 Skip: 0
-
 Leap: 0
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 !Low Discrepancy Sequence:                                  !
@@ -201,72 +150,45 @@ Started Up: F
 !Leap: 12                                                   !
 !                                                           !
 !Started Up: F                                              !
+!                                                           !
+!Speed: slow                                                !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: halton
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Halton
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 4.503600e+015
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 Low Discrepancy Sequence: Halton
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 4.503600e+015
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 !Low Discrepancy Sequence:                                  !
@@ -304,44 +226,29 @@ Started Up: F
 !Leap: 0                                                    !
 !                                                           !
 !Started Up: F                                              !
+!                                                           !
+!Speed: fast                                                !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: haltonf
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Halton
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 2.147484e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 1
-
 Index: 0
-
 Verbose logging: F
-
 Skip: 0
-
 Leap: 0
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 !Low Discrepancy Sequence:                                  !
@@ -379,72 +286,45 @@ Started Up: F
 !Leap: 12                                                   !
 !                                                           !
 !Started Up: F                                              !
+!                                                           !
+!Speed: fast                                                !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: haltonf
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Halton
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 2.147484e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 Low Discrepancy Sequence: Halton
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 2.147484e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 !Low Discrepancy Sequence:                                  !
@@ -482,44 +362,29 @@ Started Up: F
 !Leap: 0                                                    !
 !                                                           !
 !Started Up: F                                              !
+!                                                           !
+!Speed: slow                                                !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: faure
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Faure
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 4.503600e+015
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 1
-
 Index: 0
-
 Verbose logging: F
-
 Skip: 0
-
 Leap: 0
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 !Low Discrepancy Sequence:                                  !
@@ -557,72 +422,45 @@ Started Up: F
 !Leap: 12                                                   !
 !                                                           !
 !Started Up: F                                              !
+!                                                           !
+!Speed: slow                                                !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: faure
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Faure
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 4.503600e+015
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 Low Discrepancy Sequence: Faure
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 4.503600e+015
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 !Low Discrepancy Sequence:                                  !
@@ -660,44 +498,29 @@ Started Up: F
 !Leap: 0                                                    !
 !                                                           !
 !Started Up: F                                              !
+!                                                           !
+!Speed: fast                                                !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: fauref
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Faure Fast
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 2.147484e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 1
-
 Index: 0
-
 Verbose logging: F
-
 Skip: 0
-
 Leap: 0
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 !Low Discrepancy Sequence:                                  !
@@ -735,72 +558,45 @@ Started Up: F
 !Leap: 12                                                   !
 !                                                           !
 !Started Up: F                                              !
+!                                                           !
+!Speed: fast                                                !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: fauref
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Faure Fast
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 2.147484e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 Low Discrepancy Sequence: Faure Fast
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 2.147484e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 !Low Discrepancy Sequence:                                  !
@@ -838,44 +634,29 @@ Started Up: F
 !Leap: 0                                                    !
 !                                                           !
 !Started Up: F                                              !
+!                                                           !
+!Speed: slow                                                !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: reversehalton
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Reverse Halton
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 4.503600e+015
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 1
-
 Index: 0
-
 Verbose logging: F
-
 Skip: 0
-
 Leap: 0
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 !Low Discrepancy Sequence:                                  !
@@ -913,72 +694,45 @@ Started Up: F
 !Leap: 12                                                   !
 !                                                           !
 !Started Up: F                                              !
+!                                                           !
+!Speed: slow                                                !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: reversehalton
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Reverse Halton
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 4.503600e+015
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 Low Discrepancy Sequence: Reverse Halton
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 4.503600e+015
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 !Low Discrepancy Sequence:                                  !
@@ -1016,44 +770,29 @@ Started Up: F
 !Leap: 0                                                    !
 !                                                           !
 !Started Up: F                                              !
+!                                                           !
+!Speed: fast                                                !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: reversehaltonf
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Reverse Halton
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 2.147484e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 1
-
 Index: 0
-
 Verbose logging: F
-
 Skip: 0
-
 Leap: 0
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 !Low Discrepancy Sequence:                                  !
@@ -1091,72 +830,45 @@ Started Up: F
 !Leap: 12                                                   !
 !                                                           !
 !Started Up: F                                              !
+!                                                           !
+!Speed: fast                                                !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: reversehaltonf
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Reverse Halton
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 2.147484e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 Low Discrepancy Sequence: Reverse Halton
-
 =========================
-
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-
 Maximum number of simulations = 2.147484e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 !Low Discrepancy Sequence:                      !
@@ -1202,52 +914,33 @@ Started Up: F
 !Leap: 0                                        !
 !                                               !
 !Started Up: F                                  !
+!                                               !
+!Speed: slow                                    !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: sobol
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Sobol
-
 =========================
-
 Maximum dimension = 40
-
 Maximum number of simulations = 1.073742e+009
-
 count = 0
-
 maxcol = 0
-
 lastq = []
-
 recipd = 0.000000e+000
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 1
-
 Index: 0
-
 Verbose logging: F
-
 Skip: 0
-
 Leap: 0
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 !Low Discrepancy Sequence:                      !
@@ -1293,88 +986,53 @@ Started Up: F
 !Leap: 12                                       !
 !                                               !
 !Started Up: F                                  !
+!                                               !
+!Speed: slow                                    !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: sobol
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Sobol
-
 =========================
-
 Maximum dimension = 40
-
 Maximum number of simulations = 1.073742e+009
-
 count = 0
-
 maxcol = 0
-
 lastq = []
-
 recipd = 0.000000e+000
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 Low Discrepancy Sequence: Sobol
-
 =========================
-
 Maximum dimension = 40
-
 Maximum number of simulations = 1.073742e+009
-
 count = 0
-
 maxcol = 0
-
 lastq = []
-
 recipd = 0.000000e+000
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 !Low Discrepancy Sequence:                      !
@@ -1412,44 +1070,29 @@ Started Up: F
 !Leap: 0                                        !
 !                                               !
 !Started Up: F                                  !
+!                                               !
+!Speed: fast                                    !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: sobolf
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Fast Sobol
-
 =========================
-
 Maximum dimension = 1111
-
 Maximum number of simulations = 1.073742e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 1
-
 Index: 0
-
 Verbose logging: F
-
 Skip: 0
-
 Leap: 0
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 !Low Discrepancy Sequence:                      !
@@ -1487,72 +1130,45 @@ Started Up: F
 !Leap: 12                                       !
 !                                               !
 !Started Up: F                                  !
+!                                               !
+!Speed: fast                                    !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: sobolf
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Fast Sobol
-
 =========================
-
 Maximum dimension = 1111
-
 Maximum number of simulations = 1.073742e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 Low Discrepancy Sequence: Fast Sobol
-
 =========================
-
 Maximum dimension = 1111
-
 Maximum number of simulations = 1.073742e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 !Low Discrepancy Sequence:                      !
@@ -1600,54 +1216,34 @@ Started Up: F
 !Leap: 0                                        !
 !                                               !
 !Started Up: F                                  !
+!                                               !
+!Speed: slow                                    !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: niederreiter-base-2
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Niederreiter Base 2
-
 =========================
-
 Maximum dimension = 20
-
 Maximum number of simulations = 2.147484e+009
-
 nbits = 31
-
 seed = 0
-
 nextq = []
-
 recip = 0
-
 maxe = 6
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 1
-
 Index: 0
-
 Verbose logging: F
-
 Skip: 0
-
 Leap: 0
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 !Low Discrepancy Sequence:                      !
@@ -1695,92 +1291,55 @@ Started Up: F
 !Leap: 12                                       !
 !                                               !
 !Started Up: F                                  !
+!                                               !
+!Speed: slow                                    !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: niederreiter-base-2
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Niederreiter Base 2
-
 =========================
-
 Maximum dimension = 20
-
 Maximum number of simulations = 2.147484e+009
-
 nbits = 31
-
 seed = 0
-
 nextq = []
-
 recip = 0
-
 maxe = 6
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 Low Discrepancy Sequence: Niederreiter Base 2
-
 =========================
-
 Maximum dimension = 20
-
 Maximum number of simulations = 2.147484e+009
-
 nbits = 31
-
 seed = 0
-
 nextq = []
-
 recip = 0
-
 maxe = 6
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: slow
  ans  =
  
 !Low Discrepancy Sequence:                                             !
@@ -1826,50 +1385,32 @@ Started Up: F
 !Leap: 0                                                               !
 !                                                                      !
 !Started Up: F                                                         !
+!                                                                      !
+!Speed: fast                                                           !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: niederreiterf
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Fast Niederreiter
-
 =========================
-
 Base: 2
-
 Gfaritfile: TMPDIR\gfarit.txt
-
 Gfplysfile: TMPDIR\gfplys.txt
-
 Maximum dimension = 50
-
 Maximum number of simulations = 2.147484e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 1
-
 Index: 0
-
 Verbose logging: F
-
 Skip: 0
-
 Leap: 0
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 !Low Discrepancy Sequence:                                             !
@@ -1915,81 +1456,48 @@ Started Up: F
 !Leap: 12                                                              !
 !                                                                      !
 !Started Up: F                                                         !
+!                                                                      !
+!Speed: fast                                                           !
  lds  =
  
 Low Discrepancy Sequence:
-
 =========================
-
 method: niederreiterf
-
 sequence: <a Low Discrepancy Sequence>
 
-
-
 Low Discrepancy Sequence: Fast Niederreiter
-
 =========================
-
 Base: 2
-
 Gfaritfile: TMPDIR\gfarit.txt
-
 Gfplysfile: TMPDIR\gfplys.txt
-
 Maximum dimension = 50
-
 Maximum number of simulations = 2.147484e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: fast
  ans  =
  
 Low Discrepancy Sequence: Fast Niederreiter
-
 =========================
-
 Base: 2
-
 Gfaritfile: TMPDIR\gfarit.txt
-
 Gfplysfile: TMPDIR\gfplys.txt
-
 Maximum dimension = 50
-
 Maximum number of simulations = 2.147484e+009
 
-
-
 Abstract Low Discrepancy Sequence:
-
 =========================
-
 Dimension of space: 12
-
 Index: 0
-
 Verbose logging: T
-
 Skip: 12
-
 Leap: 12
-
 Started Up: F
-
+Speed: fast

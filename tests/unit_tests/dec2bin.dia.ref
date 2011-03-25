@@ -1,7 +1,5 @@
-// =============================================================================
-// Scilab ( http://www.scilab.org/ ) - This file is part of Scilab
 // Copyright (C) 2008 - INRIA - Pierre MARECHAL <pierre.marechal@inria.fr>
-// Copyright (C) 2010 - Digiteo - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 //
 //
 // This file must be used under the terms of the CeCILL.
@@ -10,118 +8,82 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 // <-- JVM NOT MANDATORY -->
-//
-// assert_close --
-//   Returns 1 if the two real matrices computed and expected are close,
-//   i.e. if the relative distance between computed and expected is lesser than epsilon.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_close ( computed, expected, epsilon )
-  if expected==0.0 then
-    shift = norm(computed-expected);
-  else
-    shift = norm(computed-expected)/norm(expected);
-  end
-  if shift < epsilon then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then bugmes();quit;end
-endfunction
-//
-// assert_equal --
-//   Returns 1 if the two real matrices computed and expected are equal.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_equal ( computed , expected )
-  if ( and ( computed==expected ) ) then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then bugmes();quit;end
-endfunction
 // unit tests for dec2bin function
 // =============================================================================
 // Test 0
 // =============================================================================
-assert_equal ( lowdisc_dec2bin(0) , "0"  );
-assert_equal ( lowdisc_dec2bin(1) , "1"  );
-assert_equal ( lowdisc_dec2bin(2) , "10" );
-assert_equal ( lowdisc_dec2bin(3) , "11" );
-assert_equal ( lowdisc_dec2bin(0)              , "0"                                             );
-assert_equal ( lowdisc_dec2bin(1)              , "1"                                             );
-assert_equal ( lowdisc_dec2bin(3)              , "11"                                            );
-assert_equal ( lowdisc_dec2bin(7)              , "111"                                           );
-assert_equal ( lowdisc_dec2bin(15)             , "1111"                                          );
-assert_equal ( lowdisc_dec2bin(255)            , "11111111"                                      );
-assert_equal ( lowdisc_dec2bin(26556445876512) , "110000010011100100111100001011110000100100000" );
-assert_equal ( lowdisc_dec2bin((2^32)-1)       , "11111111111111111111111111111111"              );
-assert_equal ( lowdisc_dec2bin(2^32)           , "100000000000000000000000000000000"             );
-assert_equal ( lowdisc_dec2bin(0,4)  , "0000" );
-assert_equal ( lowdisc_dec2bin(1,4)  , "0001" );
-assert_equal ( lowdisc_dec2bin(3,4)  , "0011" );
-assert_equal ( lowdisc_dec2bin(7,4)  , "0111" );
-assert_equal ( lowdisc_dec2bin(15,4) , "1111" );
-assert_equal ( lowdisc_dec2bin(0,8)  , "00000000" );
-assert_equal ( lowdisc_dec2bin(1,8)  , "00000001" );
-assert_equal ( lowdisc_dec2bin(3,8)  , "00000011" );
-assert_equal ( lowdisc_dec2bin(7,8)  , "00000111" );
-assert_equal ( lowdisc_dec2bin(15,8) , "00001111" );
-assert_equal ( lowdisc_dec2bin(0,16)  , "0000000000000000" );
-assert_equal ( lowdisc_dec2bin(1,16)  , "0000000000000001" );
-assert_equal ( lowdisc_dec2bin(3,16)  , "0000000000000011" );
-assert_equal ( lowdisc_dec2bin(7,16)  , "0000000000000111" );
-assert_equal ( lowdisc_dec2bin(15,16) , "0000000000001111" );
+assert_checkequal ( lowdisc_dec2bin(0) , "0"  );
+assert_checkequal ( lowdisc_dec2bin(1) , "1"  );
+assert_checkequal ( lowdisc_dec2bin(2) , "10" );
+assert_checkequal ( lowdisc_dec2bin(3) , "11" );
+assert_checkequal ( lowdisc_dec2bin(0)              , "0"                                             );
+assert_checkequal ( lowdisc_dec2bin(1)              , "1"                                             );
+assert_checkequal ( lowdisc_dec2bin(3)              , "11"                                            );
+assert_checkequal ( lowdisc_dec2bin(7)              , "111"                                           );
+assert_checkequal ( lowdisc_dec2bin(15)             , "1111"                                          );
+assert_checkequal ( lowdisc_dec2bin(255)            , "11111111"                                      );
+assert_checkequal ( lowdisc_dec2bin(26556445876512) , "110000010011100100111100001011110000100100000" );
+assert_checkequal ( lowdisc_dec2bin((2^32)-1)       , "11111111111111111111111111111111"              );
+assert_checkequal ( lowdisc_dec2bin(2^32)           , "100000000000000000000000000000000"             );
+assert_checkequal ( lowdisc_dec2bin(0,4)  , "0000" );
+assert_checkequal ( lowdisc_dec2bin(1,4)  , "0001" );
+assert_checkequal ( lowdisc_dec2bin(3,4)  , "0011" );
+assert_checkequal ( lowdisc_dec2bin(7,4)  , "0111" );
+assert_checkequal ( lowdisc_dec2bin(15,4) , "1111" );
+assert_checkequal ( lowdisc_dec2bin(0,8)  , "00000000" );
+assert_checkequal ( lowdisc_dec2bin(1,8)  , "00000001" );
+assert_checkequal ( lowdisc_dec2bin(3,8)  , "00000011" );
+assert_checkequal ( lowdisc_dec2bin(7,8)  , "00000111" );
+assert_checkequal ( lowdisc_dec2bin(15,8) , "00001111" );
+assert_checkequal ( lowdisc_dec2bin(0,16)  , "0000000000000000" );
+assert_checkequal ( lowdisc_dec2bin(1,16)  , "0000000000000001" );
+assert_checkequal ( lowdisc_dec2bin(3,16)  , "0000000000000011" );
+assert_checkequal ( lowdisc_dec2bin(7,16)  , "0000000000000111" );
+assert_checkequal ( lowdisc_dec2bin(15,16) , "0000000000001111" );
 // Test 1
 // =============================================================================
 A = [ 1 2 3 ; 89 23 65 ];
 B = [ "0000001"  "0000010" "0000011" ; "1011001" "0010111" "1000001" ];
-assert_equal ( lowdisc_dec2bin(A) , B );
+assert_checkequal ( lowdisc_dec2bin(A) , B );
 // Test 2
 // =============================================================================
 A = [ 1 2 3 ; 89 23 65 ];
 B = [ "00000001"  "00000010" "00000011" ; "01011001" "00010111" "01000001" ];
-assert_equal ( lowdisc_dec2bin(A,8) , B );
+assert_checkequal ( lowdisc_dec2bin(A,8) , B );
 // Test 3
 // =============================================================================
 A = [ 1 2 3 89 23 65 ];
 B = [ "0000001"  "0000010" "0000011" "1011001" "0010111" "1000001" ];
-assert_equal ( lowdisc_dec2bin(A) , B );
+assert_checkequal ( lowdisc_dec2bin(A) , B );
 // Test 4
 // =============================================================================
 A = [ 1 ; 2 ; 3 ; 89 ; 23 ; 65 ];
 B = [ "0000001" ; "0000010" ; "0000011" ; "1011001" ; "0010111" ; "1000001" ];
-assert_equal ( lowdisc_dec2bin(A) , B );
+assert_checkequal ( lowdisc_dec2bin(A) , B );
 // Test 5
 // =============================================================================
 A = [0 0 0 ; 0 0 0];
 B = [ "0" "0" "0" ; "0" "0" "0" ];
-assert_equal ( lowdisc_dec2bin(A) , B );
+assert_checkequal ( lowdisc_dec2bin(A) , B );
 // Test 6
 // =============================================================================
 A = [0 0 0 ; 0 0 0];
 B = [ "000000" "000000" "000000" ; "000000" "000000" "000000" ];
-assert_equal ( lowdisc_dec2bin(A,6) , B );
+assert_checkequal ( lowdisc_dec2bin(A,6) , B );
 // Test 7
 // =============================================================================
 A = [0 0 0 0 0 0];
 B = [ "000000" "000000" "000000" "000000" "000000" "000000" ];
-assert_equal ( lowdisc_dec2bin(A,6) , B );
+assert_checkequal ( lowdisc_dec2bin(A,6) , B );
 // Test 8
 // =============================================================================
 A = [0 ; 0 ; 0 ; 0 ; 0 ; 0];
 B = [ "000000" ; "000000" ; "000000" ; "000000" ; "000000" ; "000000" ];
-assert_equal ( lowdisc_dec2bin(A,6) , B );
+assert_checkequal ( lowdisc_dec2bin(A,6) , B );
 // Test 9
 // =============================================================================
 A = floor(rand(50,50) * 10^9);
-assert_equal ( bin2dec(lowdisc_dec2bin(A)) , A );
+assert_checkequal ( bin2dec(lowdisc_dec2bin(A)) , A );
 // Test 10
 // =============================================================================
 A = [ ..
@@ -328,7 +290,7 @@ B = [ ..
 	"10011010110011010110010010011"; ..
 	"01110010111001011100011111111"; ..
 ];
-assert_equal ( lowdisc_dec2bin(A) , B );
+assert_checkequal ( lowdisc_dec2bin(A) , B );
 // Test 11
 // =============================================================================
 A = [ ..
@@ -533,36 +495,36 @@ B = [ ..
 	"00111011001011010111001000011" "00011010001011010110000101100" "01011101001101000000100100001" "10010101011110100010101010110" ; ..
 	"00111111111100111110001010111" "01011000101000010010001110011" "00100010100010011000101011010" "10010011001011101101110101001" ; ..
 	"00100111110101011001011111101" "01000011111111001010001110101" "10000000000111000100000110011" "01110110000100001000111000011"];
-assert_equal ( lowdisc_dec2bin(A) , B );
+assert_checkequal ( lowdisc_dec2bin(A) , B );
 /////////////////////////////////////////////////////
 // Tests with matrix of floating point integers outputs - no padding
-assert_equal ( lowdisc_dec2bin(0,[],2) , 0  );
-assert_equal ( lowdisc_dec2bin(1,[],2) , 1  );
-assert_equal ( lowdisc_dec2bin(2,[],2) , [1 0] );
-assert_equal ( lowdisc_dec2bin(3,[],2) , [1 1] );
-assert_equal ( lowdisc_dec2bin(7,[],2)              , [1 1 1] );
-assert_equal ( lowdisc_dec2bin(15,[],2)             , [1 1 1 1] );
-assert_equal ( lowdisc_dec2bin(255,[],2)            , [1 1 1 1 1 1 1 1] );
-assert_equal ( lowdisc_dec2bin(26556445876512,[],2) , [1 1 0 0 0 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 1 0 0 0 0 1 0 1 1 1 1 0 0 0 0 1 0 0 1 0 0 0 0 0] );
-assert_equal ( lowdisc_dec2bin((2^32)-1,[],2)       , [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1] );
-assert_equal ( lowdisc_dec2bin(2^32,[],2)           , [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] );
+assert_checkequal ( lowdisc_dec2bin(0,[],2) , 0  );
+assert_checkequal ( lowdisc_dec2bin(1,[],2) , 1  );
+assert_checkequal ( lowdisc_dec2bin(2,[],2) , [1 0] );
+assert_checkequal ( lowdisc_dec2bin(3,[],2) , [1 1] );
+assert_checkequal ( lowdisc_dec2bin(7,[],2)              , [1 1 1] );
+assert_checkequal ( lowdisc_dec2bin(15,[],2)             , [1 1 1 1] );
+assert_checkequal ( lowdisc_dec2bin(255,[],2)            , [1 1 1 1 1 1 1 1] );
+assert_checkequal ( lowdisc_dec2bin(26556445876512,[],2) , [1 1 0 0 0 0 0 1 0 0 1 1 1 0 0 1 0 0 1 1 1 1 0 0 0 0 1 0 1 1 1 1 0 0 0 0 1 0 0 1 0 0 0 0 0] );
+assert_checkequal ( lowdisc_dec2bin((2^32)-1,[],2)       , [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1] );
+assert_checkequal ( lowdisc_dec2bin(2^32,[],2)           , [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] );
 /////////////////////////////////////////////////////
 // Tests with matrix of floating point integers outputs - no padding
-assert_equal ( lowdisc_dec2bin(0,4,2)  , [0 0 0 0] );
-assert_equal ( lowdisc_dec2bin(1,4,2)  , [0 0 0 1] );
-assert_equal ( lowdisc_dec2bin(3,4,2)  , [0 0 1 1] );
-assert_equal ( lowdisc_dec2bin(7,4,2)  , [0 1 1 1] );
-assert_equal ( lowdisc_dec2bin(15,4,2) , [1 1 1 1] );
-assert_equal ( lowdisc_dec2bin(0,8,2)  , [0 0 0 0 0 0 0 0] );
-assert_equal ( lowdisc_dec2bin(1,8,2)  , [0 0 0 0 0 0 0 1] );
-assert_equal ( lowdisc_dec2bin(3,8,2)  , [0 0 0 0 0 0 1 1] );
-assert_equal ( lowdisc_dec2bin(7,8,2)  , [0 0 0 0 0 1 1 1] );
-assert_equal ( lowdisc_dec2bin(15,8,2) , [0 0 0 0 1 1 1 1] );
-assert_equal ( lowdisc_dec2bin(0,16,2)  , [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] );
-assert_equal ( lowdisc_dec2bin(1,16,2)  , [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1] );
-assert_equal ( lowdisc_dec2bin(3,16,2)  , [0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1] );
-assert_equal ( lowdisc_dec2bin(7,16,2)  , [0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1] );
-assert_equal ( lowdisc_dec2bin(15,16,2) , [0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1] );
+assert_checkequal ( lowdisc_dec2bin(0,4,2)  , [0 0 0 0] );
+assert_checkequal ( lowdisc_dec2bin(1,4,2)  , [0 0 0 1] );
+assert_checkequal ( lowdisc_dec2bin(3,4,2)  , [0 0 1 1] );
+assert_checkequal ( lowdisc_dec2bin(7,4,2)  , [0 1 1 1] );
+assert_checkequal ( lowdisc_dec2bin(15,4,2) , [1 1 1 1] );
+assert_checkequal ( lowdisc_dec2bin(0,8,2)  , [0 0 0 0 0 0 0 0] );
+assert_checkequal ( lowdisc_dec2bin(1,8,2)  , [0 0 0 0 0 0 0 1] );
+assert_checkequal ( lowdisc_dec2bin(3,8,2)  , [0 0 0 0 0 0 1 1] );
+assert_checkequal ( lowdisc_dec2bin(7,8,2)  , [0 0 0 0 0 1 1 1] );
+assert_checkequal ( lowdisc_dec2bin(15,8,2) , [0 0 0 0 1 1 1 1] );
+assert_checkequal ( lowdisc_dec2bin(0,16,2)  , [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] );
+assert_checkequal ( lowdisc_dec2bin(1,16,2)  , [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1] );
+assert_checkequal ( lowdisc_dec2bin(3,16,2)  , [0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1] );
+assert_checkequal ( lowdisc_dec2bin(7,16,2)  , [0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1] );
+assert_checkequal ( lowdisc_dec2bin(15,16,2) , [0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1] );
 // Test 1
 // =============================================================================
 A = [ 1 2 3 ; 89 23 65 ];
@@ -574,7 +536,7 @@ B = [
   0 0 0 0 0 1 1
   1 0 0 0 0 0 1
   ];
-assert_equal ( lowdisc_dec2bin(A,[],2) , B );
+assert_checkequal ( lowdisc_dec2bin(A,[],2) , B );
 // Test 2
 // =============================================================================
 A = [ 1 2 3 ; 89 23 65 ];
@@ -586,7 +548,7 @@ B = [
   0 0 0 0 0 0 1 1
   0 1 0 0 0 0 0 1
   ];
-assert_equal ( lowdisc_dec2bin(A,8,2) , B );
+assert_checkequal ( lowdisc_dec2bin(A,8,2) , B );
 // Test 3
 // =============================================================================
 A = [ 1 2 3 89 23 65 ];
@@ -598,7 +560,7 @@ B = [
   0 0 1 0 1 1 1
   1 0 0 0 0 0 1
   ];
-assert_equal ( lowdisc_dec2bin(A,[],2) , B );
+assert_checkequal ( lowdisc_dec2bin(A,[],2) , B );
 // Test 4
 // =============================================================================
 A = [ 1 ; 2 ; 3 ; 89 ; 23 ; 65 ];
@@ -610,4 +572,4 @@ B = [
   0 0 1 0 1 1 1
   1 0 0 0 0 0 1
   ];
-assert_equal ( lowdisc_dec2bin(A,[],2) , B );
+assert_checkequal ( lowdisc_dec2bin(A,[],2) , B );

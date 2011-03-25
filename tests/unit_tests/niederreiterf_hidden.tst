@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2009-2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 
 //
 // This file must be used under the terms of the GNU LGPL license.
@@ -8,43 +8,7 @@
 // <-- JVM NOT MANDATORY -->
 // <-- ENGLISH IMPOSED -->
 
-//
-// assert_close --
-//   Returns 1 if the two real matrices computed and expected are close,
-//   i.e. if the relative distance between computed and expected is lesser than epsilon.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_close ( computed, expected, epsilon )
-  if expected==0.0 then
-    shift = norm(computed-expected);
-  else
-    shift = norm(computed-expected)/norm(expected);
-  end
-  if shift < epsilon then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
 
-//
-// assert_equal --
-//   Returns 1 if the two real matrices computed and expected are equal.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_equal ( computed , expected )
-  if ( and ( computed==expected ) ) then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
 
 // A word of caution !
 // In dimension 4, the programs GENIN and GENIN2 do produce the 
@@ -64,7 +28,7 @@ endfunction
 // Test the "hidden" API
 //
 start = _lowdisc_niedfisstart ( );
-assert_equal ( start , 0 );
+assert_checkequal ( start , 0 );
 dim = 4;
 base = 2;
 skip = 0;
@@ -73,18 +37,18 @@ gfplysfile = fullfile(TMPDIR,"gfplys.txt");
 init = 1;
 _lowdisc_niedfstart ( dim , base , skip , gfaritfile , gfplysfile , init );
 start = _lowdisc_niedfisstart ( );
-assert_equal ( start , 1 );
+assert_checkequal ( start , 1 );
 dim2 = _lowdisc_niedfdimget( );
-assert_equal ( dim2 , dim );
+assert_checkequal ( dim2 , dim );
 base2 = _lowdisc_niedfbaseget( );
-assert_equal ( base2 , base );
+assert_checkequal ( base2 , base );
 skip2 = _lowdisc_niedfskipget( );
-assert_equal ( skip2 , skip );
+assert_checkequal ( skip2 , skip );
 computed = [];
 // Skip first term
 next = _lowdisc_niedfnext ( );
 expected = [0.000000      0.000000      0.000000      0.000000];
-assert_close ( next , expected , %eps );
+assert_checkalmostequal ( next , expected , %eps );
 for i = 1 : 9;
   next = _lowdisc_niedfnext ( );
   computed(i,1:dim) = next;
@@ -101,10 +65,10 @@ expected= [
   0.062500      0.937500      0.953125      0.234375
   0.562500      0.437500      0.203125      0.859375
 ];
-assert_close ( computed , expected , 1.e-4 );
+assert_checkalmostequal ( computed , expected , 1.e-4 );
 _lowdisc_niedfstop ( );
 start = _lowdisc_niedfisstart ( );
-assert_equal ( start , 0 );
+assert_checkequal ( start , 0 );
 
 
 

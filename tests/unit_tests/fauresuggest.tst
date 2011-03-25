@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2009-2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 
 //
 // This file must be used under the terms of the GNU LGPL license.
@@ -8,61 +8,24 @@
 // <-- JVM NOT MANDATORY -->
 // <-- ENGLISH IMPOSED -->
 
-//
-// assert_close --
-//   Returns 1 if the two real matrices computed and expected are close,
-//   i.e. if the relative distance between computed and expected is lesser than epsilon.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_close ( computed, expected, epsilon )
-  if expected==0.0 then
-    shift = norm(computed-expected);
-  else
-    shift = norm(computed-expected)/norm(expected);
-  end
-  if shift < epsilon then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
-//
-// assert_equal --
-//   Returns 1 if the two real matrices computed and expected are equal.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_equal ( computed , expected )
-  if ( and ( computed==expected ) ) then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
-
 // See the minimum number of simulations for integration in dimension 4.
 dim = 4;
 base = 5;
 // Taken from "Algorithm 659", p97, Table II
 [nsim,skip,leap] = lowdisc_fauresuggest ( dim , base );
-assert_equal ( [nsim,skip,leap] , [125 623 0] );
+assert_checkequal ( [nsim,skip,leap] , [125 623 0] );
 [nsim,skip,leap] = lowdisc_fauresuggest ( dim , base , 10000);
-assert_equal ( [nsim,skip,leap] , [15625 623 0] );
+assert_checkequal ( [nsim,skip,leap] , [15625 623 0] );
 [nsim,skip,leap] = lowdisc_fauresuggest ( dim , base , 50000);
-assert_equal ( [nsim,skip,leap] , [78125 623 0] );
+assert_checkequal ( [nsim,skip,leap] , [78125 623 0] );
 [nsim,skip,leap] = lowdisc_fauresuggest ( dim , base , 100000);
-assert_equal ( [nsim,skip,leap] , [390625 623 0] );
+assert_checkequal ( [nsim,skip,leap] , [390625 623 0] );
 
 // Check that nsim >= nsimmin for several powers of 10
 dim = 4;
 for nsimmin = logspace(1,10,10)
   [nsim,skip,leap] = lowdisc_fauresuggest ( dim , nsimmin );
-  assert_equal ( nsim >= nsimmin , %t );
+  assert_checkequal ( nsim >= nsimmin , %t );
 end
 
 
@@ -72,7 +35,7 @@ lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",dim);
 base = lowdisc_get(lds,"-faureprime");
 [nsim,skip,leap] = lowdisc_fauresuggest ( dim , base );
-assert_equal ( [nsim,skip,leap] , [125 623 0] );
+assert_checkequal ( [nsim,skip,leap] , [125 623 0] );
 lds = lowdisc_configure(lds,"-skip",skip);
 lds = lowdisc_configure(lds,"-leap",leap);
 lds = lowdisc_startup (lds);
@@ -85,7 +48,7 @@ lds = lowdisc_new("fauref");
 lds = lowdisc_configure(lds,"-dimension",dim);
 base = lowdisc_get(lds,"-faurefprime");
 [nsim,skip,leap] = lowdisc_fauresuggest ( dim , base );
-assert_equal ( [nsim,skip,leap] , [125 623 0] );
+assert_checkequal ( [nsim,skip,leap] , [125 623 0] );
 lds = lowdisc_configure(lds,"-skip",skip);
 lds = lowdisc_configure(lds,"-leap",leap);
 lds = lowdisc_startup (lds);
@@ -99,7 +62,7 @@ lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",dim);
 base = lowdisc_get(lds,"-faureprime");
 [nsim,skip,leap] = lowdisc_fauresuggest ( dim , base , nsimmin );
-assert_equal ( [nsim,skip,leap] , [3125 623 0] );
+assert_checkequal ( [nsim,skip,leap] , [3125 623 0] );
 lds = lowdisc_configure(lds,"-skip",skip);
 lds = lowdisc_configure(lds,"-leap",leap);
 lds = lowdisc_startup (lds);
@@ -113,7 +76,7 @@ lds = lowdisc_new("fauref");
 lds = lowdisc_configure(lds,"-dimension",dim);
 base = lowdisc_get(lds,"-faurefprime");
 [nsim,skip,leap] = lowdisc_fauresuggest ( dim , base , nsimmin );
-assert_equal ( [nsim,skip,leap] , [3125 623 0] );
+assert_checkequal ( [nsim,skip,leap] , [3125 623 0] );
 lds = lowdisc_configure(lds,"-skip",skip);
 lds = lowdisc_configure(lds,"-leap",leap);
 lds = lowdisc_startup (lds);

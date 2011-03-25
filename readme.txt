@@ -25,6 +25,9 @@ Overview of sequences
  * The Reverse Halton sequence of Vandewoestyne and Cools,
  * The Niederreiter base 2 and arbitrary base sequence.
 
+Features
+--------
+ 
 This module currently provides the following functions:
  * lowdisc_cget : Returns the value associated with the given key for the given object.
  * lowdisc_configure : Update one option of the current object and returns an updated object.
@@ -55,7 +58,8 @@ See the overview in the help provided with this toolbox.
 Dependencies
 ------------
 
- * This module depends on the Stixbox (function cov).
+ * This module depends on the Stixbox module (function cov).
+ * This module depends on the assert module.
 
 TODO 
 ----

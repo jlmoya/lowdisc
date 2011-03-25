@@ -8,7 +8,7 @@
 
 
 function this = ldsobolf_destroy (this)
-  if ( ldbase_get ( this.baseobj , "-startedup" ) ) then
+  if ( _lowdisc_sobolfisstart() ) then
     _lowdisc_sobolfstop ( );
   end
   // Delegate to ldbase

@@ -1,46 +1,10 @@
-// Copyright (C) 2008 - INRIA - Michael Baudin
+// Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 //
-// This file must be used under the terms of the CeCILL.
-// This source file is licensed as described in the file COPYING, which
-// you should have received as part of this distribution.  The terms
-// are also available at
-// http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
-//
-// assert_close --
-//   Returns 1 if the two real matrices computed and expected are close,
-//   i.e. if the relative distance between computed and expected is lesser than epsilon.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_close ( computed, expected, epsilon )
-  if expected==0.0 then
-    shift = norm(computed-expected);
-  else
-    shift = norm(computed-expected)/norm(expected);
-  end
-  if shift < epsilon then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then bugmes();quit;end
-endfunction
-//
-// assert_equal --
-//   Returns 1 if the two real matrices computed and expected are equal.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_equal ( computed , expected )
-  if computed==expected then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then bugmes();quit;end
-endfunction
+// This file must be used under the terms of the GNU LGPL license.
+// 
+// <-- JVM NOT MANDATORY -->
+// <-- ENGLISH IMPOSED -->
 //
 // Check the bitlo0 function
 //
@@ -85,7 +49,7 @@ for i = 1:size(ilist,"*")
   j = ilist(i);
   computed($+1) = lowdisc_bitlo0 ( j );
 end
-assert_equal ( computed , expected );
+assert_checkequal ( computed , expected );
 // Reproduce the test from the help
 // Column #1 : n
 // Column #2 : bitlo0(n)
@@ -117,4 +81,4 @@ for i = 1:size(expected,"r")
   j = expected(i,1);
   computed($+1) = lowdisc_bitlo0 ( j );
 end
-assert_equal ( computed , expected(:,2) );
+assert_checkequal ( computed , expected(:,2) );

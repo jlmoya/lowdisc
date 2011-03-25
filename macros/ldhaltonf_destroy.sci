@@ -3,12 +3,8 @@
 //
 // This file must be used under the terms of the GNU LGPL license.
 
-
-
-
-
 function this = ldhaltonf_destroy (this)
-    if ( ldbase_get ( this.baseobj , "-startedup" ) ) then
+    if ( _lowdisc_haltonfisstart() ) then
       _lowdisc_haltonfstop ( )
     end
   // Delegate to ldbase

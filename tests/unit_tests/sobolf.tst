@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2009-2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 
 //
 // This file must be used under the terms of the GNU LGPL license.
@@ -7,44 +7,6 @@
 
 // <-- JVM NOT MANDATORY -->
 // <-- ENGLISH IMPOSED -->
-
-//
-// assert_close --
-//   Returns 1 if the two real matrices computed and expected are close,
-//   i.e. if the relative distance between computed and expected is lesser than epsilon.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_close ( computed, expected, epsilon )
-  if expected==0.0 then
-    shift = norm(computed-expected);
-  else
-    shift = norm(computed-expected)/norm(expected);
-  end
-  if shift < epsilon then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
-//
-// assert_equal --
-//   Returns 1 if the two real matrices computed and expected are equal.
-// Arguments
-//   computed, expected : the two matrices to compare
-//   epsilon : a small number
-//
-function flag = assert_equal ( computed , expected )
-  if ( and ( computed==expected ) ) then
-    flag = 1;
-  else
-    flag = 0;
-  end
-  if flag <> 1 then pause,end
-endfunction
-
 
 //
 // Check the Fast Sobol sequence
@@ -55,7 +17,7 @@ lds = lowdisc_startup (lds);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
 expected = [0.5 0.5];
-assert_close ( computed, expected, 10*%eps );
+assert_checkalmostequal ( computed, expected, 10*%eps );
 // Terms #2 to #6
 [lds,computed]=lowdisc_next(lds,5);
 expected= [
@@ -65,7 +27,7 @@ expected= [
     7./8. 7./8. 
     5./8. 1./8. 
 ];
-assert_close ( computed, expected, 10*%eps );
+assert_checkalmostequal ( computed, expected, 10*%eps );
 lds = lowdisc_destroy(lds);
 
 //
@@ -77,10 +39,10 @@ lds = lowdisc_startup (lds);
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
 expected = [0.25 0.75];
-assert_close ( computed, expected, 10*%eps );
+assert_checkalmostequal ( computed, expected, 10*%eps );
 [lds,computed] = lowdisc_next (lds);
 expected = [0.375 0.375];
-assert_close ( computed, expected, 10*%eps );
+assert_checkalmostequal ( computed, expected, 10*%eps );
 lds = lowdisc_destroy(lds);
 
 
@@ -92,10 +54,10 @@ lds = lowdisc_startup (lds);
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
 expected = [0.25 0.75 0.25];
-assert_close ( computed, expected, 10*%eps );
+assert_checkalmostequal ( computed, expected, 10*%eps );
 [lds,computed] = lowdisc_next (lds);
 expected = [0.375 0.375 0.625];
-assert_close ( computed, expected, 10*%eps );
+assert_checkalmostequal ( computed, expected, 10*%eps );
 lds = lowdisc_destroy(lds);
 
 //
@@ -207,7 +169,7 @@ expected = [
 0.289062      0.882812      0.679688      0.601562
 0.414062      0.257812      0.304688      0.476562
 ];
-assert_close ( computed , expected , 1.e-5 );
+assert_checkalmostequal ( computed , expected , 1.e-5 );
 lds = lowdisc_destroy(lds);
 
 
@@ -217,7 +179,7 @@ lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip",10);
 lds = lowdisc_startup (lds);
 index = lowdisc_get ( lds , "-index" );
-assert_equal ( index , 10 );
+assert_checkequal ( index , 10 );
 [lds,computed]=lowdisc_next(lds,10);
 expected = [
     0.4375     0.5625     0.0625     0.4375   
@@ -231,7 +193,7 @@ expected = [
     0.34375    0.71875    0.59375    0.65625  
     0.46875    0.09375    0.46875    0.28125  
 ];
-assert_close ( computed , expected , 1.e-5 );
+assert_checkalmostequal ( computed , expected , 1.e-5 );
 lds = lowdisc_destroy(lds);
 
 
@@ -241,7 +203,7 @@ lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap",1);
 lds = lowdisc_startup (lds);
 index = lowdisc_get ( lds , "-index" );
-assert_equal ( index , 0 );
+assert_checkequal ( index , 0 );
 [lds,computed]=lowdisc_next(lds,10);
 expected = [
     0.5        0.5        0.5        0.5      
@@ -255,9 +217,9 @@ expected = [
     0.59375    0.96875    0.34375    0.90625  
     0.34375    0.71875    0.59375    0.65625  
 ];
-assert_close ( computed , expected , 1.e-5 );
+assert_checkalmostequal ( computed , expected , 1.e-5 );
 index = lowdisc_get ( lds , "-index" );
-assert_equal ( index , 20 );
+assert_checkequal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 // Check performance for large values of skip
@@ -270,7 +232,7 @@ lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();
-assert_equal ( (t2-t1)<1. , %t );
+assert_checkequal ( (t2-t1)<1. , %t );
 
 // Check performance for large values of leap
 // This is not so fast : lastq has to be updated.
@@ -282,5 +244,5 @@ lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();
-assert_equal ( (t2-t1)<1. , %t );
+assert_checkequal ( (t2-t1)<1. , %t );
 

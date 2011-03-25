@@ -8,7 +8,7 @@
 
 
 function this = ldniedf_destroy (this)
-    if ( ldbase_get ( this.baseobj , "-startedup" ) ) then
+    if ( _lowdisc_niedfisstart() ) then
       _lowdisc_niedfstop ( )
     end
   // Delegate to ldbase
