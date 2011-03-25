@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_vandercorput.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_vandercorput" xml:lang="en"
@@ -16,7 +16,7 @@
 
 
   <refnamediv>
-    <refname>lowdisc_vandercorput</refname><refpurpose></refpurpose>
+    <refname>lowdisc_vandercorput</refname><refpurpose>Returns the i-th term of the Van Der Corput sequence.</refpurpose>
   </refnamediv>
 
 
@@ -24,7 +24,6 @@
 <refsynopsisdiv>
    <title>Calling Sequence</title>
    <synopsis>
-   result = lowdisc_vandercorput ( i , basis )
    result = lowdisc_vandercorput ( i , basis )
    
    </synopsis>
@@ -83,6 +82,9 @@ https://people.scs.fsu.edu/~burkardt/m_src/van_der_corput/van_der_corput.html
 <refsection>
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
+// See the algorithm
+edit lowdisc_vandercorput
+
 lowdisc_vandercorput ( 0 , 2 ) // 0.0
 lowdisc_vandercorput ( 1 , 2 ) // 0.5
 lowdisc_vandercorput ( 2 , 2 ) // 0.25

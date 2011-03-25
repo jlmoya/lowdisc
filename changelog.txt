@@ -12,6 +12,7 @@ lowdisc (not released yet)
 	  This lead to failure to compile on some operating systems.
 	* Updated tests to rely on assert module.
 	* Fixed startup/shutdown of fast sequence in case of error.
+    * Removed auto-generated demos for clarity.
 
 lowdisc (0.1)
     * Initial version

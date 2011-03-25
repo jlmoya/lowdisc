@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_haltonnext.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_haltonnext" xml:lang="en"
@@ -55,6 +55,9 @@ Generates the next element of the Halton sequence.
 <refsection>
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
+// See the source code
+edit lowdisc_haltonnext
+
 // Get a matrix of 100 primes
 primemat = lowdisc_primes100 ( );
 dimension = 2;

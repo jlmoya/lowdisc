@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_corrcoef.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_corrcoef" xml:lang="en"
@@ -35,6 +35,11 @@
 Returns a matrix r of correlation coefficients calculated from an input matrix X whose rows are observations and whose columns are variables.
 The matrix r = corrcoef(x) is related to the covariance matrix c = cov(X) by
 r(i,j) = c(i,j) / sqrt(c(i,i) * c(j,j)).
+   </para>
+   <para>
+The cov function comes from Stixbox.
+   </para>
+   <para>
 TODO : return p-values
    </para>
    <para>
