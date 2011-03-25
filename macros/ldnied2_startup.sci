@@ -447,10 +447,10 @@ function [ pc_deg, pc ] = _niederplymul2 ( add, mul, pa_deg, pa, pb_deg, pb )
     for j = max ( 0, i-pa_deg ) : min ( pb_deg, i )
       term = add ( term+1, mul ( pa(i-j+1)+1, pb(j+1)+1 ) + 1 )
     end
-    pt(i+1) = term
+    ptn(i+1) = term
   end
   for i = 0 : pc_deg
-    pc(i+1) = pt(i+1)
+    pc(i+1) = ptn(i+1)
   end
 endfunction
 //  _niedersetfld2 --
