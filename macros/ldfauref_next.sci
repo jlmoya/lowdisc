@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010-2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 
@@ -31,19 +31,9 @@ function [this,next] = ldfauref_next ( varargin )
   dimension = ldbase_cget ( this.baseobj , "-dimension" )
   leap = ldbase_cget ( this.baseobj , "-leap" )
   //
-  // Initialize the vector
-  next = zeros(imax,dimension)
-  //
-  for i=1:imax
-    this.baseobj = ldbase_incr ( this.baseobj )
-    index = ldbase_get ( this.baseobj , "-index" )
-    onevector = _lowdisc_faurefnext ( index );
-    next(i,1:dimension) = onevector
-    if ( leap > 0 ) then
-      // Leap over (i.e. ignore) as many elements as required
-      // Directly set the index.
-      this.baseobj = ldbase_indexset ( this.baseobj , index + leap )
-    end
-  end
+  index = ldbase_get ( this.baseobj , "-index" )
+  next = _lowdisc_faurefnext ( index + 1 , imax, leap);
+  index = index + imax*(leap+1)
+  this.baseobj = ldbase_indexset ( this.baseobj , index )
 endfunction
 

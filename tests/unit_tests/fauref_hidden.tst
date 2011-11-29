@@ -23,9 +23,11 @@ start = _lowdisc_faurefisstart ( );
 assert_checkequal ( start , 1 );
 qs = _lowdisc_faurefbaseget ( );
 assert_checkequal ( qs , 3 );
-next = _lowdisc_faurefnext ( 0 );
+imax = 1;
+leap = 0;
+next = _lowdisc_faurefnext ( 0 , imax , leap );
 for i = 1 : 8
-  next = _lowdisc_faurefnext ( i );
+  next = _lowdisc_faurefnext ( i , imax , leap );
   computed(i,1:dim) = next;
 end
 expected= [
@@ -51,10 +53,12 @@ computed = [];
 _lowdisc_faurefstart ( dim );
 qs = _lowdisc_faurefbaseget ( );
 assert_checkequal ( qs , 5 );
+imax = 1;
+leap = 0;
 // Skip first term
-next = _lowdisc_faurefnext ( 0 );
+next = _lowdisc_faurefnext ( 0 , imax , leap );
 for i = 1 : 8
-  next = _lowdisc_faurefnext ( i );
+  next = _lowdisc_faurefnext ( i , imax , leap );
   computed(i,1:dim) = next;
 end
 expected= [
@@ -80,9 +84,11 @@ dim = 4;
 _lowdisc_faurefstart ( dim );
 scenario = [0 1 2 3 5 6 7 1 2 3];
 computed = [];
+imax = 1;
+leap = 0;
 for k = 1 : size(scenario,"*")
   seed = scenario(k);
-  computed(k,1:dim) = _lowdisc_faurefnext ( seed );
+  computed(k,1:dim) = _lowdisc_faurefnext ( seed , imax , leap );
 end
 expected= [
     0.                     0.                     0.                     0.      
@@ -109,8 +115,35 @@ qs = primelist(k);
 _lowdisc_faurefstart ( dim , qs );
 qs2 = _lowdisc_faurefbaseget ( );
 assert_checkequal ( qs , qs2 );
-next = _lowdisc_faurefnext ( 0 );
+imax = 1;
+leap = 0;
+next = _lowdisc_faurefnext ( 0 , imax , leap );
 assert_checkequal ( size(next) , [1 dim] );
 _lowdisc_faurefstop ( );
 
 
+//
+// Test the "hidden" Fast Faure API in dimension 4.
+// Produce several elements in one single call.
+//
+dim = 4;
+computed = [];
+_lowdisc_faurefstart ( dim );
+qs = _lowdisc_faurefbaseget ( );
+assert_checkequal ( qs , 5 );
+leap = 0;
+// Skip first term
+next = _lowdisc_faurefnext ( 0 , 1 , leap );
+computed = _lowdisc_faurefnext ( 1 , 8 , leap );
+expected= [
+    0.2                    0.2                    0.2                    0.2                  
+    0.4                    0.4                    0.4                    0.4                  
+    0.6                    0.6                    0.6                    0.6
+    0.8                    0.8                    0.8                    0.8                  
+    0.04                   0.24                   0.44                   0.64 
+    0.24                   0.44                   0.64                   0.84
+    0.44                   0.64                   0.84                   0.04                 
+    0.64                   0.84                   0.04                   0.24
+];
+assert_checkalmostequal ( computed, expected, %eps );
+_lowdisc_faurefstop ( );
