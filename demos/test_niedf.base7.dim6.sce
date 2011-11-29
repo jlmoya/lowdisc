@@ -7,24 +7,37 @@
 //
 // Check the Fast Niederreiter in dimension 6
 // Use the base 7.
+mprintf("Check the Fast Niederreiter in dimension 6.\n");
+mprintf("Use the base 7.\n");
 //
+path = get_absolute_file_path("test_niedf.base7.dim6.sce");
+filepath = fullfile(path,"test_niedf.base7.dim6.txt");
+mprintf("Produced Filename: %s\n",filepath);
+reffilepath = fullfile(path,"TOMS738.GENIN.nied.base7.dim6.log.txt");
+mprintf("Reference Filename: %s\n",reffilepath);
+//
+[fd,err]=mopen( filepath , "w" );
 DIMEN = 6;
 BASE = 7;
-mprintf ("SCILAB\n")
-mprintf ("DIMENSION = %d\n", DIMEN)
-mprintf ("BASE = %d\n", BASE)
+mfprintf (fd,"SCILAB\n")
+mfprintf (fd,"DIMENSION = %d\n", DIMEN)
+mfprintf (fd,"BASE = %d\n", BASE)
+mfprintf(fd,"====================================================================\n")
 rng = lowdisc_new("niederreiterf");
 rng = lowdisc_configure(rng,"-dimension",DIMEN);
 rng = lowdisc_configure(rng,"-base",BASE);
 rng = lowdisc_startup (rng);
 [rng,computed]=lowdisc_next(rng);
-mprintf ("%8d %14.6f %14.6f %14.6f %14.6f %14.6f %14.6f\n", 0 , computed(1) , computed(2) , computed(3) , computed(4) , computed(5) , computed(6) )
+mfprintf (fd,"%8d %14.6f %14.6f %14.6f %14.6f %14.6f %14.6f\n", ..
+    0 , computed(1) , computed(2) , computed(3) , computed(4) , computed(5) , computed(6) )
 // Terms #1 to #100
 [rng,computed]=lowdisc_next(rng,100);
 for i = 1:100
-  mprintf ("%8d %14.6f %14.6f %14.6f %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) , computed(i,5) , computed(i,6) )
+  mfprintf (fd,"%8d %14.6f %14.6f %14.6f %14.6f %14.6f %14.6f\n", ..
+    i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) , computed(i,5) , computed(i,6) )
 end
 rng = lowdisc_destroy(rng);
+mclose(fd);
 
 //
 // Load this script into the editor
