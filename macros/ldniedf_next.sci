@@ -31,19 +31,11 @@ function [this,next] = ldniedf_next ( varargin )
   leap = ldbase_cget ( this.baseobj , "-leap" )
   //
   // Initialize the vector
-  next = zeros(imax,dimension)
-  //
-  for i=1:imax
-    this.baseobj = ldbase_incr ( this.baseobj )
-    onevector = _lowdisc_niedfnext ( );
-    next(i,1:dimension) = onevector
-    if ( leap > 0 ) then
-      // Leap over (i.e. ignore) as many elements as required
-      for j = 1 : leap
-        this.baseobj = ldbase_incr ( this.baseobj )
-        onevector = _lowdisc_niedfnext ( );
-      end
-    end
-  end
+  next = _lowdisc_niedfnext ( imax , leap );
+  // Leap over (i.e. ignore) as many elements as required
+  // Directly set the index.
+  index = ldbase_get ( this.baseobj , "-index" )
+  index = index + imax*(leap+1)
+  this.baseobj = ldbase_indexset ( this.baseobj , index )
 endfunction
 
