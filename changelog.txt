@@ -4,6 +4,7 @@ lowdisc (not released yet)
  * Updated unit tests: basic and ldfaure for Linux.
  * Vectorized Fast Faure sequence.
  * Vectorized Fast Halton sequence.
+ * Added Copyright notices in the gateways.
 
 lowdisc (0.2)
     * Fixed sobol_startup.
