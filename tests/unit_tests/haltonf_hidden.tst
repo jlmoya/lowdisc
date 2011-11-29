@@ -18,8 +18,7 @@ dim = 4;
 primeslist = lowdisc_primes100 ( );
 base = primeslist(1:dim);
 seed = zeros(1,dim);
-leap = ones(1,dim);
-_lowdisc_haltonfstart ( dim , base , seed , leap );
+_lowdisc_haltonfstart ( dim , base , seed );
 start = _lowdisc_haltonfisstart ( );
 assert_checkequal ( start , 1 );
 // Check get methods
@@ -30,10 +29,12 @@ assert_checkequal ( base2 , base );
 seed2 = _lowdisc_haltonfseedget ( );
 assert_checkequal ( seed2 , seed );
 leap2 = _lowdisc_haltonfleapget ( );
+leap = ones(1,dim);
 assert_checkequal ( leap2 , leap );
 // Skip the first and second terms
+leap = 0;
 for i = 1 : 100
-  computed(i,1:dim) = _lowdisc_haltonfnext ( i + 1 );
+  computed(i,1:dim) = _lowdisc_haltonfnext ( i + 1 , 1 , leap );
 end
 expected = [
 0.250000      0.666667      0.400000      0.285714
@@ -151,13 +152,13 @@ dim = 4;
 primeslist = lowdisc_primes100 ( );
 base = primeslist(1:dim);
 seed = zeros(1,dim);
-leap = ones(1,dim);
-_lowdisc_haltonfstart ( dim , base , seed , leap );
+_lowdisc_haltonfstart ( dim , base , seed );
 scenario = [0 1 2 3 5 6 7 1 2 3];
 computed = [];
+leap = 0;
 for k = 1 : size(scenario,"*")
   seed = scenario(k);
-  computed(k,1:dim) = _lowdisc_haltonfnext ( seed );
+  computed(k,1:dim) = _lowdisc_haltonfnext ( seed , 1 , leap );
 end
 expected= [
     0.        0.                     0.                     0.      
@@ -174,4 +175,30 @@ expected= [
 assert_checkalmostequal ( computed , expected , %eps );
 _lowdisc_haltonfstop ( );
 
-
+//
+// Check the "hidden" API of the Fast Halton sequence
+// Check the result against TOMS 647 data in dimension 4
+// Get 10 elements in just one call.
+//
+dim = 4;
+primeslist = lowdisc_primes100 ( );
+base = primeslist(1:dim);
+seed = zeros(1,dim);
+_lowdisc_haltonfstart ( dim , base , seed );
+// Skip the first and second terms
+leap = 0;
+computed = _lowdisc_haltonfnext ( 2 , 10 , leap );
+expected = [
+0.250000      0.666667      0.400000      0.285714
+0.750000      0.111111      0.600000      0.428571
+0.125000      0.444444      0.800000      0.571429
+0.625000      0.777778      0.040000      0.714286
+0.375000      0.222222      0.240000      0.857143
+0.875000      0.555556      0.440000      0.020408
+0.062500      0.888889      0.640000      0.163265
+0.562500      0.037037      0.840000      0.306122
+0.312500      0.370370      0.080000      0.448980
+0.812500      0.703704      0.280000      0.591837
+];
+assert_checkalmostequal ( computed , expected , 1.e-5 );
+_lowdisc_haltonfstop ( );

@@ -14,9 +14,8 @@ function this = ldhaltonf_startup (this)
   end
   //
   base = this.primeslist(1:dimension)
-  leap = ones(1,dimension)
   seed = zeros(1,dimension)
-  _lowdisc_haltonfstart ( dimension , base , seed , leap )
+  _lowdisc_haltonfstart ( dimension , base , seed )
   //
   skip = ldbase_cget ( this.baseobj , "-skip" )
   if ( skip > 0 ) then

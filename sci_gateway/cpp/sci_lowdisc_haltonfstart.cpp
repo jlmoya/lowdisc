@@ -17,17 +17,19 @@ extern "C" {
 #include "halton.h" 
 
 
-// _lowdisc_haltonfstart ( dim , base , seed , leap )
+// _lowdisc_haltonfstart ( dim , base , seed )
 //   Start the Halton sequence.
 // Parameters
 //   dim : the number of dimensions (e.g. 1)
 //   base : a 1 x dim matrix of doubles, a list of successive prime numbers (e.g. (0,0,0,0) for automatic setup or (2,3,5,7) for user-defined setup)
 //   seed : a 1 x dim matrix of doubles, the Halton sequence element corresponding to STEP = 0 (e.g. (0,0,0,0) for default setup)
-//   leap : a 1 x dim matrix of doubles, the succesive jumps in the Halton sequence. (e.g. (1,1,1,1) for default setup)
 //
 //      If base(i) = 0 then the prime number #i is automatically set.
 //	    If base(i) > 1 then the base is directly used.
 //	    If base(i) <0 or base(i) = 1, this is an error.
+//
+// Description
+// Internally uses leap = (1,1, ..., 1) for the halton C library.
 
 int sci_lowdisc_haltonfstart (char *fname) {
 	int dim;
@@ -39,19 +41,18 @@ int sci_lowdisc_haltonfstart (char *fname) {
 	int * base = NULL;
 	double *dseed = NULL;
 	int * seed = NULL;
-	double *dleap = NULL;
 	int * leap = NULL;
 	
-	CheckRhs(4,5) ;
+	CheckRhs(3,3) ;
 	CheckLhs(0,1) ;
 	//
-	// Get dim
+	// Get Arg #1: dim
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
 	if ( ierr==0 ) {
 		return 0;
 	}
 	//
-	// Get base
+	// Get Arg #2: base
 	ierr = lowdisc_AssertVariableType(fname , 2 , sci_matrix );
 	if ( ierr==0 ) {
 		return 0;
@@ -74,7 +75,7 @@ int sci_lowdisc_haltonfstart (char *fname) {
 		}
 	}
 	//
-	// Get seed
+	// Get Arg #3: seed
 	ierr = lowdisc_AssertVariableType ( fname , 3 , sci_matrix );
 	if ( ierr == 0 ) {
 		return 0;
@@ -96,28 +97,10 @@ int sci_lowdisc_haltonfstart (char *fname) {
 			return 0;
 		}
 	}
-	//
-	// Get leap
-	ierr = lowdisc_AssertVariableType ( fname , 4 , sci_matrix );
-	if ( ierr == 0 ) {
-		return 0;
-	}
-	GetRhsVarMatrixDouble ( 4 , &nRows, &nCols, &dleap);
-	ierr = lowdisc_AssertNumberOfRows ( fname , 4 , 1 , nRows );
-	if ( ierr == 0 ) {
-		return 0;
-	}
-	ierr = lowdisc_AssertNumberOfColumns ( fname , 4 , dim , nCols );
-	if ( ierr==0 ) {
-		return 0;
-	}
-	// Transfer the double array into an array of integers
+	// Createthe leap vector
 	leap = ivector ( dim );
 	for(int k = 0; k < dim; k++) {
-		ierr = lowdisc_Double2IntegerArgument ( fname , 4 , dleap[k] , leap+k );
-		if ( ierr == 0 ) {
-			return 0;
-		}
+		leap[k]=1;
 	}
 	//
 	// Start the Halton sequence

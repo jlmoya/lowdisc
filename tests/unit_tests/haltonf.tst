@@ -1,6 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
-
 //
 // This file must be used under the terms of the GNU LGPL license.
 // 
@@ -14,9 +13,13 @@
 lds = lowdisc_new("haltonf");
 lds = lowdisc_configure(lds,"-dimension",2);
 lds = lowdisc_startup (lds);
+index = lowdisc_get(lds,"-index");
+assert_checkalmostequal ( index, 0);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
 expected = [0.5 1./3.];
+index = lowdisc_get(lds,"-index");
+assert_checkalmostequal ( index, 1);
 assert_checkalmostequal ( computed, expected, 10 * %eps );
 // Terms #2 to #6
 [lds,computed]=lowdisc_next(lds,5);
@@ -28,6 +31,8 @@ expected= [
     3./8. 2./9. 
 ];
 assert_checkalmostequal ( computed, expected, 10 * %eps );
+index = lowdisc_get(lds,"-index");
+assert_checkalmostequal ( index, 6);
 lds = lowdisc_destroy(lds);
 
 
@@ -224,7 +229,7 @@ index = lowdisc_get ( lds , "-index" );
 assert_checkequal ( index , 0 );
 [lds,computed]=lowdisc_next(lds,10);
 expected = [
-  0.5        0.3333333    0.2     0.1428571
+  0.5           0.3333333     0.2           0.1428571
   0.750000      0.111111      0.600000      0.428571
   0.625000      0.777778      0.040000      0.714286
   0.875000      0.555556      0.440000      0.020408

@@ -32,18 +32,11 @@ function [this,next] = ldhaltonf_next ( varargin )
   leap = ldbase_cget ( this.baseobj , "-leap" )
   //
   // Initialize the vector
-  next = zeros(imax,dimension)
-  //
-  for i=1:imax
-    this.baseobj = ldbase_incr ( this.baseobj )
-    index = ldbase_get ( this.baseobj , "-index" )
-    onevector = _lowdisc_haltonfnext ( index );
-    next(i,1:dimension) = onevector
-    if ( leap > 0 ) then
-      // Leap over (i.e. ignore) as many elements as required
-      // Directly set the index.
-      this.baseobj = ldbase_indexset ( this.baseobj , index + leap )
-    end
-  end
+  index = ldbase_get ( this.baseobj , "-index" )
+  next = _lowdisc_haltonfnext ( index + 1, imax , leap );
+  // Leap over (i.e. ignore) as many elements as required
+  // Directly set the index.
+  index = index + imax*(leap+1)
+  this.baseobj = ldbase_indexset ( this.baseobj , index )
 endfunction
 

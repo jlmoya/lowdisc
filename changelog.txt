@@ -3,7 +3,7 @@ changelog of the Low Discrepancy Toolbox
 lowdisc (not released yet)
  * Updated unit tests: basic and ldfaure for Linux.
  * Vectorized Fast Faure sequence.
-
+ * Vectorized Fast Halton sequence.
 
 lowdisc (0.2)
     * Fixed sobol_startup.
@@ -13,10 +13,10 @@ lowdisc (0.2)
     * Separated Halton and Sobol sequences as stand-alons functions.
     * Created a separate .xml page for bad 2D projections.
     * Added "speed" field for ldbase, so that the speed of each sequence can be known.
-	* Disabled optimization of source code for Sobol sequence.
-	  This lead to failure to compile on some operating systems.
-	* Updated tests to rely on assert module.
-	* Fixed startup/shutdown of fast sequence in case of error.
+    * Disabled optimization of source code for Sobol sequence.
+      This lead to failure to compile on some operating systems.
+    * Updated tests to rely on assert module.
+    * Fixed startup/shutdown of fast sequence in case of error.
     * Removed auto-generated demos for clarity.
 
 lowdisc (0.1)

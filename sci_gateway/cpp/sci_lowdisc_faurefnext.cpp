@@ -33,7 +33,7 @@ extern "C" {
 //         where d is the dimension of the sequence.
 //
 // Description
-//   Get the next n elements of the Faure sequence.
+//   Get the next imax elements of the Faure sequence.
 // If leap = 0, then get the elements 
 //   seed, seed+1, seed+2, etc...
 // If leap = 1, then get the elements 
