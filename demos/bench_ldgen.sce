@@ -29,7 +29,7 @@ end
 for ldseq = ["haltonf" "fauref" "reversehaltonf" "sobolf" "niederreiterf"]
   k = k + 1;
   t1 = tic();
-  [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq , strict );
+  [ evalf , u ] = lowdisc_ldgen ( 100*callf , n , ldseq , strict );
   perf(k) = toc() + %eps;
   bynb(k) = (n * evalf) / perf(k);
   mprintf("%-20s %10d %10.3f %10d\n",ldseq,evalf,perf(k),bynb(k))

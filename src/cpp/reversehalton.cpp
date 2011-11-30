@@ -151,7 +151,7 @@ void reversehalton_start ( int dim_num , int newbase[] )
 	if ( revhal_startup )
 	{
 		ostringstream msg;
-		msg << "faure - faure_startup - Error!\n";
+		msg << "reversehalton - reversehalton_start - Error!\n";
 		msg << "  revhal_startup is already done.\n";
 		lowdisc_error(msg.str());
 		return;
