@@ -90,7 +90,6 @@ Dependencies
 
 TODO 
 ----
- * update the next to get all elements in one call
  * change assert_typereal to assert_type with variable name and variable index
  * synchronize the lowdisc_ldgen against the inprb_ldgen function in the intprb module : make a apifun module and make it depend on it.
  * create separate functions for the slow (macros) versions of Reverse Halton, Niederreiter and Faure.
@@ -119,4 +118,85 @@ for this project.
 Thanks to Jean-Philippe Chancelier for finding bugs in the 
 source code of the gateway.
 
+Internal Design
+---------------
+
+The internal design of the toolbox is based on the 
+following hierarchy of internal (i.e. undocumented) functions.
+
+The ldhalton_*, ldfaure_*, etc... functions are each implementing 
+a specific low discrepancy sequence. Each sequence is independent of the others.
+Each sequence has its specific options, but all must implement the
+following methods : new, destroy, configure, cget, get, startup and next.
+The purpose of these functions is the following:
+ * ld<sequence>_new: creates a new sequence with type <sequence>
+ * ld<sequence>_configure: configure an option of the sequence (e.g. -dimension)
+ * ld<sequence>_cget: get the value of a configurable options (e.g. -dimension)
+ * ld<sequence>_get: get the value of a non-configurable options (e.g. -speed)
+ * ld<sequence>_startup: startup the sequence
+ * ld<sequence>_next: returns the next element in the sequence
+ * ld<sequence>_destroy: destroys the sequence
+For example, the Faure sequence is associated with the following functions 
+ldfaure_new, ldfaure_destroy, ldfaure_configure, ldfaure_cget, ldfaure_get, 
+ldfaure_startup and ldfaure_next.
+
+The ldbase_* functions provide an abstract sequence object.
+This class gathers the source code shared by all sequences.
+ * ldbase_new: creates a new abstract sequence
+ * ldbase_cget: get the value of a configurable options (e.g. -dimension)
+ * ldbase_configure: configure an option of the sequence (e.g. -dimension)
+ * ldbase_get: get the value of a non-configurable options (e.g. -speed)
+ * ldbase_incr: increments the index counter
+ * ldbase_indexset: sets the index counter
+ * ldbase_startup: starts the sequence (i.e. sets index to 0)
+ * ldbase_destroy: destroys the sequence
+
+The _lowdisc_* functions are "hidden" (i.e. undocumented) functions which 
+provides the fast low discrepancy functions. 
+
+Main module:
+ * _lowdisc_startup: startup the module
+ * _lowdisc_shutdown: shutdown the module
+  
+Fast Sobol:
+ * _lowdisc_sobolfnext: returns the next element
+ * _lowdisc_sobolfstart: starts the sequence
+ * _lowdisc_sobolfstop: stops the sequence
+ * _lowdisc_sobolfdimget: returns the dimension of the sequence
+ * _lowdisc_sobolfisstart: returns 1 if the sequence is started up, 0 if not
+
+Fast Halton:
+ * _lowdisc_haltonfnext: returns the next element
+ * _lowdisc_haltonfstart: starts the sequence
+ * _lowdisc_haltonfstop: stops the sequence
+ * _lowdisc_haltonfdimget: returns the dimension of the sequence
+ * _lowdisc_haltonfbaseget: returns the basis of the sequence
+ * _lowdisc_haltonfseedget: returns the index of the sequence
+ * _lowdisc_haltonfleapget: returns the leap of the sequence
+ * _lowdisc_haltonfisstart: returns 1 if the sequence is started up, 0 if not
+
+Fast Faure:
+ * _lowdisc_faurefbaseget: 
+ * _lowdisc_faurefnext: returns the next element
+ * _lowdisc_faurefstart: starts the sequence
+ * _lowdisc_faurefstop: stops the sequence
+ * _lowdisc_faurefisstart: returns 1 if the sequence is started up, 0 if not
+ * _lowdisc_faurefdimget: returns the dimension of the sequence
+
+Fast Reverse Halton:
+ * _lowdisc_revhaltfnext: returns the next element
+ * _lowdisc_revhaltfstart: starts the sequence
+ * _lowdisc_revhaltfstop: stops the sequence
+ * _lowdisc_revhaltfbaseget: returns the basis of the sequence
+ * _lowdisc_revhaltfdimget: returns the dimension of the sequence
+ * _lowdisc_revhaltfisstart: returns 1 if the sequence is started up, 0 if not
+
+Fast Niederreiter:
+ * _lowdisc_niedfnext: returns the next element
+ * _lowdisc_niedfstart: starts the sequence
+ * _lowdisc_niedfstop: stops the sequence
+ * _lowdisc_niedfbaseget: returns the basis of the sequence
+ * _lowdisc_niedfdimget: returns the dimension of the sequence
+ * _lowdisc_niedfskipget: returns the skip of the sequence
+ * _lowdisc_niedfisstart: returns 1 if the sequence is started up, 0 if not
 

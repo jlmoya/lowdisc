@@ -22,54 +22,48 @@ function this = lowdisc_configure (this,key,value)
   //   This command allows to configure the state of the current object.
   //   It requires to take the current object both as an input
   //   and output argument.
-  //  The following keys are available.
+  //  The following keys are available: <literal>"-dimension"</literal>, <literal>"-index"</literal>, 
+  // <literal>"-skip"</literal>, <literal>"-leap"</literal>, <literal>"-verbose"</literal>.
   //  <itemizedlist>
-  //   <listitem>"-verbose" : a boolean, the verbose mode (default : %f).</listitem>
-  //   <listitem>"-dimension" : a positive floating point integer, 
+  //   <listitem><literal>"-dimension"</literal> : a positive floating point integer, 
   //     the dimension of the space, i.e.
   //     the size of the vector returned by the command lowdisc_next (default = 1).</listitem>
-  //   <listitem>"-sequenceindex" : a positive floating point integer,
-  //     the starting index of the low discrepancy sequences.
-  //     When a sequence is created this setting is initialized to 0.
-  //     Whenever the randonumber_next method is called, the sequence index
-  //     is updated and incremented with 1. If this option is passed to the lowdisc_cget
-  //     method, it allows to know the number of vectors which have allready
-  //     been generated.
-  //     If this option is set, it allows to modify the behaviour of the low discrepancy
-  //     sequences, which take into account this index to produce the next element
-  //     in the sequence.
-  //     The -sequenceindex optin should therefore generally not be set, 
-  //     except in specific situations
-  //     where the user has particular requirements on the low discrepancy
-  //     sequence to generate.</listitem>
-  //   <listitem>"-skip" : a positive floating point integer, 
+  //   <listitem><literal>"-index"</literal> : a positive floating point integer,
+  //     the number of points which have already been generated in the sequence.
+  //     When a sequence is created, then index is set to 0.
+  //     Whenever the lowdisc_next function is called, the index
+  //     is updated and incremented with 1. 
+  //     If this option is set, the algorithm directly goes to the required 
+  //     location in the sequence.
+  //     </listitem>
+  //   <listitem><literal>"-skip"</literal> : a positive floating point integer, 
   //     the number of terms to skip at startup. 
   //     When the sequence is started up with the lowdisc_startup method,
-  //     the algorithm generates skip elements, which are immediately
-  //     discarded. This option allows to start the simulation at a later
-  //     point in the sequence. 
+  //     then skip elements are ignored in the sequence, so that the 
+  //     next point will be generated at index skip+1.
   //     For example, Fox recommends to skip the qs^4 - 2 first terms in the 
   //     Faure sequence, where qs is the prime number associated with the 
   //     sequence. This number can be retrieved with 
   //     qs = lowdisc_get ( lds , "-faureprime" ).</listitem>
-  //   <listitem>"-leap" : a positive floating point integer, 
+  //   <listitem><literal>"-leap"</literal> : a positive floating point integer, 
   //     the number of elements to ignore from element to element (default = 0).
   //     Each time the lowdisc_next function is called, the immediate element
   //     is retrieved. Then, in order to prepare for the next call,
   //     there are leap elements which are generated and immediately
   //     discarded. This option allows to generate alternative 
   //     sequences based on the same basic generator.</listitem>
+  //   <listitem><literal>"-verbose"</literal> : a boolean, the verbose mode (default : %f).</listitem>
   //  </itemizedlist>
   //
   // Some sequences can be configured in order to increase their maximum
   // dimension. These sequences accept the following "-primeslist" option.
   //  <itemizedlist>
-  //   <listitem>"-primeslist" : a row array of positive floating point integers, 
-  //     at matrix of prime numbers used in the several low discrepancy sequences.
-  //     The expected matrix must have a 1xn shape, with n an integer greater than 2.
-  //     The default list is made of the 100 first prime numbers, from 2 to 541, which
+  //   <listitem>"-primeslist" : a 1-by-n array of positive floating point integers, 
+  //     where n is greater than 2, 
+  //     a matrix of prime numbers used in several low discrepancy sequences.
+  //     The default value is made of the 100 first prime numbers, from 2 to 541, which
   //     enables the user to generate sequences up to 100 dimensions.
-  //     If a larger dimension problem is to process, that feature should enable users to
+  //     If a larger dimension problem is to manage, the -primeslist option enables users to
   //     customize the list to meet the required dimension.
   //     The user should be warned that the Halton sequence may produce poor convergence
   //     rate if the dimension is larger than 15.</listitem>
@@ -77,8 +71,8 @@ function this = lowdisc_configure (this,key,value)
   //  The sequences which are sensitive to this option are : "halton", "haltonf", "faure", "fauref", 
   //  "reversehalton", "reversehaltonf".
   //
-  //  For the Fast Niederreiter sequence in arbitrary base, we can configure the 
-  //  base. 
+  //  For the "niederreiterf" sequence (Fast Niederreiter sequence in arbitrary base), 
+  //  we can configure the base as following. 
   //  <itemizedlist>
   //  <listitem>"-base" : a floating point number, greater than 2.
   //  The base can be an odd or even integer.
@@ -86,7 +80,7 @@ function this = lowdisc_configure (this,key,value)
   //  It may be the smallest prime larger than the dimension as in the 
   //  Faure sequence, although it does not guarantee that this 
   //  leads to a lower discrepancy.
-  //  See the lowdisc_niederbase function for a suggestion of the optimal 
+  //  See the <literal>lowdisc_niedersuggest</literal> function for a suggestion of the optimal 
   //  base, depending on the dimension.
   //  </listitem>
   //  </itemizedlist>
@@ -124,7 +118,7 @@ function this = lowdisc_configure (this,key,value)
   //   lds = lowdisc_configure(lds,"-dimension",3);
   //   method = lowdisc_cget(lds,"-method")
   //   nbdim = lowdisc_cget(lds,"-dimension")
-  //   i = lowdisc_cget(lds,"-sequenceindex")
+  //   i = lowdisc_cget(lds,"-index")
   //   verbose = lowdisc_cget(lds,"-verbose")
   //   lds
   //   lds = lowdisc_destroy(lds);

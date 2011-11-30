@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
- * Copyright (C) 2010 - DIGITEO - Michael Baudin
+ * Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
  * This file is released under the terms of the GNU LGPL license.
 -->
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_overview" xml:lang="fr"
@@ -24,22 +24,24 @@
     <title>Purpose</title>
 
     <para>
-    The goal of this toolbox is to provide a collection of low
-    discrepancy sequences. These sequences try to produce numbers which favor
-    the convergence of a Monte-Carlo simulation by reducing the discrepancy. 
-    These random numbers are designed to be used in a
-    Monte-Carlo simulation. For example, low discrepancy sequences provide a
-    higher convergence rate to the Monte-Carlo method when used in numerical
-    integration. The toolbox takes into account the dimension of the problem,
-    i.e. generate vectors with arbitrary size.</para>
-
-    <para>Low Discrepancy sequences are designed to be able to produce
-    real values uniform in the [0,1[^s interval, where s is the dimension of
-    the space.
+      The goal of this toolbox is to provide a collection of low
+      discrepancy sequences. These sequences try to produce numbers which favor
+      the convergence of a Monte-Carlo simulation by reducing the discrepancy.
+      These random numbers are designed to be used in a
+      Monte-Carlo simulation. For example, low discrepancy sequences provide a
+      higher convergence rate to the Monte-Carlo method when used in numerical
+      integration. The toolbox takes into account the dimension of the problem,
+      i.e. generate vectors with arbitrary size.
     </para>
 
     <para>
-    See the provided demonstrations for sample examples of this library.
+      Low Discrepancy sequences are designed to be able to produce
+      real values uniform in the [0,1[^s interval, where s is the dimension of
+      the space.
+    </para>
+
+    <para>
+      See the provided demonstrations for sample examples of this library.
     </para>
 
   </refsection>
@@ -49,7 +51,8 @@
 
     <para>The list of sequences which are provided in this component is the following.</para>
 
-    <para><itemizedlist>
+    <para>
+      <itemizedlist>
         <listitem>
           <para>The Halton sequence.</para>
         </listitem>
@@ -70,13 +73,15 @@
           <para>The Niederreiter base 2 and arbitrary base sequence. </para>
         </listitem>
 
-      </itemizedlist></para>
+      </itemizedlist>
+    </para>
   </refsection>
 
   <refsection>
     <title>Features</title>
 
-    <para>The current component has the following features : <itemizedlist>
+    <para>
+      The current component has the following features : <itemizedlist>
         <listitem>
           <para>manage arbitrary number of dimensions,</para>
         </listitem>
@@ -86,8 +91,10 @@
         </listitem>
 
         <listitem>
-          <para>leaps (i.e. ignores) a given number of elements from call to
-          call,</para>
+          <para>
+            leaps (i.e. ignores) a given number of elements from call to
+            call,
+          </para>
         </listitem>
 
         <listitem>
@@ -103,10 +110,10 @@
         </listitem>
 
         <listitem>
-          <para>object oriented programming.</para>
+          <para>object oriented programming, if necessary.</para>
         </listitem>
 
-      </itemizedlist> 
+      </itemizedlist>
     </para>
 
   </refsection>
@@ -115,43 +122,48 @@
     <title>Quick Start</title>
 
     <para>
-    The following example generates more than 20 points from a Halton and 
-    Faure sequences in dimension 4.
-    This is a simplified use of the library, where we know in advance the number
-    of experiments to perform.
-    The generated low discrepancy sequence tries to use "optimal" settings,
-    based on the parameters suggested in the bibliography.
+      The following example generates more than 20 points from a Halton and
+      Faure sequences in dimension 4.
+      This is a simplified use of the library, where we know in advance the number
+      of experiments to perform.
+      The generated low discrepancy sequence tries to use "optimal" settings,
+      based on the parameters suggested in the bibliography.
     </para>
 
-   <programlisting role="example"><![CDATA[
+    <programlisting role="example">
+      <![CDATA[
    [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "haltonf" )
    [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "fauref" )
-   ]]></programlisting>
+   ]]>
+    </programlisting>
 
     <para>
-    The parameter evalf is the actual number of points in the sequence.
-    In order to reduce the discrepancy of the point set, it may be larger 
-    than the given number of calls.
-    In order to get the exact number of calls, activate the "strict" option.
-    While this is not recommended (it may increase the discrepancy of the
-    generated point set), it might be useful in some situations.
-    This is done in the following example, where we generate
-    exactly 20 points from the Faure sequence.
+      The parameter evalf is the actual number of points in the sequence.
+      In order to reduce the discrepancy of the point set, it may be larger
+      than the given number of calls.
+      In order to get the exact number of calls, activate the "strict" option.
+      While this is not recommended (it may increase the discrepancy of the
+      generated point set), it might be useful in some situations.
+      This is done in the following example, where we generate
+      exactly 20 points from the Faure sequence.
     </para>
 
-   <programlisting role="example"><![CDATA[
+    <programlisting role="example">
+      <![CDATA[
    [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "fauref" , %t )
-   ]]></programlisting>
+   ]]>
+    </programlisting>
 
     <para>
-    The following example creates 1000 points in dimension 4 from the Sobol sequence.
-    This way of using the library allows to get a complete control over the 
-    parameters of the sequence.
-    It also allows to generate the points one by one, which may be 
-    useful to save memory.
+      The following example creates 1000 points in dimension 4 from the Sobol sequence.
+      This way of using the library allows to get a complete control over the
+      parameters of the sequence.
+      It also allows to generate the points one by one, which may be
+      useful to save memory.
     </para>
 
-   <programlisting role="example"><![CDATA[
+    <programlisting role="example">
+      <![CDATA[
 rng = lowdisc_new("sobolf");
 rng = lowdisc_configure(rng,"-dimension",4);
 rng = lowdisc_startup (rng);
@@ -162,19 +174,21 @@ rng = lowdisc_startup (rng);
 // Get 1000 points
 [rng,computed]=lowdisc_next(rng,1000);
 rng = lowdisc_destroy(rng);
-   ]]></programlisting>
+   ]]>
+    </programlisting>
 
     <para>
-    There are currently 5 sequences available in two flavors:
-    slow sequences are based on macros and fast sequences are based
-    on compiled source code.
-    The function lowdisc_methods returns the list of available
-    sequences. The following script displays the available sequences
-    and a table displaying the speed, maximum dimension and
-    maximum number of calls for all sequences.
+      There are currently 5 sequences available in two flavors:
+      slow sequences are based on macros and fast sequences are based
+      on compiled source code.
+      The function lowdisc_methods returns the list of available
+      sequences. The following script displays the available sequences
+      and a table displaying the speed, maximum dimension and
+      maximum number of calls for all sequences.
     </para>
 
-   <programlisting role="example"><![CDATA[
+    <programlisting role="example">
+      <![CDATA[
 // Get all the available sequences.
 seqmat = lowdisc_methods ()
 
@@ -192,16 +206,18 @@ mprintf("%-20s %-10s  %-10d %-10d\n", seqname , ..
 speed , dimmax , nbsimmax );
 lds = lowdisc_destroy(lds);
 end
-   ]]></programlisting>
+   ]]>
+    </programlisting>
 
     <para>
-    The previous script produces the following output.
-    When the maximum number of calls is equal to -1, this means
-    that there is, in principle, no limit in the number of
-    elements which can be generated.
+      The previous script produces the following output.
+      When the maximum number of calls is equal to -1, this means
+      that there is, in principle, no limit in the number of
+      elements which can be generated.
     </para>
 
-   <programlisting role="example"><![CDATA[
+    <programlisting role="example">
+      <![CDATA[
 Name                 Speed      Max Dim    Max Call  
 halton               slow        100        -1        
 haltonf              fast        100        2147483647
@@ -213,32 +229,39 @@ sobol                slow        40         1073741823
 sobolf               fast        1111       1073741823
 niederreiter-base-2  slow        20         2147483647
 niederreiterf        fast        50         2147483647
-   ]]></programlisting>
+   ]]>
+    </programlisting>
 
   </refsection>
 
   <refsection>
     <title>Sources of Sequences</title>
 
-    <para>Although the random number toolbox provides the same interface for
-    all generators, what happens behind the scenes is not the same, depending
-    on the sequence. Two main sources are used in this toolbox.</para>
+    <para>
+      Although the random number toolbox provides the same interface for
+      all generators, what happens behind the scenes is not the same, depending
+      on the sequence. Two main sources are used in this toolbox.
+    </para>
 
     <itemizedlist>
       <listitem>
         <para>Scripts</para>
 
-        <para>Scripts are provided with this toolbox to implement both
-        low-discrepancy sequences (such as Halton for instance). These
-        sequences may be slow if a large number of data is to be generated,
-        but may provide greater flexibility for some users.</para>
+        <para>
+          Scripts are provided with this toolbox to implement both
+          low-discrepancy sequences (such as Halton for instance). These
+          sequences may be slow if a large number of data is to be generated,
+          but may provide greater flexibility for some users.
+        </para>
       </listitem>
 
       <listitem>
         <para>C source codes</para>
 
-        <para>These sequences are based on compiled C source code and are
-        as fast as possible.</para>
+        <para>
+          These sequences are based on compiled C source code and are
+          as fast as possible.
+        </para>
       </listitem>
     </itemizedlist>
   </refsection>
@@ -246,83 +269,127 @@ niederreiterf        fast        50         2147483647
   <refsection>
     <title>Design</title>
 
-    <para>The internal design of the toolbox is based on the 
-    following hierarchy.</para>
+    <para>
+      The main components in this toolbox are the following.
 
-    <para><itemizedlist>
+      <itemizedlist>
         <listitem>
-          <para>The lowdisc_* functions provide the highest level object oriented 
-          functions.
-          They allow to access to any sequence with a constructor based
-          on a string representing the sequence. For example, lds = lowdisc_new("halton")
-          creates a new Halton sequence.
-          In this framework, the lowdisc component allows to access to all sequences
-          with a single API, where all the methods are valid for all sequences and
-          all sequences share the same options.</para>
+          <para>
+              The <literal>lowdisc_gen</literal> function 
+            can produce a complete set of points, given the name of a sequence and 
+            the number of dimension. 
+            Moreover, this function makes use of optimized <literal>skip</literal> 
+            and <literal>leap</literal> parameters, 
+            which may reduce the discrepancy of the sequence. 
+            Moreover, the number of generated points can be optimized to reduce 
+            the discrepancy. 
+            This is the flagship of this toolbox.
+          </para>
         </listitem>
 
         <listitem>
-          <para>The ldhalton_*, ldfaure_*, etc... functions are each implementing 
-          a specific
-          low discrepancy sequence. Each sequence is independent of the others.
-          Each sequence has its specific options, but all must implement the
-          following methods : new, destroy, configure, cget, get, startup and next.</para>
+          <para>
+            Sequences:
+          </para>
+          <para>
+            The <literal>lowdisc_*</literal> functions provide the highest level object oriented
+            functions.
+            They allow to access to any sequence with a constructor based
+            on a string representing the sequence. For example, <literal>lds = lowdisc_new("halton")</literal>
+            creates a new Halton sequence.
+            In this framework, the lowdisc component allows to access to all sequences
+            with a single API, where all the methods are valid for all sequences and
+            all sequences share the same options.
+          </para>
         </listitem>
 
         <listitem>
-          <para>The ldbase_* functions provide an abstract sequence object.
-          This class gathers the source code shared by all sequences.</para>
+          <para>
+            Macro generators:
+          </para>
+          <para>
+            These functions are macros which produce quasi-random sequences. 
+            These functions can be interesting to experiment low discrepancy 
+            sequences, because it is easy to edit them with Scilab's editor. 
+            On the other, these functions are rather slow if the number 
+            points to generate is large.
+          </para>
         </listitem>
 
-      </itemizedlist></para>
+        <listitem>
+          <para>
+            Static Functions:
+          </para>
+          <para>
+            These functions are macros which provides parameters which can 
+            be used in low discrepancy sequences such as <literal>skip</literal>
+            and <literal>leap</literal> parameters, or tables of prime numbers.
+        </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            Support Functions:
+          </para>
+          <para>
+            These functions are macros which provide basic functions which
+            are used in slow sequences.
+            For example, the <literal>lowdisc_bit*</literal> functions 
+            compute various numbers based on the b-ary decomposition of 
+            an integer.
+          </para>
+        </listitem>
+
+      </itemizedlist>
+    </para>
   </refsection>
 
   <refsection>
     <title>Limitations</title>
 
     <para>
-    Two different sequences, fast (i.e. based on C compiled source codes), 
-	of the same type (e.g. "sobolf" or "fauref"), cannot 
-	be managed at the same time within this toolbox. 
-	For example, before creating a new fast Sobol sequence, 
-	we must destroy the current one.
-	In this section, we explain why this limitation occurs. 
+      Two different sequences, fast (i.e. based on C compiled source codes),
+      of the same type (e.g. "sobolf" or "fauref"), cannot
+      be managed at the same time within this toolbox.
+      For example, before creating a new fast Sobol sequence,
+      we must destroy the current one.
+      In this section, we explain why this limitation occurs.
     </para>
 
     <para>
-    Much work was devoted to the update of the library so that 
-    the parameters of each sequence are clearly identified.
-    In the original Fortran 77 implementations, common blocks were
-    used to manage the state of the sequence throughout the calls.
-    In the original C source code, static variables, some of them
-    being local to some functions, were used.
-    In the original Matlab implementations, global variables were used.
-    In the current implementation, the parameters are clearly
-    identified.
+      Much work was devoted to the update of the library so that
+      the parameters of each sequence are clearly identified.
+      In the original Fortran 77 implementations, common blocks were
+      used to manage the state of the sequence throughout the calls.
+      In the original C source code, static variables, some of them
+      being local to some functions, were used.
+      In the original Matlab implementations, global variables were used.
+      In the current implementation, the parameters are clearly
+      identified.
     </para>
 
     <para>
-    In the macros-based sequences, each sequence has a state which
-    is stored in a typed list, created transparently by the user.
-    There is no global variable in macros-based sequences.
+      In the macros-based sequences, each sequence has a state which
+      is stored in a typed list, created transparently by the user.
+      There is no global variable in macros-based sequences.
     </para>
 
     <para>
-    In the C-based sequences, each sequence has an associated 
-    collection of variables declared as static variables at the 
-    begining of each source code.
-    These variables are used consistently : there are no local static
-    variables anymore, but the global static variables are still 
-	used.
+      In the C-based sequences, each sequence has an associated
+      collection of variables declared as static variables at the
+      begining of each source code.
+      These variables are used consistently : there are no local static
+      variables anymore, but the global static variables are still
+      used.
     </para>
 
     <para>
-    This implementation of the fast sequences has one limitation: 
-	it is not possible to 
-    manage two sequences of the same type concurently (i.e. at the 
-    same time).
-    In a future implementation, an update of the source code 
-    will be necessary to use C++ classes.
+      This implementation of the fast sequences has one limitation:
+      it is not possible to
+      manage two sequences of the same type concurently (i.e. at the
+      same time).
+      In a future implementation, an update of the source code
+      will be necessary to use C++ classes.
     </para>
 
   </refsection>
@@ -330,103 +397,134 @@ niederreiterf        fast        50         2147483647
   <refsection>
     <title>History of the source code</title>
 
-    <para>The source code provided here is the result of the cumulated 
-    work of several authors at different times.</para>
+    <para>
+      The source code provided here is the result of the cumulated
+      work of several authors at different times.
+    </para>
 
-    <para><itemizedlist>
+    <para>
+      <itemizedlist>
         <listitem>
-          <para>From 1986 to 1992, Bennett Fox and then Paul Bratley and 
-          Harald Niederreiter developped Fortran algorithms which 
-          provided the Sobol, Faure and Niederreiter sequences.
-          These algorithms are described in several papers called Algorithm 647,
-          Algorithm 659 and Algorithm 738.</para>
-        </listitem>
-
-        <listitem>
-          <para>From 2003 to 2009, John Burkardt translated these 
-          source codes into Matlab and C. He also developped a leaped Halton 
-          sequence based on the 1997 paper by Kocis and Whiten.</para>
+          <para>
+            From 1986 to 1992, Bennett Fox and then Paul Bratley and
+            Harald Niederreiter developped Fortran algorithms which
+            provided the Sobol, Faure and Niederreiter sequences.
+            These algorithms are described in several papers called Algorithm 647,
+            Algorithm 659 and Algorithm 738.
+          </para>
         </listitem>
 
         <listitem>
           <para>
-          From 2008 to 2010, Michael Baudin did early experiments
-          with interfacing the low discrepancy sequences from the Gnu Scientific Library.
-          Problems with the portability of the library under Windows and 
-          limitations of the licence led me to the search for another 
-          source of sequences. 
-          I developped the Halton and Faure sequences as 
-          Scilab macros from the algorithms provided by Paul Glasserman in his book.
-          Then I translated and re-structured the
-          Matlab and, later, the C source codes from John Burkardt.
-          I updated all the sequences, so that they all share the same parameters,
-          such as the skip and the leap parameters.
-          I also created the Reverse Halton sequence from the 2006 paper
-          by Vandewoestyne and Cools. This work was inspired by the 
-          work done by O. Teytaud in the Gnu Scientific Library.
-          Much time was spent on the validation of the sequences provided in this 
-          module. 
-          Each sequence is associated with a collection of unit
-          tests which ensure the that the sequence is correctly computed. 
-          We used the original Fortran 77 implementations as a base to compare 
-          our results. 
-          Several bugs were discovered this way and fixed in the
-          source code provided here. 
+            From 2003 to 2009, John Burkardt translated these
+            source codes into Matlab and C. He also developped a leaped Halton
+            sequence based on the 1997 paper by Kocis and Whiten.
           </para>
         </listitem>
 
-      </itemizedlist></para>
+        <listitem>
+          <para>
+            From 2008 to 2011, Michael Baudin did early experiments
+            with interfacing the low discrepancy sequences from the Gnu Scientific Library.
+            Problems with the portability of the library under Windows and
+            limitations of the licence led me to the search for another
+            source of sequences.
+            I developped the Halton and Faure sequences as
+            Scilab macros from the algorithms provided by Paul Glasserman in his book.
+            Then I translated and re-structured the
+            Matlab and, later, the C source codes from John Burkardt.
+            I updated all the sequences, so that they all share the same parameters,
+            such as the skip and the leap parameters.
+            I also created the Reverse Halton sequence from the 2006 paper
+            by Vandewoestyne and Cools. This work was inspired by the
+            work done by O. Teytaud in the Gnu Scientific Library.
+            Much time was spent on the validation of the sequences provided in this
+            module.
+            Each sequence is associated with a collection of unit
+            tests which ensure the that the sequence is correctly computed.
+            We used the original Fortran 77 implementations as a base to compare
+            our results.
+            Several bugs were discovered this way and fixed in the
+            source code provided here.
+          </para>
+        </listitem>
+
+      </itemizedlist>
+    </para>
   </refsection>
 
   <refsection>
     <title>Efficiency of Quasi Monte-Carlo</title>
-<para>
-The actual efficiency of quasi-Monte-Carlo methods over crude Monte-Carlo
-may depend on the nature of the function to be integrated and
-the number of variables n.
-          </para>
+    <para>
+      The actual efficiency of quasi-Monte-Carlo methods over crude Monte-Carlo
+      may depend on the nature of the function to be integrated and
+      the number of variables n.
+    </para>
 
-<para>
-In "A primer for the Monte-Carlo method", Sobol suggests 
-the following. If all the variables are
-equally important and n is large (say, n>15), then there is no
-advantage in switching to quasi-Monte-Carlo. However, if all the
-variables are independent or if the dependence on xi decreases as
-i increases (in other words, the initial coordinates are the leading ones),
-one can expect a considerable benefit for QMC, even if n is
-large (from n=10 to n=100, may be 1000).
-          </para>
+    <para>
+      In "A primer for the Monte-Carlo method", Sobol suggests
+      the following. If all the variables are
+      equally important and n is large (say, n>15), then there is no
+      advantage in switching to quasi-Monte-Carlo. However, if all the
+      variables are independent or if the dependence on xi decreases as
+      i increases (in other words, the initial coordinates are the leading ones),
+      one can expect a considerable benefit for QMC, even if n is
+      large (from n=10 to n=100, may be 1000).
+    </para>
 
-<para>
-Caflish, Morokoff and Owen defined the effective dimension of a function
-in the superposition or in the truncation sense. Both these definitions
-are making use of the functional ANOVA decomposition and lead
-to global sensitivity indices, which normalized versions were defined
-by Sobol.
-Functions with a small effective dimension dT are easy to integrate as long
-as the point set used has good properties for its projections over the first dT
-coordinates. The original Halton sequence should be quite sensitive to the
-effective dimension dT, since we know its projections deteriorate quickly as
-the dimension increases.
-          </para>
+    <para>
+      Caflish, Morokoff and Owen defined the effective dimension of a function
+      in the superposition or in the truncation sense. Both these definitions
+      are making use of the functional ANOVA decomposition and lead
+      to global sensitivity indices, which normalized versions were defined
+      by Sobol.
+      Functions with a small effective dimension dT are easy to integrate as long
+      as the point set used has good properties for its projections over the first dT
+      coordinates. The original Halton sequence should be quite sensitive to the
+      effective dimension dT, since we know its projections deteriorate quickly as
+      the dimension increases.
+    </para>
   </refsection>
 
 
   <refsection>
     <title>TODO</title>
 
-    <para><itemizedlist>
-        <listitem> <para> Add scrambling algorithms : RR2 from Kocis and Whiten, Matousek. Can we program Reverse Halton as a scrambling ? Can let the user define its scrambling function ?</para> </listitem>
-        <listitem> <para> Add algorithms to compute the discrepancy</para> </listitem>
-        <listitem> <para> Add test cases on integrals as in Bratley and Fox</para> </listitem>
-        <listitem> <para> check interaction between skip and leap for all sequences</para> </listitem>
-        <listitem> <para> for C-based sequences, vectorize the calls to the fast sequences, so that we can get several elements at the same time</para> </listitem>
-        <listitem> <para> replace dim_num by dim everywhere in the macros</para> </listitem>
-        <listitem> <para> update the name of the next routines of the C library : i4_sobol > i4_sobol_next, etc... Review all the .h to be sure of this update.</para> </listitem>
-        <listitem> <para> see if the Gray code of the index can be computed directly, so that the skip and leap options of Sobol sequence is faster</para> </listitem>
-        <listitem> <para> replace basis by base where appropriate in Faure sequence</para> </listitem>
-        <listitem> <para> create a graycode function</para> </listitem>
-        <listitem> <para> update the C source codes and use C++ classes </para> </listitem>
+    <para>
+      <itemizedlist>
+        <listitem>
+          <para> Add scrambling algorithms : RR2 from Kocis and Whiten, Matousek. Can we program Reverse Halton as a scrambling ? Can let the user define its scrambling function ?</para>
+        </listitem>
+        <listitem>
+          <para> Add algorithms to compute the discrepancy</para>
+        </listitem>
+        <listitem>
+          <para> Add test cases on integrals as in Bratley and Fox</para>
+        </listitem>
+        <listitem>
+          <para> check interaction between skip and leap for all sequences</para>
+        </listitem>
+        <listitem>
+          <para> for C-based sequences, vectorize the calls to the fast sequences, so that we can get several elements at the same time</para>
+        </listitem>
+        <listitem>
+          <para> replace dim_num by dim everywhere in the macros</para>
+        </listitem>
+        <listitem>
+          <para> update the name of the next routines of the C library : i4_sobol > i4_sobol_next, etc... Review all the .h to be sure of this update.</para>
+        </listitem>
+        <listitem>
+          <para> see if the Gray code of the index can be computed directly, so that the skip and leap options of Sobol sequence is faster</para>
+        </listitem>
+        <listitem>
+          <para> replace basis by base where appropriate in Faure sequence</para>
+        </listitem>
+        <listitem>
+          <para> create a graycode function</para>
+        </listitem>
+        <listitem>
+          <para> update the C source codes and use C++ classes </para>
+        </listitem>
       </itemizedlist>
     </para>
   </refsection>
@@ -445,18 +543,18 @@ the dimension increases.
 
   <refsection>
     <title>Acknowledgements</title>
-    
+
     <para>
-    Michael Baudin thanks John Burkardt for his help during
-    the development of this library.
+      Michael Baudin thanks John Burkardt for his help during
+      the development of this library.
     </para>
     <para>
-    Thanks to Alan Cornet, Pierre Marechal for the technical help
-    for this project.
+      Thanks to Alan Cornet, Pierre Marechal for the technical help
+      for this project.
     </para>
     <para>
-    Thanks to Jean-Philippe Chancelier for finding bugs in the
-    source code of the gateway.
+      Thanks to Jean-Philippe Chancelier for finding bugs in the
+      source code of the gateway.
     </para>
 
   </refsection>
@@ -464,74 +562,102 @@ the dimension increases.
 
   <refsection>
     <title>Licence</title>
-    
+
     <para>
-    This toolbox is distributed under the GNU LGPL license.
+      This toolbox is distributed under the GNU LGPL license.
     </para>
   </refsection>
 
   <refsection>
     <title>Bibliography</title>
 
-    <para>"Monte-Carlo methods in Financial Engineering", Paul Glasserman,
-    Springer, 2003</para>
+    <para>
+      "Monte-Carlo methods in Financial Engineering", Paul Glasserman,
+      Springer, 2003
+    </para>
 
-    <para>"Algorithm 247: Radical-inverse quasi-random point sequence", J. H.
-    Halton, 1964. Commun. ACM 7, 12 (Dec. 1964), 701-702</para>
+    <para>
+      "Algorithm 247: Radical-inverse quasi-random point sequence", J. H.
+      Halton, 1964. Commun. ACM 7, 12 (Dec. 1964), 701-702
+    </para>
 
-    <para>"Good permutations for deterministic scrambled Halton sequences in
-    terms of L2-discrepancy", B. Vandewoestyne and R. Cools, Computational and
-    Applied Mathematics 189, 2006</para>
+    <para>
+      "Good permutations for deterministic scrambled Halton sequences in
+      terms of L2-discrepancy", B. Vandewoestyne and R. Cools, Computational and
+      Applied Mathematics 189, 2006
+    </para>
 
-    <para>"Low-discrepancy and low-dispersion sequences", Harald Niederreiter,
-    Journal of Number Theory, Volume 30, 1988, pages 51-70.</para>
+    <para>
+      "Low-discrepancy and low-dispersion sequences", Harald Niederreiter,
+      Journal of Number Theory, Volume 30, 1988, pages 51-70.
+    </para>
 
-    <para>"Algorithm 647: Implementation and Relative Efficiency of
-    Quasirandom Sequence Generators", B. L. Fox, 1986. ACM Trans. Math. Softw.
-    12, 4 (Dec. 1986), 362-376.</para>
+    <para>
+      "Algorithm 647: Implementation and Relative Efficiency of
+      Quasirandom Sequence Generators", B. L. Fox, 1986. ACM Trans. Math. Softw.
+      12, 4 (Dec. 1986), 362-376.
+    </para>
 
-    <para>"Algorithm 659: Implementing Sobol's quasirandom sequence
-    generator.", P. Bratley and B. L. Fox, 1988. ACM Trans. Math. Softw. 14, 1
-    (Mar. 1988), 88-100.</para>
+    <para>
+      "Algorithm 659: Implementing Sobol's quasirandom sequence
+      generator.", P. Bratley and B. L. Fox, 1988. ACM Trans. Math. Softw. 14, 1
+      (Mar. 1988), 88-100.
+    </para>
 
-    <para>"Remark on Algorithm 659: Implementing Sobol's Quasirandom Sequence
-    Generator", Stephen Joe, Frances Kuo, ACM Transactions on Mathematical
-    Software, Volume 29, Number 1, March 2003, pages 49-57.</para>
+    <para>
+      "Remark on Algorithm 659: Implementing Sobol's Quasirandom Sequence
+      Generator", Stephen Joe, Frances Kuo, ACM Transactions on Mathematical
+      Software, Volume 29, Number 1, March 2003, pages 49-57.
+    </para>
 
-    <para>"Implementation and Tests of Low Discrepancy Sequences",
-    Paul Bratley, Bennett Fox, Harald Niederreiter,
-    ACM Transactions on Modeling and Computer Simulation,
-    Volume 2, Number 3, July 1992, pages 195-213.</para>
+    <para>
+      "Implementation and Tests of Low Discrepancy Sequences",
+      Paul Bratley, Bennett Fox, Harald Niederreiter,
+      ACM Transactions on Modeling and Computer Simulation,
+      Volume 2, Number 3, July 1992, pages 195-213.
+    </para>
 
-    <para>"Algorithm 738: Programs to generate Niederreiter's low-discrepancy
-    sequences", P. Bratley, B. L. Fox, and H. Niederreiter, 1994. ACM Trans.
-    Math. Softw. 20, 4 (Dec. 1994), 494-495.</para>
+    <para>
+      "Algorithm 738: Programs to generate Niederreiter's low-discrepancy
+      sequences", P. Bratley, B. L. Fox, and H. Niederreiter, 1994. ACM Trans.
+      Math. Softw. 20, 4 (Dec. 1994), 494-495.
+    </para>
 
-    <para>"Algorithm 823: Implementing scrambled digital sequences", H. S.
-    Hong and F. J. Hickernell, 2003. ACM Trans. Math. Softw. 29, 2 (Jun.
-    2003), 95-109.</para>
+    <para>
+      "Algorithm 823: Implementing scrambled digital sequences", H. S.
+      Hong and F. J. Hickernell, 2003. ACM Trans. Math. Softw. 29, 2 (Jun.
+      2003), 95-109.
+    </para>
 
-    <para>"Discrepancy of sequences associated with a number system (in
-    dimension one)", Faure Henri, Bull. Soc. Math. France 109, no. 2,
-    143--182, 1981</para>
+    <para>
+      "Discrepancy of sequences associated with a number system (in
+      dimension one)", Faure Henri, Bull. Soc. Math. France 109, no. 2,
+      143--182, 1981
+    </para>
 
-    <para>"Numerical Recipes in Fortran: The Art of Scientific Computing",
-    William Press, Brian Flannery, Saul Teukolsky, William Vetterling, Second
-    Edition, Cambridge University Press, 1992</para>
+    <para>
+      "Numerical Recipes in Fortran: The Art of Scientific Computing",
+      William Press, Brian Flannery, Saul Teukolsky, William Vetterling, Second
+      Edition, Cambridge University Press, 1992
+    </para>
 
-    <para>"Comparison of Point Sets and Sequences for Quasi-Monte Carlo and
-    for Random Number Generation.", L'Ecuyer, P. 2008. In Proceedings of the
-    5th international Conference on Sequences and their Applications
-    (Lexington, KY, USA, September 14 - 18, 2008). S. W. Golomb, M. G. Parker,
-    A. Pott, and A. Winterhof, Eds. Lecture Notes In Computer Science, vol.
-    5203. Springer-Verlag, Berlin, Heidelberg, 1-17.</para>
+    <para>
+      "Comparison of Point Sets and Sequences for Quasi-Monte Carlo and
+      for Random Number Generation.", L'Ecuyer, P. 2008. In Proceedings of the
+      5th international Conference on Sequences and their Applications
+      (Lexington, KY, USA, September 14 - 18, 2008). S. W. Golomb, M. G. Parker,
+      A. Pott, and A. Winterhof, Eds. Lecture Notes In Computer Science, vol.
+      5203. Springer-Verlag, Berlin, Heidelberg, 1-17.
+    </para>
 
-    <para>"Computational investigations of low-discrepancy sequences", Kocis,
-    L. and Whiten, W. J. 1997. ACM Trans. Math. Softw. 23, 2 (Jun. 1997),
-    266-294.</para>
+    <para>
+      "Computational investigations of low-discrepancy sequences", Kocis,
+      L. and Whiten, W. J. 1997. ACM Trans. Math. Softw. 23, 2 (Jun. 1997),
+      266-294.
+    </para>
 
     <para>"Gnu Scientific Library - The Reverse Halton Sequence", Olivier Teytaud, 2007</para>
-    
+
     <para>"USSR Computational Mathematics and Mathematical Physics", Ilya Sobol, Volume 16, pages 236-242, 1977.</para>
 
     <para>"The Production of Points Uniformly Distributed in a Multidimensional Cube" (in Russian), Ilya Sobol, YL Levitan, Preprint IPM Akad. Nauk SSSR, Number 40, Moscow 1976.</para>

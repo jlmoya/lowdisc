@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_sobolskip.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_sobolskip" xml:lang="en"
@@ -20,6 +20,14 @@
   </refnamediv>
 
 
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   [ count , lastq ] = lowdisc_sobolskip ( skip , lastq , dim_num , count , v )
+   
+   </synopsis>
+</refsynopsisdiv>
 
 <refsection>
    <title>Parameters</title>

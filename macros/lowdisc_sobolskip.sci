@@ -8,6 +8,9 @@
 function [ count , lastq ] = lowdisc_sobolskip ( skip , lastq , dim_num , count , v )
   // Skip elements in the Sobol sequence.
   //
+  // Calling Sequence
+  //   [ count , lastq ] = lowdisc_sobolskip ( skip , lastq , dim_num , count , v )
+  //
   // Parameters
   //   skip : a 1 x 1 matrix of floating point integers, the number of elements to discard
   //   dim_num : a 1 x 1 matrix of floating point integers, the number of dimensions

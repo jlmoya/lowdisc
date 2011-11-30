@@ -8,6 +8,7 @@ lowdisc (not released yet)
  * Vectorized Fast Niederreiter sequence.
  * Vectorized Fast Reverse Halton sequence.
  * Vectorized Fast Sobol sequence.
+ * Clarified help pages.
 
 lowdisc (0.2)
     * Fixed sobol_startup.

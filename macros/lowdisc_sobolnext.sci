@@ -1,4 +1,4 @@
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2009 - John Burkardt
 // Copyright (C) 1986 - Bennett Fox
@@ -34,44 +34,44 @@ function [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_nu
   // 
   //    // Generates elements of the Sobol sequence in dimension 4
   //    dim_num = 4
-  //    [ v , maxcol , lastq , count , recipd ] = lowdisc_sobolstart ( dim_num );
+  //    [v,maxcol,lastq,count,recipd]=lowdisc_sobolstart(dim_num);
   //    // Element #0
-  //    [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_num , lastq , v , recipd );
+  //    [quasi,lastq,count]=lowdisc_sobolnext(count,maxcol,dim_num,lastq,v,recipd);
   //    disp(quasi')
   //    // Element #1
-  //    [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_num , lastq , v , recipd );
+  //    [quasi,lastq,count]=lowdisc_sobolnext(count,maxcol,dim_num,lastq,v,recipd);
   //    disp(quasi')
   //    // Element #2
-  //    [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_num , lastq , v , recipd );
+  //    [quasi,lastq,count]=lowdisc_sobolnext(count,maxcol,dim_num,lastq,v,recipd);
   //    disp(quasi')
   //
   //    // Generate 15 elements of the Sobol sequence in dimension 4
   //    dim_num = 4
-  //    [ v , maxcol , lastq , count , recipd ] = lowdisc_sobolstart ( dim_num );
+  //    [v,maxcol,lastq,count,recipd]=lowdisc_sobolstart(dim_num);
   //    for k = 1 : 15
-  //      [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_num , lastq , v , recipd );
+  //      [quasi,lastq,count]=lowdisc_sobolnext(count,maxcol,dim_num,lastq,v,recipd);
   //      mprintf("#%d = [%s]\n",k,strcat(string(quasi)," "))
   //    end
   //    
   //    // Generate 5 elements of the Sobol sequence in dimension 4,
   //    // skip 5 elements, then generate 5 elements
   //    dim_num = 4
-  //    [ v , maxcol , lastq , count , recipd ] = lowdisc_sobolstart ( dim_num );
+  //    [v,maxcol,lastq,count,recipd]=lowdisc_sobolstart(dim_num);
   //    for k = 1 : 5
-  //      [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_num , lastq , v , recipd );
+  //      [quasi,lastq,count]=lowdisc_sobolnext(count,maxcol,dim_num,lastq,v,recipd);
   //      mprintf("#%d = [%s]\n",k,strcat(string(quasi)," "))
   //    end
-  //    [ count , lastq ] = lowdisc_sobolskip ( 5 , lastq , dim_num , count , v );
+  //    [count,lastq]=lowdisc_sobolskip(5,lastq,dim_num,count,v);
   //    for k = 1 : 5
-  //      [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_num , lastq , v , recipd );
+  //      [quasi,lastq,count]=lowdisc_sobolnext(count,maxcol,dim_num,lastq,v,recipd);
   //      mprintf("#%d = [%s]\n",k,strcat(string(quasi)," "))
   //    end
   //
   //    // Generate some elements and plot them
   //    dim_num = 2;
-  //    [ v , maxcol , lastq , count , recipd ] = lowdisc_sobolstart ( dim_num );
+  //    [v,maxcol,lastq,count,recipd]=lowdisc_sobolstart(dim_num);
   //    for k = 1 : 2^7-1
-  //      [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_num , lastq , v , recipd );
+  //      [quasi,lastq,count]=lowdisc_sobolnext(count,maxcol,dim_num,lastq,v,recipd);
   //      next(i+1,1:dim_num) = quasi';
   //    end
   //    plot ( next(:,1) , next(:,2) , "bo" )
@@ -79,7 +79,7 @@ function [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_nu
   //  Authors
   //    1986 - Bennett Fox (Original FORTRAN 77 version)
   //    2009 - John Burkardt (MATLAB version)
-  //    2009 - Digiteo - Michael Baudin (Scilab version)
+  //    2009 - 2011 - Digiteo - Michael Baudin (Scilab version)
   //
   // Bibliography
   //    Antonov, Saleev, USSR Computational Mathematics and Mathematical Physics, Volume 19, 1980, pages 252 - 256.
