@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2009-2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 //
@@ -14,11 +14,11 @@ mprintf("Use the default base 2.\n");
 path = get_absolute_file_path("test_niedf.base2.dim4.sce");
 filepath = fullfile(path,"test_niedf.base2.dim4.txt");
 mprintf("Produced Filename: %s\n",filepath);
-reffilepath = fullfile(path,"TOMS738.GENIN.nied.base2.dim4.log.txt");
-mprintf("Reference Filename: %s\n",reffilepath);
 reffilepath = fullfile(path,"TOMS738.GENIN2.nied.base2.dim4.log.txt");
+mprintf("Reference Filename: %s\n",reffilepath);
+reffilepath = fullfile(path,"TOMS738.GENIN.nied.base2.dim4.log.txt");
 mprintf("Reference Filename #2: %s\n",reffilepath);
-mprintf("Caution: with GENIN2, the values are the same\n");
+mprintf("Caution: with GENIN, the values are the same\n");
 mprintf("but the points (i.e. the rows of the file\n");
 mprintf("come in a different order.\n");
 

@@ -13,12 +13,12 @@ mprintf("Use the default base 2.\n");
 path = get_absolute_file_path("test_niedf.base2.dim6.sce");
 filepath = fullfile(path,"test_niedf.base2.dim6.txt");
 mprintf("Produced Filename: %s\n",filepath);
-reffilepath = fullfile(path,"TOMS738.GENIN.nied.base2.dim6.log.txt");
-mprintf("Reference Filename: %s\n",reffilepath);
 reffilepath = fullfile(path,"TOMS738.GENIN2.nied.base2.dim6.log.txt");
+mprintf("Reference Filename: %s\n",reffilepath);
+reffilepath = fullfile(path,"TOMS738.GENIN.nied.base2.dim6.log.txt");
 mprintf("Reference Filename #2: %s\n",reffilepath);
-mprintf("Caution: with GENIN2, the values are the same\n");
-mprintf("but the points (i.e. the rows of the file\n");
+mprintf("Caution: with GENIN, the values are the same\n");
+mprintf("but the points (i.e. the rows of the file)\n");
 mprintf("come in a different order.\n");
 //
 DIMEN = 6;
