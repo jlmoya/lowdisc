@@ -7,6 +7,7 @@ lowdisc (not released yet)
  * Added Copyright notices in the gateways.
  * Vectorized Fast Niederreiter sequence.
  * Vectorized Fast Reverse Halton sequence.
+ * Vectorized Fast Sobol sequence.
 
 lowdisc (0.2)
     * Fixed sobol_startup.
