@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2009-2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 //
@@ -10,17 +10,21 @@ mprintf("Check the Faure sequence in dimension 3.\n");
 path = get_absolute_file_path("test_faure.dim3.sce");
 filepath = fullfile(path,"test_faure.dim3.log.txt");
 mprintf("Produced Filename: %s\n",filepath);
-reffilepath = fullfile(path,"Glasserman.faure.dim3.txt");
-mprintf("Reference Filename: %s\n",reffilepath);
 reffilepath = fullfile(path,"TOMS647.faure.dim3.log.txt");
+mprintf("Reference Filename: %s\n",reffilepath);
+reffilepath = fullfile(path,"Glasserman.faure.dim3.txt");
 mprintf("Reference Filename #2: %s\n",reffilepath);
+mprintf("In order to compare to Ref. File #2, \n");
+mprintf("please comment the -skip option.\n");
 //
 [fd,err]=mopen( filepath , "w" );
 mfprintf ( fd , "SCILAB\n");
 rng = lowdisc_new("faure");
 rng = lowdisc_configure(rng,"-dimension",3);
-// Skip qs^4 - 1 terms, as in TOMS implementation
 qs = lowdisc_get ( rng , "-faureprime" );
+// Skip qs^4 - 1 terms, as in TOMS implementation:
+// comment out this line in order to compare with Glasserman's 
+// data (Glasserman.faure.dim3.txt).
 rng = lowdisc_configure(rng,"-skip", qs^4 - 2);
 str = string(rng);
 nrows = size(str,"r");

@@ -1,15 +1,23 @@
 SCILAB
 Low Discrepancy Sequence:
 =========================
+method: faure
+sequence: <a Low Discrepancy Sequence>
+
+Low Discrepancy Sequence: Faure
+=========================
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+Maximum number of simulations = 4.503600e+015
+
+Abstract Low Discrepancy Sequence:
+=========================
 Dimension of space: 4
-Method: faure
-Sequence Index: 0
+Index: 0
 Verbose logging: F
 Skip: 623
 Leap: 0
-Van Der Corput Basis: 2
-Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
-Started Up: 0
+Started Up: F
+Speed: slow
 ====================================================================
        1       0.998400       0.374400       0.150400       0.046400
        2       0.000320       0.374720       0.317120       0.355520

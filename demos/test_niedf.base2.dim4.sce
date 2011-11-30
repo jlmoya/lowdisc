@@ -19,7 +19,8 @@ mprintf("Reference Filename: %s\n",reffilepath);
 reffilepath = fullfile(path,"TOMS738.GENIN2.nied.base2.dim4.log.txt");
 mprintf("Reference Filename #2: %s\n",reffilepath);
 mprintf("Caution: with GENIN2, the values are the same\n");
-mprintf("but the points come in a different order.\n");
+mprintf("but the points (i.e. the rows of the file\n");
+mprintf("come in a different order.\n");
 
 //
 DIMEN = 4;
