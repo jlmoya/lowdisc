@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2009-2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 //
@@ -13,7 +13,7 @@ mprintf("Use the base 7.\n");
 path = get_absolute_file_path("test_niedf.base7.dim6.sce");
 filepath = fullfile(path,"test_niedf.base7.dim6.txt");
 mprintf("Produced Filename: %s\n",filepath);
-reffilepath = fullfile(path,"TOMS738.GENIN.nied.base7.dim6.log.txt");
+reffilepath = fullfile(path,"test_nied.base7.dim6.TOMS738.GENIN.log.txt");
 mprintf("Reference Filename: %s\n",reffilepath);
 //
 [fd,err]=mopen( filepath , "w" );

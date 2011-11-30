@@ -6,9 +6,15 @@
 
 //
 // Check the Sobol sequence in dimension 4
+mprintf("Check the Sobol sequence in dimension 4.\n");
+path = get_absolute_file_path("test_sobol.dim4.sce");
+filepath = fullfile(path,"test_sobol.dim4.log.txt");
+mprintf("Produced Filename: %s\n",filepath);
+reffilepath = fullfile(path,"test_sobol.dim4.TOMS647.log.txt");
+mprintf("Reference Filename: %s\n",reffilepath);
 //
-[fd,err]=mopen( "test_sobol.dim4.log.txt" , "w" )
-mfprintf ( fd , "SCILAB\n")
+[fd,err]=mopen( filepath , "w" );
+mfprintf ( fd , "SCILAB\n");
 rng = lowdisc_new("sobol");
 rng = lowdisc_configure(rng,"-dimension",4);
 str = string(rng);
@@ -23,7 +29,7 @@ for i = 1:100
   mfprintf ( fd , "%8d %14.6f %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
 end
 rng = lowdisc_destroy(rng);
-mclose(fd)
+mclose(fd);
 //
 // Load this script into the editor
 //

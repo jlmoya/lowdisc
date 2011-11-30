@@ -10,7 +10,7 @@ mprintf("Check the Fast Faure sequence in dimension 4\n");
 path = get_absolute_file_path("test_fauref.dim4.sce");
 filepath = fullfile(path,"test_fauref.dim4.log.txt");
 mprintf("Produced Filename: %s\n",filepath);
-reffilepath = fullfile(path,"TOMS647.faure.dim4.log.txt");
+reffilepath = fullfile(path,"test_faure.dim4.TOMS647.log.txt");
 mprintf("Reference Filename: %s\n",reffilepath);
 //
 [fd,err]=mopen( filepath , "w" )
