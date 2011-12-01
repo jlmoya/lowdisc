@@ -9,14 +9,12 @@ function [ evalf , u ] = lowdisc_ldgen ( varargin )
   //   [ evalf , u ] = lowdisc_ldgen ( callf , n )
   //   [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq )
   //   [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq , strict )
-  //   [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq , strict , verbose )
   //
   // Parameters
   //   callf : a 1 x 1 matrix of floating point integers, the number of calls to the function.
   //   n: a 1 x 1 matrix of floating point integers, the spatial dimension.
   //   ldseq : a 1 x 1 matrix of strings, the name of the sequence. (default <literal>ldseq = "sobolf"</literal>). The method can be equal to : <literal>"halton"</literal>, <literal>"haltonf"</literal>, <literal>"faure"</literal>, <literal>"fauref"</literal>, <literal>"reversehalton"</literal>, <literal>"reversehaltonf"</literal>, <literal>"sobol"</literal>, <literal>"sobolf"</literal>, <literal>"niederreiter-base-2"</literal>, <literal>"niederreiterf"</literal>. See below for details.
   //   strict : a 1 x 1 matrix of boolean, set to %t to make so that <literal>evalf==callf</literal>. (default = %f)
-  //   verbose : a 1 x 1 matrix of boolean, set to %t to enable verbose messages. (default = %f)
   //   evalf : a 1 x 1 matrix of floating point integers, the actual number of function evaluations. We have <literal>evalf >= callf</literal>.
   //   u : a evalf x n matrix of doubles, the uniform random numbers in <literal>[0,1]^n</literal>.
   //
@@ -62,38 +60,43 @@ function [ evalf , u ] = lowdisc_ldgen ( varargin )
   // Authors
   //   Michael Baudin - 2010 - 2011 - DIGITEO
   
-  [lhs, rhs] = argn();
-  if ( rhs < 2 | rhs > 5 ) then
-    errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from %d to %d are expected."), "lowdisc_ldgen", rhs,2,5);
-    error(errmsg)
-  end
+  [lhs, rhs] = argn()
+  apifun_checkrhs ( "lowdisc_ldgen" , rhs , 2:4 )
+  apifun_checklhs ( "lowdisc_ldgen" , lhs , 1:2 )
   //
   callf = varargin(1)
   n = varargin(2)
-  ldseq = "sobolf"
-  if ( rhs >= 3 ) then
-    if ( varargin(3) <> [] ) then
-      ldseq = varargin(3)
-    end
-  end
-  strict = %f
-  if ( rhs >= 4 ) then
-    if ( varargin(4) <> [] ) then
-      strict = varargin(4)
-    end
-  end
-  verbose = %f
-  if ( rhs >= 5 ) then
-    if ( varargin(5) <> [] ) then
-      verbose = varargin(5)
-    end
-  end
+  ldseq = apifun_argindefault ( varargin , 3 , "sobolf" )
+  strict = apifun_argindefault ( varargin , 4 , %f )
   //
-  assert_type ( callf , "callf" , 1 , "constant" )
-  assert_type ( n , "n" , 2, "constant" )
-  assert_type ( ldseq , "ldseq" , 3, "string" )
-  assert_type ( strict , "strict" , 4, "boolean" )
-  assert_type ( verbose , "verbose" , 5, "boolean" )
+  // Check type
+  apifun_checktype ( "lowdisc_ldgen" , callf , "callf" , 1 , "constant" )
+  apifun_checktype ( "lowdisc_ldgen" , n , "n" , 2, "constant" )
+  apifun_checktype ( "lowdisc_ldgen" , ldseq , "ldseq" , 3, "string" )
+  apifun_checktype ( "lowdisc_ldgen" , strict , "strict" , 4, "boolean" )
+  //
+  // Check size
+  apifun_checkscalar ( "lowdisc_ldgen" , callf , "callf" , 1 )
+  apifun_checkscalar ( "lowdisc_ldgen" , n , "n" , 2 )
+  apifun_checkscalar ( "lowdisc_ldgen" , ldseq , "ldseq" , 3 )
+  apifun_checkscalar ( "lowdisc_ldgen" , strict , "strict" , 4 )
+  //
+  // Check content
+  apifun_checkflint ( "lowdisc_ldgen" , callf , "callf" , 1 )
+  apifun_checkflint ( "lowdisc_ldgen" , n , "n" , 2 )
+  availablemethods = [
+   "halton" 
+   "haltonf" 
+   "faure" 
+   "fauref" 
+   "reversehalton"
+   "reversehaltonf" 
+   "sobol"
+   "sobolf"
+   "niederreiter-base-2" 
+   "niederreiterf" 
+   ];
+  apifun_checkoption ( "lowdisc_ldgen" , ldseq , "ldseq" , 3 , availablemethods )
   //
   lds = lowdisc_new(ldseq);
   lds = lowdisc_configure(lds,"-dimension",n);
@@ -151,27 +154,9 @@ function [ evalf , u ] = lowdisc_ldgen ( varargin )
       error ( msg )
     end
   end
-  if ( verbose ) then
-    mprintf(gettext("%s: Ldseq = %s.\n"), "lowdisc_ldgen" , string(ldseq) );
-    mprintf(gettext("%s: Evalf = %s.\n"), "lowdisc_ldgen" , string(evalf) );
-    mprintf(gettext("%s: Skip = %s.\n"), "lowdisc_ldgen" , string(skip) );
-    mprintf(gettext("%s: Leap = %s.\n"), "lowdisc_ldgen" , string(leap) );
-    mprintf(gettext("%s: Strict = %s.\n"), "lowdisc_ldgen" , string(strict) );
-  end
   lds = lowdisc_configure(lds,"-skip",skip);
   lds = lowdisc_configure(lds,"-leap",leap);
   lds = lowdisc_startup (lds);
   [lds,u]=lowdisc_next(lds,evalf);
   lds = lowdisc_destroy(lds);
 endfunction
-
-// Generates an error if the given variable is not of expected type
-function assert_type ( var , varname , ivar , expectedtype )
-  if ( typeof ( var ) <> expectedtype ) then
-    errmsg = msprintf(gettext("%s: Expected %s variable for variable %s at input #%d, but got %s instead."),"assert_typereal", expectedtype,varname , ivar , typeof(var) );
-    error(errmsg);
-  end
-endfunction
-
-
-

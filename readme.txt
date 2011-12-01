@@ -87,6 +87,7 @@ Dependencies
  * This module depends on the Stixbox module (function cov).
  * This module depends on the assert module.
  * This module depends on the helptbx module.
+ * This module depends on the apifun module.
 
 TODO 
 ----
@@ -97,6 +98,7 @@ TODO
    and put it into the "Macro Generators" section.
  * Remove lowdisc_primes100, lowdisc_primes1000, lowdisc_primes10000 
    and use the functions from the "number" module.
+ * Remove verbose option from lowdisc_ldgen and lowdisc_configure
 
 Author
 ------

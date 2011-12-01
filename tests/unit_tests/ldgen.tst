@@ -35,18 +35,6 @@ assert_checkequal ( evalf , callf );
 assert_checkequal ( size(u) , [evalf n] );
 assert_checkequal ( and(u>=0 & u<=1) , %t );
 
-//
-// Check verbose
-callf = 100;
-n = 4;
-ldseq = [];
-strict = [];
-verbose = %t;
-[ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq , strict , verbose );
-assert_checkequal ( evalf >= callf , %t );
-assert_checkequal ( size(u) , [evalf n] );
-assert_checkequal ( and(u>=0 & u<=1) , %t );
-
 // Check all sequences
 callf = 10;
 n = 2;

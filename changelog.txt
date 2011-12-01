@@ -9,6 +9,8 @@ lowdisc (not released yet)
  * Vectorized Fast Reverse Halton sequence.
  * Vectorized Fast Sobol sequence.
  * Clarified help pages.
+ * Used apifun in lowdisc_ldgen.
+ * Removed verbose argument in lowdisc_ldgen.
 
 lowdisc (0.2)
     * Fixed sobol_startup.

@@ -96,7 +96,8 @@ y=lowdisc_dec2bin(x)
 
 // example 2
 // the binary representation of 86 is: '1010110'
-// its length is 7(less than n), so we add to y, 8 times the character '0'  (on the left)
+// its length is 7(less than n), so we add to y,
+// 8 times the character '0'  (on the left)
 x=86
 n=15
 y=lowdisc_dec2bin(x,n)
@@ -127,14 +128,17 @@ end
 // example 4 : returns integers, instead of string
 x=[12 45 135]
 y=lowdisc_dec2bin(x,[],2)
-// See that the result does not depend on the orientation of x.
+// See that the result does not depend on
+// the orientation of x.
 x=[12 45 135]'
 y=lowdisc_dec2bin(x,[],2)
 
-// example 4 : returns integers, instead of string and pad to 8 bits
+// example 4 : returns integers, instead of
+// string and pad to 8 bits
 x=[12 45 135]
 y=lowdisc_dec2bin(x,8,2)
-// See that the result does not depend on the orientation of x.
+// See that the result does not depend on
+// the orientation of x.
 x=[12 45 135]'
 y=lowdisc_dec2bin(x,8,2)
 
