@@ -104,7 +104,7 @@ function this = lowdisc_new ( varargin )
   //    </listitem>
   //  <listitem>"sobol" : the Sobol sequence. 
   //    It is able to generate experiments in dimension at most 40.
-  //    This sequence is able to generate at most 2^30-1  = 1 073 741 823 experiments. TODO : check this (why not 2^31 - 1 ?).
+  //    This sequence is able to generate at most 2^30-1  = 1 073 741 823 experiments. 
   //    There is no way to extend the number of dimensions or the number of 
   //    experiments.
   //    The routine adapts the ideas of Antonov and Saleev, which make use of a Gray code 
@@ -121,7 +121,7 @@ function this = lowdisc_new ( varargin )
   //    </listitem>
   //  <listitem>"sobolf" : the fast Sobol sequence. 
   //    It is able to generate experiments in dimension at most 1111.
-  //    This sequence is able to generate at most 2^30-1  = 1 073 741 823 experiments. TODO : check this (why not 2^31 - 1 ?).
+  //    This sequence is able to generate at most 2^30-1  = 1 073 741 823 experiments. 
   //    There is no way to extend the number of dimensions or the number of 
   //    experiments.
   //    The routine adapts the ideas of Antonov and Saleev, which make use of a Gray code 
