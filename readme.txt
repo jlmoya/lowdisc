@@ -90,9 +90,13 @@ Dependencies
 
 TODO 
 ----
- * change assert_typereal to assert_type with variable name and variable index
- * synchronize the lowdisc_ldgen against the inprb_ldgen function in the intprb module : make a apifun module and make it depend on it.
- * create separate functions for the slow (macros) versions of Reverse Halton, Niederreiter and Faure.
+ * Use apifun
+ * Put lowdisc_corrcoeff into Stixbox
+ * Use number_bary instead of lowdisc_bary
+ * create macros functions for Reverse Halton, Niederreiter and Faure 
+   and put it into the "Macro Generators" section.
+ * Remove lowdisc_primes100, lowdisc_primes1000, lowdisc_primes10000 
+   and use the functions from the "number" module.
 
 Author
 ------

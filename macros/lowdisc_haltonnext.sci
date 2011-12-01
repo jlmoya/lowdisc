@@ -31,13 +31,14 @@ function next = lowdisc_haltonnext ( dimension , index , primemat )
   // next = lowdisc_haltonnext ( dimension , 1 , primemat )
   // // Generate element #2 of the Halton sequence in dimension 2
   // next = lowdisc_haltonnext ( dimension , 2 , primemat )
-  //
   // // Generate some elements 
   // for i = 0 : 2^7-1
   //   next(i+1,1:dimension) = lowdisc_haltonnext ( dimension , i , primemat );
   // end
   // // Plot them
+  // scf();
   // plot ( next(:,1) , next(:,2) , "bo" )
+  // xtitle("Halton point set","X1","X2");
   //
   // Authors
   //   Michael Baudin - 2008-2009 - INRIA

@@ -21,10 +21,37 @@ function value = lowdisc_get (this,key)
   //   Returns the option of the given key.
   //  The following keys are available.
   //  <itemizedlist>
-  //   <listitem>"-dimmax" : a floating point integer, the largest dimension available for the sequence.</listitem>
-  //   <listitem>"-nbsimmax" : a floating point integer, the largest number of elements available for the sequence.</listitem>
-  //   <listitem>"-faureprime" : a floating point integer, the prime integer used in the Faure sequence.</listitem>
-  //   <listitem>"-faurefprime" : a floating point integer, the prime integer used in the Faure fast sequence.</listitem>
+  //   <listitem>
+  //     <para>
+  //     <literal>"-index"</literal> : a positive floating point integer,
+  //     the number of points which have already been generated in the sequence.
+  //     When a sequence is created, then index is set to 0.
+  //     Whenever the <literal>lowdisc_next</literal> function is called, the index
+  //     is updated and incremented with 1. 
+  //     If this option is set, the algorithm directly goes to the required 
+  //     location in the sequence.
+  //     </para>
+  //   </listitem>
+  //   <listitem>
+  //     <para>
+  //       <literal>"-dimmax"</literal> : a floating point integer, the largest dimension available for the sequence.
+  //     </para>
+  //   </listitem>
+  //   <listitem>
+  //     <para>
+  //       <literal>"-nbsimmax"</literal> : a floating point integer, the largest number of elements available for the sequence.
+  //     </para>
+  //   </listitem>
+  //   <listitem>
+  //     <para>
+  //       <literal>"-faureprime"</literal> : a floating point integer, the prime integer used in the Faure sequence.
+  //     </para>
+  //   </listitem>
+  //   <listitem>
+  //     <para>
+  //       <literal>"-faurefprime"</literal> : a floating point integer, the prime integer used in the Faure fast sequence.
+  //     </para>
+  //   </listitem>
   //  </itemizedlist>
   //
   // Examples

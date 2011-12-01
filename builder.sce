@@ -22,7 +22,7 @@ if ~with_module("development_tools") then
 end
 // ====================================================================
 TOOLBOX_NAME  = "lowdisc";
-TOOLBOX_TITLE = "Low Discrepancy Toolbox";
+TOOLBOX_TITLE = "Low Discrepancy";
 // ====================================================================
 toolbox_dir = get_absolute_file_path("builder.sce");
 

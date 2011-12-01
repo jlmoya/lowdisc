@@ -1,4 +1,4 @@
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 function r = lowdisc_corrcoef ( x )
@@ -7,10 +7,16 @@ function r = lowdisc_corrcoef ( x )
   // Calling Sequence
   // r = lowdisc_corrcoef ( x )
   //
+  // Parameters
+  //   x : a m-by-n matrix of doubles, the data. <literal>m</literal> is the number of observations. <literal>n</literal> is the number of variables.
+  //   r : a n-by-n matrix of doubles, the correlation coefficient.
+  //
   // Description
-  // Returns a matrix r of correlation coefficients calculated from an input matrix X whose rows are observations and whose columns are variables. 
-  // The matrix r = corrcoef(x) is related to the covariance matrix c = cov(X) by
-  // r(i,j) = c(i,j) / sqrt(c(i,i) * c(j,j)).
+  // Returns the matrix <literal>r</literal> of correlation coefficients calculated from an 
+  // input matrix <literal>x</literal>. 
+  // The matrix <literal>r</literal> is related to the covariance matrix <literal>c=cov(x)</literal> by
+  //
+  // <literal>r(i,j) = c(i,j) / sqrt(c(i,i) * c(j,j)).</literal>
   //
   // The cov function comes from Stixbox.
   //
@@ -25,7 +31,7 @@ function r = lowdisc_corrcoef ( x )
   // r = lowdisc_corrcoef ( x )
   //
   // Authors
-  //   2010 - DIGITEO - Michael Baudin
+  //   2010 - 2011 - DIGITEO - Michael Baudin
   
   c = cov(x)
   r = c ./ sqrt(diag(c) * diag(c)')

@@ -31,7 +31,9 @@
     <title>Halton Sequence</title>
 
     <para>
-    The Halton sequence is known for having bad 2D projections.
+	In this section, we present some bad 2D projections of the Halton sequence. 
+    The Halton sequence is known for having bad 2D projections and 
+	several examples are presented in the bibliography.
     </para>
 
    <programlisting role="example"><![CDATA[
@@ -98,6 +100,10 @@ lowdisc_proj2d ( u , k );
 
   <refsection>
     <title>Faure Sequence</title>
+
+    <para>
+	In this section, we present some bad 2D projections of the Faure sequence. 
+    </para>
 
    <programlisting role="example"><![CDATA[
 // Search the worst Faure projection

@@ -25,40 +25,50 @@ function this = lowdisc_configure (this,key,value)
   //  The following keys are available: <literal>"-dimension"</literal>, <literal>"-index"</literal>, 
   // <literal>"-skip"</literal>, <literal>"-leap"</literal>, <literal>"-verbose"</literal>.
   //  <itemizedlist>
-  //   <listitem><literal>"-dimension"</literal> : a positive floating point integer, 
+  //   <listitem>
+  //     <para>
+  //     <literal>"-dimension"</literal> : a positive floating point integer, 
   //     the dimension of the space, i.e.
-  //     the size of the vector returned by the command lowdisc_next (default = 1).</listitem>
-  //   <listitem><literal>"-index"</literal> : a positive floating point integer,
-  //     the number of points which have already been generated in the sequence.
-  //     When a sequence is created, then index is set to 0.
-  //     Whenever the lowdisc_next function is called, the index
-  //     is updated and incremented with 1. 
-  //     If this option is set, the algorithm directly goes to the required 
-  //     location in the sequence.
-  //     </listitem>
-  //   <listitem><literal>"-skip"</literal> : a positive floating point integer, 
+  //     the size of the vector returned by the command lowdisc_next (default = 1).
+  //     </para>
+  //   </listitem>
+  //   <listitem>
+  //     <para>
+  //     <literal>"-skip"</literal> : a positive floating point integer, 
   //     the number of terms to skip at startup. 
   //     When the sequence is started up with the lowdisc_startup method,
   //     then skip elements are ignored in the sequence, so that the 
-  //     next point will be generated at index skip+1.
-  //     For example, Fox recommends to skip the qs^4 - 2 first terms in the 
+  //     next point will be generated at index <literal>skip+1</literal>.
+  //     For example, Fox recommends to skip the <literal>qs^4 - 2</literal> first terms in the 
   //     Faure sequence, where qs is the prime number associated with the 
   //     sequence. This number can be retrieved with 
-  //     qs = lowdisc_get ( lds , "-faureprime" ).</listitem>
-  //   <listitem><literal>"-leap"</literal> : a positive floating point integer, 
-  //     the number of elements to ignore from element to element (default = 0).
-  //     Each time the lowdisc_next function is called, the immediate element
-  //     is retrieved. Then, in order to prepare for the next call,
-  //     there are leap elements which are generated and immediately
-  //     discarded. This option allows to generate alternative 
-  //     sequences based on the same basic generator.</listitem>
-  //   <listitem><literal>"-verbose"</literal> : a boolean, the verbose mode (default : %f).</listitem>
+  //     <literal>qs=lowdisc_get(lds,"-faureprime")</literal>.
+  //     </para>
+  //   </listitem>
+  //   <listitem>
+  //      <para>
+  //      <literal>"-leap"</literal> : a positive floating point integer, 
+  //      the number of elements to ignore from element to element (default = 0).
+  //      Each time the lowdisc_next function is called, the immediate element
+  //      is retrieved. Then, in order to prepare for the next call,
+  //      there are leap elements which are generated and immediately
+  //      discarded. This option allows to generate alternative 
+  //      sequences based on the same basic generator.
+  //      </para>
+  //    </listitem>
+  //    <listitem>
+  //      <para>
+  //      <literal>"-verbose"</literal> : a boolean, the verbose mode (default : %f).
+  //      </para>
+  //    </listitem>
   //  </itemizedlist>
   //
   // Some sequences can be configured in order to increase their maximum
   // dimension. These sequences accept the following "-primeslist" option.
   //  <itemizedlist>
-  //   <listitem>"-primeslist" : a 1-by-n array of positive floating point integers, 
+  //    <listitem>
+  //     <para>
+  //     <literal>"-primeslist"</literal> : a 1-by-n array of positive floating point integers, 
   //     where n is greater than 2, 
   //     a matrix of prime numbers used in several low discrepancy sequences.
   //     The default value is made of the 100 first prime numbers, from 2 to 541, which
@@ -66,7 +76,9 @@ function this = lowdisc_configure (this,key,value)
   //     If a larger dimension problem is to manage, the -primeslist option enables users to
   //     customize the list to meet the required dimension.
   //     The user should be warned that the Halton sequence may produce poor convergence
-  //     rate if the dimension is larger than 15.</listitem>
+  //     rate if the dimension is larger than 15.
+  //     </para>
+  //    </listitem>
   //  </itemizedlist>
   //  The sequences which are sensitive to this option are : "halton", "haltonf", "faure", "fauref", 
   //  "reversehalton", "reversehaltonf".
@@ -74,14 +86,17 @@ function this = lowdisc_configure (this,key,value)
   //  For the "niederreiterf" sequence (Fast Niederreiter sequence in arbitrary base), 
   //  we can configure the base as following. 
   //  <itemizedlist>
-  //  <listitem>"-base" : a floating point number, greater than 2.
-  //  The base can be an odd or even integer.
-  //  The default value is 2. 
-  //  It may be the smallest prime larger than the dimension as in the 
-  //  Faure sequence, although it does not guarantee that this 
-  //  leads to a lower discrepancy.
-  //  See the <literal>lowdisc_niedersuggest</literal> function for a suggestion of the optimal 
-  //  base, depending on the dimension.
+  //  <listitem>
+  //     <para>
+  //     <literal>"-base"</literal> : a floating point number, greater than 2.
+  //     The base can be an odd or even integer.
+  //     The default value is 2. 
+  //     It may be the smallest prime larger than the dimension as in the 
+  //     Faure sequence, although it does not guarantee that this 
+  //     leads to a lower discrepancy.
+  //     See the <literal>lowdisc_niedersuggest</literal> function for a suggestion of the optimal 
+  //     base, depending on the dimension.
+  //     </para>
   //  </listitem>
   //  </itemizedlist>
   //
@@ -92,10 +107,10 @@ function this = lowdisc_configure (this,key,value)
   //  This can lead to some trouble for non-experts.
   //  For that purpose, we designed the following functions.
   //  <itemizedlist>
-  //  <listitem> lowdisc_haltonsuggest : provides settings for the Halton sequence,</listitem>
-  //  <listitem> lowdisc_fauresuggest : provides settings for the Faure sequence,</listitem>
-  //  <listitem> lowdisc_sobolsuggest : provides settings for the Sobol sequence,</listitem>
-  //  <listitem> lowdisc_niedersuggest : provides settings for the Niederreiter sequence.</listitem>
+  //  <listitem><para> <literal>lowdisc_haltonsuggest</literal> : provides settings for the Halton sequence,</para></listitem>
+  //  <listitem><para> <literal>lowdisc_fauresuggest</literal> : provides settings for the Faure sequence,</para></listitem>
+  //  <listitem><para> <literal>lowdisc_sobolsuggest</literal> : provides settings for the Sobol sequence,</para></listitem>
+  //  <listitem><para> <literal>lowdisc_niedersuggest</literal> : provides settings for the Niederreiter sequence.</para></listitem>
   //  </itemizedlist>
   //  These functions have been designed to include suggestions by various authors to improve 
   //  the sequences.
@@ -106,10 +121,10 @@ function this = lowdisc_configure (this,key,value)
   //   Some sequences are limited in the maximum number of dimensions, 
   //   because they use internally fixed tables of parameters (e.g. the Sobol 
   //   sequence).
-  //   Some other sequences can be extended with the "-primeslist" option.
-  //   The "-primeslist" option can be configure with a table of 
-  //   primes computed with the lowdisc_primes100(), lowdisc_primes1000()
-  //   or lowdisc_primes10000() functions. The maximum dimension 
+  //   Some other sequences can be extended with the <literal>"-primeslist"</literal> option.
+  //   The <literal>"-primeslist"</literal> option can be configure with a table of 
+  //   primes computed with the <literal>lowdisc_primes100()</literal>, <literal>lowdisc_primes1000()</literal>
+  //   or <literal>lowdisc_primes10000()</literal> functions. The maximum dimension 
   //   which can be attained with these tables depends on the sequence.
   //   See the specific settings of each sequence below for detail.
   //
@@ -118,14 +133,14 @@ function this = lowdisc_configure (this,key,value)
   //   lds = lowdisc_configure(lds,"-dimension",3);
   //   method = lowdisc_cget(lds,"-method")
   //   nbdim = lowdisc_cget(lds,"-dimension")
-  //   i = lowdisc_cget(lds,"-index")
+  //   i = lowdisc_get(lds,"-index")
   //   verbose = lowdisc_cget(lds,"-verbose")
   //   lds
   //   lds = lowdisc_destroy(lds);
   //
   // Authors
-  //   Michael Baudin - 2008-2009 - INRIA
-  //   Michael Baudin - 2010 - DIGITEO
+  //   Michael Baudin - 2008 - 2009 - INRIA
+  //   Michael Baudin - 2010 - 2011 - DIGITEO
 
     select this.method
     case "halton" then

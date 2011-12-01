@@ -74,7 +74,9 @@ function [ quasi , lastq , count ] = lowdisc_sobolnext ( count , maxcol , dim_nu
   //      [quasi,lastq,count]=lowdisc_sobolnext(count,maxcol,dim_num,lastq,v,recipd);
   //      next(i+1,1:dim_num) = quasi';
   //    end
+  //    scf();
   //    plot ( next(:,1) , next(:,2) , "bo" )
+  //    xtitle("Sobol point set","X1","X2");
   //
   //  Authors
   //    1986 - Bennett Fox (Original FORTRAN 77 version)

@@ -1,4 +1,4 @@
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 
@@ -14,40 +14,53 @@ function [ evalf , u ] = lowdisc_ldgen ( varargin )
   // Parameters
   //   callf : a 1 x 1 matrix of floating point integers, the number of calls to the function.
   //   n: a 1 x 1 matrix of floating point integers, the spatial dimension.
-  //   ldseq : a 1 x 1 matrix of strings, the name of the sequence. (default ldseq = "sobolf"). The method can be equal to : "halton", "haltonf", "faure", "fauref", "reversehalton", "reversehaltonf", "sobol", "sobolf", "niederreiter-base-2", "niederreiterf". See below for details.
-  //   strict : a 1 x 1 matrix of boolean, set to %t to make so that evalf==callf. (default = %f)
+  //   ldseq : a 1 x 1 matrix of strings, the name of the sequence. (default <literal>ldseq = "sobolf"</literal>). The method can be equal to : <literal>"halton"</literal>, <literal>"haltonf"</literal>, <literal>"faure"</literal>, <literal>"fauref"</literal>, <literal>"reversehalton"</literal>, <literal>"reversehaltonf"</literal>, <literal>"sobol"</literal>, <literal>"sobolf"</literal>, <literal>"niederreiter-base-2"</literal>, <literal>"niederreiterf"</literal>. See below for details.
+  //   strict : a 1 x 1 matrix of boolean, set to %t to make so that <literal>evalf==callf</literal>. (default = %f)
   //   verbose : a 1 x 1 matrix of boolean, set to %t to enable verbose messages. (default = %f)
-  //   evalf : a 1 x 1 matrix of floating point integers, the actual number of function evaluations. We have evalf >= callf.
-  //   u : a evalf x n matrix of doubles, the uniform random numbers in [0,1]^n.
+  //   evalf : a 1 x 1 matrix of floating point integers, the actual number of function evaluations. We have <literal>evalf >= callf</literal>.
+  //   u : a evalf x n matrix of doubles, the uniform random numbers in <literal>[0,1]^n</literal>.
   //
   // Description
-  // In dimension n, generate more than callf experiments with
-  // low discrepancy sequence ldseq.
+  // In dimension n, generate more than <literal>callf</literal> experiments with
+  // low discrepancy sequence <literal>ldseq</literal>.
   //
-  // Returns the number of suggested function evaluations evalf
-  // and the uniform numbers u in [0,1]^n.
+  // Returns the number of suggested function evaluations <literal>evalf</literal>
+  // and the uniform numbers u in <literal>[0,1]^n</literal>.
   //
-  // If strict is false, then the optimum number of simulations evalf is
+  // If <literal>strict</literal> is false, then the optimum number of simulations <literal>evalf</literal> is
   // used. 
   // If strict is true, the number of simulations is equal to
-  // the required one, that is, we have evalf == callf.
+  // the required one, that is, we have <literal>evalf == callf</literal>. 
+  // In general, using <literal>strict=%f</literal> (i.e. the default) 
+  // may produce a set of points with a lower discrepancy, that is, 
+  // with greater quality. 
+  // On the other hand, the value of <literal>evalf</literal> may be much larger 
+  // than the value of <literal>callf</literal>, so that, in practice, 
+  // it may be necessary to use <literal>strict=%t</literal>.
   //
-  // The sequences which are available are described in depth in the lowdisc_new function.
+  // The sequences which are available are described in depth in the <literal>lowdisc_new</literal> function.
   //
   // Examples
-  // // Generate more than 20 points from a fast Halton sequence in dimension 4
-  // callf = 20
-  // n = 4
-  // ldseq = "haltonf"
+  // // Generate more than 20 points from a 
+  // // fast Sobol sequence in dimension 4
+  // [ evalf , u ] = lowdisc_ldgen ( 20 , 4 )
+  //
+  // // Generate more than 20 points from a 
+  // // fast Halton sequence in dimension 4
+  // callf = 20;
+  // n = 4;
+  // ldseq = "haltonf";
   // [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq )
   //
-  // // Generate the suggested number of points from the fast Faure sequence.
+  // // Generate the suggested number of points 
+  // // from the fast Faure sequence.
   // [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "fauref" )
-  // // Generate exactly 20 points (this is not recommended, it may increase the discrepancy).
+  // // Generate exactly 20 points (this is not 
+  // // recommended, it may increase the discrepancy).
   // [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "fauref" , %t )
   //
   // Authors
-  //   Michael Baudin - 2010 - DIGITEO
+  //   Michael Baudin - 2010 - 2011 - DIGITEO
   
   [lhs, rhs] = argn();
   if ( rhs < 2 | rhs > 5 ) then

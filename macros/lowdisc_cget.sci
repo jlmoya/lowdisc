@@ -15,12 +15,12 @@ function value = lowdisc_cget (this,key)
   //
   // Parameters
   //   this: the current object
-  //   key: a string. The name of the option to get. All options which can be set with lowdisc_configure can be get with lowdisc_cget.
+  //   key: a string. The name of the option to get. All options which can be set with <literal>lowdisc_configure</literal> can be get with <literal>lowdisc_cget</literal>.
   //   value: the value associated with the key.
   //
   // Description
   //   This command allows to get the current state of the object,
-  //   which has been configured with the lowdisc_configure command.
+  //   which has been configured with the <literal>lowdisc_configure</literal> command.
   //
   // Examples
   //   lds = lowdisc_new("faure");

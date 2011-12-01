@@ -35,7 +35,7 @@
    <varlistentry><term>this:</term>
       <listitem><para> the current object</para></listitem></varlistentry>
    <varlistentry><term>key:</term>
-      <listitem><para> a string. The name of the option to get. All options which can be set with lowdisc_configure can be get with lowdisc_cget.</para></listitem></varlistentry>
+      <listitem><para> a string. The name of the option to get. All options which can be set with <literal>lowdisc_configure</literal> can be get with <literal>lowdisc_cget</literal>.</para></listitem></varlistentry>
    <varlistentry><term>value:</term>
       <listitem><para> the value associated with the key.</para></listitem></varlistentry>
    </variablelist>
@@ -45,7 +45,7 @@
    <title>Description</title>
    <para>
 This command allows to get the current state of the object,
-which has been configured with the lowdisc_configure command.
+which has been configured with the <literal>lowdisc_configure</literal> command.
    </para>
    <para>
 </para>

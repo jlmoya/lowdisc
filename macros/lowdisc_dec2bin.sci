@@ -1,13 +1,10 @@
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) INRIA - Farid BELAHCENE
 //
 //
 // This file must be used under the terms of the CeCILL.
 // 
-
-
-
 
 function y = lowdisc_dec2bin ( varargin )
   // Convert a decimal floating point integer into binary.
@@ -18,63 +15,100 @@ function y = lowdisc_dec2bin ( varargin )
   //   y = lowdisc_dec2bin ( x , n , m )
   //
   // Parameters
-  //    x : a  scalar/vector/matix of positives floating point integers, the decimal values to convert.
-  //    n : (optionnal) a floating point integer, the number of bits in the generated binary string. Default is n=[], which means no padding.
-  //    m : a floating point integer, the mode. The type of the output matrix. If m=1, then a string is returned. If m = 2, then a matrix of floating point integers is returned. Default m = 1.
-  //    y : a vector of strings (positives)
+  //    x : a nx-by-mx matrix of doubles, integer value, the decimal values to convert.
+  //    n : a floating point integer, the number of bits in the generated binary string. Default is n=[], which means no padding.
+  //    m : a floating point integer, the mode. The type of the output matrix (Default m = 1). If m=1, then a string is returned. If m = 2, then a matrix of floating point integers is returned. 
+  //    y : a nx-by-mx matrix of strings (if m=1) or a (nx*mx)-by-nb matrix of of doubles (if m=2), where nb is the number of bits.
   //
   // Description
-  // Given x, a positive (or a vector/matix of integers) integer, this function returns a 
-  // string (or a column vector of strings) which is the binary representation of x. 
-  // If dimension of x is superior than 1 then each component of the colums vector str is 
-  // the binary representation of the x components (i.e str(i) is the binary representation of x(i)). 
-  // If the components length of str is less than n ( i.e length str(i) < n ), then add to 
-  // str components the characters '0' on the left in order to have componants length equal to n.
+  // Given a positive integer <literal>x</literal> this function returns its binary representation. 
+  // When required, characters '0' are added on the left in order to have components with length equal to n.
+  //
+  // This function is vectorized, that is, takes a matrix <literal>x</literal> as input and 
+  // returns a matrix <literal>y</literal> on output. 
+  //  <itemizedlist>
+  //   <listitem>
+  //     <para>
+  //     If m=1, then <literal>y</literal> is a matrix of strings, where <literal>y(i,j)</literal> 
+  //     is the binary representation of <literal>x(i,j)</literal>, for <literal>i=1,2,...,nx</literal> and
+  //     <literal>j=1,2,...,mx</literal>.
+  //     </para>
+  //   </listitem>
+  //   <listitem>
+  //     <para>
+  //     If m=2, then <literal>y</literal> is a matrix of doubles, with integer values, 
+  //     where the row <literal>y(k,:)</literal> 
+  //     is the binary representation of <literal>x(k)</literal>, for 
+  //     <literal>k=1,2,...,nx*mx</literal> (i.e. we can access it with a linear index).
+  //     </para>
+  //   </listitem>
+  //  </itemizedlist>
   //
   // If m=2, then all floating point integers have the same number of bits, equal to the maximum
   // number of digits necessary to represent the largest integer.
-  // If m=2, then the result y is always row-by-row, where y(i,:) stores the bits which 
-  // represent the digits of x(i).
-  // If m=2, and n<>[], then zeros are inserted at the head so that the matrix has n columns.
+  // If m=2, and <literal>n</literal> not equal to [], then zeros are inserted on the left 
+  // so that the matrix has <literal>n</literal> columns.
   //
-  // This function is vectorized, that is, takes matrices of inputs x and returns matrices of output y.
-  // It can convert many integers x at a time.
+  // The difference between <literal>lowdisc_dec2bin</literal> and Scilab's <literal>dec2bin</literal> 
+  // is that <literal>lowdisc_dec2bin</literal>
+  // can produce integers, while <literal>dec2bin</literal> only produces strings.
   //
   // Examples
   // // example 1
   // x=86
-  // str=dec2bin(x)
+  // y=lowdisc_dec2bin(x)
   // 
   // // example 2
   // // the binary representation of 86 is: '1010110'
-  // // its length is 7(less than n), so we add to str, 8 times the character '0'  (on the left)
+  // // its length is 7(less than n), so we add to y, 
+  // // 8 times the character '0'  (on the left)
   // x=86
   // n=15
-  // str=dec2bin(x,n)
+  // y=lowdisc_dec2bin(x,n)
   // 
   // // example 3
+  // // See that lowdisc_dec2bin is vectorized.
   // x=[12 45 135]
-  // z=dec2bin(x)
-  // x=[12 45 135]'
-  // z=dec2bin(x)
+  // y=lowdisc_dec2bin(x)
+  // // See how the values are ordered in the output y
+  // x=[
+  //   12 45 135
+  //   11 44 134
+  //   ]
+  // [mx,nx]=size(x);
+  // // See with m=1.
+  // y=lowdisc_dec2bin(x)
+  // for j = 1 : nx
+  //   for i = 1 : mx
+  //      disp([string(x(i,j)) ":" y(i,j)])
+  //   end
+  // end
+  // // See with m=2.
+  // y=lowdisc_dec2bin(x,[],2)
+  // for k = 1 : mx * nx
+  //    disp([string(x(k)) ":" string(y(k,:))])
+  // end
   //
   // // example 4 : returns integers, instead of string
   // x=[12 45 135]
-  // z=dec2bin(x,[],2)
-  // // See that the result does not depend on the orientation of x.
+  // y=lowdisc_dec2bin(x,[],2)
+  // // See that the result does not depend on 
+  // // the orientation of x.
   // x=[12 45 135]'
-  // z=dec2bin(x,[],2)
+  // y=lowdisc_dec2bin(x,[],2)
   //
-  // // example 4 : returns integers, instead of string and pad to 8 bits
+  // // example 4 : returns integers, instead of 
+  // // string and pad to 8 bits
   // x=[12 45 135]
-  // z=dec2bin(x,8,2)
-  // // See that the result does not depend on the orientation of x.
+  // y=lowdisc_dec2bin(x,8,2)
+  // // See that the result does not depend on 
+  // // the orientation of x.
   // x=[12 45 135]'
-  // z=dec2bin(x,8,2)
+  // y=lowdisc_dec2bin(x,8,2)
   //
   // Authors
   //   INRIA - F.Belahcene
-  //   2010 - DIGITEO - Michael Baudin
+  //   2010 - 2011 - DIGITEO - Michael Baudin
 
   rhs = argn(2)
   // check the number of input arguments

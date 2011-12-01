@@ -111,7 +111,9 @@ for k = 1 : 2^7-1
 [quasi,lastq,count]=lowdisc_sobolnext(count,maxcol,dim_num,lastq,v,recipd);
 next(i+1,1:dim_num) = quasi';
 end
+scf();
 plot ( next(:,1) , next(:,2) , "bo" )
+xtitle("Sobol point set","X1","X2");
 
    ]]></programlisting>
 </refsection>
