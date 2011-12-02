@@ -1,11 +1,7 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
-
-
-
-
 
 function value = lowdisc_cget (this,key)
   // Returns the value associated with the given key.
@@ -33,7 +29,16 @@ function value = lowdisc_cget (this,key)
   //   lds = lowdisc_destroy(lds);
   //
   // Authors
-  //   Michael Baudin - 2010 - DIGITEO
+  //   Michael Baudin - 2010 - 2011 - DIGITEO
+
+  [lhs, rhs] = argn()
+  apifun_checkrhs ( "lowdisc_cget" , rhs , 2:2 )
+  apifun_checklhs ( "lowdisc_cget" , lhs , 1 )
+  //
+  apifun_checktype ( "lowdisc_cget" , this , "this" , 1 , "LOWDISC" )
+  apifun_checktype ( "lowdisc_cget" , key , "key" , 2 , "string" )
+  apifun_checkscalar ( "lowdisc_cget" , key , "key" , 2 )
+  //
 
   select key
   case "-method" then

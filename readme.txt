@@ -99,6 +99,24 @@ TODO
  * Remove lowdisc_primes100, lowdisc_primes1000, lowdisc_primes10000 
    and use the functions from the "number" module.
  * Remove verbose option from lowdisc_ldgen and lowdisc_configure
+ * Add scrambling algorithms : RR2 from Kocis and Whiten, Matousek. 
+   Can we program Reverse Halton as a scrambling ? 
+   Can let the user define its scrambling function ?
+ * Add algorithms to compute the discrepancy
+ * Add test cases on integrals as in Bratley and Fox
+ * check interaction between skip and leap for all sequences
+ * for C-based sequences, vectorize the calls to the fast 
+   sequences, so that we can get several elements at the same time
+ * replace dim_num by dim everywhere in the macros
+ * update the name of the next routines of the C library : 
+   i4_sobol > i4_sobol_next, etc... 
+   Review all the .h to be sure of this update.
+ * see if the Gray code of the index can be computed 
+   directly, so that the skip and leap options of 
+   Sobol sequence is faster
+ * replace basis by base where appropriate in Faure sequence
+ * create a graycode function
+ * update the C source codes and use C++ classes
 
 Author
 ------

@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 
@@ -142,7 +142,15 @@ function this = lowdisc_configure (this,key,value)
   //   Michael Baudin - 2008 - 2009 - INRIA
   //   Michael Baudin - 2010 - 2011 - DIGITEO
 
-    select this.method
+  [lhs, rhs] = argn()
+  apifun_checkrhs ( "lowdisc_configure" , rhs , 3:3 )
+  apifun_checklhs ( "lowdisc_configure" , lhs , 1 )
+  //
+  apifun_checktype ( "lowdisc_configure" , this , "this" , 1 , "LOWDISC" )
+  apifun_checktype ( "lowdisc_configure" , key , "key" , 2 , "string" )
+  apifun_checkscalar ( "lowdisc_configure" , key , "key" , 2 )
+  //
+  select this.method
     case "halton" then
       this.sequence     = ldhalton_configure ( this.sequence , key , value )
     case "faure" then

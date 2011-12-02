@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 
@@ -29,6 +29,12 @@ function this = lowdisc_destroy (this)
   //   Michael Baudin - 2008-2009 - INRIA
   //   Michael Baudin - 2010 - DIGITEO
 
+  [lhs, rhs] = argn()
+  apifun_checkrhs ( "lowdisc_destroy" , rhs , 1:1 )
+  apifun_checklhs ( "lowdisc_destroy" , lhs , 0:1 )
+  //
+  apifun_checktype ( "lowdisc_cget" , this , "this" , 1 , "LOWDISC" )
+  //
   select this.method
   case "halton" then
     this.sequence     = ldhalton_destroy ( this.sequence )

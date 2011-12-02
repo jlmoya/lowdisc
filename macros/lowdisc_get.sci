@@ -1,10 +1,7 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
-
-
-
-
 
 function value = lowdisc_get (this,key)
   // Quiery one not-configurable field.
@@ -75,9 +72,17 @@ function value = lowdisc_get (this,key)
   //
   // Authors
   //   Michael Baudin - 2008-2009 - INRIA
-  //   Michael Baudin - 2010 - DIGITEO
+  //   Michael Baudin - 2010 - 2011 - DIGITEO
   //
 
+  [lhs, rhs] = argn()
+  apifun_checkrhs ( "lowdisc_get" , rhs , 2:2 )
+  apifun_checklhs ( "lowdisc_get" , lhs , 1 )
+  //
+  apifun_checktype ( "lowdisc_get" , this , "this" , 1 , "LOWDISC" )
+  apifun_checktype ( "lowdisc_get" , key , "key" , 2 , "string" )
+  apifun_checkscalar ( "lowdisc_get" , key , "key" , 2 )
+  //
   select this.method
   case "halton" then
     value     = ldhalton_get ( this.sequence , key )

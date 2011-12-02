@@ -59,8 +59,7 @@ function tau = lowdisc_soboltau ( dim )
   // dim = 4;
   // lds = lowdisc_new("sobol");
   // lds = lowdisc_configure(lds,"-dimension",dim);
-  // tau = lowdisc_soboltau ( dim );
-  // assert_equal ( tau , 3 );
+  // tau = lowdisc_soboltau ( dim )
   // skip = 2^(tau + dim - 1);
   // lds = lowdisc_configure(lds,"-skip", skip);
   // lds = lowdisc_startup (lds);
@@ -73,12 +72,15 @@ function tau = lowdisc_soboltau ( dim )
   //   Michael Baudin - 2010 - DIGITEO
   //
 
-  // Check dim
-  if ( dim < 1 ) then
-    errmsg = msprintf(gettext("%s: The dim argument should be greater than 1, but is equal to %d."), "lowdisc_soboltau", dim);
-    error(errmsg)
-  end
-
+  [lhs, rhs] = argn()
+  apifun_checkrhs ( "lowdisc_soboltau" , rhs , 1:1 )
+  apifun_checklhs ( "lowdisc_soboltau" , lhs , 1 )
+  //
+  apifun_checktype ( "lowdisc_soboltau" , dim , "dim" , 1 , "constant" )
+  apifun_checkscalar ( "lowdisc_soboltau" , dim , "dim" , 1 )
+  apifun_checkflint ( "lowdisc_soboltau" , dim , "dim" , 1 )
+  apifun_checkgreq ( "lowdisc_soboltau" , dim , "dim" , 1 , 1 )
+  //
   dim_max = 13
   
   tau_table = [0,  0,  1,  3,  5, 8, 11, 15, 19, 23, 27, 31, 35 ]

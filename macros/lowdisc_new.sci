@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 
@@ -16,7 +16,7 @@ function this = lowdisc_new ( varargin )
   //
   // Parameters
   //   this: the current object
-  //   method: (optionnal) a string, the low discrepancy sequence (default = "halton"). The method can be equal to : "halton", "haltonf", "faure", "fauref", "reversehalton", "reversehaltonf", "sobol", "sobolf", "niederreiter-base-2", "niederreiterf". See below for details. 
+  //   method: a string, the low discrepancy sequence (default = "sobolf"). The method can be equal to : "halton", "haltonf", "faure", "fauref", "reversehalton", "reversehaltonf", "sobol", "sobolf", "niederreiter-base-2", "niederreiterf". See below for details. 
   //
   // Description
   //   This function requires to take the current object both as an input
@@ -177,26 +177,22 @@ function this = lowdisc_new ( varargin )
   //
   // Authors
   //   Michael Baudin - 2008-2009 - INRIA
-  //   Michael Baudin - 2010 - DIGITEO
+  //   Michael Baudin - 2010 - 2011 - DIGITEO
 
-  [lhs,rhs]=argn();
-  if ( rhs > 1 ) then
-    errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "lowdisc_new", rhs);
-    error(errmsg)
-  end
-  
-  if ( rhs < 1 ) then
-    method = "halton"
-  else
-    method = varargin(1)
-  end
-
+  [lhs, rhs] = argn()
+  apifun_checkrhs ( "lowdisc_new" , rhs , 0:1 )
+  apifun_checklhs ( "lowdisc_new" , lhs , 1 )
+  //
+  method = apifun_argindefault ( varargin , 1 , "sobolf" )
+  //
+  apifun_checktype ( "lowdisc_new" , method , "method" , 1 , "string" )
+  apifun_checkscalar ( "lowdisc_new" , method , "method" , 1 )
+  //
   this = tlist([
     "LOWDISC"
     "method"
     "sequence"
     ])
-  assert_typestring ( method )
   this.method = method
   select this.method
   case "halton" then
@@ -224,12 +220,3 @@ function this = lowdisc_new ( varargin )
     error(errmsg);
   end
 endfunction
-
-// Generates an error if the given variable is not of type string
-function assert_typestring ( var )
-  if ( type ( var ) <> 10 ) then
-    errmsg = msprintf(gettext("%s: Expected string variable but got %s instead"),"assert_typestring", typeof(var) );
-    error(errmsg);
-  end
-endfunction
-

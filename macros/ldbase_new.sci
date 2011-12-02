@@ -1,10 +1,18 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 
 function this = ldbase_new ( speed )
 
+  [lhs, rhs] = argn()
+  apifun_checkrhs ( "ldbase_new" , rhs , 1:1 )
+  apifun_checklhs ( "ldbase_new" , lhs , 1 )
+  //
+  apifun_checktype ( "ldbase_configure" , speed , "speed" , 1 , "string" )
+  apifun_checkscalar ( "ldbase_configure" , speed , "speed" , 1 )
+  apifun_checkoption ( "ldbase_configure" , speed , "speed" , 1 , ["fast" "slow"] )
+  //
   this = tlist([
     "LDBASE"
     "verbose"
@@ -23,16 +31,5 @@ function this = ldbase_new ( speed )
   this.skip = 0
   this.leap = 0
   this.startedup = %f
-  assert_typestring ( speed )
   this.speed = speed
 endfunction
-
-
-// Generates an error if the given variable is not of type string
-function assert_typestring ( var )
-  if ( type ( var ) <> 10 ) then
-    errmsg = msprintf(gettext("%s: Expected string variable but got %s instead"),"assert_typestring", typeof(var) );
-    error(errmsg);
-  end
-endfunction
-

@@ -103,19 +103,19 @@ function [this,next] = lowdisc_next ( varargin )
   //   Michael Baudin - 2010 - DIGITEO
   //
 
-  [lhs,rhs]=argn();
-  if ( rhs > 2 ) then
-    errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "lowdisc_next", rhs);
-    error(errmsg)
-  end
-  
+  [lhs, rhs] = argn()
+  apifun_checkrhs ( "lowdisc_next" , rhs , 1:2 )
+  apifun_checklhs ( "lowdisc_next" , lhs , 0:2 )
+  //
   this = varargin(1)
-  if ( rhs < 2 ) then
-    imax = 1
-  else
-    imax = varargin(2)
-  end
-
+  imax = apifun_argindefault ( varargin , 2 , 1 )
+  //
+  apifun_checktype ( "lowdisc_next" , this , "this" , 1 , "LOWDISC" )
+  apifun_checktype ( "lowdisc_next" , imax , "imax" , 2 , "constant" )
+  apifun_checkscalar ( "lowdisc_next" , imax , "imax" , 2 )
+  apifun_checkflint ( "lowdisc_next" , imax , "imax" , 2 )
+  apifun_checkgreq ( "lowdisc_next" , imax , "imax" , 2 , 1 )
+  //
   select this.method
   case "halton" then
     [this.sequence,next]     = ldhalton_next ( this.sequence , imax )
