@@ -1,6 +1,6 @@
 changelog of the Low Discrepancy Toolbox
 
-lowdisc (not released yet)
+lowdisc (v0.3)
  * Updated unit tests: basic and ldfaure for Linux.
  * Vectorized Fast Faure sequence.
  * Vectorized Fast Halton sequence.

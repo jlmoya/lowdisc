@@ -63,15 +63,11 @@ Static Functions:
  * lowdisc_methods : Returns available sequences.
  * lowdisc_niederbase : Returns optimal base for Niederreiter sequence.
  * lowdisc_niedersuggest : Returns favorable parameters for Niederreiter sequence.
- * lowdisc_primes100 : Returns a matrix containing the 100 first primes.
- * lowdisc_primes1000 : Returns a matrix containing the 1000 first primes.
- * lowdisc_primes10000 : Returns a matrix containing the 10000 first primes.
  * lowdisc_sobolsuggest : Returns favorable parameters for Sobol sequences.
  * lowdisc_soboltau : Returns favorable starting seeds for Sobol sequences.
  * lowdisc_stopall : Stop all fast sequences.
  
 Support Functions:
- * lowdisc_bary : Returns the digits of a number given the basis.
  * lowdisc_bitand : Bitwise AND.
  * lowdisc_bithi1 : Returns the position of the high one bit base 2 in an integer.
  * lowdisc_bitlo0 : Returns the position of the low zero bit base 2 in an integer.
@@ -100,7 +96,6 @@ TODO
    Can we program Reverse Halton as a scrambling ? 
    Can let the user define its scrambling function ?
  * Add algorithms to compute the discrepancy
- * Add test cases on integrals as in Bratley and Fox
  * check interaction between skip and leap for all sequences
  * for C-based sequences, vectorize the calls to the fast 
    sequences, so that we can get several elements at the same time
