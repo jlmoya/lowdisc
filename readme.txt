@@ -93,7 +93,6 @@ Dependencies
 TODO 
 ----
  * Put lowdisc_corrcoeff into Stixbox
- * Use number_bary instead of lowdisc_bary
  * create macros functions for Reverse Halton, Niederreiter and Faure 
    and put it into the "Macro Generators" section.
  * Remove verbose option from lowdisc_ldgen and lowdisc_configure

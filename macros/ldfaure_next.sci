@@ -86,7 +86,7 @@ endfunction
 //   Monte-Carlo methods in Financial Engineering, Paul Glasserman
 //
 function next = _fauresequence ( dimension , index , basis )
-  digits = lowdisc_bary ( index , basis , "bigendian" )
+  digits = number_tobary ( index , basis , "bigendian" )
   r = size ( digits , "r" )
   // Compute a vector made of 1/b, 1/b^2, etc...
   ib = 1.0/basis

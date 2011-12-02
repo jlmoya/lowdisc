@@ -19,7 +19,7 @@ function bit = lowdisc_bithi1 ( n )
   //
   //  Examples
   //    // n = 22 writes [1 0 1 1 0]' in base 2
-  //    lowdisc_bary(22)'
+  //    number_tobary(22)'
   //    // Hence, the high 1 bit is 5, 
   //    // i.e. the highest 1 bit is at index 5.
   //    lowdisc_bithi1 ( 22 )
@@ -30,7 +30,7 @@ function bit = lowdisc_bithi1 ( n )
   //  nmat =  [0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 1023 1024 1025];
   //  for n = nmat
   //    bit = lowdisc_bithi1 ( n );
-  //    d = lowdisc_bary ( n , 2 );
+  //    d = number_tobary ( n , 2 );
   //    mprintf("%5d %25s %5d\n",n,strcat(string(d)," "),bit);
   //  end
   //
@@ -39,7 +39,7 @@ function bit = lowdisc_bithi1 ( n )
   //    2010 - 2011 - Digiteo - Michael Baudin
   //
   
-  d = lowdisc_bary(n)
+  d = number_tobary(n)
   bit = size(d,"*")
 endfunction
 

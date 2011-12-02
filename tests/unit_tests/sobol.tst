@@ -252,7 +252,7 @@ lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();
-assert_checkequal ( (t2-t1)<1. , %t );
+assert_checkequal ( (t2-t1)<10. , %t );
 
 // Check performance for large values of leap
 // This is not so fast : lastq has to be updated.
@@ -264,5 +264,5 @@ lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();
-assert_checkequal ( (t2-t1)<10. , %t );
+assert_checkequal ( (t2-t1)<20. , %t );
 

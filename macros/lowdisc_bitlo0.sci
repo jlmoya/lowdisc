@@ -1,4 +1,4 @@
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
@@ -25,7 +25,7 @@ function bit = lowdisc_bitlo0 ( n )
   //
   //  Examples
   //  // n = 11 is equal to "1 0 1 1" in binary
-  //  d = lowdisc_bary ( 11 , 2 )'
+  //  d = number_tobary ( 11 , 2 )'
   //  // Hence, the low 0 bit is 3 
   //  // i.e., from the right, the first zero is at index 3.
   //  bit = lowdisc_bitlo0 ( 11 )
@@ -36,16 +36,16 @@ function bit = lowdisc_bitlo0 ( n )
   //  nmat =  [0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 1023 1024 1025];
   //  for n = nmat
   //    bit = lowdisc_bitlo0 ( n );
-  //    d = lowdisc_bary ( n , 2 );
+  //    d = number_tobary ( n , 2 );
   //    mprintf("%5d %25s %5d\n",n,strcat(string(d)," "),bit);
   //  end
   //
   //  Authors
   //    2008-2009 - INRIA - Michael Baudin (Scilab version)
-  //    2010 - Digiteo - Michael Baudin
+  //    2010 - 2011 - Digiteo - Michael Baudin
   //
   
-  d = lowdisc_bary(n)
+  d = number_tobary(n)
   l = size(d,"*")
   k = find(d==0)
   bit = l - max(k) + 1

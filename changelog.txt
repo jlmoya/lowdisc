@@ -15,6 +15,7 @@ lowdisc (not released yet)
    from "halton" to "sobolf".
  * Removed lowdisc_primes100, lowdisc_primes1000, lowdisc_primes10000 
    and use the functions from the "number" module instead.
+ * Removed lowdisc_bary: replaced by number_tobary.
 
 lowdisc (0.2)
     * Fixed sobol_startup.

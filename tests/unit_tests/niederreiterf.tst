@@ -116,9 +116,9 @@ lds = lowdisc_destroy(lds);
 
 
 // Check performance for large values of skip
-// This is not so fast : nextq has to be updated.
+// This is fast because the code is compiled.
 t1 = timer();
-lds = lowdisc_new("niederreiter-base-2");
+lds = lowdisc_new("niederreiterf");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip", 1.e2);
 lds = lowdisc_startup (lds);
@@ -128,9 +128,9 @@ t2 = timer();
 assert_checkequal ( (t2-t1)<1. , %t );
 
 // Check performance for large values of leap
-// This is not so fast : nextq has to be updated.
+// This is fast because the code is compiled.
 t1 = timer();
-lds = lowdisc_new("niederreiter-base-2");
+lds = lowdisc_new("niederreiterf");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap", 1.e2);
 lds = lowdisc_startup (lds);

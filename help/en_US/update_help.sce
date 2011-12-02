@@ -55,7 +55,6 @@ helptbx_helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t )
 // Generate the support functions help
 helpdir = fullfile(cwd,"supportfunctions");
 funmat = [
-  "lowdisc_bary"
   "lowdisc_bitlo0"
   "lowdisc_bithi1"
   "lowdisc_bitxor"

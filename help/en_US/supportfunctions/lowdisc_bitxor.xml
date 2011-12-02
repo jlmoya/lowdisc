@@ -66,9 +66,9 @@ This routine is vectorized, i.e. it does take a column matrix n as input argumen
 
 // Compute xor for several pairs of integers.
 // In base-2, 86 = [1 0 1 0 1 1 0]'
-lowdisc_bary ( 86 , 2 )
+number_tobary ( 86 , 2 )
 // In base-2, 19 = [1 0 0 1 1]'
-lowdisc_bary ( 19 , 2 )
+number_tobary ( 19 , 2 )
 // The xor of [1 0 1 0 1 1 0]'
 //        and     [1 0 0 1 1]'
 //         is [1 0 0 0 1 0 1]'
@@ -94,9 +94,9 @@ x12 = [
 ];
 for i = 1 : 10
 y = lowdisc_bitxor ( x12(i,1) , x12(i,2) );
-d1 = lowdisc_bary ( x12(i,1) , 2 );
-d2 = lowdisc_bary ( x12(i,2) , 2 );
-d3 = lowdisc_bary ( y , 2 );
+d1 = number_tobary ( x12(i,1) , 2 );
+d2 = number_tobary ( x12(i,2) , 2 );
+d3 = number_tobary ( y , 2 );
 mprintf("%5d %5d %15s %15s %15s %5d\n",...
 x12(i,1),x12(i,2),strcat(string(d1)," "),..
 strcat(string(d2)," "),strcat(string(d3)," "),y);
