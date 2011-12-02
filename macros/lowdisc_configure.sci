@@ -124,8 +124,8 @@ function this = lowdisc_configure (this,key,value)
   //  sequence).
   //  Some other sequences can be extended with the <literal>"-primeslist"</literal> option.
   //  The <literal>"-primeslist"</literal> option can be configure with a table of 
-  //  primes computed with the <literal>lowdisc_primes100()</literal>, <literal>lowdisc_primes1000()</literal>
-  //  or <literal>lowdisc_primes10000()</literal> functions. The maximum dimension 
+  //  primes computed with the <literal>number_primes100()</literal>, <literal>number_primes1000()</literal>
+  //  or <literal>number_primes10000()</literal> functions. The maximum dimension 
   //  which can be attained with these tables depends on the sequence.
   //  See the specific settings of each sequence below for detail.
   //

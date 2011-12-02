@@ -23,7 +23,7 @@ function next = lowdisc_haltonnext ( dimension , index , primemat )
   // edit lowdisc_haltonnext
   // 
   // // Get a matrix of 100 primes
-  // primemat = lowdisc_primes100 ( );
+  // primemat = number_primes100 ( );
   // dimension = 2;
   // // Generate element #0 of the Halton sequence in dimension 2
   // next = lowdisc_haltonnext ( dimension , 0 , primemat )

@@ -109,7 +109,7 @@ _lowdisc_faurefstop ( );
 // Test the "hidden" Fast Faure API in dimension 2000
 //
 dim = 2000;
-primelist = lowdisc_primes10000();
+primelist = number_primes10000();
 k = find(primelist>dim,1);
 qs = primelist(k);
 _lowdisc_faurefstart ( dim , qs );

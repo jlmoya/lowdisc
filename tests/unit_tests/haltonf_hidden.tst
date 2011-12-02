@@ -15,7 +15,7 @@
 start = _lowdisc_haltonfisstart ( );
 assert_checkequal ( start , 0 );
 dim = 4;
-primeslist = lowdisc_primes100 ( );
+primeslist = number_primes100 ( );
 base = primeslist(1:dim);
 seed = zeros(1,dim);
 _lowdisc_haltonfstart ( dim , base , seed );
@@ -149,7 +149,7 @@ assert_checkequal ( start , 0 );
 // i.e. pick arbitrary experiments in the sequence.
 //
 dim = 4;
-primeslist = lowdisc_primes100 ( );
+primeslist = number_primes100 ( );
 base = primeslist(1:dim);
 seed = zeros(1,dim);
 _lowdisc_haltonfstart ( dim , base , seed );
@@ -181,7 +181,7 @@ _lowdisc_haltonfstop ( );
 // Get 10 elements in just one call.
 //
 dim = 4;
-primeslist = lowdisc_primes100 ( );
+primeslist = number_primes100 ( );
 base = primeslist(1:dim);
 seed = zeros(1,dim);
 _lowdisc_haltonfstart ( dim , base , seed );

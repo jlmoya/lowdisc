@@ -14,7 +14,7 @@
 start = _lowdisc_revhaltfisstart ( );
 assert_checkequal ( start , 0 );
 dim = 2;
-primelist = lowdisc_primes100();
+primelist = number_primes100();
 _lowdisc_revhaltfstart ( dim , primelist(1:dim) );
 start = _lowdisc_revhaltfisstart ( );
 assert_checkequal ( start , 1 );
@@ -48,7 +48,7 @@ assert_checkequal ( start , 0 );
 // i.e. pick arbitrary experiments in the sequence.
 //
 dim = 4;
-primelist = lowdisc_primes100();
+primelist = number_primes100();
 _lowdisc_revhaltfstart ( dim , primelist(1:dim) );
 scenario = [0 1 2 3 5 6 7 1 2 3];
 computed = [];
@@ -79,7 +79,7 @@ _lowdisc_revhaltfstop ( );
 // Get elements 0,1,..., 7 in one single call.
 //
 dim = 4;
-primelist = lowdisc_primes100();
+primelist = number_primes100();
 _lowdisc_revhaltfstart ( dim , primelist(1:dim) );
 computed = [];
 imax = 8;
@@ -105,7 +105,7 @@ _lowdisc_revhaltfstop ( );
 // Test leap.
 //
 dim = 4;
-primelist = lowdisc_primes100();
+primelist = number_primes100();
 _lowdisc_revhaltfstart ( dim , primelist(1:dim) );
 computed = [];
 imax = 4;

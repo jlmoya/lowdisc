@@ -38,9 +38,6 @@ helptbx_helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t )
 // Generate the static functions help
 helpdir = fullfile(cwd,"staticfunctions");
 funmat = [
-  "lowdisc_primes100"
-  "lowdisc_primes1000"
-  "lowdisc_primes10000"
   "lowdisc_stopall"
   "lowdisc_methods"
   "lowdisc_haltonsuggest"

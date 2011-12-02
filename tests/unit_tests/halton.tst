@@ -191,8 +191,10 @@ lds = lowdisc_destroy(lds);
 
 // Configure a list of primes and use it
 lds = lowdisc_new("halton");
-prarray = lowdisc_primes1000 ( );
-lds = lowdisc_configure(lds,"-primeslist",prarray);
+prarray = number_primes1000 ( );
+primtable = prarray';
+primtable = primtable(:);
+lds = lowdisc_configure(lds,"-primeslist",primtable);
 lds = lowdisc_configure(lds,"-dimension",150);
 lds = lowdisc_startup (lds);
 [lds,next] = lowdisc_next ( lds , 10 );

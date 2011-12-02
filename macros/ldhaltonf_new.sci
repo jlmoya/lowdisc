@@ -20,7 +20,7 @@ function this = ldhaltonf_new ()
   //
   // Configurable options
   // This makes the component available up to dimension 100
-  this.primeslist = lowdisc_primes100 ( )
+  this.primeslist = number_primes100 ( )
   //
   // Non Configurable options
   this.primessize = size(this.primeslist,2)

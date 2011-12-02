@@ -154,7 +154,7 @@ lds = lowdisc_destroy(lds);
 // test in dimension 1229
 lds = lowdisc_new("haltonf");
 lds = lowdisc_configure(lds,"-dimension",1229);
-prarray = lowdisc_primes10000 ( );
+prarray = number_primes10000 ( );
 lds = lowdisc_configure(lds,"-primeslist",prarray);
 lds = lowdisc_startup (lds);
 for i=0:30

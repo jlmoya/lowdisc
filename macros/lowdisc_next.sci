@@ -98,6 +98,20 @@ function [this,next] = lowdisc_next ( varargin )
   //       i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
   //   end
   //   lds = lowdisc_destroy(lds);
+  //
+  //   // Configure a list of primes and use it
+  //   lds = lowdisc_new("halton");
+  //   // The primes come row-by-row
+  //   prarray = number_primes1000 ( )
+  //   // Create a column vector containing all primes.
+  //   primtable = prarray';
+  //   primtable = primtable(:);
+  //   lds = lowdisc_configure(lds,"-primeslist",primtable);
+  //   lds = lowdisc_configure(lds,"-dimension",150);
+  //   lds = lowdisc_startup (lds);
+  //   [lds,next] = lowdisc_next ( lds , 10 );
+  //   assert_checkequal ( size(next) , [10 150] );
+  //   lds = lowdisc_destroy(lds);
   //   
   // Authors
   //   Michael Baudin - 2008-2009 - INRIA

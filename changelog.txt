@@ -13,6 +13,8 @@ lowdisc (not released yet)
  * Removed verbose input argument in lowdisc_ldgen.
  * Changed default value of method argument in lowdisc_new
    from "halton" to "sobolf".
+ * Removed lowdisc_primes100, lowdisc_primes1000, lowdisc_primes10000 
+   and use the functions from the "number" module instead.
 
 lowdisc (0.2)
     * Fixed sobol_startup.

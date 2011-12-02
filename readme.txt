@@ -88,16 +88,14 @@ Dependencies
  * This module depends on the assert module.
  * This module depends on the helptbx module.
  * This module depends on the apifun module.
+ * This module depends on the number module.
 
 TODO 
 ----
- * Use apifun
  * Put lowdisc_corrcoeff into Stixbox
  * Use number_bary instead of lowdisc_bary
  * create macros functions for Reverse Halton, Niederreiter and Faure 
    and put it into the "Macro Generators" section.
- * Remove lowdisc_primes100, lowdisc_primes1000, lowdisc_primes10000 
-   and use the functions from the "number" module.
  * Remove verbose option from lowdisc_ldgen and lowdisc_configure
  * Add scrambling algorithms : RR2 from Kocis and Whiten, Matousek. 
    Can we program Reverse Halton as a scrambling ? 
