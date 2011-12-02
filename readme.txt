@@ -83,8 +83,8 @@ Dependencies
  * This module depends on the Stixbox module (function cov).
  * This module depends on the assert module.
  * This module depends on the helptbx module.
- * This module depends on the apifun module.
- * This module depends on the number module.
+ * This module depends on the apifun module (v>=0.3).
+ * This module depends on the number module (v>=1.2).
 
 TODO 
 ----
