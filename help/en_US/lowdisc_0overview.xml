@@ -49,9 +49,8 @@
   <refsection>
     <title>Overview of sequences</title>
 
-    <para>The list of sequences which are provided in this component is the following.</para>
-
     <para>
+      The list of sequences which are provided in this component is the following.
       <itemizedlist>
         <listitem>
           <para>The Halton sequence.</para>
@@ -216,21 +215,19 @@ end
       elements which can be generated.
     </para>
 
-    <programlisting role="example">
-      <![CDATA[
-Name                 Speed      Max Dim    Max Call  
-halton               slow        100        -1        
-haltonf              fast        100        2147483647
-faure                slow        541        -1        
-fauref               fast        541        2147483647
-reversehalton        slow        100        -1        
-reversehaltonf       fast        100        2147483647
-sobol                slow        40         1073741823
-sobolf               fast        1111       1073741823
-niederreiter-base-2  slow        20         2147483647
-niederreiterf        fast        50         2147483647
-   ]]>
-    </programlisting>
+    <screen>
+      Name                 Speed      Max Dim    Max Call
+      halton               slow        100        -1
+      haltonf              fast        100        2147483647
+      faure                slow        541        -1
+      fauref               fast        541        2147483647
+      reversehalton        slow        100        -1
+      reversehaltonf       fast        100        2147483647
+      sobol                slow        40         1073741823
+      sobolf               fast        1111       1073741823
+      niederreiter-base-2  slow        20         2147483647
+      niederreiterf        fast        50         2147483647
+    </screen>
 
   </refsection>
 
@@ -240,30 +237,32 @@ niederreiterf        fast        50         2147483647
     <para>
       Although the random number toolbox provides the same interface for
       all generators, what happens behind the scenes is not the same, depending
-      on the sequence. Two main sources are used in this toolbox.
+      on the sequence.
     </para>
+    <para>
+      Two main sources are used in this toolbox.
+      <itemizedlist>
+        <listitem>
+          <para>Scripts</para>
 
-    <itemizedlist>
-      <listitem>
-        <para>Scripts</para>
+          <para>
+            Scripts are provided with this toolbox to implement both
+            low-discrepancy sequences (such as Halton for instance). These
+            sequences may be slow if a large number of data is to be generated,
+            but may provide greater flexibility for some users.
+          </para>
+        </listitem>
 
-        <para>
-          Scripts are provided with this toolbox to implement both
-          low-discrepancy sequences (such as Halton for instance). These
-          sequences may be slow if a large number of data is to be generated,
-          but may provide greater flexibility for some users.
-        </para>
-      </listitem>
+        <listitem>
+          <para>C source codes</para>
 
-      <listitem>
-        <para>C source codes</para>
-
-        <para>
-          These sequences are based on compiled C source code and are
-          as fast as possible.
-        </para>
-      </listitem>
-    </itemizedlist>
+          <para>
+            These sequences are based on compiled C source code and are
+            as fast as possible.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
   </refsection>
 
   <refsection>
@@ -275,14 +274,14 @@ niederreiterf        fast        50         2147483647
       <itemizedlist>
         <listitem>
           <para>
-              The <literal>lowdisc_gen</literal> function 
-            can produce a complete set of points, given the name of a sequence and 
-            the number of dimension. 
-            Moreover, this function makes use of optimized <literal>skip</literal> 
-            and <literal>leap</literal> parameters, 
-            which may reduce the discrepancy of the sequence. 
-            Moreover, the number of generated points can be optimized to reduce 
-            the discrepancy. 
+            The <literal>lowdisc_gen</literal> function
+            can produce a complete set of points, given the name of a sequence and
+            the number of dimension.
+            Moreover, this function makes use of optimized <literal>skip</literal>
+            and <literal>leap</literal> parameters,
+            which may reduce the discrepancy of the sequence.
+            Moreover, the number of generated points can be optimized to reduce
+            the discrepancy.
             This is the flagship of this toolbox.
           </para>
         </listitem>
@@ -308,10 +307,10 @@ niederreiterf        fast        50         2147483647
             Macro generators:
           </para>
           <para>
-            These functions are macros which produce quasi-random sequences. 
-            These functions can be interesting to experiment low discrepancy 
-            sequences, because it is easy to edit them with Scilab's editor. 
-            On the other, these functions are rather slow if the number 
+            These functions are macros which produce quasi-random sequences.
+            These functions can be interesting to experiment low discrepancy
+            sequences, because it is easy to edit them with Scilab's editor.
+            On the other, these functions are rather slow if the number
             points to generate is large.
           </para>
         </listitem>
@@ -321,10 +320,10 @@ niederreiterf        fast        50         2147483647
             Static Functions:
           </para>
           <para>
-            These functions are macros which provides parameters which can 
+            These functions are macros which provides parameters which can
             be used in low discrepancy sequences such as <literal>skip</literal>
             and <literal>leap</literal> parameters, or tables of prime numbers.
-        </para>
+          </para>
         </listitem>
 
         <listitem>
@@ -334,8 +333,8 @@ niederreiterf        fast        50         2147483647
           <para>
             These functions are macros which provide basic functions which
             are used in slow sequences.
-            For example, the <literal>lowdisc_bit*</literal> functions 
-            compute various numbers based on the b-ary decomposition of 
+            For example, the <literal>lowdisc_bit*</literal> functions
+            compute various numbers based on the b-ary decomposition of
             an integer.
           </para>
         </listitem>
@@ -400,9 +399,7 @@ niederreiterf        fast        50         2147483647
     <para>
       The source code provided here is the result of the cumulated
       work of several authors at different times.
-    </para>
 
-    <para>
       <itemizedlist>
         <listitem>
           <para>
@@ -483,49 +480,6 @@ niederreiterf        fast        50         2147483647
       coordinates. The original Halton sequence should be quite sensitive to the
       effective dimension dT, since we know its projections deteriorate quickly as
       the dimension increases.
-    </para>
-  </refsection>
-
-
-  <refsection>
-    <title>TODO</title>
-
-    <para>
-      <itemizedlist>
-        <listitem>
-          <para> Add scrambling algorithms : RR2 from Kocis and Whiten, Matousek. Can we program Reverse Halton as a scrambling ? Can let the user define its scrambling function ?</para>
-        </listitem>
-        <listitem>
-          <para> Add algorithms to compute the discrepancy</para>
-        </listitem>
-        <listitem>
-          <para> Add test cases on integrals as in Bratley and Fox</para>
-        </listitem>
-        <listitem>
-          <para> check interaction between skip and leap for all sequences</para>
-        </listitem>
-        <listitem>
-          <para> for C-based sequences, vectorize the calls to the fast sequences, so that we can get several elements at the same time</para>
-        </listitem>
-        <listitem>
-          <para> replace dim_num by dim everywhere in the macros</para>
-        </listitem>
-        <listitem>
-          <para> update the name of the next routines of the C library : i4_sobol > i4_sobol_next, etc... Review all the .h to be sure of this update.</para>
-        </listitem>
-        <listitem>
-          <para> see if the Gray code of the index can be computed directly, so that the skip and leap options of Sobol sequence is faster</para>
-        </listitem>
-        <listitem>
-          <para> replace basis by base where appropriate in Faure sequence</para>
-        </listitem>
-        <listitem>
-          <para> create a graycode function</para>
-        </listitem>
-        <listitem>
-          <para> update the C source codes and use C++ classes </para>
-        </listitem>
-      </itemizedlist>
     </para>
   </refsection>
 
