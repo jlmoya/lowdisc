@@ -31,22 +31,51 @@ function value = lowdisc_get (this,key)
   //   </listitem>
   //   <listitem>
   //     <para>
-  //       <literal>"-dimmax"</literal> : a floating point integer, the largest dimension available for the sequence.
+  //       <literal>"-dimmax"</literal> : a floating point integer, 
+  //       the largest dimension available for the sequence.
   //     </para>
   //   </listitem>
   //   <listitem>
   //     <para>
-  //       <literal>"-nbsimmax"</literal> : a floating point integer, the largest number of elements available for the sequence.
+  //       <literal>"-speed"</literal> : a string, 
+  //       the speed of the sequence. 
+  //       The <literal>speed</literal> field can be equal to "slow" or "fast".
   //     </para>
   //   </listitem>
   //   <listitem>
   //     <para>
-  //       <literal>"-faureprime"</literal> : a floating point integer, the prime integer used in the Faure sequence.
+  //       <literal>"-nbsimmax"</literal> : a floating point integer, 
+  //       the largest number of elements available for the sequence.
   //     </para>
   //   </listitem>
+  //  </itemizedlist>
+  //
+  // For the "faure" sequence (slow Faure sequence), the 
+  // following field is available.
+  //  <itemizedlist>
   //   <listitem>
   //     <para>
-  //       <literal>"-faurefprime"</literal> : a floating point integer, the prime integer used in the Faure fast sequence.
+  //       <literal>"-faureprime"</literal> : a floating point integer, 
+  //       the prime integer used in the Faure sequence.
+  //       This prime number is computed depending on the dimension of 
+  //       the sequence: this is the smallest prime number larger than 
+  //       the dimension.
+  //       This prime number is used as the base of the Faure sequence.
+  //     </para>
+  //   </listitem>
+  //  </itemizedlist>
+  //
+  // For the "fauref" sequence (fast Faure sequence), the 
+  // following field is available.
+  //  <itemizedlist>
+  //   <listitem>
+  //     <para>
+  //       <literal>"-faurefprime"</literal> : a floating point integer, 
+  //       the prime integer used in the Faure fast sequence.
+  //       This prime number is computed depending on the dimension of 
+  //       the sequence: this is the smallest prime number larger than 
+  //       the dimension.
+  //       This prime number is used as the base of the Faure sequence.
   //     </para>
   //   </listitem>
   //  </itemizedlist>
@@ -66,8 +95,10 @@ function value = lowdisc_get (this,key)
   //   // Terms #1 to #100
   //   [lds,computed]=lowdisc_next(lds,100);
   //   for i = 1:100
-  //     mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
+  //     mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", ...
+  //       i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
   //   end
+  //   i = lowdisc_cget(lds,"-index")
   //   lds = lowdisc_destroy(lds);
   //
   // Authors

@@ -27,7 +27,6 @@
    [ evalf , u ] = lowdisc_ldgen ( callf , n )
    [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq )
    [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq , strict )
-   [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq , strict , verbose )
    
    </synopsis>
 </refsynopsisdiv>
@@ -36,19 +35,17 @@
    <title>Parameters</title>
    <variablelist>
    <varlistentry><term>callf :</term>
-      <listitem><para> a 1 x 1 matrix of floating point integers, the number of calls to the function.</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of floating point integers, the number of calls to the function.</para></listitem></varlistentry>
    <varlistentry><term>n:</term>
-      <listitem><para> a 1 x 1 matrix of floating point integers, the spatial dimension.</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of floating point integers, the spatial dimension.</para></listitem></varlistentry>
    <varlistentry><term>ldseq :</term>
-      <listitem><para> a 1 x 1 matrix of strings, the name of the sequence. (default <literal>ldseq = "sobolf"</literal>). The method can be equal to : <literal>"halton"</literal>, <literal>"haltonf"</literal>, <literal>"faure"</literal>, <literal>"fauref"</literal>, <literal>"reversehalton"</literal>, <literal>"reversehaltonf"</literal>, <literal>"sobol"</literal>, <literal>"sobolf"</literal>, <literal>"niederreiter-base-2"</literal>, <literal>"niederreiterf"</literal>. See below for details.</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of strings, the name of the sequence. (default <literal>ldseq = "sobolf"</literal>). The method can be equal to : <literal>"halton"</literal>, <literal>"haltonf"</literal>, <literal>"faure"</literal>, <literal>"fauref"</literal>, <literal>"reversehalton"</literal>, <literal>"reversehaltonf"</literal>, <literal>"sobol"</literal>, <literal>"sobolf"</literal>, <literal>"niederreiter-base-2"</literal>, <literal>"niederreiterf"</literal>. See below for details.</para></listitem></varlistentry>
    <varlistentry><term>strict :</term>
-      <listitem><para> a 1 x 1 matrix of boolean, set to %t to make so that <literal>evalf==callf</literal>. (default = %f)</para></listitem></varlistentry>
-   <varlistentry><term>verbose :</term>
-      <listitem><para> a 1 x 1 matrix of boolean, set to %t to enable verbose messages. (default = %f)</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of boolean, set to %t to make so that <literal>evalf==callf</literal>. (default = %f)</para></listitem></varlistentry>
    <varlistentry><term>evalf :</term>
-      <listitem><para> a 1 x 1 matrix of floating point integers, the actual number of function evaluations. We have <literal>evalf &gt;= callf</literal>.</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of floating point integers, the actual number of function evaluations. We have <literal>evalf &gt;= callf</literal>.</para></listitem></varlistentry>
    <varlistentry><term>u :</term>
-      <listitem><para> a evalf x n matrix of doubles, the uniform random numbers in <literal>[0,1]^n</literal>.</para></listitem></varlistentry>
+      <listitem><para> a evalf-by-n matrix of doubles, the uniform random numbers in <literal>[0,1]^n</literal>.</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 

@@ -54,7 +54,7 @@ function [nsim,skip,leap] = lowdisc_niedersuggest ( varargin )
   //    We compute k = max ( [ pb , ceil(log(nsimmin)/log(base)) ] ) so that the 
   //    number of simulations is greater than nsimmin.
   //    We compute nsim = b^k.
-  //    If the base is lower than 13, we compute skip = base ^ pb. If not, we compute skip = 10000.
+  //    If the base is lower than 13, we compute skip = base^pb. If not, we compute skip = 10000.
   //    We return leap = 0.
   //
   // Examples
@@ -87,7 +87,8 @@ function [nsim,skip,leap] = lowdisc_niedersuggest ( varargin )
   // [lds,computed]=lowdisc_next(lds,nsim);
   // lds = lowdisc_destroy(lds);
   //
-  // // Use the slow Base 2 Niederreiter and minimum number of simulations in dimension 4.
+  // // Use the slow Base 2 Niederreiter and minimum 
+  // // number of simulations in dimension 4.
   // dim = 4;
   // [nsim,skip,leap] = lowdisc_niedersuggest ( dim );
   // lds = lowdisc_new("niederreiter-base-2");

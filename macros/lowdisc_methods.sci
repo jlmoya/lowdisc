@@ -13,7 +13,7 @@ function seqmat = lowdisc_methods ()
   //   seqmat = lowdisc_methods ()
   //
   // Parameters
-  //   seqmat : a n x 1 matrix of strings. Each string represents a sequence and is a valid argument method for the lowdisc_new function.
+  //   seqmat : a n-by-1 matrix of strings. Each string represents a sequence and is a valid argument method for the lowdisc_new function.
   //
   // Description
   //   This function allows to make a loop over all sequences.

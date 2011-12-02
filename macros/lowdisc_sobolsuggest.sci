@@ -32,8 +32,14 @@ function [nsim,skip,leap] = lowdisc_sobolsuggest ( varargin )
   //    We compute tau from the lowdisc_soboltau function.
   //    For spatial dimensions 1 through 13, tau is non-trivial. For other dimensions, tau=0
   //    and a warning is generated.
-  //    For integration problems, we take k = max ( ceil(log2(nsimmin)) , 2*dim , tau + dim - 1 )
-  //    For optimization problems, we take k = max ( ceil(log2(nsimmin)) , tau + 1 ).
+  //    For integration problems, we take 
+  //
+  //    <literal>k = max ( ceil(log2(nsimmin)) , 2*dim , tau + dim - 1 )</literal>
+  //
+  //    For optimization problems, we take 
+  //
+  //    <literal>k = max ( ceil(log2(nsimmin)) , tau + 1 ).</literal>
+  //
   //    We consider nsim = 2**k.
   //
   //    When the number of dimensions is greater than 6, the number 

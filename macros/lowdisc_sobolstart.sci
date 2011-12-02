@@ -1,5 +1,5 @@
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 // Copyright (C) 2005-2009 - John Burkardt
 // Copyright (C) 1986 - Bennett Fox
 
@@ -12,26 +12,30 @@ function [ v , maxcol , lastq , count , recipd ] = lowdisc_sobolstart ( dim_num 
   //   [ v , maxcol , lastq , count , recipd ] = lowdisc_sobolstart ( dim_num )
   // 
   // Parameters
-  //   dim_num : a 1 x 1 matrix of floating point integers, the current number of dimensions. We expect to have 1<= dim_num<= 40, since no more that 40 polynomials are stored in the database.
-  //   v : a dimmax x logmax matrix of floating point integers, table of direction numbers. We have dimmax = 40 and logmax = 30. Each row corresponds to a primitive polynomial. The numbers in v are actually binary fractions.
-  //   maxcol : a 1 x 1 matrix of floating point integers, number of bits in atmost
-  //   lastq : a dim_num x 1 matrix of floating point integers, the numerators of the last vector generated
-  //   count : a 1 x 1 matrix of floating point integers, the index of the element in the sequence
-  //   recipd : (1/denominator) for the numerators lastq
+  //   dim_num : a 1-by-1 matrix of floating point integers, the current number of dimensions. We expect to have 1<= dim_num<= 40, since no more that 40 polynomials are stored in the database.
+  //   v : a dimmax-by-logmax matrix of floating point integers, table of direction numbers. We have <literal>dimmax = 40</literal> and <literal>logmax = 30</literal>. Each row corresponds to a primitive polynomial. The numbers in <literal>v</literal> are actually binary fractions.
+  //   maxcol : a 1-by-1 matrix of floating point integers, number of bits in atmost
+  //   lastq : a dim_num-by-1 matrix of floating point integers, the numerators of the last vector generated
+  //   count : a 1-by-1 matrix of floating point integers, the index of the element in the sequence
+  //   recipd : a 1-by-1 matrix of doubles, (1/denominator) for the numerators <literal>lastq</literal>
   //
   // Description
   //   Returns the initial data for use in a Sobol sequence.
   //
   //   In the algorithm, the variable atmost is the maximum number of calls to the generator.
-  //   We have atmost = 2^logmax - 1 with logmax = 30.
+  //   We have 
+  //
+  //   <literal>atmost = 2^logmax - 1</literal> 
+  //
+  //   with <literal>logmax = 30</literal>.
   //   This leads to atmost = 1.074 x 10^9.
   //
-  //   This routine is designed to be used with the lowdisc_sobolnext() and lowdisc_sobolskip()
-  //   functions.
+  //   This routine is designed to be used with the <literal>lowdisc_sobolnext</literal> 
+  //   and <literal>lowdisc_sobolskip</literal> functions.
   //
   // Authors
   //   Michael Baudin - 2008-2009 - INRIA
-  //   Michael Baudin - 2010 - DIGITEO
+  //   Michael Baudin - 2010 - 2011 - DIGITEO
   
   dimmax = 40
   logmax = 30

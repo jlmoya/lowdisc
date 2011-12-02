@@ -10,9 +10,9 @@ function r = lowdisc_vandercorput ( i , b )
   //   r = lowdisc_vandercorput ( i , b )
   //
   // Parameters
-  //   i : a 1 x 1 matrix of floating point integers, the index in the sequence
-  //   b : a 1 x 1 matrix of floating point integers, the b of the sequence
-  //   r : a 1 x 1 matrix of floating point doubles, the next element in the sequence, in the [0,1) interval
+  //   i : a 1-by-1 matrix of floating point integers, the index in the sequence
+  //   b : a 1-by-1 matrix of floating point integers, the b of the sequence
+  //   r : a 1-by-1 matrix of floating point doubles, the next element in the sequence, in the [0,1) interval
   //
   // Description
   // This function allows to compute the terms of the Van Der Corput sequence.

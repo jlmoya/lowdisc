@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_methods.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_methods" xml:lang="en"
@@ -33,7 +33,7 @@
    <title>Parameters</title>
    <variablelist>
    <varlistentry><term>seqmat :</term>
-      <listitem><para> a n x 1 matrix of strings. Each string represents a sequence and is a valid argument method for the lowdisc_new function.</para></listitem></varlistentry>
+      <listitem><para> a n-by-1 matrix of strings. Each string represents a sequence and is a valid argument method for the lowdisc_new function.</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 

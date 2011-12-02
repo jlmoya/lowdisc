@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_startup.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_startup" xml:lang="en"
@@ -41,7 +41,8 @@
    <title>Description</title>
    <para>
 This command can only be executed once in the lifetime of the object.
-This function is sensitive to the "-skip" and "-leap" options.
+This function is sensitive to the <literal>"-skip"</literal> and
+<literal>"-leap"</literal> options.
    </para>
    <para>
 The mathematical definition of some sequences (e.g. Sobol, Niederreiter, Faure) imply

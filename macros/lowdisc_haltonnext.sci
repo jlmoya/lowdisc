@@ -10,10 +10,10 @@ function next = lowdisc_haltonnext ( dimension , index , primemat )
   //   next = lowdisc_haltonnext ( dimension , index , primemat )
   //
   // Parameters
-  //   dimension : a 1 x 1 matrix of floating point integers, the number of variables
-  //   index : a 1 x 1 matrix of floating point integers, the index of the element in the sequence
-  //   primemat : a 1 x 1 matrix of floating point integers, a matrix of consecutive primes, in increasing order
-  //   next : a 1 x 1 matrix of doubles, the next element in the sequence, in the [0,1) interval
+  //   dimension : a 1-by-1 matrix of floating point integers, the number of variables
+  //   index : a 1-by-1 matrix of floating point integers, the index of the element in the sequence
+  //   primemat : a 1-by-1 matrix of floating point integers, a matrix of consecutive primes, in increasing order
+  //   next : a 1-by-1 matrix of doubles, the next element in the sequence, in the [0,1) interval
   //
   // Description
   //   Generates the next element of the Halton sequence.

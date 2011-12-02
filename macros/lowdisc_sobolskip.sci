@@ -18,11 +18,13 @@ function [ count , lastq ] = lowdisc_sobolskip ( skip , lastq , dim_num , count 
   //   count : a 1 x 1 matrix of floating point integers, the index of the element in the sequence
   // 
   // Description
-  //   The only difference with lowdisc_sobolnext is that we do not generate the 
-  //   vector quasi.
+  //   This functions skips elements in the Sobol sequence.
+  //   
+  //   The only difference with <literal>lowdisc_sobolnext</literal> is that we do not generate the 
+  //   vector <literal>quasi</literal>.
   //
-  //   This routine is designed to be used with the lowdisc_sobolnext() and lowdisc_sobolstart()
-  //   functions.
+  //   This routine is designed to be used with the <literal>lowdisc_sobolnext()</literal> 
+  //   and <literal>lowdisc_sobolstart</literal> functions.
   //
   // Authors
   //   Michael Baudin - 2008-2009 - INRIA

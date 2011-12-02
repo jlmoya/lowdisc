@@ -47,6 +47,8 @@
 This command allows to configure the state of the current object.
 It requires to take the current object both as an input
 and output argument.
+   </para>
+   <para>
 The following keys are available: <literal>"-dimension"</literal>, <literal>"-index"</literal>,
 <literal>"-skip"</literal>, <literal>"-leap"</literal>, <literal>"-verbose"</literal>.
 <itemizedlist>
@@ -128,9 +130,9 @@ base, depending on the dimension.
 </itemizedlist>
    </para>
    <para>
-Some expertise is required to configure the skip and leap options.
-The skip option can improve the Faure, Sobol and Niederreiter sequences.
-The leap option can improve the Halton sequence, although
+Some expertise is required to configure the <literal>skip</literal> and <literal>leap</literal> options.
+The <literal>skip</literal> option can improve the Faure, Sobol and Niederreiter sequences.
+The <literal>leap</literal> option can improve the Halton sequence, although
 Kocis and Whiten also tried to leap the Faure and Sobol sequences.
 This can lead to some trouble for non-experts.
 For that purpose, we designed the following functions.

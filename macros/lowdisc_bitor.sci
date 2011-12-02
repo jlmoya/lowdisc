@@ -15,8 +15,9 @@ function z = lowdisc_bitor(x,y)
   //   z = lowdisc_bitor(x,y)
   //
   // Parameters
-  //  x, y :  scalars/vectors/matices of positives integers, x and y must have the same size
-  //  z : scalar/vector/matrix
+  //  x : a m-by-n matrix of doubles, integer value, positive
+  //  y : a m-by-n matrix of doubles, integer value, positive
+  //  z : a m-by-n matrix of doubles, integer value, positive
   //
   // Description
   // Given x,y two positives integers this function returns the decimal
@@ -28,8 +29,10 @@ function z = lowdisc_bitor(x,y)
   // // example 1 :
   // // '110000' : is the binary representation of 48 
   // // '100101' : is the binary representation of 37   
-  // // '110101' : is the binary representation for the OR applied to the binary forms 48 and 37 
-  // // so the decimal number corresponding to the OR  applied to binary forms 48 and 37 is : 53
+  // // '110101' : is the binary representation for the OR operator 
+  // // applied to the binary forms 48 and 37 
+  // // so the decimal number corresponding to the OR operator 
+  // // applied to binary forms 48 and 37 is : 53
   // x=48;
   // lowdisc_dec2bin(x)
   // y=37;

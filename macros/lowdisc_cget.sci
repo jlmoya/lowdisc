@@ -23,7 +23,6 @@ function value = lowdisc_cget (this,key)
   //   lds = lowdisc_configure(lds,"-dimension",3);
   //   method = lowdisc_cget(lds,"-method")
   //   nbdim = lowdisc_cget(lds,"-dimension")
-  //   i = lowdisc_cget(lds,"-index")
   //   verbose = lowdisc_cget(lds,"-verbose")
   //   lds
   //   lds = lowdisc_destroy(lds);

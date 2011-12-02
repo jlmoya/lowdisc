@@ -1,4 +1,4 @@
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 1988 - Bennett Fox
 //
@@ -11,13 +11,12 @@ function lowdisc_proj2d ( u , dimensions )
   //   lowdisc_proj2d ( u , dimensions )
   //
   // Parameters
-  //    u : a nsim x n matrix of doubles, the numbers in the interval [0,1]^n
-  //    dimensions : a p x 1 matrix of floating point integers, dimensions to plot.
+  //    u : a nsim-by-n matrix of doubles, the numbers in the interval [0,1]^n, where nsim is the number of simulations and n is the dimension of the space.
+  //    dimensions : a p-by-1 matrix of floating point integers, dimensions to plot.
   //
   // Description
-  // Plots the required two dimensionnal projections of u,
-  // with size nsim x n, where nsim is the number of 
-  // simulations and n is the dimension of the space.
+  // Plots the required two dimensionnal projections of u.
+  // 
   // This function allows to see all the 2 dimensionnal projections 
   // of a multivariate vector u.
   //
@@ -40,7 +39,7 @@ function lowdisc_proj2d ( u , dimensions )
   // plot( u(:,3) , u(:,6) , "bo" )
   //
   // Authors
-  //   Michael Baudin - 2010 - DIGITEO
+  //   Michael Baudin - 2010 - 2011 - DIGITEO
 
   nsim = size(u,"r")
   n = size(u,"c")

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_primes100.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_primes100" xml:lang="en"
@@ -33,7 +33,7 @@
    <title>Parameters</title>
    <variablelist>
    <varlistentry><term>m:</term>
-      <listitem><para> a 1x100 matrix of doubles</para></listitem></varlistentry>
+      <listitem><para> a 1-by-100 matrix of doubles</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 

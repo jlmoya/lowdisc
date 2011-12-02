@@ -11,12 +11,12 @@ function [ evalf , u ] = lowdisc_ldgen ( varargin )
   //   [ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq , strict )
   //
   // Parameters
-  //   callf : a 1 x 1 matrix of floating point integers, the number of calls to the function.
-  //   n: a 1 x 1 matrix of floating point integers, the spatial dimension.
-  //   ldseq : a 1 x 1 matrix of strings, the name of the sequence. (default <literal>ldseq = "sobolf"</literal>). The method can be equal to : <literal>"halton"</literal>, <literal>"haltonf"</literal>, <literal>"faure"</literal>, <literal>"fauref"</literal>, <literal>"reversehalton"</literal>, <literal>"reversehaltonf"</literal>, <literal>"sobol"</literal>, <literal>"sobolf"</literal>, <literal>"niederreiter-base-2"</literal>, <literal>"niederreiterf"</literal>. See below for details.
-  //   strict : a 1 x 1 matrix of boolean, set to %t to make so that <literal>evalf==callf</literal>. (default = %f)
-  //   evalf : a 1 x 1 matrix of floating point integers, the actual number of function evaluations. We have <literal>evalf >= callf</literal>.
-  //   u : a evalf x n matrix of doubles, the uniform random numbers in <literal>[0,1]^n</literal>.
+  //   callf : a 1-by-1 matrix of floating point integers, the number of calls to the function.
+  //   n: a 1-by-1 matrix of floating point integers, the spatial dimension.
+  //   ldseq : a 1-by-1 matrix of strings, the name of the sequence. (default <literal>ldseq = "sobolf"</literal>). The method can be equal to : <literal>"halton"</literal>, <literal>"haltonf"</literal>, <literal>"faure"</literal>, <literal>"fauref"</literal>, <literal>"reversehalton"</literal>, <literal>"reversehaltonf"</literal>, <literal>"sobol"</literal>, <literal>"sobolf"</literal>, <literal>"niederreiter-base-2"</literal>, <literal>"niederreiterf"</literal>. See below for details.
+  //   strict : a 1-by-1 matrix of boolean, set to %t to make so that <literal>evalf==callf</literal>. (default = %f)
+  //   evalf : a 1-by-1 matrix of floating point integers, the actual number of function evaluations. We have <literal>evalf >= callf</literal>.
+  //   u : a evalf-by-n matrix of doubles, the uniform random numbers in <literal>[0,1]^n</literal>.
   //
   // Description
   // In dimension n, generate more than <literal>callf</literal> experiments with

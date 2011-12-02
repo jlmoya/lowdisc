@@ -33,13 +33,13 @@
    <title>Parameters</title>
    <variablelist>
    <varlistentry><term>dimension :</term>
-      <listitem><para> a 1 x 1 matrix of floating point integers, the number of variables</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of floating point integers, the number of variables</para></listitem></varlistentry>
    <varlistentry><term>index :</term>
-      <listitem><para> a 1 x 1 matrix of floating point integers, the index of the element in the sequence</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of floating point integers, the index of the element in the sequence</para></listitem></varlistentry>
    <varlistentry><term>primemat :</term>
-      <listitem><para> a 1 x 1 matrix of floating point integers, a matrix of consecutive primes, in increasing order</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of floating point integers, a matrix of consecutive primes, in increasing order</para></listitem></varlistentry>
    <varlistentry><term>next :</term>
-      <listitem><para> a 1 x 1 matrix of doubles, the next element in the sequence, in the [0,1) interval</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of doubles, the next element in the sequence, in the [0,1) interval</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 

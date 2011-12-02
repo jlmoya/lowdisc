@@ -13,10 +13,10 @@ function digits = lowdisc_bary ( varargin )
   //   digits = lowdisc_bary ( n , basis , order )
   // 
   // Parameters
-  //   n : a 1 x 1 matrix of floating point integers, the integer to decompose
-  //   basis : a 1 x 1 matrix of floating point integers, the basis. Default basis = 2.
+  //   n : a 1-by-1 matrix of floating point integers, the integer to decompose
+  //   basis : a 1-by-1 matrix of floating point integers, the basis. Default basis = 2.
   //   order : a string, the order of the digits. If order="littleendian", then the least significant digits are at the end. If order="bigendian", then the biggest significant digits are at the begining. Default is order="littleendian".
-  //   digits : a n x 1 matrix of floating point integers, the digits of the decomposition. The i-th digit satisfies 0<= digit(i) <= b - 1
+  //   digits : a n-by-1 matrix of floating point integers, the digits of the decomposition. The i-th digit satisfies 0<= digit(i) <= b - 1
   //
   // Description
   //   Returns the list of digits of the decomposition of

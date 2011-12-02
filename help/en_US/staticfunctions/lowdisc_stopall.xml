@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_stopall.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_stopall" xml:lang="en"
@@ -33,7 +33,7 @@
    <title>Description</title>
    <para>
 This function allows to stop all fast sequences. This
-might be handy in case of interactive plouf and may allow
+might be handy in case of interactive error of the user and may allow
 to reset all "lost" sequences.
    </para>
    <para>

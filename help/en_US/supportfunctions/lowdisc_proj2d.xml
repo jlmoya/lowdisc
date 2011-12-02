@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_proj2d.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_proj2d" xml:lang="en"
@@ -33,18 +33,18 @@
    <title>Parameters</title>
    <variablelist>
    <varlistentry><term>u :</term>
-      <listitem><para> a nsim x n matrix of doubles, the numbers in the interval [0,1]^n</para></listitem></varlistentry>
+      <listitem><para> a nsim-by-n matrix of doubles, the numbers in the interval [0,1]^n, where nsim is the number of simulations and n is the dimension of the space.</para></listitem></varlistentry>
    <varlistentry><term>dimensions :</term>
-      <listitem><para> a p x 1 matrix of floating point integers, dimensions to plot.</para></listitem></varlistentry>
+      <listitem><para> a p-by-1 matrix of floating point integers, dimensions to plot.</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
 <refsection>
    <title>Description</title>
    <para>
-Plots the required two dimensionnal projections of u,
-with size nsim x n, where nsim is the number of
-simulations and n is the dimension of the space.
+Plots the required two dimensionnal projections of u.
+   </para>
+   <para>
 This function allows to see all the 2 dimensionnal projections
 of a multivariate vector u.
    </para>
@@ -78,7 +78,7 @@ plot( u(:,3) , u(:,6) , "bo" )
 <refsection>
    <title>Authors</title>
    <simplelist type="vert">
-   <member>Michael Baudin - 2010 - DIGITEO</member>
+   <member>Michael Baudin - 2010 - 2011 - DIGITEO</member>
    </simplelist>
 </refsection>
 </refentry>

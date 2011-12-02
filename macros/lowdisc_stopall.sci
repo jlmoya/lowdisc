@@ -14,7 +14,7 @@ function lowdisc_stopall ( )
   //
   // Description
   //   This function allows to stop all fast sequences. This 
-  //   might be handy in case of interactive plouf and may allow
+  //   might be handy in case of interactive error of the user and may allow
   //   to reset all "lost" sequences.
   //
   // Examples

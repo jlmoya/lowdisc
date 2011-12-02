@@ -1,6 +1,6 @@
 // Copyright (C) ???? - INRIA - Farid BELAHCENE
 // Copyright (C) 2008 - INRIA - Pierre MARECHAL
-// Copyright (C) 2010 - DIGITEO - Michael Baudin
+// Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 // 
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
@@ -15,8 +15,9 @@ function z = lowdisc_bitand(x,y)
   // z = lowdisc_bitand(x,y)
   //
   // Parameters
-  //  x, y :  scalars/vectors/matices/hypermatices of positives integers, x and y must have the same size
-  //  z : scalar/vector/matrix/hypermatice
+  //  x : a m-by-n matrix of doubles, integer value, positive
+  //  y : a m-by-n matrix of doubles, integer value, positive
+  //  z : a m-by-n matrix of doubles, integer value, positive
   //
   // Description
   // Given x,y two positives integers this function returns the decimal
@@ -28,8 +29,10 @@ function z = lowdisc_bitand(x,y)
   // // example 1 :
   // // '1010110' : is the binary representation of 86 
   // // '1011011' : is the binary representation of 91   
-  // // '1010010' : is the binary representation for the AND of binary representation 86 and 91 
-  // // so the decimal number corresponding to the AND  applied to binary forms 86 and 91 is : 82
+  // // '1010010' : is the binary representation for 
+  // //             the AND operator of binary representation 86 and 91 
+  // // so the decimal number corresponding to the AND operator 
+  // // applied to binary forms 86 and 91 is : 82
   // x=86; 
   // lowdisc_dec2bin(x)
   // y=91;
@@ -44,7 +47,7 @@ function z = lowdisc_bitand(x,y)
   // Authors
   // INRIA - Farid BELAHCENE
   // 2008 - INRIA - Pierre MARECHAL
-  // 2010 - DIGITEO - Michael Baudin
+  // 2010 - 2011 - DIGITEO - Michael Baudin
 
   // P. Marechal, 5 Feb 2008
   //   - fix bug 2691 and 2692

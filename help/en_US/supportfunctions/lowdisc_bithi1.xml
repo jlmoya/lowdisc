@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_bithi1.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_bithi1" xml:lang="en"
@@ -26,18 +26,24 @@
    <synopsis>
    bit = lowdisc_bithi1 ( n )
    
-   Parameters:
-   n : a 1 x 1 matrix of floating point integers, the integer to be measured. n should be nonnegative.  If n is nonpositive, the value will always be 0.
-   bit : a 1 x 1 matrix of floating point integers, the high 1 bit in the base 2 expansion of n
-   
    </synopsis>
 </refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>n :</term>
+      <listitem><para> a 1-by-1 matrix of floating point integers, the integer to be measured. n should be nonnegative.  If n is nonpositive, the value will always be 0.</para></listitem></varlistentry>
+   <varlistentry><term>bit :</term>
+      <listitem><para> a 1-by-1 matrix of floating point integers, the high 1 bit in the base 2 expansion of n</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
 
 <refsection>
    <title>Description</title>
    <para>
 This routine is not vectorized, i.e. it does not take a column matrix n as input argument, but only
-a 1 x 1 matrix.
+a 1-by-1 matrix.
    </para>
    <para>
 </para>
@@ -62,11 +68,14 @@ d = lowdisc_bary ( n , 2 );
 mprintf("%5d %25s %5d\n",n,strcat(string(d)," "),bit);
 end
 
-Author:
-
-2008-2009 - INRIA - Michael Baudin (Scilab version)
-2010 - Digiteo - Michael Baudin
-
    ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>2008-2009 - INRIA - Michael Baudin (Scilab version)</member>
+   <member>2010 - 2011 - Digiteo - Michael Baudin</member>
+   </simplelist>
 </refsection>
 </refentry>

@@ -46,12 +46,15 @@
 <refsection>
    <title>Description</title>
    <para>
-The only difference with lowdisc_sobolnext is that we do not generate the
-vector quasi.
+This functions skips elements in the Sobol sequence.
    </para>
    <para>
-This routine is designed to be used with the lowdisc_sobolnext() and lowdisc_sobolstart()
-functions.
+The only difference with <literal>lowdisc_sobolnext</literal> is that we do not generate the
+vector <literal>quasi</literal>.
+   </para>
+   <para>
+This routine is designed to be used with the <literal>lowdisc_sobolnext()</literal>
+and <literal>lowdisc_sobolstart</literal> functions.
    </para>
    <para>
 </para>

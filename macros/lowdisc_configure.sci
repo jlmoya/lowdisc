@@ -22,6 +22,7 @@ function this = lowdisc_configure (this,key,value)
   //   This command allows to configure the state of the current object.
   //   It requires to take the current object both as an input
   //   and output argument.
+  //
   //  The following keys are available: <literal>"-dimension"</literal>, <literal>"-index"</literal>, 
   // <literal>"-skip"</literal>, <literal>"-leap"</literal>, <literal>"-verbose"</literal>.
   //  <itemizedlist>
@@ -100,9 +101,9 @@ function this = lowdisc_configure (this,key,value)
   //  </listitem>
   //  </itemizedlist>
   //
-  //  Some expertise is required to configure the skip and leap options.
-  //  The skip option can improve the Faure, Sobol and Niederreiter sequences.
-  //  The leap option can improve the Halton sequence, although 
+  //  Some expertise is required to configure the <literal>skip</literal> and <literal>leap</literal> options.
+  //  The <literal>skip</literal> option can improve the Faure, Sobol and Niederreiter sequences.
+  //  The <literal>leap</literal> option can improve the Halton sequence, although 
   //  Kocis and Whiten also tried to leap the Faure and Sobol sequences.
   //  This can lead to some trouble for non-experts.
   //  For that purpose, we designed the following functions.
@@ -118,15 +119,15 @@ function this = lowdisc_configure (this,key,value)
   //  functions may be used. Still, these have not been included as defaults, 
   //  which authorizes a more aware choice of the parameters.
   //
-  //   Some sequences are limited in the maximum number of dimensions, 
-  //   because they use internally fixed tables of parameters (e.g. the Sobol 
-  //   sequence).
-  //   Some other sequences can be extended with the <literal>"-primeslist"</literal> option.
-  //   The <literal>"-primeslist"</literal> option can be configure with a table of 
-  //   primes computed with the <literal>lowdisc_primes100()</literal>, <literal>lowdisc_primes1000()</literal>
-  //   or <literal>lowdisc_primes10000()</literal> functions. The maximum dimension 
-  //   which can be attained with these tables depends on the sequence.
-  //   See the specific settings of each sequence below for detail.
+  //  Some sequences are limited in the maximum number of dimensions, 
+  //  because they use internally fixed tables of parameters (e.g. the Sobol 
+  //  sequence).
+  //  Some other sequences can be extended with the <literal>"-primeslist"</literal> option.
+  //  The <literal>"-primeslist"</literal> option can be configure with a table of 
+  //  primes computed with the <literal>lowdisc_primes100()</literal>, <literal>lowdisc_primes1000()</literal>
+  //  or <literal>lowdisc_primes10000()</literal> functions. The maximum dimension 
+  //  which can be attained with these tables depends on the sequence.
+  //  See the specific settings of each sequence below for detail.
   //
   // Examples
   //   lds = lowdisc_new("faure");

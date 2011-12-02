@@ -13,7 +13,7 @@ function m = lowdisc_primes1000 ( )
   //   m = lowdisc_primes1000 ( )
   //
   // Parameters
-  //   m: a 1x1000 matrix of doubles
+  //   m: a 1-by-1000 matrix of doubles
   //
   // Description
   //   This function allows to update the table of 

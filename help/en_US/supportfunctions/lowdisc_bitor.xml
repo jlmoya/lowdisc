@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_bitor.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_bitor" xml:lang="en"
@@ -32,10 +32,12 @@
 <refsection>
    <title>Parameters</title>
    <variablelist>
-   <varlistentry><term>x, y :</term>
-      <listitem><para>  scalars/vectors/matices of positives integers, x and y must have the same size</para></listitem></varlistentry>
+   <varlistentry><term>x :</term>
+      <listitem><para> a m-by-n matrix of doubles, integer value, positive</para></listitem></varlistentry>
+   <varlistentry><term>y :</term>
+      <listitem><para> a m-by-n matrix of doubles, integer value, positive</para></listitem></varlistentry>
    <varlistentry><term>z :</term>
-      <listitem><para> scalar/vector/matrix</para></listitem></varlistentry>
+      <listitem><para> a m-by-n matrix of doubles, integer value, positive</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
@@ -57,8 +59,10 @@ If dimension of x is superior than 1 then z(i) is equal to bitor(x(i),y(i)).
 // example 1 :
 // '110000' : is the binary representation of 48
 // '100101' : is the binary representation of 37
-// '110101' : is the binary representation for the OR applied to the binary forms 48 and 37
-// so the decimal number corresponding to the OR  applied to binary forms 48 and 37 is : 53
+// '110101' : is the binary representation for the OR operator
+// applied to the binary forms 48 and 37
+// so the decimal number corresponding to the OR operator
+// applied to binary forms 48 and 37 is : 53
 x=48;
 lowdisc_dec2bin(x)
 y=37;

@@ -14,7 +14,8 @@ function this = lowdisc_startup (this)
   //
   // Description
   //   This command can only be executed once in the lifetime of the object.
-  //   This function is sensitive to the "-skip" and "-leap" options.
+  //   This function is sensitive to the <literal>"-skip"</literal> and 
+  //   <literal>"-leap"</literal> options.
   //
   //   The mathematical definition of some sequences (e.g. Sobol, Niederreiter, Faure) imply
   //   that the first element of the sequence is the zero vector. 

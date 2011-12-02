@@ -16,13 +16,13 @@ function [this,next] = lowdisc_next ( varargin )
   //
   // Parameters
   //   this: the current object
-  //   imax: the number of terms to retrieve (default = 1)
-  //   next : a matrix of size imax x s, the next vector in the sequence. The experiment #i is stored at next(i,:) for 1<=i<=imax. The component #j of experiment #i is stored in next(i,j) with 1<=j<=dimension.
+  //   imax: a 1-by-1 matrix of doubles, integer value, the number of terms to retrieve (default imax = 1)
+  //   next : a imax-by-s matrix of doubles, the next vector in the sequence. The experiment #i is stored at <literal>next(i,:)</literal> for <literal>i=1,2,...,imax</literal>. The component #j of experiment #i is stored in <literal>next(i,j)</literal> with <literal>j=1,2,...,s</literal>.
   //
   // Description
   //   The current object is updated after the call to next :
-  //   both this and next are mandatory output arguments.
-  //   This function is sensitive to the "-leap" option.
+  //   both <literal>this</literal> and <literal>next</literal> are mandatory output arguments.
+  //   This function is sensitive to the <literal>"-leap"</literal> option.
   //
   //   Because of the limitation of floating point integers, 
   //   the lowdisc_next function is able to generate at most 
@@ -38,10 +38,10 @@ function [this,next] = lowdisc_next ( varargin )
   //  This can lead to some trouble for non-experts.
   //  For that purpose, we designed the following functions.
   //  <itemizedlist>
-  //  <listitem> lowdisc_haltonsuggest : provides settings for the Halton sequence,</listitem>
-  //  <listitem> lowdisc_fauresuggest : provides settings for the Faure sequence,</listitem>
-  //  <listitem> lowdisc_sobolsuggest : provides settings for the Sobol sequence,</listitem>
-  //  <listitem> lowdisc_niedersuggest : provides settings for the Niederreiter sequence.</listitem>
+  //  <listitem> <literal>lowdisc_haltonsuggest</literal> : provides settings for the Halton sequence,</listitem>
+  //  <listitem> <literal>lowdisc_fauresuggest</literal> : provides settings for the Faure sequence,</listitem>
+  //  <listitem> <literal>lowdisc_sobolsuggest</literal> : provides settings for the Sobol sequence,</listitem>
+  //  <listitem> <literal>lowdisc_niedersuggest</literal> : provides settings for the Niederreiter sequence.</listitem>
   //  </itemizedlist>
   //
   // Examples
@@ -94,7 +94,8 @@ function [this,next] = lowdisc_next ( varargin )
   //   // Terms #1 to #100
   //   [lds,computed]=lowdisc_next(lds,100);
   //   for i = 1:100
-  //     mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
+  //     mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", ...
+  //       i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
   //   end
   //   lds = lowdisc_destroy(lds);
   //   

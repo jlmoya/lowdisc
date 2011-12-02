@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_bitlo0.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_bitlo0" xml:lang="en"
@@ -33,7 +33,7 @@
    <title>Parameters</title>
    <variablelist>
    <varlistentry><term>n :</term>
-      <listitem><para> the integer to be measured, should be nonnegative.</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of doubles, integer value, positive</para></listitem></varlistentry>
    <varlistentry><term>bit :</term>
       <listitem><para> the position of the low 0 bit, with 1&lt;= bit &lt;= d+1, where d is the number of digits to represent n in base 2.</para></listitem></varlistentry>
    </variablelist>
@@ -45,8 +45,12 @@
 Consider the number 11 = "1 0 1 1" in binary. The low zero bit is
 the first zero starting from the right. It is located at the index bit=3.
 If a number is made only of d ones in base 2, then bit = d+1.
+   </para>
+   <para>
 This routine is not vectorized, i.e. it does not take a column matrix n as input argument, but only
-a 1 x 1 matrix.
+a 1-by-1 matrix.
+   </para>
+   <para>
 TODO : vectorize this, if possible
    </para>
    <para>
@@ -72,10 +76,14 @@ d = lowdisc_bary ( n , 2 );
 mprintf("%5d %25s %5d\n",n,strcat(string(d)," "),bit);
 end
 
-Author:
-2008-2009 - INRIA - Michael Baudin (Scilab version)
-2010 - Digiteo - Michael Baudin
-
    ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>2008-2009 - INRIA - Michael Baudin (Scilab version)</member>
+   <member>2010 - Digiteo - Michael Baudin</member>
+   </simplelist>
 </refsection>
 </refentry>

@@ -36,93 +36,98 @@
    <varlistentry><term>this:</term>
       <listitem><para> the current object</para></listitem></varlistentry>
    <varlistentry><term>method:</term>
-      <listitem><para> (optionnal) a string, the low discrepancy sequence (default = "halton"). The method can be equal to : "halton", "haltonf", "faure", "fauref", "reversehalton", "reversehaltonf", "sobol", "sobolf", "niederreiter-base-2", "niederreiterf". See below for details.</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of strings, the low discrepancy sequence (default = "sobolf"). The method can be equal to : "halton", "haltonf", "faure", "fauref", "reversehalton", "reversehaltonf", "sobol", "sobolf", "niederreiter-base-2", "niederreiterf". See below for details.</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
 <refsection>
    <title>Description</title>
    <para>
-This function requires to take the current object both as an input
-and an output argument.
+This function creates a new low discrepancy object.
    </para>
    <para>
 The following is the list of possible values for method.
 <itemizedlist>
 <listitem>"halton" : the Halton low discrepancy sequence.
-This sequence is sensitive to the "-primeslist" option.
+This sequence is sensitive to the <literal>"-primeslist"</literal> option.
 By default, it is able to generate experiments in dimension at most 100.
 This sequence is able to generate at most 2^52 - 1 = 4 503 599 627 370 495 experiments.
-To extend the number of dimensions, please configure the "-primeslist" option.
+To extend the number of dimensions, please configure the <literal>"-primeslist"</literal> option.
 The maximum dimension which can be obtained is equal to the number of
 different primes in the prime table.
-For the Halton sequence, the skip and leap option is fast, that is, large
-values of the skip or leap parameter do not reduce the performance.
+For the Halton sequence, the <literal>skip</literal> and
+<literal>leap</literal> options are fast, that is, large
+values of the <literal>skip</literal> or <literal>leap</literal> parameter do not reduce the performance.
 This is a macro-based algorithm.
 This implementation is based on the book by Paul Glasserman,
 "Monte-Carlo methods in Financial Engineering".
 </listitem>
 <listitem>"haltonf" : the fast Halton sequence.
-This sequence is sensitive to the "-primeslist" option.
+This sequence is sensitive to the <literal>"-primeslist"</literal> option.
 By default, it is able to generate experiments in dimension at most 100.
 This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
-To extend the number of dimensions, please configure the "-primeslist" option.
+To extend the number of dimensions, please configure the <literal>"-primeslist"</literal> option.
 The maximum dimension which can be obtained is equal to the number of
 different primes in the prime table.
-For the Halton sequence, the skip and leap option is fast, that is, large
-values of the skip or leap parameter do not reduce the performance.
+For the Halton sequence, the <literal>skip</literal> and
+<literal>leap</literal> option is fast, that is, large
+values of the <literal>skip</literal> or <literal>leap</literal> parameter do not reduce the performance.
 This fast algorithm is based on a compiled C source code.
 The implementation is a modification of the C source code by John Burkardt.
 </listitem>
 <listitem>"faure" : the Faure low discrepancy sequence.
-This sequence is sensitive to the "-primeslist" option.
+This sequence is sensitive to the <literal>"-primeslist"</literal> option.
 By default, it is able to generate experiments in dimension at most 541.
 This sequence is able to generate at most 2^52 - 1 = 4 503 599 627 370 495 experiments.
-To extend the number of dimensions, please configure the "-primeslist" option.
+To extend the number of dimensions, please configure the <literal>"-primeslist"</literal> option.
 The maximum dimension which can be obtained is equal to the maximum
 prime number in the prime table.
-For the Faure sequence, the skip and leap option is fast, that is, large
-values of the skip or leap parameter do not reduce the performance.
+For the Faure sequence, the <literal>skip</literal> and
+<literal>leap</literal> option is fast, that is, large
+values of the <literal>skip</literal> or <literal>leap</literal> parameter do not reduce the performance.
 This is a macro-based algorithm.
 This implementation is based on the book by Paul Glasserman,
 "Monte-Carlo methods in Financial Engineering".
 </listitem>
 <listitem>"fauref" : the fast Faure sequence.
-This sequence is sensitive to the "-primeslist" option.
+This sequence is sensitive to the <literal>"-primeslist"</literal> option.
 By default, it is able to generate experiments in dimension at most 541.
 This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
-To extend the number of dimensions, please configure the "-primeslist" option.
+To extend the number of dimensions, please configure the <literal>"-primeslist"</literal> option.
 The maximum dimension which can be obtained is equal to the maximum
 prime number in the prime table.
-For the Faure sequence, the skip and leap option is fast, that is, large
-values of the skip or leap parameter do not reduce the performance.
+For the Faure sequence, the <literal>skip</literal> and
+<literal>leap</literal> option is fast, that is, large
+values of the <literal>skip</literal> or <literal>leap</literal> parameter do not reduce the performance.
 This fast algorithm is based on a compiled C source code.
 The implementation is a modification of the C source code by John Burkardt.
 Original Fortran 77 version by Bennett Fox in "Algorithm 647: Implementation and Relative Efficiency of
 Quasirandom Sequence Generators".
 </listitem>
 <listitem>"reversehalton" : the Reverse Halton sequence of Vandewoestyne and Cools.
-This sequence is sensitive to the "-primeslist" option.
+This sequence is sensitive to the <literal>"-primeslist"</literal> option.
 By default, it is able to generate experiments in dimension at most 100.
 This sequence is able to generate at most 2^52 - 1 = 4 503 599 627 370 495 experiments.
-To extend the number of dimensions, please configure the "-primeslist" option.
+To extend the number of dimensions, please configure the <literal>"-primeslist"</literal> option.
 The maximum dimension which can be obtained is equal to the number of
 different primes in the prime table.
-For the Reverse Halton sequence, the skip and leap option is fast, that is, large
-values of the skip or leap parameter do not reduce the performance.
+For the Reverse Halton sequence, the <literal>skip</literal> and
+<literal>leap</literal> option are fast, that is, large
+values of the <literal>skip</literal> or <literal>leap</literal> parameter do not reduce the performance.
 This is a macro-based algorithm.
 This implementation is based on the paper "Good permutations for deterministic scrambled
 Halton sequences in terms of L2-discrepancy" by B. Vandewoestyne and R. Cools.
 </listitem>
 <listitem>"reversehaltonf" : the fast Reverse Halton sequence of Vandewoestyne and Cools.
-This sequence is sensitive to the "-primeslist" option.
+This sequence is sensitive to the <literal>"-primeslist"</literal> option.
 By default, it is able to generate experiments in dimension at most 100.
 This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
-To extend the number of dimensions, please configure the "-primeslist" option.
+To extend the number of dimensions, please configure the <literal>"-primeslist"</literal> option.
 The maximum dimension which can be obtained is equal to the number of
 different primes in the prime table.
-For the Reverse Halton sequence, the skip and leap option is fast, that is, large
-values of the skip or leap parameter do not reduce the performance.
+For the Reverse Halton sequence, the <literal>skip</literal> and
+<literal>leap</literal> option are fast, that is, large
+values of the <literal>skip</literal> or <literal>leap</literal> parameter do not reduce the performance.
 This fast algorithm is based on a compiled C source code.
 This implementation is based on the paper "Good permutations for deterministic scrambled
 Halton sequences in terms of L2-discrepancy" by B. Vandewoestyne and R. Cools.
@@ -134,8 +139,9 @@ There is no way to extend the number of dimensions or the number of
 experiments.
 The routine adapts the ideas of Antonov and Saleev, which make use of a Gray code
 representation to construct the elements of the sequence recursively.
-For the Sobol sequence, the skip and leap option is slow, that is, large
-values of the skip or leap parameter leads to increased CPU time.
+For the Sobol sequence, the <literal>skip</literal> and
+<literal>leap</literal> options are slow, that is, large
+values of the <literal>skip</literal> or <literal>leap</literal> parameter leads to increased CPU time.
 This is because generating the new vector implies to update iteratively
 the lastq vector.
 This is a macro-based algorithm.
@@ -151,8 +157,9 @@ There is no way to extend the number of dimensions or the number of
 experiments.
 The routine adapts the ideas of Antonov and Saleev, which make use of a Gray code
 representation to construct the elements of the sequence recursively.
-For the Sobol sequence, the skip and leap option is slow, that is, large
-values of the skip or leap parameter leads to increased CPU time.
+For the Sobol sequence, the <literal>skip</literal> and
+<literal>leap</literal> options are slow, that is, large
+values of the <literal>skip</literal> or <literal>leap</literal> parameter leads to increased CPU time.
 This is because generating the new vector implies to update iteratively
 the lastq vector.
 This fast algorithm is based on a compiled C source code.
@@ -166,10 +173,11 @@ It is able to generate experiments in dimension at most 20.
 This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
 There is no way to extend the number of dimensions or the number of
 experiments.
-For the Niederreiter sequence, the skip and leap option is slow, that is, large
-values of the skip or leap parameter leads to increased CPU time.
+For the Niederreiter sequence, the <literal>skip</literal> and
+<literal>leap</literal> options are slow, that is, large
+values of the <literal>skip</literal> or <literal>leap</literal> parameter leads to increased CPU time.
 This is because generating the new vector implies to update iteratively
-the nextq vector.
+the <literal>nextq</literal> vector.
 The implementation is a Scilab port of the Matlab source code by John Burkardt.
 Original Fortran 77 version by Paul Bratley, Bennett Fox, Harald Niederreiter
 in "Algorithm 738: Programs to generate Niederreiter's low-discrepancy
@@ -182,8 +190,9 @@ The base can be configured with the -base option. By default, the base is 2.
 The base is expected to be a prime or a power of a prime. If the base is a power of a
 prime, it must be one of the following :  4 = 2^2, 8 = 2^3, 9 = 3^2, 16 = 2^4, 25 = 5^2,
 27 = 3^3, 32 = 2^5, 49 = 7^2.
-For the Niederreiter sequence, the skip and leap option is slow, that is, large
-values of the skip or leap parameter leads to increased CPU time.
+For the Niederreiter sequence, the <literal>skip</literal> and
+<literal>leap</literal> option is slow, that is, large
+values of the <literal>skip</literal> or <literal>leap</literal> parameter leads to increased CPU time.
 This is because generating the new vector implies to update iteratively
 the nextq vector.
 The library generates two temporary files gfarit and gfplys when the sequence is started up.
@@ -213,7 +222,7 @@ lds = lowdisc_destroy(lds);
    <title>Authors</title>
    <simplelist type="vert">
    <member>Michael Baudin - 2008-2009 - INRIA</member>
-   <member>Michael Baudin - 2010 - DIGITEO</member>
+   <member>Michael Baudin - 2010 - 2011 - DIGITEO</member>
    </simplelist>
 </refsection>
 </refentry>

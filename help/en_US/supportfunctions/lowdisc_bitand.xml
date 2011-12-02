@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_bitand.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_bitand" xml:lang="en"
@@ -32,10 +32,12 @@
 <refsection>
    <title>Parameters</title>
    <variablelist>
-   <varlistentry><term>x, y :</term>
-      <listitem><para>  scalars/vectors/matices/hypermatices of positives integers, x and y must have the same size</para></listitem></varlistentry>
+   <varlistentry><term>x :</term>
+      <listitem><para> a m-by-n matrix of doubles, integer value, positive</para></listitem></varlistentry>
+   <varlistentry><term>y :</term>
+      <listitem><para> a m-by-n matrix of doubles, integer value, positive</para></listitem></varlistentry>
    <varlistentry><term>z :</term>
-      <listitem><para> scalar/vector/matrix/hypermatice</para></listitem></varlistentry>
+      <listitem><para> a m-by-n matrix of doubles, integer value, positive</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
@@ -57,8 +59,10 @@ If dimension of x (and y) is superior than 1 then z(i) is equal to bitand(x(i),y
 // example 1 :
 // '1010110' : is the binary representation of 86
 // '1011011' : is the binary representation of 91
-// '1010010' : is the binary representation for the AND of binary representation 86 and 91
-// so the decimal number corresponding to the AND  applied to binary forms 86 and 91 is : 82
+// '1010010' : is the binary representation for
+//             the AND operator of binary representation 86 and 91
+// so the decimal number corresponding to the AND operator
+// applied to binary forms 86 and 91 is : 82
 x=86;
 lowdisc_dec2bin(x)
 y=91;
@@ -78,7 +82,7 @@ z=lowdisc_bitand(x,y)
    <simplelist type="vert">
    <member>INRIA - Farid BELAHCENE</member>
    <member>2008 - INRIA - Pierre MARECHAL</member>
-   <member>2010 - DIGITEO - Michael Baudin</member>
+   <member>2010 - 2011 - DIGITEO - Michael Baudin</member>
    </simplelist>
 </refsection>
 </refentry>

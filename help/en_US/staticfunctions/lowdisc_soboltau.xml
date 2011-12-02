@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_soboltau.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_soboltau" xml:lang="en"
@@ -94,8 +94,7 @@ tau = lowdisc_soboltau ( 0 )
 dim = 4;
 lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",dim);
-tau = lowdisc_soboltau ( dim );
-assert_equal ( tau , 3 );
+tau = lowdisc_soboltau ( dim )
 skip = 2^(tau + dim - 1);
 lds = lowdisc_configure(lds,"-skip", skip);
 lds = lowdisc_startup (lds);

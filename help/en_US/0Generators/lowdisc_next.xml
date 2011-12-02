@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_next.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_next" xml:lang="en"
@@ -36,9 +36,9 @@
    <varlistentry><term>this:</term>
       <listitem><para> the current object</para></listitem></varlistentry>
    <varlistentry><term>imax:</term>
-      <listitem><para> the number of terms to retrieve (default = 1)</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of doubles, integer value, the number of terms to retrieve (default imax = 1)</para></listitem></varlistentry>
    <varlistentry><term>next :</term>
-      <listitem><para> a matrix of size imax x s, the next vector in the sequence. The experiment #i is stored at next(i,:) for 1&lt;=i&lt;=imax. The component #j of experiment #i is stored in next(i,j) with 1&lt;=j&lt;=dimension.</para></listitem></varlistentry>
+      <listitem><para> a imax-by-s matrix of doubles, the next vector in the sequence. The experiment #i is stored at <literal>next(i,:)</literal> for <literal>i=1,2,...,imax</literal>. The component #j of experiment #i is stored in <literal>next(i,j)</literal> with <literal>j=1,2,...,s</literal>.</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
@@ -46,8 +46,8 @@
    <title>Description</title>
    <para>
 The current object is updated after the call to next :
-both this and next are mandatory output arguments.
-This function is sensitive to the "-leap" option.
+both <literal>this</literal> and <literal>next</literal> are mandatory output arguments.
+This function is sensitive to the <literal>"-leap"</literal> option.
    </para>
    <para>
 Because of the limitation of floating point integers,
@@ -65,10 +65,10 @@ This is especially true for the Sobol, Faure and Niederreiter sequences.
 This can lead to some trouble for non-experts.
 For that purpose, we designed the following functions.
 <itemizedlist>
-<listitem> lowdisc_haltonsuggest : provides settings for the Halton sequence,</listitem>
-<listitem> lowdisc_fauresuggest : provides settings for the Faure sequence,</listitem>
-<listitem> lowdisc_sobolsuggest : provides settings for the Sobol sequence,</listitem>
-<listitem> lowdisc_niedersuggest : provides settings for the Niederreiter sequence.</listitem>
+<listitem> <literal>lowdisc_haltonsuggest</literal> : provides settings for the Halton sequence,</listitem>
+<listitem> <literal>lowdisc_fauresuggest</literal> : provides settings for the Faure sequence,</listitem>
+<listitem> <literal>lowdisc_sobolsuggest</literal> : provides settings for the Sobol sequence,</listitem>
+<listitem> <literal>lowdisc_niedersuggest</literal> : provides settings for the Niederreiter sequence.</listitem>
 </itemizedlist>
    </para>
    <para>
@@ -127,7 +127,8 @@ lds = lowdisc_startup (lds);
 // Terms #1 to #100
 [lds,computed]=lowdisc_next(lds,100);
 for i = 1:100
-mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
+mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", ...
+i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
 end
 lds = lowdisc_destroy(lds);
 

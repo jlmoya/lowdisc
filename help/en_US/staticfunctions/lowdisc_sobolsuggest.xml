@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_sobolsuggest.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_sobolsuggest" xml:lang="en"
@@ -64,8 +64,18 @@ Volume 12, Number 4, pages 362-376, 1986.
 We compute tau from the lowdisc_soboltau function.
 For spatial dimensions 1 through 13, tau is non-trivial. For other dimensions, tau=0
 and a warning is generated.
-For integration problems, we take k = max ( ceil(log2(nsimmin)) , 2*dim , tau + dim - 1 )
-For optimization problems, we take k = max ( ceil(log2(nsimmin)) , tau + 1 ).
+For integration problems, we take
+   </para>
+   <para>
+<literal>k = max ( ceil(log2(nsimmin)) , 2*dim , tau + dim - 1 )</literal>
+   </para>
+   <para>
+For optimization problems, we take
+   </para>
+   <para>
+<literal>k = max ( ceil(log2(nsimmin)) , tau + 1 ).</literal>
+   </para>
+   <para>
 We consider nsim = 2**k.
    </para>
    <para>
