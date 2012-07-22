@@ -78,6 +78,7 @@ funmat = [
   "lowdisc_combinesum"
   "lowdisc_plotbmbox"
   "lowdisc_subplotdecompose"
+  "lowdisc_getpath"
   ];
 macrosdir = cwd +"../../macros";
 demosdir = [];

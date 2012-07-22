@@ -7,7 +7,6 @@ demopath = get_absolute_file_path("lowdisc.dem.gateway.sce");
 subdemolist = [
 "bench_ldgen", "bench_ldgen.sce"; ..
 "tms_nets", "tms_nets.sce";..
-"runtests", "runtests.sce"; ..
 "test_faure.dim3", "test_faure.dim3.sce"; ..
 "test_faure.dim4", "test_faure.dim4.sce"; ..
 "test_faure.glasserman", "test_faure.glasserman.sce"; ..

@@ -10,6 +10,8 @@ lowdisc (not released yet)
      [u,evalf]=lowdisc_ldgen(callf,n,ldseq,strict)
  * Changed the default value of strict in lowdisc_ldgen. 
    The new default is strict=%t.
+ * Created lowdisc_getpath() function.
+ * Added a unit test to check the demos.
 
 lowdisc (v0.3)
  * Updated unit tests: basic and ldfaure for Linux.

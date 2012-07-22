@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ *
+ * This help file was generated from lowdisc_plotelembox.sci using help_from_sci().
+ *
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_plotelembox" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+
+  <refnamediv>
+    <refname>lowdisc_plotelembox</refname><refpurpose>Plot elementary box</refpurpose>
+  </refnamediv>
+
+
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   lowdisc_plotelembox(b,d)
+   lowdisc_plotelembox(b,d,u)
+   
+   </synopsis>
+</refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>b :</term>
+      <listitem><para> a matrix of doubles, integer value, the basis</para></listitem></varlistentry>
+   <varlistentry><term>d:</term>
+      <listitem><para> a matrix of doubles, integer value, the log-b of number of divisions in direction 1 and 2</para></listitem></varlistentry>
+   <varlistentry><term>u :</term>
+      <listitem><para> a npoints-by-2 matrix of doubles, the point set to plot. Default is to plot no point set.</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+Plot the elementary interval with volume prod(b.^d).
+This interval has b(1)^d(1) divisions in direction 1 and
+b(2)^d(2) divisions in direction 2.
+   </para>
+   <para>
+The values of b and d are expanded as need.
+For example, b can be a 1-by-1 matrix and d can
+be a 2-by-1 matrix.
+In this case, b is expanded to match the size of d.
+   </para>
+   <para>
+If the point set u is provided, we plot it.
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+// Plot an elementary interval with volume 2^3
+lowdisc_plotelembox(2,[2 1])
+
+// Use a different basis for each direction.
+// This is useful for Halton sequence.
+scf();
+lowdisc_plotelembox([2 3],[2 1])
+
+// Plot all elementary intervals with volume b^m=2^3
+b = 2;
+m = 3;
+C = lowdisc_combinesum(m);
+n = size(C,"r");
+for i = 1 : n
+scf();
+lowdisc_plotelembox(b,C(i,:));
+end
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Bibliography</title>
+   <para>"Random number generation and quasi-Monte Carlo methods", H. Niederreiter, CBMS-NSF Series in Applied Mathematics, No. 63, SIAM, Philadelphia, 1992.</para>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>Copyright (C) 2012 - Michael Baudin</member>
+   </simplelist>
+</refsection>
+</refentry>

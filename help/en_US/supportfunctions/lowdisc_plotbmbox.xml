@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ *
+ * This help file was generated from lowdisc_plotbmbox.sci using help_from_sci().
+ *
+ -->
+
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_plotbmbox" xml:lang="en"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns3="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+
+  <refnamediv>
+    <refname>lowdisc_plotbmbox</refname><refpurpose>Plot all elementary boxes with volume b^m</refpurpose>
+  </refnamediv>
+
+
+
+<refsynopsisdiv>
+   <title>Calling Sequence</title>
+   <synopsis>
+   lowdisc_plotbmbox(b,m)
+   lowdisc_plotbmbox(b,m,u)
+   
+   </synopsis>
+</refsynopsisdiv>
+
+<refsection>
+   <title>Parameters</title>
+   <variablelist>
+   <varlistentry><term>b :</term>
+      <listitem><para> a 1-by-1 matrix of doubles, integer value, the basis</para></listitem></varlistentry>
+   <varlistentry><term>m :</term>
+      <listitem><para> a 1-by-1 matrix of doubles, integer value, the m parameter in the (t,m,s)-net</para></listitem></varlistentry>
+   <varlistentry><term>u :</term>
+      <listitem><para> a npoints-by-2 matrix of doubles, the point set to plot. Default is to plot no point set.</para></listitem></varlistentry>
+   </variablelist>
+</refsection>
+
+<refsection>
+   <title>Description</title>
+   <para>
+Plot all the elementary intervals with volume b^m.
+Compute all decompositions d which sum to m.
+Then plot the elementary intervals in base b with
+directions d.
+   </para>
+   <para>
+If the point set u is provided, we plot it.
+   </para>
+   <para>
+</para>
+</refsection>
+
+<refsection>
+   <title>Examples</title>
+   <programlisting role="example"><![CDATA[
+// Plot all elementary intervals with volume 2^3
+scf();
+lowdisc_plotbmbox(2,3)
+
+// Plot elementary intervals with volume 2^3,
+// and add Faure points (insert zero).
+[ u , evalf ] = lowdisc_ldgen ( 2^4-1 , 2 , "fauref" , %t );
+u = [0,0;u];
+scf();
+lowdisc_plotbmbox(2,3,u);
+
+   ]]></programlisting>
+</refsection>
+
+<refsection>
+   <title>Bibliography</title>
+   <para>"Random number generation and quasi-Monte Carlo methods", H. Niederreiter, CBMS-NSF Series in Applied Mathematics, No. 63, SIAM, Philadelphia, 1992.</para>
+</refsection>
+
+<refsection>
+   <title>Authors</title>
+   <simplelist type="vert">
+   <member>Copyright (C) 2012 - Michael Baudin</member>
+   </simplelist>
+</refsection>
+</refentry>
