@@ -138,7 +138,7 @@ expected = [
 0.148438      0.411523      0.032000      0.291545
 0.648438      0.744856      0.232000      0.434402
 ];
-assert_checkalmostequal ( computed , expected , 1.e-5 );
+assert_checkalmostequal ( computed , expected , [], 1.e-5 );
 _lowdisc_haltonfstop ( );
 start = _lowdisc_haltonfisstart ( );
 assert_checkequal ( start , 0 );
@@ -200,5 +200,5 @@ expected = [
 0.312500      0.370370      0.080000      0.448980
 0.812500      0.703704      0.280000      0.591837
 ];
-assert_checkalmostequal ( computed , expected , 1.e-5 );
+assert_checkalmostequal ( computed , expected , [], 1.e-5 );
 _lowdisc_haltonfstop ( );

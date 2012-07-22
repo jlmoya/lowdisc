@@ -70,7 +70,7 @@ expected= [
     0.25      0.3333333    0.6     0.7142857  
     0.75      0.2222222    0.4     0.5714286  
 ];
-assert_checkalmostequal ( computed , expected , 1.e-7 );
+assert_checkalmostequal ( computed , expected , [], 1.e-7 );
 _lowdisc_revhaltfstop ( );
 
 
@@ -95,7 +95,7 @@ expected= [
     0.375    0.1111111    0.96    0.1428571  
     0.875    0.7777778    0.76    0.1224490  
 ];
-assert_checkalmostequal ( computed , expected , 1.e-7 );
+assert_checkalmostequal ( computed , expected , [], 1.e-7 );
 _lowdisc_revhaltfstop ( );
 
 
@@ -117,7 +117,7 @@ expected= [
     0.125    0.8888889    0.2     0.4285714  
     0.375    0.1111111    0.96    0.1428571  
 ];
-assert_checkalmostequal ( computed , expected , 1.e-7 );
+assert_checkalmostequal ( computed , expected , [], 1.e-7 );
 _lowdisc_revhaltfstop ( );
 
 

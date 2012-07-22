@@ -64,7 +64,7 @@ expected= [
   0.062500      0.937500      0.953125      0.234375
   0.562500      0.437500      0.203125      0.859375
 ];
-assert_checkalmostequal ( computed , expected , 1.e-4 );
+assert_checkalmostequal ( computed , expected , [], 1.e-5 );
 _lowdisc_niedfstop ( );
 start = _lowdisc_niedfisstart ( );
 assert_checkequal ( start , 0 );
@@ -98,7 +98,7 @@ expected= [
   0.062500      0.937500      0.953125      0.234375
   0.562500      0.437500      0.203125      0.859375
 ];
-assert_checkalmostequal ( computed , expected , 1.e-4 );
+assert_checkalmostequal ( computed , expected , [], 1.e-5 );
 _lowdisc_niedfstop ( );
 
 //
@@ -124,5 +124,5 @@ expected= [
   0.375000      0.375000      0.875000      0.281250
   0.062500      0.937500      0.953125      0.234375
 ];
-assert_checkalmostequal ( computed , expected , 1.e-4 );
+assert_checkalmostequal ( computed , expected , [], 1.e-5 );
 _lowdisc_niedfstop ( );

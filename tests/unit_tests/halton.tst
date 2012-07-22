@@ -186,7 +186,7 @@ expected = [
 0.148438      0.411523      0.032000      0.291545
 0.648438      0.744856      0.232000      0.434402
 ];
-assert_checkalmostequal ( computed , expected , 1.e-5 );
+assert_checkalmostequal ( computed , expected , [], 1.e-5 );
 lds = lowdisc_destroy(lds);
 
 // Configure a list of primes and use it
@@ -223,7 +223,7 @@ expected = [
     0.78125    0.4074074    0.92    0.7551020  
     0.15625    0.7407407    0.16    0.8979592  
 ];
-assert_checkalmostequal ( computed , expected , 1.e-5 );
+assert_checkalmostequal ( computed , expected , [], 1.e-5 );
 index = lowdisc_get ( lds , "-index" );
 assert_checkequal ( index , 20 );
 lds = lowdisc_destroy(lds);
@@ -250,7 +250,7 @@ expected = [
     0.53125      0.9259259    0.52     0.4693878  
     0.78125      0.4074074    0.92     0.7551020  
 ];
-assert_checkalmostequal ( computed , expected , 1.e-5 );
+assert_checkalmostequal ( computed , expected , [], 1.e-5 );
 index = lowdisc_get ( lds , "-index" );
 assert_checkequal ( index , 20 );
 lds = lowdisc_destroy(lds);

@@ -47,7 +47,7 @@ expected= [
    0.937500    0.062500    0.562500    0.937500  
    0.437500    0.562500    0.062500    0.437500  
 ];
-assert_checkalmostequal ( computed, expected, 1.e-5 );
+assert_checkalmostequal ( computed, expected, [], 1.e-5 );
 // Drop terms 12-94
 [lds,computed]=lowdisc_next(lds,94-12+1);
 // Terms #95-110
@@ -70,7 +70,7 @@ expected= [
    0.851562    0.570312    0.617188    0.289062  
    0.601562    0.320312    0.867188    0.539062  
 ];
-assert_checkalmostequal ( computed, expected, 1.e-5 );
+assert_checkalmostequal ( computed, expected, [], 1.e-5 );
 lds = lowdisc_destroy(lds);
 //
 // Check the result against TOMS 647 data
@@ -181,7 +181,7 @@ expected = [
 0.289062      0.882812      0.679688      0.601562
 0.414062      0.257812      0.304688      0.476562
 ];
-assert_checkalmostequal ( computed , expected , 1.e-5 );
+assert_checkalmostequal ( computed , expected , [], 1.e-5 );
 lds = lowdisc_destroy(lds);
 // Test skip
 lds = lowdisc_new("sobol");

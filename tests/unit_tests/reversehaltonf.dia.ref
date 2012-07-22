@@ -73,7 +73,7 @@ expected = [
     0.78125      0.7037037    0.28   
     0.15625      0.3703704    0.04   
 ];
-assert_checkalmostequal ( computed, computed, 1e-5 );
+assert_checkalmostequal ( computed, computed, [], 1e-5 );
 index = lowdisc_get ( lds , "-index" );
 assert_checkequal ( index , 20 );
 lds = lowdisc_destroy(lds);
@@ -97,7 +97,7 @@ expected = [
     0.53125      0.5185185    0.68   
     0.78125      0.7037037    0.28   
 ];
-assert_checkalmostequal ( computed, computed, 1e-5 );
+assert_checkalmostequal ( computed, computed, [], 1e-5 );
 index = lowdisc_get ( lds , "-index" );
 assert_checkequal ( index , 20 );
 lds = lowdisc_destroy(lds);
