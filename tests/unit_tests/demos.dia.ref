@@ -1,0 +1,42 @@
+// Copyright (C) 2012 - Michael Baudin
+//
+// This file must be used under the terms of the GNU LGPL license.
+// 
+TOOLBOX_NAME  = "lowdisc";
+path = lowdisc_getpath();
+demospath = fullfile(path,"demos");
+// Get the subdemolist variable from the demos gateway
+demosscript = TOOLBOX_NAME+".dem.gateway.sce";
+exec(fullfile(demospath,demosscript),-1);
+ndemos = size(subdemolist,"r");
+for i = 1 : ndemos
+	mprintf("%s: exec(%s)\n",subdemolist(i,1),subdemolist(i,2));
+	exec(subdemolist(i,2),-1);
+end
+bench_ldgen: exec(L:\FORGES~1\lowdisc\demos\bench_ldgen.sce)
+Measures the performances of low discrepancy sequences.
+Compares with uniform random number generators.
+The column Nb/T indicates the number of generated doubles
+by unit of time: larger is better.
+
+Name                     Eval f   Time (s)       Nb/T
+halton                      500      1.212       1650
+faure                       500      4.867        410
+reversehalton               500      1.102       1814
+sobol                       500      4.707        424
+niederreiter-base-2         500      4.897        408
+haltonf                  100000      0.310    1290322
+fauref                   100000      0.321    1246105
+reversehaltonf           100000      0.300    1333333
+sobolf                   100000      0.090    4444444
+niederreiterf            100000      1.723     232153
+mt                       100000      0.020   19999999
+kiss                     100000      0.020   19999999
+clcg2                    100000      0.020   19999999
+clcg4                    100000      0.040    9999999
+urand                    100000      0.020   19999999
+fsultra                  100000      0.020   19999999
+Warning !!!
+Scilab has found a critical error (EXCEPTION_ACCESS_VIOLATION).
+Save your data and restart Scilab.
+exec('SCI/etc/scilab.quit',-1);quit;
