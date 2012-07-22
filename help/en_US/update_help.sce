@@ -1,10 +1,12 @@
 // Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
+// Copyright (C) 2012 - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 
 // Updates the .xml files by deleting existing files and 
 // creating them again from the .sci with help_from_sci.
 
+function lowdisc_updatehelp()
 
 //
 cwd = get_absolute_file_path("update_help.sce");
@@ -40,6 +42,15 @@ helpdir = fullfile(cwd,"staticfunctions");
 funmat = [
   "lowdisc_stopall"
   "lowdisc_methods"
+  ];
+macrosdir = cwd +"../../macros";
+demosdir = [];
+modulename = "lowdisc";
+helptbx_helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t );
+//
+// Generate the favorable parameters functions help
+helpdir = fullfile(cwd,"favpar");
+funmat = [
   "lowdisc_haltonsuggest"
   "lowdisc_fauresuggest"
   "lowdisc_sobolsuggest"
@@ -63,6 +74,10 @@ funmat = [
   "lowdisc_bitand"
   "lowdisc_proj2d"
   "lowdisc_corrcoef"
+  "lowdisc_plotelembox"
+  "lowdisc_combinesum"
+  "lowdisc_plotbmbox"
+  "lowdisc_subplotdecompose"
   ];
 macrosdir = cwd +"../../macros";
 demosdir = [];
@@ -83,4 +98,8 @@ macrosdir = cwd +"../../macros";
 demosdir = [];
 modulename = "lowdisc";
 helptbx_helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t );
+
+endfunction 
+lowdisc_updatehelp();
+clear lowdisc_updatehelp
 

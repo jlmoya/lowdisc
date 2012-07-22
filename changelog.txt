@@ -1,5 +1,16 @@
 changelog of the Low Discrepancy Toolbox
 
+lowdisc (not released yet)
+ * Created lowdisc_combinesum.
+ * Created lowdisc_plotbmbox.
+ * Created lowdisc_plotelembox.
+ * Added a demo of (t,m,s)-nets
+ * Changed the calling sequence of lowdisc_ldgen. 
+   The new calling sequence is:
+     [u,evalf]=lowdisc_ldgen(callf,n,ldseq,strict)
+ * Changed the default value of strict in lowdisc_ldgen. 
+   The new default is strict=%t.
+
 lowdisc (v0.3)
  * Updated unit tests: basic and ldfaure for Linux.
  * Vectorized Fast Faure sequence.

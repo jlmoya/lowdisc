@@ -7,28 +7,24 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
-function root_tlbx = loadlowdisclib ()
+function lowdisclib = lowdisc_load()
 
-    modulename = "Lowdisc"
-    mprintf("Start %s\n",modulename);
+    TOOLBOX_NAME = "lowdisc"
+    TOOLBOX_TITLE = "Lowdisc"
 
-    if ( isdef("lowdisclib") ) then
-        warning("	Library is already loaded");
-        return;
-    end
+    mprintf("Start %s\n",TOOLBOX_TITLE);
 
-    etc_tlbx  = get_absolute_file_path("lowdisc.start");
+    etc_tlbx  = get_absolute_file_path(TOOLBOX_NAME+".start");
     etc_tlbx  = getshortpathname(etc_tlbx);
     root_tlbx = strncpy( etc_tlbx, length(etc_tlbx)-length("\etc\") );
 
     //Load  functions library
     // =============================================================================
 
-    if ( %t ) then
-        mprintf("\tLoad macros\n");
-        pathmacros = pathconvert( root_tlbx ) + "macros" + filesep();
-        lowdisclib  = lib(pathmacros);
-    end
+    mprintf("\tLoad macros\n");
+    pathmacros = pathconvert( root_tlbx ) + "macros" + filesep();
+    lowdisclib  = lib(pathmacros);
+    clear pathmacros;
 
     // load gateways
     // =============================================================================
@@ -42,47 +38,45 @@ function root_tlbx = loadlowdisclib ()
     // Load and add help chapter
     // =============================================================================
 
-    if or(getscilabmode() == ["NW";"STD"]) then
-        mprintf("\tLoad help\n");
-        path_addchapter = pathconvert(root_tlbx+"/jar");
-        if ( isdir(path_addchapter) <> [] ) then
-            add_help_chapter(modulename, path_addchapter, %F);
+    if ( %t ) then
+        if or(getscilabmode() == ["NW";"STD"]) then
+            mprintf("\tLoad help\n");
+            path_addchapter = pathconvert(root_tlbx+"/jar");
+            if ( isdir(path_addchapter) <> [] ) then
+                add_help_chapter(TOOLBOX_TITLE, path_addchapter, %F);
+            end
         end
     end
 
     // add demos
     // =============================================================================
 
-    if or(getscilabmode() == ["NW";"STD"]) then
-        mprintf("\tLoad demos\n");
-        pathdemos = pathconvert(root_tlbx+"/demos/lowdisc.dem.gateway.sce",%f,%t);
-        add_demo(modulename,pathdemos);
+    if ( %t ) then
+        if or(getscilabmode() == ["NW";"STD"]) then
+            mprintf("\tLoad demos\n");
+            demoscript = TOOLBOX_NAME + ".dem.gateway.sce"
+            pathdemos = pathconvert(fullfile(root_tlbx,"demos",demoscript),%f,%t);
+            add_demo(TOOLBOX_TITLE,pathdemos);
+        end
     end
 
-    // =============================================================================
-    
-    _lowdisc_startup()
+    // ====================================================================
 
+    _lowdisc_startup()
+	
     // ====================================================================
     // A Welcome message.
 
     mprintf("\tType ""help lowdisc_overview"" for quick start.\n");
-    mprintf("\tType ""demo_gui()"" and search for ""%s"" for Demonstrations.\n",modulename);
+    mprintf("\tType ""demo_gui()"" and search for ""%s"" for Demonstrations.\n",TOOLBOX_TITLE);
 
-    // =============================================================================
-    // Create variables at level #0
-
-    lowdisclib = resume(lowdisclib)
-
-endfunction
+endfunction 
 
 if ( isdef("lowdisclib") ) then
     warning("	Library is already loaded (""ulink(); clear lowdisclib;"" to unload.)");
     return;
 end
 
-loadlowdisclib();
-clear loadlowdisclib;
-
-
+lowdisclib = lowdisc_load ();
+clear lowdisc_load;
 

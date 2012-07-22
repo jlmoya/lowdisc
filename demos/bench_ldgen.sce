@@ -2,7 +2,7 @@
 //
 // This file must be used under the terms of the GNU LGPL license.
 
-
+function lowdisc_benchldgen()
 mprintf("Measures the performances of low discrepancy sequences.\n")
 mprintf("Compares with uniform random number generators.\n")
 mprintf("The column Nb/T indicates the number of generated doubles\n")
@@ -11,7 +11,6 @@ mprintf("by unit of time: larger is better.\n\n")
 // Check the performances of all sequences
 callf = 1000;
 n = 4;
-strict = %t;
 seqmat = lowdisc_methods ();
 mprintf("%-20s %10s %10s %10s\n","Name","Eval f", "Time (s)", "Nb/T")
 k = 0;
@@ -19,7 +18,7 @@ k = 0;
 for ldseq = ["halton" "faure" "reversehalton" "sobol" "niederreiter-base-2"]
   k = k + 1;
   t1 = tic();
-  [ evalf , u ] = lowdisc_ldgen ( callf/2 , n , ldseq , strict );
+  [ u , evalf ] = lowdisc_ldgen ( callf/2 , n , ldseq );
   // Add %eps to the timing to prevent a zero timing.
   perf(k) = toc() + %eps;
   bynb(k) = (n * evalf) / perf(k);
@@ -29,7 +28,7 @@ end
 for ldseq = ["haltonf" "fauref" "reversehaltonf" "sobolf" "niederreiterf"]
   k = k + 1;
   t1 = tic();
-  [ evalf , u ] = lowdisc_ldgen ( 100*callf , n , ldseq , strict );
+  [ u , evalf ] = lowdisc_ldgen ( 100*callf , n , ldseq );
   perf(k) = toc() + %eps;
   bynb(k) = (n * evalf) / perf(k);
   mprintf("%-20s %10d %10.3f %10d\n",ldseq,evalf,perf(k),bynb(k))
@@ -51,4 +50,8 @@ end
 filename = "bench_ldgen.sce";
 dname = get_absolute_file_path(filename);
 editor ( dname + filename );
+
+endfunction 
+lowdisc_benchldgen();
+clear lowdisc_benchldgen;
 

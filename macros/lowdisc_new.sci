@@ -36,6 +36,9 @@ function this = lowdisc_new ( varargin )
   //    This is a macro-based algorithm.
   //    This implementation is based on the book by Paul Glasserman, 
   //    "Monte-Carlo methods in Financial Engineering".
+  //    The base used in Halton sequence depends on the dimension: 
+  //    the s-th base uses the s-prime number. 
+  //    For example, in dimension 4, the bases are [2 3 5 7], the fourth first primes. 
   //    </listitem>
   //  <listitem>"haltonf" : the fast Halton sequence. 
   //    This sequence is sensitive to the <literal>"-primeslist"</literal> option.
@@ -62,7 +65,10 @@ function this = lowdisc_new ( varargin )
   //    values of the <literal>skip</literal> or <literal>leap</literal> parameter do not reduce the performance.
   //    This is a macro-based algorithm.
   //    This implementation is based on the book by Paul Glasserman, 
-  //    "Monte-Carlo methods in Financial Engineering".
+  //    "Monte-Carlo methods in Financial Engineering". 
+  //    The base used in Faure sequence is the smallest prime larger or equal to the 
+  //    dimension. 
+  //    For example, in dimension 6, the base is 7.
   //    </listitem>
   //  <listitem>"fauref" : the fast Faure sequence.
   //    This sequence is sensitive to the <literal>"-primeslist"</literal> option.
@@ -123,7 +129,8 @@ function this = lowdisc_new ( varargin )
   //    The current implementation is a Scilab port of the source code in Matlab 
   //    by John Burkardt. The original source code was created by Bennett Fox in Fortran 
   //    in "Algorithm 647: Implementation and Relative Efficiency of
-  //    Quasirandom Sequence Generators".
+  //    Quasirandom Sequence Generators". 
+  //    The Sobol sequence is in base 2. 
   //    </listitem>
   //  <listitem>"sobolf" : the fast Sobol sequence. 
   //    It is able to generate experiments in dimension at most 1111.

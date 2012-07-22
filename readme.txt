@@ -58,14 +58,16 @@ Macro Generators:
  * lowdisc_vandercorput : Returns the i-th term of the Van Der Corput sequence.
  
 Static Functions:
+ * lowdisc_methods : Returns available sequences.
+ * lowdisc_stopall : Stop all fast sequences.
+
+Favorable Parameters:
  * lowdisc_fauresuggest : Returns favorable parameters for Faure sequences.
  * lowdisc_haltonsuggest : Returns favorable parameters for Halton sequence.
- * lowdisc_methods : Returns available sequences.
  * lowdisc_niederbase : Returns optimal base for Niederreiter sequence.
  * lowdisc_niedersuggest : Returns favorable parameters for Niederreiter sequence.
  * lowdisc_sobolsuggest : Returns favorable parameters for Sobol sequences.
  * lowdisc_soboltau : Returns favorable starting seeds for Sobol sequences.
- * lowdisc_stopall : Stop all fast sequences.
  
 Support Functions:
  * lowdisc_bitand : Bitwise AND.
@@ -73,8 +75,11 @@ Support Functions:
  * lowdisc_bitlo0 : Returns the position of the low zero bit base 2 in an integer.
  * lowdisc_bitor : bitwise OR
  * lowdisc_bitxor : Bitwise logical XOR operator.
+ * lowdisc_combinesum  Search 2D combinations with given sum.
  * lowdisc_corrcoef : Correlation coefficients
  * lowdisc_dec2bin : Convert a decimal floating point integer into binary.
+ * lowdisc_plotbmbox  Plot all elementary boxes with volume b^m
+ * lowdisc_plotelembox  Plot elementary box
  * lowdisc_proj2d : Plots 2 dimensional projections.
 
 Dependencies
@@ -85,6 +90,7 @@ Dependencies
  * This module depends on the helptbx module.
  * This module depends on the apifun module (v>=0.3).
  * This module depends on the number module (v>=1.2).
+ * This module depends on the specfun module (v>=0.2).
 
 TODO 
 ----
