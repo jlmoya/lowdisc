@@ -244,6 +244,7 @@ for k = 1 : 2
   ierr = execstr(cmd,"errcatch");
   assert_checkequal ( or(ierr==[10000 999]) , %t );
   errmsg = lasterror();
+  errmsg = strcat(errmsg(:));
   mprintf("Error (code=%d): %s\n",ierr,errmsg);
   k = find(seqname==name2error(:,1));
   expected = name2error(k,2);
