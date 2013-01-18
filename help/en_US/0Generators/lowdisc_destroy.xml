@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- * 
+ *
  * This help file was generated from lowdisc_destroy.sci using help_from_sci().
- * 
+ *
  -->
 
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_destroy" xml:lang="en"
@@ -12,13 +12,13 @@
           xmlns:svg="http://www.w3.org/2000/svg"
           xmlns:ns3="http://www.w3.org/1999/xhtml"
           xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:scilab="http://www.scilab.org"
           xmlns:db="http://docbook.org/ns/docbook">
 
-
   <refnamediv>
-    <refname>lowdisc_destroy</refname><refpurpose>Destroy the current object.</refpurpose>
+    <refname>lowdisc_destroy</refname>
+    <refpurpose>Destroy the current object.</refpurpose>
   </refnamediv>
-
 
 
 <refsynopsisdiv>

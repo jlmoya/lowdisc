@@ -58,7 +58,7 @@ lowdisc_proj2d ( u , [28 29] );
 lowdisc_corrcoef ( [u(:,28) u(:,29)] )
 // See our Leaped - Halton projection:
 // there is no obvious problem.
-[ evalf , u ] = lowdisc_ldgen ( 4096 , 29 , "haltonf" );
+[ u , evalf ] = lowdisc_ldgen ( 4096 , 29 , "haltonf" );
 scf(); 
 lowdisc_proj2d ( u , [28 29] );
    ]]>
@@ -84,7 +84,7 @@ lowdisc_proj2d ( u , [39 40] );
 // Compute the correlation coefficient for dimensions (39,40)
 lowdisc_corrcoef ( [u(:,39) u(:,40)] )
 // See our Leaped-Halton
-[ evalf , u ] = lowdisc_ldgen ( 2000 , 40 , "haltonf" );
+[ u , evalf ] = lowdisc_ldgen ( 2000 , 40 , "haltonf" );
 scf();
 lowdisc_proj2d ( u , [39 40] );
    ]]>

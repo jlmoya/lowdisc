@@ -1,4 +1,4 @@
-// Scilab ( http://www.scilab.org/ ) - This file is part of Scilab
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008 - INRIA   - Michael Baudin
 // Copyright (C) 2009 - DIGITEO - Pierre MARECHAL
 //
@@ -8,9 +8,9 @@
 // are also available at
 // http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt
 
-src_dir = get_absolute_file_path("builder_src.sce");
-
-tbx_builder_src_lang("cpp"    , src_dir);
-
-clear tbx_builder_src_lang;
-clear src_dir;
+function lowdiscBuildSrc()
+    src_dir = get_absolute_file_path("builder_src.sce");
+    tbx_builder_src_lang("cpp"    , src_dir);
+endfunction
+lowdiscBuildSrc();
+clear lowdiscBuildSrc

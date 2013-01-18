@@ -1,6 +1,6 @@
 changelog of the Low Discrepancy Toolbox
 
-lowdisc (not released yet)
+lowdisc (v0.4)
  * Created lowdisc_combinesum.
  * Created lowdisc_plotbmbox.
  * Created lowdisc_plotelembox.
@@ -12,6 +12,10 @@ lowdisc (not released yet)
    The new default is strict=%t.
  * Created lowdisc_getpath() function.
  * Added a unit test to check the demos.
+ * Fixed bug #1002.
+   lowdisc_proj2d was failing with Scilab 5.4
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1002/
+ * Updated the builder scripts for Scilab 5.4.
 
 lowdisc (v0.3)
  * Updated unit tests: basic and ldfaure for Linux.

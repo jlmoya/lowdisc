@@ -131,8 +131,8 @@
 
     <programlisting role="example">
       <![CDATA[
-   [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "haltonf" )
-   [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "fauref" )
+   [ u , evalf ] = lowdisc_ldgen ( 20 , 4 , "haltonf" )
+   [ u , evalf ] = lowdisc_ldgen ( 20 , 4 , "fauref" )
    ]]>
     </programlisting>
 
@@ -149,7 +149,7 @@
 
     <programlisting role="example">
       <![CDATA[
-   [ evalf , u ] = lowdisc_ldgen ( 20 , 4 , "fauref" , %t )
+   [ u , evalf ] = lowdisc_ldgen ( 20 , 4 , "fauref" , %t )
    ]]>
     </programlisting>
 

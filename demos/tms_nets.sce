@@ -73,7 +73,7 @@ mprintf("of low discrepancy sequences.")
 // * Van der Corput in base b are (0,1)-nets in base b.
 // * Halton sequences are not (t,s)-nets: the base b is not 
 //   the same for all dimensions.
-// * Sobol sequence is a (t,s)-net in base 2 with t=O(slogs).
+// * Sobol sequence is a (t,s)-sequence in base 2 with t=O(slogs).
 //   Sobol sequence use the same base b=2 for all dimensions.
 // * The Faure sequences are (0,s)-sequences in base b. 
 //   Therefore, the Faure sequences are (0,m,s)-nets in 

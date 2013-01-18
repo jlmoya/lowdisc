@@ -12,13 +12,13 @@
           xmlns:svg="http://www.w3.org/2000/svg"
           xmlns:ns3="http://www.w3.org/1999/xhtml"
           xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:scilab="http://www.scilab.org"
           xmlns:db="http://docbook.org/ns/docbook">
 
-
   <refnamediv>
-    <refname>lowdisc_proj2d</refname><refpurpose>Plots 2 dimensional projections.</refpurpose>
+    <refname>lowdisc_proj2d</refname>
+    <refpurpose>Plots 2 dimensional projections.</refpurpose>
   </refnamediv>
-
 
 
 <refsynopsisdiv>
@@ -59,7 +59,7 @@ callf = 1.e2;
 n = 6;
 ldseq = "haltonf";
 strict = %t;
-[ evalf , u ] = lowdisc_ldgen ( callf , n , ldseq );
+[ u , evalf ] = lowdisc_ldgen ( callf , n , ldseq );
 // See all possible projections.
 lowdisc_proj2d ( u , 1:n )
 // See all projections for dimensions 2,3,6.
@@ -78,7 +78,8 @@ plot( u(:,3) , u(:,6) , "bo" )
 <refsection>
    <title>Authors</title>
    <simplelist type="vert">
-   <member>Michael Baudin - 2010 - 2011 - DIGITEO</member>
+   <member>Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin</member>
+   <member>Copyright (C) 2013 - Michael Baudin</member>
    </simplelist>
 </refsection>
 </refentry>
