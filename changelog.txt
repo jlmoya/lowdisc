@@ -1,5 +1,8 @@
 changelog of the Low Discrepancy Toolbox
 
+lowdisc (Not released yet)
+ * Fixed a typo in the help page of lowdisc_combinesum.
+
 lowdisc (v0.4)
  * Created lowdisc_combinesum.
  * Created lowdisc_plotbmbox.

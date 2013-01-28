@@ -10,11 +10,12 @@ function C = lowdisc_combinesum(m)
     // C = lowdisc_combinesum(m)
     //
     // Parameters
-    // C : a n-by-2 matrix, where n is the number of combinations
+    // m : a 1-by-1 matrix of doubles, the sum
+    // C : a n-by-2 matrix of doubles, where n is the number of combinations
     //
     // Description
     // Search all combinations of (d(1),d(2)) 
-    // which sum to m=3, with d(1),d(2) in {0,1,2,..,m}.
+    // which sum to m, with d(1),d(2) in {0,1,2,..,m}.
     //
     // Examples
     // // Search combinations (d(1),d(2)) which sum to 3.

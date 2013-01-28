@@ -78,9 +78,11 @@ Support Functions:
  * lowdisc_combinesum  Search 2D combinations with given sum.
  * lowdisc_corrcoef : Correlation coefficients
  * lowdisc_dec2bin : Convert a decimal floating point integer into binary.
- * lowdisc_plotbmbox  Plot all elementary boxes with volume b^m
- * lowdisc_plotelembox  Plot elementary box
+ * lowdisc_getpath : Returns the path to the current module.
+ * lowdisc_plotbmbox : Plot all elementary boxes with volume b^m
+ * lowdisc_plotelembox : Plot elementary box
  * lowdisc_proj2d : Plots 2 dimensional projections.
+ * lowdisc_subplotdecompose : Compute the rows and columns of a matrix of subplots
 
 Dependencies
 ------------
