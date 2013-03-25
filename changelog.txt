@@ -2,6 +2,7 @@ changelog of the Low Discrepancy Toolbox
 
 lowdisc (Not released yet)
  * Fixed a typo in the help page of lowdisc_combinesum.
+ * Added a separate help page for (t,m,s)-nets.
 
 lowdisc (v0.4)
  * Created lowdisc_combinesum.
