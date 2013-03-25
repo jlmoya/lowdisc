@@ -56,6 +56,23 @@ lowdisc_corrcoef ( [u(:,28) u(:,29)] )
     </programlisting>
 
     <para>
+      The previous script produces the following output.
+    </para>
+
+    <screen>
+      <![CDATA[
+-->lowdisc_corrcoef ( [u(:,28) u(:,29)] )
+ ans  =
+    1.         - 0.1210675  
+  - 0.1210675    1.         
+   ]]>
+    </screen>
+
+    <para>
+      The previous script also produces the following graphics.
+    </para>
+
+    <para>
       <inlinemediaobject>
         <imageobject>
           <imagedata
@@ -100,7 +117,7 @@ lowdisc_proj2d ( u , [28 29] );
       ACM Transactions on Mathematical Software,
       Vol. 23, No. 2, June 1997, Pages 266-294.
     </para>
-    
+
     <programlisting role="example">
       <![CDATA[
 u=lowdisc_ldgen ( 2000 , 40 , "haltonf" );
@@ -118,9 +135,9 @@ lowdisc_corrcoef ( [u(:,39) u(:,40)] )
     <screen>
       <![CDATA[
 -->lowdisc_corrcoef ( [u(:,39) u(:,40)] )
-    ans  =
-    1.           0.1048947
-    0.1048947    1.
+ ans  =
+    1.           0.1048947  
+    0.1048947    1.         
    ]]>
     </screen>
 
@@ -190,7 +207,7 @@ scf();
 lowdisc_proj2d ( u , k );
    ]]>
     </programlisting>
-    
+
     <para>
       <inlinemediaobject>
         <imageobject>
@@ -203,7 +220,7 @@ lowdisc_proj2d ( u , k );
       </inlinemediaobject>
     </para>
 
-    
+
   </refsection>
 
   <refsection>
@@ -237,7 +254,7 @@ scf();
 lowdisc_proj2d ( u , k );
    ]]>
     </programlisting>
-    
+
     <para>
       <inlinemediaobject>
         <imageobject>
@@ -249,12 +266,12 @@ lowdisc_proj2d ( u , k );
         </imageobject>
       </inlinemediaobject>
     </para>
-    
+
     <para>
-      In the following example, we consider the Faure sequence in dimension 40, 
-      and consider the projection (39,40) 
+      In the following example, we consider the Faure sequence in dimension 40,
+      and consider the projection (39,40)
       as in "Computational Investigations of Low-Discrepancy Sequences",
-      Kocis, Whiten, 
+      Kocis, Whiten,
       ACM Transactions on Mathematical Software,
       Vol. 23, No. 2, June 1997, Pages 266-294.
     </para>
@@ -266,7 +283,7 @@ scf();
 lowdisc_proj2d ( u , [39 40] );
    ]]>
     </programlisting>
-    
+
     <para>
       <inlinemediaobject>
         <imageobject>
