@@ -51,7 +51,7 @@ u=lowdisc_ldgen ( 4096 , 29 , "haltonf" );
 scf(); 
 lowdisc_proj2d ( u , [28 29] );
 // Compute the correlation coefficient for dimensions (28,29)
-lowdisc_corrcoef ( [u(:,28) u(:,29)] )
+corrcoef ( [u(:,28) u(:,29)] )
    ]]>
     </programlisting>
 
@@ -61,7 +61,7 @@ lowdisc_corrcoef ( [u(:,28) u(:,29)] )
 
     <screen>
       <![CDATA[
--->lowdisc_corrcoef ( [u(:,28) u(:,29)] )
+-->corrcoef ( [u(:,28) u(:,29)] )
  ans  =
     1.         - 0.1210675  
   - 0.1210675    1.         
@@ -126,7 +126,7 @@ u=lowdisc_ldgen ( 2000 , 40 , "haltonf" );
 scf();
 lowdisc_proj2d ( u , [39 40] );
 // Compute the correlation coefficient for dimensions (39,40)
-lowdisc_corrcoef ( [u(:,39) u(:,40)] )
+corrcoef ( [u(:,39) u(:,40)] )
    ]]>
     </programlisting>
 
@@ -136,7 +136,7 @@ lowdisc_corrcoef ( [u(:,39) u(:,40)] )
 
     <screen>
       <![CDATA[
--->lowdisc_corrcoef ( [u(:,39) u(:,40)] )
+-->corrcoef ( [u(:,39) u(:,40)] )
  ans  =
     1.           0.1048947  
     0.1048947    1.         
@@ -196,7 +196,7 @@ lowdisc_proj2d ( u , [39 40] );
       <![CDATA[
 u=lowdisc_ldgen ( 2000 , 40 , "haltonf" );
 // Compute correlation coefficients
-c = lowdisc_corrcoef ( u );
+c = corrcoef ( u );
 // Get the maximum correlation coefficient 
 // but remove the diagonal (unity) terms
 [m,k] = max(abs(c-eye(c)))
@@ -243,7 +243,7 @@ lowdisc_proj2d ( u , k );
       <![CDATA[
 u=lowdisc_ldgen ( 2000 , 40 , "fauref" );
 // Compute correlation coefficients
-c = lowdisc_corrcoef ( u );
+c = corrcoef ( u );
 // Get the maximum correlation coefficient 
 // but remove the diagonal (unity) terms
 [m,k] = max(abs(c-eye(c)))

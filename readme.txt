@@ -76,7 +76,6 @@ Support Functions:
  * lowdisc_bitor : bitwise OR
  * lowdisc_bitxor : Bitwise logical XOR operator.
  * lowdisc_combinesum  Search 2D combinations with given sum.
- * lowdisc_corrcoef : Correlation coefficients
  * lowdisc_dec2bin : Convert a decimal floating point integer into binary.
  * lowdisc_getpath : Returns the path to the current module.
  * lowdisc_plotbmbox : Plot all elementary boxes with volume b^m
@@ -87,9 +86,9 @@ Support Functions:
 Dependencies
 ------------
 
- * This module depends on the Stixbox module (function cov).
- * This module depends on the assert module.
+ * This module depends on Scilab (>=v5.4).
  * This module depends on the helptbx module.
+ * This module depends on the Stixbox module (v>=2.2).
  * This module depends on the apifun module (v>=0.3).
  * This module depends on the number module (v>=1.2).
  * This module depends on the specfun module (v>=0.2).
@@ -118,9 +117,10 @@ TODO
  * create a graycode function
  * update the C source codes and use C++ classes
 
-Author
-------
+Authors
+-------
 
+ * 2013 - Michael Baudin
  * 2009-2011 - DIGITEO - Michael Baudin
  * 2008-2009 - INRIA - Michael Baudin
  * 2003-2009 - John Burkardt

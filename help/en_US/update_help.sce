@@ -73,7 +73,6 @@ funmat = [
   "lowdisc_bitor"
   "lowdisc_bitand"
   "lowdisc_proj2d"
-  "lowdisc_corrcoef"
   "lowdisc_plotelembox"
   "lowdisc_combinesum"
   "lowdisc_plotbmbox"
