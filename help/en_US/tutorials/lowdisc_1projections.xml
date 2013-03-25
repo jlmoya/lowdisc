@@ -76,7 +76,7 @@ lowdisc_corrcoef ( [u(:,28) u(:,29)] )
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/halton-proj28-29.png"
+          fileref ="../figures/halton-proj28-29.png"
           align ="center"
           valign ="middle"
 			/>
@@ -85,8 +85,10 @@ lowdisc_corrcoef ( [u(:,28) u(:,29)] )
     </para>
 
     <para>
-      See our Leaped - Halton projection:
-      there is no obvious problem.
+      See our Leaped - Halton projection.
+      We check what is the behavior with the favorable parameters and
+      disable the <literal>strict</literal> option.
+      There is no obvious problem anymore.
     </para>
 
     <programlisting role="example">
@@ -101,7 +103,7 @@ lowdisc_proj2d ( u , [28 29] );
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/halton-proj28-29-leaped.png"
+          fileref ="../figures/halton-proj28-29-leaped.png"
           align ="center"
           valign ="middle"
 			/>
@@ -149,7 +151,7 @@ lowdisc_corrcoef ( [u(:,39) u(:,40)] )
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/halton-proj39-40.png"
+          fileref ="../figures/halton-proj39-40.png"
           align ="center"
           valign ="middle"
 			/>
@@ -173,7 +175,7 @@ lowdisc_proj2d ( u , [39 40] );
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/halton-proj39-40-leaped.png"
+          fileref ="../figures/halton-proj39-40-leaped.png"
           align ="center"
           valign ="middle"
 			/>
@@ -212,7 +214,7 @@ lowdisc_proj2d ( u , k );
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/halton-proj35-36.png"
+          fileref ="../figures/halton-proj35-36.png"
           align ="center"
           valign ="middle"
 			/>
@@ -259,7 +261,7 @@ lowdisc_proj2d ( u , k );
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/faure-proj21-20.png"
+          fileref ="../figures/faure-proj21-20.png"
           align ="center"
           valign ="middle"
 			/>
@@ -288,7 +290,7 @@ lowdisc_proj2d ( u , [39 40] );
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/faure-proj39-40.png"
+          fileref ="../figures/faure-proj39-40.png"
           align ="center"
           valign ="middle"
 			/>
@@ -296,6 +298,82 @@ lowdisc_proj2d ( u , [39 40] );
       </inlinemediaobject>
     </para>
 
+    <para>
+      We check what is the behavior with the favorable parameters and 
+      disable the <literal>strict</literal> option. 
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 300 , 40 , "fauref" , %f);
+scf();
+lowdisc_proj2d ( u , [39 40] );
+size(u)
+   ]]>
+  </programlisting>
+
+    <para>
+      We see that the number of experiments has increased from 300
+      to 68921, which is significantly more.
+    </para>
+
+    <screen>
+      <![CDATA[
+-->size(u)
+ ans  =
+    68921.    40.  
+   ]]>
+  </screen>
+
+    <para>
+      The following figure shows that there are no correlation problem anymore.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/faure-n300-proj39-40.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      In order to keep the number of experiments constant, we might be 
+      interested in using the <literal>leap</literal> option.
+      Following Kocis and Whithen (Computational investigations of low-discrepancy sequences", 
+      Kocis, L. and Whiten, W. J. 1997. ACM Trans. Math. Softw. 23, 2, 266-294.), 
+      we may try a leaped Faure sequence. 
+      We try the leap L=5.
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+lds = lowdisc_new("fauref");
+lds = lowdisc_configure(lds,"-dimension",40);
+lds = lowdisc_configure(lds,"-leap",5);
+lds = lowdisc_startup (lds);
+[lds,u] = lowdisc_next (lds,300);
+lds = lowdisc_destroy(lds);
+scf();
+lowdisc_proj2d ( u , [39 40] );
+   ]]>
+  </programlisting>
+    
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/faure-n300-leaped-proj39-40.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
 
   </refsection>
 

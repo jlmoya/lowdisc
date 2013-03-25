@@ -4,6 +4,10 @@ lowdisc (Not released yet)
  * Fixed a typo in the help page of lowdisc_combinesum.
  * Added a separate help page for (t,m,s)-nets.
  * Created a separate Tutorials section in the help page.
+ * Fixed bug #1115:
+   The Halton leaped sequence in dimension 2 had a huge flaw.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1112/
+   The leap is now computed according to Matlab's rule.
 
 lowdisc (v0.4)
  * Created lowdisc_combinesum.

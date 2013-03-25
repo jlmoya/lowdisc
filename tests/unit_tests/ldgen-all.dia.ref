@@ -1,0 +1,41 @@
+// Copyright (C) 2010-2011 - DIGITEO - Michael Baudin
+//
+// This file must be used under the terms of the GNU LGPL license.
+// <-- JVM NOT MANDATORY -->
+// <-- ENGLISH IMPOSED -->
+// Check all sequences in dimensions 10
+callf = 10;
+n = 2;
+seqmat = lowdisc_methods ();
+for ldseq = seqmat'
+  mprintf("Checking sequence %s - strict true\n",ldseq)
+  [ u , evalf ] = lowdisc_ldgen ( callf , n , ldseq , %t );
+  assert_checkequal ( evalf >= callf , %t );
+  assert_checkequal ( size(u) , [evalf n] );
+  assert_checkequal ( and(u>=0 & u<=1) , %t );
+  mprintf("Checking sequence %s - strict false\n",ldseq)
+  [ u , evalf ] = lowdisc_ldgen ( callf , n , ldseq , %f );
+  assert_checkequal ( evalf >= callf , %t );
+  assert_checkequal ( size(u) , [evalf n] );
+  assert_checkequal ( and(u>=0 & u<=1) , %t );
+end
+Checking sequence halton - strict true
+Checking sequence halton - strict false
+Checking sequence haltonf - strict true
+Checking sequence haltonf - strict false
+Checking sequence faure - strict true
+Checking sequence faure - strict false
+Checking sequence fauref - strict true
+Checking sequence fauref - strict false
+Checking sequence reversehalton - strict true
+Checking sequence reversehalton - strict false
+Checking sequence reversehaltonf - strict true
+Checking sequence reversehaltonf - strict false
+Checking sequence sobol - strict true
+Checking sequence sobol - strict false
+Checking sequence sobolf - strict true
+Checking sequence sobolf - strict false
+Checking sequence niederreiter-base-2 - strict true
+Checking sequence niederreiter-base-2 - strict false
+Checking sequence niederreiterf - strict true
+Checking sequence niederreiterf - strict false

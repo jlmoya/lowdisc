@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
  * Copyright (C) 2013 - Michael Baudin
+ *
  * This file is released under the terms of the GNU LGPL license.
  *
  * Reminder:
@@ -310,7 +311,7 @@ h.isoview="off";
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/halton-n12.png"
+          fileref ="../figures/halton-n12.png"
           align ="center"
           valign ="middle"
 			/>
@@ -349,7 +350,7 @@ lowdisc_plotbmbox(2,4,u);
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/faure-n16-v16.png"
+          fileref ="../figures/faure-n16-v16.png"
           align ="center"
           valign ="middle"
 			/>
@@ -376,7 +377,7 @@ lowdisc_plotbmbox(2,3,u);
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/faure-n16-v8.png"
+          fileref ="../figures/faure-n16-v8.png"
           align ="center"
           valign ="middle"
 			/>
@@ -440,7 +441,7 @@ h.isoview="off";
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/faure-n16-v8-bis.png"
+          fileref ="../figures/faure-n16-v8-bis.png"
           align ="center"
           valign ="middle"
 			/>
@@ -472,7 +473,7 @@ lowdisc_plotbmbox(2,4,u);
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/nieder-n32-v16.png"
+          fileref ="../figures/nieder-n32-v16.png"
           align ="center"
           valign ="middle"
 			/>
@@ -499,7 +500,7 @@ lowdisc_plotbmbox(2,3,u);
     <inlinemediaobject>
       <imageobject>
         <imagedata
-        fileref ="figures/nieder-n32-v8.png"
+        fileref ="../figures/nieder-n32-v8.png"
         align ="center"
         valign ="middle"
 			/>
@@ -533,7 +534,7 @@ lowdisc_plotbmbox(2,4,u);
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/sobol-n16-v16.png"
+          fileref ="../figures/sobol-n16-v16.png"
           align ="center"
           valign ="middle"
 			/>
@@ -566,7 +567,92 @@ xtitle("Sobol, Volume=1/32, 64 Points");
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="figures/sobol-n64-v32.png"
+          fileref ="../figures/sobol-n64-v32.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+  <refsection>
+    <title>Leaped sequences and (t,m,s)-nets</title>
+    <para>
+      A common practice is to use a leaped sequence to 
+      improve the correlations in high dimensions. 
+      However, we may notice that a leaped sequence 
+      may lead to a set which is not a (t,m,s)-net anymore.
+    </para>
+    <para>
+      For example, let's see the first 12 points of a leaped
+      Halton sequence. 
+    </para>
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 11 , 2 , "haltonf" , %f );
+u = [0,0;u];
+//
+scf();
+subplot(1,2,1);
+plot(u(:,1),u(:,2),"bo")
+lowdisc_plotelembox([2 3],[2 1])
+xtitle("Halton, Volume=1/12, 12 Points");
+h = gca();
+h.isoview="off";
+//
+subplot(1,2,2);
+plot(u(:,1),u(:,2),"bo")
+lowdisc_plotelembox([2 3],[1 1])
+xtitle("Halton, Volume=1/6, 12 Points");
+h = gca();
+h.isoview="off";
+    ]]>
+    </programlisting>
+
+    <para>
+      Although the unleaped Halton sequence had exactly 1 point
+      by elementary interval, the leaped Halton sequence is not
+      as regular : some intervals are empty (the top left on the left
+      figure), some intervals have more points than expected 
+      (the bottom left on the left figure).
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/halton-leaped-s2.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      The same phenomenon may happen with a leaped Faure sequence. 
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+lds = lowdisc_new("fauref");
+lds = lowdisc_configure(lds,"-dimension",2);
+lds = lowdisc_configure(lds,"-leap",5);
+lds = lowdisc_startup (lds);
+[lds,u] = lowdisc_next (lds,2^4-1);
+lds = lowdisc_destroy(lds);
+u = [0,0;u];
+scf();
+lowdisc_plotbmbox(2,4,u);
+    ]]>
+    </programlisting>
+    
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/faure-leaped-s2.png"
           align ="center"
           valign ="middle"
 			/>
@@ -576,7 +662,7 @@ xtitle("Sobol, Volume=1/32, 64 Points");
 
   </refsection>
 
-      <refsection>
+  <refsection>
     <title>Bibliography</title>
 
     <para>
