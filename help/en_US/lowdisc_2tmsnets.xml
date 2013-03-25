@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ * Copyright (C) 2013 - Michael Baudin
+ * This file is released under the terms of the GNU LGPL license.
+ *
+ * Reminder:
+ * &lt;	less than (i.e. <)
+ * &#8804;	less-than or equal to (i.e. <=)
+ * &#8805;	greater-than or equal to (i.e. >=)
+-->
+<refentry version="5.0-subset Scilab"
+          xml:id="lowdisc_tmsnets"
+          xml:lang="fr"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns4="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <refnamediv>
+    <refname>(t,m,s)-nets</refname>
+
+    <refpurpose>(t,m,s)-nets and low discrepancy sequences.</refpurpose>
+  </refnamediv>
+
+  <refsection>
+    <title>Purpose</title>
+
+    <para>
+      The goal of this page is to show the (t,m,s)-net properties
+      of low discrepancy sequences.
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Definitions</title>
+
+    <para>
+      Definition: Elementary interval in one dimension.
+      Let b be the base, with b&#8805;2.
+      An elementary interval in base b is an interval <latex>[a/b^d,(a+1)/b^d]</latex>
+      with integers a and d such that d&#8805;0 and 0&#8804; a &lt; b^d.
+    </para>
+
+    <para>
+      Definition: Elementary interval in base b in s dimensions.
+      Let b be the base, with b&#8805;2.
+      An elementary interval in base b of the hypercube <latex>[0,1]^s</latex> is an interval
+      <latex>[a_i/b^d_i,(a_i+1)/b^d_i]</latex>
+      with integers a_i and d such that d&#8805;0 and 0&#8804; a_i &lt; b^d_i,
+      for i=1,2,...,s.
+    </para>
+
+    <para>
+      Corollary: Volume of an elementary interval in base b.
+      The volume of E is
+    </para>
+    <para>
+      <latex>
+        \frac{1}{b^{d_1+d_2+...+d_s}.
+      </latex>
+    </para>
+
+    <para>
+      Definition: (t,m,s)-net in base b.
+      Let b&#8805;2, s&#8805;1 and 0&#8804;t&#8804;m be integers.
+      Then a point set with b^m points in <latex>[0,1]^s</latex> is a (t,m,s)-net
+      in base b if every elementary interval in base b
+      with volume <latex>1/b^{m-t}</latex> contains exactly <latex>b^t</latex> points.
+    </para>
+
+    <para>
+      Comment: Smaller t provides a greater uniformity.
+      At best, we have t=0, for which the smallest volume <latex>1/b^m</latex>
+      is achieved, with 1 point by elementary interval.
+    </para>
+
+    <para>
+      Corollary: (0,m,s)-net in base b.
+      Let b&#8805;2, s&#8805;1 be integers.
+      Then a point set with <latex>b^m</latex> points in <latex>[0,1]^s</latex> is a (0,m,s)-net
+      in base b if every elementary interval in base b
+      with volume <latex>1/b^m</latex> contains exactly one point.
+    </para>
+
+    <para>
+      Definition : (t,s)-sequence in base b.
+      Let b&#8805;2, s&#8805;1 and t&#8805;0 be integers.
+      Then the infinite sequence <latex>x_0</latex>, <latex>x_1</latex>, ... of points in <latex>[0,1]^s</latex>
+      is a (t,s) sequence in base b if,
+      for all k&#8805;0 and m&#8805;t, the point set
+    </para>
+    <para>
+      <latex>x_{kb^m},x_{kb^m+1},...,x_{(k+1)b^m-1},</latex>
+    </para>
+    <para>
+      which has <latex>b^m</latex> points, is a (t,m,s)-net in base b.
+    </para>
+
+    <para>
+      Comment: A smaller base b is preferable because the
+      uniformity properties of (t,m,s)-nets and (t,s)-sequences are exhibited
+      in sets of <latex>b^m</latex> elementary intervals.
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Theorems</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>
+          Van der Corput in base b are (0,1)-nets in base b.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Halton sequences are not (t,s)-sequences: the base b is not
+          the same for all dimensions.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Sobol sequence is a (t,s)-sequence in base 2 with t=O(slogs).
+          Sobol sequence use the same base b=2 for all dimensions.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Faure sequences are (0,s)-sequences in base b.
+          Therefore, the Faure sequences are (0,m,s)-nets in
+          base b, for any m>=1.
+          Therefore, Faure sequences achieve the lowest possible
+          value of t, but with increasing b (the smallest prime larger than s).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Niederreiter sequences are (0,s)-sequences defined for any base b,
+          where b is a power of a prime.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      The following table presents the quality parameters t of binary (t,s)-sequences.
+      For Sobol sequence, this is the table in section 3.4 of [6].
+      We consider here the Niederreiter sequence in base 2 (see table II in [5]).
+    </para>
+    <screen>
+      s               1 2 3 4 5 6 7  8  9  10 11 12 13 14
+      Sobol           0 0 1 3 5 8 11 15 19 23 27 31 35 40
+      Niederreiter    0 0 1 3 5 8 11 14 18 22 26 30 34 38
+    </screen>
+  </refsection>
+
+  <refsection>
+    <title>Discrepancy</title>
+    <para>
+      Definition: multi-dimensional interval. The set P is an interval of <latex>[0,1]^s</latex>
+      if:
+    </para>
+    <para>
+      <latex>
+        P = \prod_{j=1}^s [\alpha_j,\beta_j), 0\leq \alpha_j\leq \beta_j\leq 1,
+      </latex>
+    </para>
+    <para>
+      for j=1,2,...,s.
+    </para>
+
+    <para>
+      Definition: star intervals. The I* set is the set of origin-anchored
+      intervals in <latex>[0,1]^s</latex>:
+    </para>
+    <para>
+      <latex>
+        I^\star = \left\{P=\prod_{j=1}^s [0,\beta_j), 0\leq \beta_j\leq 1\right\}.
+      </latex>
+    </para>
+
+    <para>
+      Definition: number of points and volume of an interval.
+      Let x be a sequence of more than n points in <latex>[0,1]^s</latex>.
+      Then x(n) represents the set of the first n points of the sequence x.
+      Let P be an interval.
+      Therefore, A(P,x(n)) is the number of points from x(n) in the interval P.
+      Moreover, <latex>\lambda(P)</latex> is the volume of P:
+    </para>
+    <para>
+      <latex>
+        \lambda(P) = \lambda(P)\prod_{j=1}^s (\beta_j-\alpha_j)
+      </latex>
+    </para>
+
+    <para>
+      Definition: star discrepancy.
+      Let x be a sequence of more than n points in <latex>[0,1]^s</latex>.
+      The star discrepancy D*(x) measures the lack of uniformity of the
+      first n points:
+    </para>
+    <para>
+      <latex>
+        D^\star_n(x)=\sup_{P\in I^\star} \left| \frac{1}{n}A(P,x(n)) - \lambda(P) \right|.
+      </latex>
+    </para>
+  </refsection>
+
+  <refsection>
+    <title>Estimate of the mean by a low discrepancy sequence</title>
+
+    <para>
+      Theorem (Koksma-Hlawka):
+      Let f from <latex>[0,1]^s</latex> to R be a function where
+      V(f), the variation in the sense of Hardy and Krause, is bounded, therefore,
+      for any sequence of n points x(n), we have
+    </para>
+    <para>
+      <latex>
+        \left|\frac{1}{n} \sum_{i=1}^n f(x^{(i)} - \int_{[0,1]^s} f(x)dx \right|
+        \leq V(f) D^\star_n(x).
+      </latex>
+    </para>
+
+    <para>
+      Theorem (Niederreiter):
+      For any (t,s)-sequence in base b, we have
+    </para>
+    <para>
+      <latex>
+        D^\star_n(x) \leq C(b,s,t) n^{-1} (\log n)^s + O\left(n^{-1} (\log n)^{s-1}\right)
+      </latex>
+    </para>
+
+    <para>
+      In other words, any (t,s)-sequence is a low discrepancy sequence.
+    </para>
+
+    <para>
+      In the previous inequality, the dominating term when n is large is 1/n.
+      However, for moderate n, the factor log(n)^s must be taken into account.
+      Indeed, we the function log(n)^s/n increases for n lower than exp(s).
+      In other words, for increasing values of s, the number of points n
+      required to get into the asymptotic discrepancy rate is larger and larger.
+    </para>
+
+    <itemizedlist>
+      <listitem>
+        <para>
+          Sobol sequence : C(b,s,t) grows to infinity, when s increases.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Faure sequences : C(b,s,t) grows to zero, when s increases.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Niederreiter sequences : C(b,s,t) grows to zero, when s increases.
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <para>
+      The following table presents the constant C(b,s,t) for several
+      sequences.
+      This is the table 4.2 in [1].
+    </para>
+
+    <screen>
+      <![CDATA[
+s        2     3     4      5      6      7       8       9         10
+Halton   0.65  0.81  1.25   2.62   6.13   17.3    52.9    185.5     771.5
+Sobol    0.26  0.25  0.541  0.833  1.6    2.6     7.6     19.6      45.0
+Faure    0.26  0.13  0.099  0.025  0.019  0.0041  0.0089  2.1x10-3  4.2x10-4
+Nieder.  0.26  0.13  0.086  0.025  0.019  0.0041  0.0030  6.1x10-4  4.2x10-4
+   ]]>
+    </screen>
+  </refsection>
+
+  <refsection>
+    <title>Halton sequence</title>
+
+    <programlisting role="example">
+      <![CDATA[
+// Get the points 0,1,...,11 (insert zero)
+u=lowdisc_ldgen ( 11 , 2 , "haltonf" );
+u = [0,0;u];
+//
+scf();
+subplot(1,2,1);
+plot(u(:,1),u(:,2),"bo")
+lowdisc_plotelembox([2 3],[2 1])
+xtitle("Halton, Volume=1/12, 12 Points");
+h = gca();
+h.isoview="off";
+//
+subplot(1,2,2);
+plot(u(:,1),u(:,2),"bo")
+lowdisc_plotelembox([2 3],[1 1])
+xtitle("Halton, Volume=1/6, 12 Points");
+h = gca();
+h.isoview="off";
+   ]]>
+    </programlisting>
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/halton-n12.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+  </refsection>
+
+  <refsection>
+    <title>Faure sequence</title>
+    <para>
+      In dimension s=2, the Faure sequence uses the base 2. 
+      Moreover, the Faure sequence is a (0,2)-sequence in base 2 
+      (i.e. the quality parameter t is zero). 
+      We choose m=4, and check that Faure is a (0,4,2)-net in base 2. 
+      Hence, we have to consider b^m=2^4=16 points and check that 
+      there are b^t=1 points for any elementary interval of volume 
+      1/b^m=1/16.
+    </para>
+    <para>
+      Plot 2^4=16 Faure points (insert zero) and
+      plot elementary intervals with volume 1/2^4=1/16
+      there is 1 point by box.
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 2^4-1 , 2 , "fauref" );
+u = [0,0;u];
+scf();
+lowdisc_plotbmbox(2,4,u);
+]]>
+    </programlisting>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/faure-n16-v16.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      Plot 2^4=16 Faure points (insert zero) and
+      plot elementary intervals with volume 1/2^3=1/8:
+      there are 2 points by box.
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 2^4-1 , 2 , "fauref" );
+u = [0,0;u];
+scf();
+lowdisc_plotbmbox(2,3,u);
+   ]]>
+    </programlisting>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/faure-n16-v8.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      Plot 16 Faure points and plot elementary intervals
+      with volume 1/8 : there are two points by interval.
+      Moreover, the first 8 points fill all intervals (1 point by interval),
+      while the points from 9 to 16 again fill the intervals. 
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+// Get the points 0,1,...,15 (insert zero)
+u=lowdisc_ldgen ( 2^4-1 , 2 , "fauref" );
+u = [0,0;u];
+scf();
+//
+subplot(2,2,1);
+plot(u(1:8,1),u(1:8,2),"bo")
+plot(u(9:16,1),u(9:16,2),"g*")
+legend(["Points 1-8","Points 9-16"]);
+lowdisc_plotelembox(2,[3 0]);
+xtitle("Faure, Volume=1/8, 16 Points");
+h = gca();
+h.isoview="off";
+//
+subplot(2,2,2);
+plot(u(1:8,1),u(1:8,2),"bo")
+plot(u(9:16,1),u(9:16,2),"g*")
+legend(["Points 1-8","Points 9-16"]);
+lowdisc_plotelembox(2,[2 1]);
+xtitle("Faure, Volume=1/8, 16 Points");
+h = gca();
+h.isoview="off";
+//
+subplot(2,2,3);
+plot(u(1:8,1),u(1:8,2),"bo")
+plot(u(9:16,1),u(9:16,2),"g*")
+legend(["Points 1-8","Points 9-16"]);
+lowdisc_plotelembox(2,[0 3]);
+xtitle("Faure, Volume=1/8, 16 Points");
+h = gca();
+h.isoview="off";
+//
+subplot(2,2,4);
+plot(u(1:8,1),u(1:8,2),"bo")
+plot(u(9:16,1),u(9:16,2),"g*")
+legend(["Points 1-8","Points 9-16"]);
+lowdisc_plotelembox(2,[1 2]);
+xtitle("Faure, Volume=1/8, 16 Points");
+h = gca();
+h.isoview="off";
+   ]]>
+    </programlisting>
+    
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/faure-n16-v8-bis.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Niederreiter base 2 sequence</title>
+
+    <para>
+      Plot elementary intervals with Niederreiter points (insert zero)
+      Plot elementary intervals with volume 2^4:
+      2 points by elementary interval.
+      Niederreiter is a (0,5,2)-net in base 2
+    </para>
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 2^5-1 , 2 , "niederreiter-base-2" );
+u = [0,0;u];
+scf();
+lowdisc_plotbmbox(2,4,u);
+    ]]>
+    </programlisting>
+    
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/nieder-n32-v16.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      Plot elementary intervals with Niederreiter points (insert zero)
+      Plot elementary intervals with volume 2^3:
+      4 points by elementary interval.
+      Niederreiter is a (0,5,2)-net in base 2
+    </para>
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 2^5-1 , 2 , "niederreiter-base-2" );
+u = [0,0;u];
+scf();
+lowdisc_plotbmbox(2,3,u);
+    ]]>
+  </programlisting>
+
+  <para>
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata
+        fileref ="figures/nieder-n32-v8.png"
+        align ="center"
+        valign ="middle"
+			/>
+      </imageobject>
+    </inlinemediaobject>
+  </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Sobol sequence</title>
+
+    <para>
+      Sobol is a (0,4,2)-net in base 2.
+      Get 2^4=16 points (insert zero).
+      Plot boxes with volume 2^4.
+      There is 1 point by elementary interval.
+      Use 2^2 subdivisions for X1,
+      2^2 subdivisions for X2.
+    </para>
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 2^4-1 , 2 , "sobolf" , %t );
+u = [0,0;u];
+h = scf();
+lowdisc_plotbmbox(2,4,u);
+    ]]>
+    </programlisting>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/sobol-n16-v16.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      Sobol is a (0,5,2)-net in base 2.
+      Get 2^6 points (insert zero)
+      Plot boxes with volume 2^5.
+      There are two points by elementary interval.
+      Use 2^3 subdivisions for X1,
+      2^2 subdivisions for X2.
+    </para>
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 2^6-1 , 2 , "sobolf" );
+u = [0,0;u];
+h = scf();
+plot(u(1:2^5,1),u(1:2^5,2),"bo")
+plot(u(2^5+1:2^6,1),u(2^5+1:2^6,2),"g*")
+legend(["Points 1-32","Points 33-64"]);
+lowdisc_plotelembox(2,[3 2]);
+xtitle("Sobol, Volume=1/32, 64 Points");
+    ]]>
+    </programlisting>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/sobol-n64-v32.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+      <refsection>
+    <title>Bibliography</title>
+
+    <para>
+      [1] "Sur le calcul et la majoration de la discrepance a l'origine",
+      These, Eric Thiemard, Lausanne, EPFL, 2000
+      Section 4.6 "Les (t,s)-suites et les (t,m,s)-reseaux.
+      and Fig 4.7
+    </para>
+
+    <para>
+      [2] "Random number generation and quasi-Monte Carlo methods",
+      H. Niederreiter, CBMS-NSF Series in Applied Mathematics, No. 63,
+      SIAM, Philadelphia, 1992.
+    </para>
+
+    <para>
+      [3] "Monte-Carlo methods in Financial Engineering",
+      Paul Glasserman, Springer, 2003
+      See Section 5.1.4 "Nets and sequences",
+      and Fig. 5.3, page 292
+    </para>
+
+    <para>
+      [4] Applications of Scrambled Low Discrepancy Sequences to Exotic Options
+      KS Tan, PP Boyle
+      International AFIR Colloquium Proceedings, Australia, 1997  
+    </para>
+    
+    <para>
+      [5] "Low-discrepancy and low-dispersion sequences", Harald Niederreiter, 
+      Journal of Number Theory, Volume 30, 1988, pages 51-70.
+    </para>
+
+    <para>
+      [6] "Algorithm 659: Implementing Sobol's quasirandom sequence generator.",
+      P. Bratley and B. L. Fox, 1988. ACM Trans. Math. Softw. 14, 1 (Mar. 1988), 88-100.
+    </para>
+
+  </refsection>
+
+</refentry>
+

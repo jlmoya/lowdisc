@@ -47,22 +47,50 @@
 
     <programlisting role="example">
       <![CDATA[
-lds = lowdisc_new("haltonf");
-lds = lowdisc_configure(lds,"-dimension",29);
-lds = lowdisc_startup (lds);
-[lds,u] = lowdisc_next (lds,4096);
-lds = lowdisc_destroy(lds);
+u=lowdisc_ldgen ( 4096 , 29 , "haltonf" );
 scf(); 
 lowdisc_proj2d ( u , [28 29] );
 // Compute the correlation coefficient for dimensions (28,29)
 lowdisc_corrcoef ( [u(:,28) u(:,29)] )
-// See our Leaped - Halton projection:
-// there is no obvious problem.
-[ u , evalf ] = lowdisc_ldgen ( 4096 , 29 , "haltonf" );
+   ]]>
+    </programlisting>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/halton-proj28-29.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      See our Leaped - Halton projection:
+      there is no obvious problem.
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 4096 , 29 , "haltonf" , %f);
 scf(); 
 lowdisc_proj2d ( u , [28 29] );
    ]]>
     </programlisting>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/halton-proj28-29-leaped.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
 
     <para>
       In the following example, we consider the projection of Halton
@@ -72,23 +100,70 @@ lowdisc_proj2d ( u , [28 29] );
       ACM Transactions on Mathematical Software,
       Vol. 23, No. 2, June 1997, Pages 266-294.
     </para>
+    
     <programlisting role="example">
       <![CDATA[
-lds = lowdisc_new("haltonf");
-lds = lowdisc_configure(lds,"-dimension",40);
-lds = lowdisc_startup (lds);
-[lds,u] = lowdisc_next (lds,2000);
-lds = lowdisc_destroy(lds);
+u=lowdisc_ldgen ( 2000 , 40 , "haltonf" );
 scf();
 lowdisc_proj2d ( u , [39 40] );
 // Compute the correlation coefficient for dimensions (39,40)
 lowdisc_corrcoef ( [u(:,39) u(:,40)] )
-// See our Leaped-Halton
-[ u , evalf ] = lowdisc_ldgen ( 2000 , 40 , "haltonf" );
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <screen>
+      <![CDATA[
+-->lowdisc_corrcoef ( [u(:,39) u(:,40)] )
+    ans  =
+    1.           0.1048947
+    0.1048947    1.
+   ]]>
+    </screen>
+
+    <para>
+      The previous script also produces the following figure.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/halton-proj39-40.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      See our Leaped-Halton.
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 2000 , 40 , "haltonf" , %f );
 scf();
 lowdisc_proj2d ( u , [39 40] );
    ]]>
     </programlisting>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/halton-proj39-40-leaped.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
     <para>
       In the following example, we search the worst Halton projection
       for 2000 points in dimensions 40.
@@ -100,11 +175,7 @@ lowdisc_proj2d ( u , [39 40] );
 
     <programlisting role="example">
       <![CDATA[
-lds = lowdisc_new("haltonf");
-lds = lowdisc_configure(lds,"-dimension",40);
-lds = lowdisc_startup (lds);
-[lds,u] = lowdisc_next (lds,2000);
-lds = lowdisc_destroy(lds);
+u=lowdisc_ldgen ( 2000 , 40 , "haltonf" );
 // Compute correlation coefficients
 c = lowdisc_corrcoef ( u );
 // Get the maximum correlation coefficient 
@@ -119,6 +190,20 @@ scf();
 lowdisc_proj2d ( u , k );
    ]]>
     </programlisting>
+    
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/halton-proj35-36.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    
   </refsection>
 
   <refsection>
@@ -137,11 +222,7 @@ lowdisc_proj2d ( u , k );
 
     <programlisting role="example">
       <![CDATA[
-lds = lowdisc_new("fauref");
-lds = lowdisc_configure(lds,"-dimension",40);
-lds = lowdisc_startup (lds);
-[lds,u] = lowdisc_next (lds,2000);
-lds = lowdisc_destroy(lds);
+u=lowdisc_ldgen ( 2000 , 40 , "fauref" );
 // Compute correlation coefficients
 c = lowdisc_corrcoef ( u );
 // Get the maximum correlation coefficient 
@@ -156,26 +237,48 @@ scf();
 lowdisc_proj2d ( u , k );
    ]]>
     </programlisting>
+    
     <para>
-      In the following example, we consider the projection of Faure sequence for
-      300 points in dimensions (39,40)
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/faure-proj21-20.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+    
+    <para>
+      In the following example, we consider the Faure sequence in dimension 40, 
+      and consider the projection (39,40) 
       as in "Computational Investigations of Low-Discrepancy Sequences",
-      Kocis, Whiten
+      Kocis, Whiten, 
       ACM Transactions on Mathematical Software,
       Vol. 23, No. 2, June 1997, Pages 266-294.
     </para>
 
     <programlisting role="example">
       <![CDATA[
-lds = lowdisc_new("fauref");
-lds = lowdisc_configure(lds,"-dimension",40);
-lds = lowdisc_startup (lds);
-[lds,u] = lowdisc_next (lds,300);
-lds = lowdisc_destroy(lds);
+u=lowdisc_ldgen ( 300 , 40 , "fauref" );
 scf();
 lowdisc_proj2d ( u , [39 40] );
    ]]>
     </programlisting>
+    
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="figures/faure-proj39-40.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
 
   </refsection>
 
