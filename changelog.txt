@@ -10,6 +10,8 @@ lowdisc (Not released yet)
    The leap is now computed according to Matlab's rule.
  * Fixed bug #1114: lowdisc_corrcoef was duplicated in Stixbox.
    http://forge.scilab.org/index.php/p/lowdisc/issues/1114/
+ * Removed lowdisc_soboltau.
+   This function did not serve a straightforward purpose. 
 
 lowdisc (v0.4)
  * Created lowdisc_combinesum.

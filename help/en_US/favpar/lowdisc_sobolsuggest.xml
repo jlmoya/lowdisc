@@ -176,8 +176,10 @@ end
 <refsection>
    <title>Authors</title>
    <simplelist type="vert">
-   <member>Michael Baudin - 2010 - DIGITEO</member>
-   <member>Bennett Fox - 1988</member>
+   <member>Copyright (C) 2013 - Michael Baudin</member>
+   <member>Copyright (C) 2010 - DIGITEO - Michael Baudin</member>
+   <member>Copyright (C) 2008-2009 - INRIA - Michael Baudin</member>
+   <member>Copyright (C) 1988 - Bennett Fox</member>
    </simplelist>
 </refsection>
 </refentry>

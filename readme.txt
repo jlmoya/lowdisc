@@ -67,7 +67,6 @@ Favorable Parameters:
  * lowdisc_niederbase : Returns optimal base for Niederreiter sequence.
  * lowdisc_niedersuggest : Returns favorable parameters for Niederreiter sequence.
  * lowdisc_sobolsuggest : Returns favorable parameters for Sobol sequences.
- * lowdisc_soboltau : Returns favorable starting seeds for Sobol sequences.
  
 Support Functions:
  * lowdisc_bitand : Bitwise AND.

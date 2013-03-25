@@ -22,7 +22,7 @@ modulename = "lowdisc";
 helptbx_helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t );
 //
 // Generate the object-oriented library help
-helpdir = fullfile(cwd,"0generators");
+helpdir = fullfile(cwd,"1Generators");
 funmat = [
   "lowdisc_cget"
   "lowdisc_get"
@@ -54,7 +54,6 @@ funmat = [
   "lowdisc_haltonsuggest"
   "lowdisc_fauresuggest"
   "lowdisc_sobolsuggest"
-  "lowdisc_soboltau"
   "lowdisc_niedersuggest"
   "lowdisc_niederbase"
   ];
