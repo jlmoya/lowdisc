@@ -4,6 +4,8 @@
 // This file must be used under the terms of the GNU LGPL license.
 // 
 
+// <-- NOT FIXED -->
+
 TOOLBOX_NAME  = "lowdisc";
 path = lowdisc_getpath();
 demospath = fullfile(path,"demos");

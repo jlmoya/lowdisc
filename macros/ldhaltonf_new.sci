@@ -10,7 +10,7 @@
 function this = ldhaltonf_new ()
 
   this = tlist([
-    "LDHALTONF"
+    "LDHLTNF"
     "baseobj"
     "primeslist"
     "primessize"

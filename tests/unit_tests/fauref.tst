@@ -11,7 +11,7 @@
 //
 // Check the Fast Faure sequence in dimension 3
 //
-lds = lowdisc_new("fauref");
+lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",3);
 lds = lowdisc_startup (lds);
 // Term #1
@@ -35,10 +35,10 @@ lds = lowdisc_destroy(lds);
 //
 // Compare the results against the data extracted from the TOMS 647 program.
 //
-lds = lowdisc_new("fauref");
+lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",3);
 // Skip qs^4 - 1 terms, as in TOMS implementation
-qs = lowdisc_get ( lds , "-faurefprime" );
+qs = lowdisc_get ( lds , "-faureprime" );
 lds = lowdisc_configure(lds,"-skip", qs^4 - 2);
 lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,100);
@@ -151,10 +151,10 @@ lds = lowdisc_destroy(lds);
 //
 // Compare the results against the data extracted from the TOMS 647 program.
 //
-lds = lowdisc_new("fauref");
+lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",4);
 // Skip qs^4 - 1 terms, as in TOMS implementation
-qs = lowdisc_get ( lds , "-faurefprime" );
+qs = lowdisc_get ( lds , "-faureprime" );
 lds = lowdisc_configure(lds,"-skip", qs^4 - 2);
 lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,100);
@@ -264,7 +264,7 @@ assert_checkalmostequal ( computed , expected , [], 1.e-5 );
 lds = lowdisc_destroy(lds);
 
 // Configure a list of primes and use it
-lds = lowdisc_new("fauref");
+lds = lowdisc_new("faure");
 prarray = number_primes1000 ( );
 primtable = prarray';
 primtable = primtable(:);
@@ -276,7 +276,7 @@ assert_checkequal ( size(next) , [10 150] );
 lds = lowdisc_destroy(lds);
 
 // Testing skip
-lds = lowdisc_new("fauref");
+lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",3);
 lds = lowdisc_configure(lds,"-skip",10);
 lds = lowdisc_startup ( lds );
@@ -299,7 +299,7 @@ assert_checkalmostequal ( computed , expected , [], 1.e-5 );
 lds = lowdisc_destroy(lds);
 
 // Testing leap
-lds = lowdisc_new("fauref");
+lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",3);
 lds = lowdisc_configure(lds,"-leap",1);
 lds = lowdisc_startup ( lds );
@@ -325,7 +325,7 @@ lds = lowdisc_destroy(lds);
 
 // Check performance for large values of skip
 t1 = timer();
-lds = lowdisc_new("fauref");
+lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip", 1.e7);
 lds = lowdisc_startup (lds);
@@ -336,7 +336,7 @@ assert_checkequal ( (t2-t1)<1. , %t );
 
 // Check performance for large values of leap
 t1 = timer();
-lds = lowdisc_new("fauref");
+lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap", 1.e7);
 lds = lowdisc_startup (lds);

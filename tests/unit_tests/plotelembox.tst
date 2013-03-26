@@ -14,7 +14,12 @@ lowdisc_plotelembox([2 3],[2 1]);
 // Plot all elementary intervals with volume b^m=2^3
 b = 2;
 m = 3;
-C = lowdisc_combinesum(m);
+C = [
+0.    3.
+1.    2.
+2.    1.
+3.    0.
+];
 n = size(C,"r");
 for i = 1 : n
 scf();

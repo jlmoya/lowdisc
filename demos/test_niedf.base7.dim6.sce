@@ -11,7 +11,7 @@ mprintf("Check the Fast Niederreiter in dimension 6.\n");
 mprintf("Use the base 7.\n");
 //
 path = get_absolute_file_path("test_niedf.base7.dim6.sce");
-filepath = fullfile(path,"test_niedf.base7.dim6.txt");
+filepath = fullfile(TMPDIR,"test_niedf.base7.dim6.txt");
 mprintf("Produced Filename: %s\n",filepath);
 reffilepath = fullfile(path,"test_nied.base7.dim6.TOMS738.GENIN.log.txt");
 mprintf("Reference Filename: %s\n",reffilepath);
@@ -23,7 +23,7 @@ mfprintf (fd,"SCILAB\n")
 mfprintf (fd,"DIMENSION = %d\n", DIMEN)
 mfprintf (fd,"BASE = %d\n", BASE)
 mfprintf(fd,"====================================================================\n")
-rng = lowdisc_new("niederreiterf");
+rng = lowdisc_new("niederreiter");
 rng = lowdisc_configure(rng,"-dimension",DIMEN);
 rng = lowdisc_configure(rng,"-base",BASE);
 rng = lowdisc_startup (rng);

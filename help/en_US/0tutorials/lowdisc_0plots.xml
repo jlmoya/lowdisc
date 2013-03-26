@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ * Copyright (C) 2013 - Michael Baudin
+ * This file is released under the terms of the GNU LGPL license.
+-->
+<refentry version="5.0-subset Scilab" 
+          xml:id="lowdisc_plots" 
+          xml:lang="fr"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns4="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <refnamediv>
+    <refname>Gallery</refname>
+
+    <refpurpose>A gallery of low discrepancy sequences.</refpurpose>
+  </refnamediv>
+
+  <refsection>
+    <title>Purpose</title>
+
+    <para>
+      The goal of this page is to gather experiments showing 
+	  2D pictures of low disrepancy sequences.
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Halton Sequence</title>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 1000 , 2 , "halton" );
+scf(); 
+plot(u(:,1),u(:,2),"bo")
+xtitle("Halton: 1000 points","X1","X2")
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="halton-s2-n1000.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Reverse-Halton Sequence</title>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 1000 , 2 , "reversehalton" );
+scf(); 
+plot(u(:,1),u(:,2),"bo")
+xtitle("Reverse-Halton: 1000 points","X1","X2")
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="reversehalton-s2-n1000.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Sobol Sequence</title>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 1000 , 2 , "sobol" );
+scf(); 
+plot(u(:,1),u(:,2),"bo")
+xtitle("Sobol: 1000 points","X1","X2")
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="sobol-s2-n1000.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Faure Sequence</title>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 1000 , 2 , "faure" );
+scf(); 
+plot(u(:,1),u(:,2),"bo")
+xtitle("Faure: 1000 points","X1","X2")
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="faure-s2-n1000.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Niederreiter Sequence</title>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 1000 , 2 , "niederreiter" );
+scf(); 
+plot(u(:,1),u(:,2),"bo")
+xtitle("Niederreiter: 1000 points","X1","X2")
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="niederreiter-s2-n1000.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Note on 2D plots</title>
+	<para>
+	  As we have seen, in 2D the Sobol, Niederreiter (base 2) and 
+	  Faure sequences are essentially the same. 
+	</para>
+    <programlisting role="example">
+      <![CDATA[
+i=(1:2^4-1)';
+u1=lowdisc_ldgen ( 2^4-1 , 2 , "niederreiter" );
+u2=lowdisc_ldgen ( 2^4-1 , 2 , "faure" );
+u3=lowdisc_ldgen ( 2^4-1 , 2 , "sobol" );
+disp([i,u1,u2,u3])
+   ]]>
+    </programlisting>
+	<screen>
+      <![CDATA[
+           Niderreiter         Faure               Sobol
+    n      X1        X2        X1        X2        X1        X2
+    1.     0.5       0.5       0.5       0.5       0.5       0.5     
+    2.     0.25      0.75      0.25      0.75      0.75      0.25    
+    3.     0.75      0.25      0.75      0.25      0.25      0.75    
+    4.     0.125     0.625     0.125     0.625     0.375     0.375   
+    5.     0.625     0.125     0.625     0.125     0.875     0.875   
+    6.     0.375     0.375     0.375     0.375     0.625     0.125   
+    7.     0.875     0.875     0.875     0.875     0.125     0.625   
+    8.     0.0625    0.9375    0.0625    0.9375    0.1875    0.3125  
+    9.     0.5625    0.4375    0.5625    0.4375    0.6875    0.8125  
+    10.    0.3125    0.1875    0.3125    0.1875    0.9375    0.0625  
+    11.    0.8125    0.6875    0.8125    0.6875    0.4375    0.5625  
+    12.    0.1875    0.3125    0.1875    0.3125    0.3125    0.1875  
+    13.    0.6875    0.8125    0.6875    0.8125    0.8125    0.6875  
+    14.    0.4375    0.5625    0.4375    0.5625    0.5625    0.4375  
+    15.    0.9375    0.0625    0.9375    0.0625    0.0625    0.9375  
+   ]]>
+	</screen>
+	<para>
+	  The points are coming by blocks which size is a power of 2. 
+	  A part of the reason is because all these sequences 
+	  in two dimensions are based on the first prime, which is 2.
+	</para>
+	<para>
+	  The Niederreiter (base 2) and Faure sequences produce 
+	  exactly the same points, in the same order. 
+	  The Sobol points are also the same, but come in a different order. 
+	  For example, the point #15 in Sobol sequence (columns #6 and #7) 
+	  is the same as point #8 in Niederreiter (base 2) sequence.
+	</para>
+  </refsection>
+  
+  <refsection>
+    <title>In 3D</title>
+
+	<para>
+	  Since the 2D Niederreiter, Sobol and Faure sequences are the same, 
+	  we consider 3D sequences.
+	</para>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 1000 , 3 , "niederreiter" );
+scf(); 
+lowdisc_proj2d(u)
+subplot(2,2,3)
+xstring(0.5,0.5,"Niederreiter: 1000 points")
+
+u=lowdisc_ldgen ( 1000 , 3 , "sobol" );
+scf(); 
+lowdisc_proj2d(u)
+subplot(2,2,3)
+xstring(0.5,0.5,"Sobol: 1000 points")
+
+u=lowdisc_ldgen ( 1000 , 3 , "faure" );
+scf(); 
+lowdisc_proj2d(u)
+subplot(2,2,3)
+xstring(0.5,0.5,"Faure: 1000 points")
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="niederreiter-s3-n1000.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="sobol-s3-n1000.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="faure-s3-n1000.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+</refentry>
+

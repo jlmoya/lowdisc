@@ -108,11 +108,11 @@ rate if the dimension is larger than 15.
 </para>
 </listitem>
 </itemizedlist>
-The sequences which are sensitive to this option are : "halton", "haltonf", "faure", "fauref",
-"reversehalton", "reversehaltonf".
+The sequences which are sensitive to this option are : "halton", "faure",
+"reversehalton".
    </para>
    <para>
-For the "niederreiterf" sequence (Fast Niederreiter sequence in arbitrary base),
+For the "niederreiter" sequence (Fast Niederreiter sequence in arbitrary base),
 we can configure the base as following.
 <itemizedlist>
 <listitem>

@@ -10,7 +10,7 @@
 function value = ldfauref_get (this,key)
 
   select key
-  case "-faurefprime" then
+  case "-faureprime" then
     dimension = ldbase_cget ( this.baseobj , "-dimension" )
     k = find(this.primeslist>=dimension,1)
     if (k == []) then

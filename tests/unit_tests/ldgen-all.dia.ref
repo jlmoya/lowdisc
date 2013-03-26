@@ -21,21 +21,11 @@ for ldseq = seqmat'
 end
 Checking sequence halton - strict true
 Checking sequence halton - strict false
-Checking sequence haltonf - strict true
-Checking sequence haltonf - strict false
 Checking sequence faure - strict true
 Checking sequence faure - strict false
-Checking sequence fauref - strict true
-Checking sequence fauref - strict false
 Checking sequence reversehalton - strict true
 Checking sequence reversehalton - strict false
-Checking sequence reversehaltonf - strict true
-Checking sequence reversehaltonf - strict false
 Checking sequence sobol - strict true
 Checking sequence sobol - strict false
-Checking sequence sobolf - strict true
-Checking sequence sobolf - strict false
-Checking sequence niederreiter-base-2 - strict true
-Checking sequence niederreiter-base-2 - strict false
-Checking sequence niederreiterf - strict true
-Checking sequence niederreiterf - strict false
+Checking sequence niederreiter - strict true
+Checking sequence niederreiter - strict false

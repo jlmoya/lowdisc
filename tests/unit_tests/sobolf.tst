@@ -11,7 +11,7 @@
 //
 // Check the Fast Sobol sequence
 //
-lds = lowdisc_new("sobolf");
+lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",2);
 lds = lowdisc_startup (lds);
 // Term #1
@@ -32,7 +32,7 @@ lds = lowdisc_destroy(lds);
 
 //
 // test Fast Sobol in dimension 2 
-lds = lowdisc_new("sobolf");
+lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",2);
 lds = lowdisc_startup (lds);
 [lds,computed] = lowdisc_next (lds);
@@ -47,7 +47,7 @@ lds = lowdisc_destroy(lds);
 
 
 // test in dimension 3
-lds = lowdisc_new("sobolf");
+lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",3);
 lds = lowdisc_startup (lds);
 [lds,computed] = lowdisc_next (lds);
@@ -63,7 +63,7 @@ lds = lowdisc_destroy(lds);
 //
 // Check the result against TOMS 647 data
 //
-lds = lowdisc_new("sobolf");
+lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,100);
@@ -174,7 +174,7 @@ lds = lowdisc_destroy(lds);
 
 
 // Test skip
-lds = lowdisc_new("sobolf");
+lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip",10);
 lds = lowdisc_startup (lds);
@@ -198,7 +198,7 @@ lds = lowdisc_destroy(lds);
 
 
 // Test leap
-lds = lowdisc_new("sobolf");
+lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap",1);
 lds = lowdisc_startup (lds);
@@ -225,7 +225,7 @@ lds = lowdisc_destroy(lds);
 // Check performance for large values of skip
 // This is not so fast : lastq has to be updated.
 t1 = timer();
-lds = lowdisc_new("sobolf");
+lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip", 1.e5);
 lds = lowdisc_startup (lds);
@@ -237,7 +237,7 @@ assert_checkequal ( (t2-t1)<1. , %t );
 // Check performance for large values of leap
 // This is not so fast : lastq has to be updated.
 t1 = timer();
-lds = lowdisc_new("sobolf");
+lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap", 1.e5);
 lds = lowdisc_startup (lds);

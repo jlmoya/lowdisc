@@ -1,3 +1,4 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
@@ -5,19 +6,15 @@
 
 demopath = get_absolute_file_path("lowdisc.dem.gateway.sce");
 subdemolist = [
+"Macros Generators", fullfile("ld-macros","ld-macros.dem.gateway.sce"); ..
 "bench_ldgen", "bench_ldgen.sce"; ..
-"tms_nets", "tms_nets.sce";..
-"test_faure.dim3", "test_faure.dim3.sce"; ..
-"test_faure.dim4", "test_faure.dim4.sce"; ..
-"test_faure.glasserman", "test_faure.glasserman.sce"; ..
-"test_fauref.dim4", "test_fauref.dim4.sce"; ..
-"test_halton.dim4", "test_halton.dim4.sce"; ..
-"test_haltonf.dim4", "test_haltonf.dim4.sce"; ..
-"test_nied2.dim4", "test_nied2.dim4.sce"; ..
-"test_niedf.base2.dim4", "test_niedf.base2.dim4.sce"; ..
-"test_niedf.base2.dim6", "test_niedf.base2.dim6.sce"; ..
-"test_niedf.base7.dim6", "test_niedf.base7.dim6.sce"; ..
-"test_sobol.dim4", "test_sobol.dim4.sce"; ..
-"test_sobolf.dim4", "test_sobolf.dim4.sce"; ..
+"Faure dim. 3", "test_faure.dim3.sce"; ..
+"Faure dim. 4", "test_fauref.dim4.sce"; ..
+"Faure glasserman", "test_faure.glasserman.sce"; ..
+"Halton dim. 4", "test_haltonf.dim4.sce"; ..
+"Nied. base 2.dim. 4", "test_niedf.base2.dim4.sce"; ..
+"Nied. base 2.dim. 6", "test_niedf.base2.dim6.sce"; ..
+"Nied. base 7.dim. 6", "test_niedf.base7.dim6.sce"; ..
+"Sobol dim. 4", "test_sobolf.dim4.sce"; ..
 ];
 subdemolist(:,2) = demopath + subdemolist(:,2)

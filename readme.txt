@@ -23,12 +23,8 @@ Overview of sequences
  * The Sobol sequence,
  * The Faure sequence,
  * The Reverse Halton sequence of Vandewoestyne and Cools,
- * The Niederreiter base 2 and arbitrary base sequence.
+ * The Niederreiter arbitrary base sequence.
  
-This component currently provides the following sequences:
- * "slow" sequences based on macros : Halton, Sobol, Faure, Reverse Halton, Niederreiter base 2,
- * "fast" sequences based on C source code : Halton, Sobol, Faure, Reverse Halton, Niederreiter in arbitrary base.
-
 See the overview in the help provided with this toolbox.
 
 Features
@@ -36,11 +32,15 @@ Features
  
 The module provides the following help pages:
  * lowdisc_overview : An overview of the Low Discrepancy toolbox.
- * lowdisc_projections : An overview of bad 2D projections.
 
 The flagship of this module is:
  * lowdisc_ldgen : Returns uniform numbers from a low discrepancy sequence.
  
+Tutorials
+
+ * lowdisc_projections — An overview of bad 2D projections.
+ * lowdisc_tmsnets — (t,m,s)-nets and low discrepancy sequences.
+
 Sequences:
  * lowdisc_cget : Returns the value associated with the given key.
  * lowdisc_configure : Configure a field of the object and returns the modified object.
@@ -69,18 +69,10 @@ Favorable Parameters:
  * lowdisc_sobolsuggest : Returns favorable parameters for Sobol sequences.
  
 Support Functions:
- * lowdisc_bitand : Bitwise AND.
- * lowdisc_bithi1 : Returns the position of the high one bit base 2 in an integer.
- * lowdisc_bitlo0 : Returns the position of the low zero bit base 2 in an integer.
- * lowdisc_bitor : bitwise OR
- * lowdisc_bitxor : Bitwise logical XOR operator.
- * lowdisc_combinesum  Search 2D combinations with given sum.
- * lowdisc_dec2bin : Convert a decimal floating point integer into binary.
  * lowdisc_getpath : Returns the path to the current module.
  * lowdisc_plotbmbox : Plot all elementary boxes with volume b^m
  * lowdisc_plotelembox : Plot elementary box
  * lowdisc_proj2d : Plots 2 dimensional projections.
- * lowdisc_subplotdecompose : Compute the rows and columns of a matrix of subplots
 
 Dependencies
 ------------
@@ -223,3 +215,43 @@ Fast Niederreiter:
  * _lowdisc_niedfskipget: returns the skip of the sequence
  * _lowdisc_niedfisstart: returns 1 if the sequence is started up, 0 if not
 
+History of the source code
+
+The source code provided here is the result of the cumulated
+work of several authors at different times.
+
+From 1986 to 1992, Bennett Fox and then Paul Bratley and
+Harald Niederreiter developped Fortran algorithms which
+provided the Sobol, Faure and Niederreiter sequences.
+These algorithms are described in several papers called Algorithm 647,
+Algorithm 659 and Algorithm 738.
+
+From 2003 to 2009, John Burkardt translated these
+source codes into Matlab and C. He also developped a leaped Halton
+sequence based on the 1997 paper by Kocis and Whiten.
+
+From 2008 to 2013, Michael Baudin did early experiments
+with interfacing the low discrepancy sequences from the Gnu Scientific Library.
+Problems with the portability of the library under Windows and
+limitations of the licence led me to the search for another
+source of sequences.
+I developped the Halton and Faure sequences as
+Scilab macros from the algorithms provided by Paul Glasserman in his book.
+Then I translated and re-structured the
+Matlab and, later, the C source codes from John Burkardt.
+I updated all the sequences, so that they all share the same parameters,
+such as the skip and the leap parameters.
+I also created the Reverse Halton sequence from the 2006 paper
+by Vandewoestyne and Cools. This work was inspired by the
+work done by O. Teytaud in the Gnu Scientific Library.
+Much time was spent on the validation of the sequences provided in this
+module.
+Each sequence is associated with a collection of unit
+tests which ensure the that the sequence is correctly computed.
+We used the original Fortran 77 implementations as a base to compare
+our results.
+Several bugs were discovered this way and fixed in the
+source code provided here.
+A significant amount of energy was devoted to the 
+validation of the sequences, so that we have a good 
+confidence that, if the tests pass, then the sequence is correct.

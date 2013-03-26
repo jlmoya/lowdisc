@@ -10,7 +10,7 @@
 function this = ldrevhalf_new ()
 
   this = tlist([
-    "LDREVHALF"
+    "LDRVHLF"
     "baseobj"
     "primeslist"
     "primessize"

@@ -8,8 +8,8 @@ scf();
 lowdisc_plotbmbox(2,3)
 
 // Plot elementary intervals with volume 2^3,
-// and add Faure points (insert zero).
-u = lowdisc_ldgen ( 2^4-1 , 2 , "fauref" , %t );
+// and add Sobol points (insert zero).
+u = lowdisc_ldgen ( 2^4-1 , 2 );
 u = [0,0;u];
 scf();
 lowdisc_plotbmbox(2,3,u);

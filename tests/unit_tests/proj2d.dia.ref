@@ -1,0 +1,16 @@
+// Copyright (C) 2013 - Michael Baudin
+//
+// This file must be used under the terms of the GNU LGPL license.
+// 
+callf = 100;
+n = 6;
+u=lowdisc_ldgen ( callf , n );
+// See all possible projections.
+scf();
+lowdisc_proj2d ( u )
+// See all projections for dimensions 2,3,6.
+scf();
+lowdisc_proj2d ( u , [2,3,6] )
+// See projection (3,6)
+scf();
+lowdisc_proj2d ( u , [3,6] )

@@ -81,10 +81,10 @@ function this = lowdisc_configure (this,key,value)
   //     </para>
   //    </listitem>
   //  </itemizedlist>
-  //  The sequences which are sensitive to this option are : "halton", "haltonf", "faure", "fauref", 
-  //  "reversehalton", "reversehaltonf".
+  //  The sequences which are sensitive to this option are : "halton", "faure", 
+  //  "reversehalton".
   //
-  //  For the "niederreiterf" sequence (Fast Niederreiter sequence in arbitrary base), 
+  //  For the "niederreiter" sequence (Fast Niederreiter sequence in arbitrary base), 
   //  we can configure the base as following. 
   //  <itemizedlist>
   //  <listitem>
@@ -152,25 +152,15 @@ function this = lowdisc_configure (this,key,value)
   apifun_checkscalar ( "lowdisc_configure" , key , "key" , 2 )
   //
   select this.method
-    case "halton" then
-      this.sequence     = ldhalton_configure ( this.sequence , key , value )
-    case "faure" then
-      this.sequence     = ldfaure_configure ( this.sequence , key , value )
     case "reversehalton" then
-      this.sequence     = ldrevhal_configure ( this.sequence , key , value )
-    case "sobol" then
-      this.sequence     = ldsobol_configure ( this.sequence , key , value )
-    case "niederreiter-base-2" then
-      this.sequence     = ldnied2_configure ( this.sequence , key , value )
-    case "reversehaltonf" then
       this.sequence     = ldrevhalf_configure ( this.sequence , key , value )
-    case "niederreiterf" then
+    case "niederreiter" then
       this.sequence     = ldniedf_configure ( this.sequence , key , value )
-    case "sobolf" then
+    case "sobol" then
       this.sequence     = ldsobolf_configure ( this.sequence , key , value )
-    case "fauref" then
+    case "faure" then
       this.sequence     = ldfauref_configure ( this.sequence , key , value )
-    case "haltonf" then
+    case "halton" then
       this.sequence     = ldhaltonf_configure ( this.sequence , key , value )
     else
       errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_configure" , this.method);

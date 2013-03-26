@@ -44,25 +44,15 @@ function value = lowdisc_cget (this,key)
     value = this.method;
   else
     select this.method
-    case "halton" then
-      value     = ldhalton_cget ( this.sequence , key )
-    case "faure" then
-      value     = ldfaure_cget ( this.sequence , key )
     case "reversehalton" then
-      value     = ldrevhal_cget ( this.sequence , key )
-    case "sobol" then
-      value     = ldsobol_cget ( this.sequence , key )
-    case "niederreiter-base-2" then
-      value     = ldnied2_cget ( this.sequence , key )
-    case "reversehaltonf" then
       value     = ldrevhalf_cget ( this.sequence , key )
-    case "niederreiterf" then
+    case "niederreiter" then
       value     = ldniedf_cget ( this.sequence , key )
-    case "sobolf" then
+    case "sobol" then
       value     = ldsobolf_cget ( this.sequence , key )
-    case "fauref" then
+    case "faure" then
       value     = ldfauref_cget ( this.sequence , key )
-    case "haltonf" then
+    case "halton" then
       value     = ldhaltonf_cget ( this.sequence , key )
     else
       errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_cget" , this.method);

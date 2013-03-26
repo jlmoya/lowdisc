@@ -91,20 +91,6 @@ function [nsim,skip,leap] = lowdisc_fauresuggest ( varargin )
   // [lds,experiments]=lowdisc_next(lds,nsim);
   // lds = lowdisc_destroy(lds);
   // 
-  // // Use the minimum number of simulations for integration in dimension 4.
-  // // Use Fast Faure
-  // dim = 4;
-  // nsimmin = 1000;
-  // lds = lowdisc_new("fauref");
-  // lds = lowdisc_configure(lds,"-dimension",dim);
-  // base = lowdisc_get(lds,"-faurefprime");
-  // [nsim,skip,leap] = lowdisc_fauresuggest ( dim , base , nsimmin );
-  // lds = lowdisc_configure(lds,"-skip",skip);
-  // lds = lowdisc_configure(lds,"-leap",leap);
-  // lds = lowdisc_startup (lds);
-  // [lds,experiments]=lowdisc_next(lds,nsim);
-  // lds = lowdisc_destroy(lds);
-  //
   //  Authors
   //   Michael Baudin - 2010 - DIGITEO
   //   Bennett Fox - 1986

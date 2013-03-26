@@ -37,7 +37,7 @@ assert_checkequal ( base , 2 );
 //
 dim = 4;
 base = lowdisc_niederbase ( dim );
-lds = lowdisc_new("niederreiterf");
+lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",dim);
 lds = lowdisc_configure(lds,"-base",base);
 lds = lowdisc_startup (lds);

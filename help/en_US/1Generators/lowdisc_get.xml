@@ -80,28 +80,12 @@ the largest number of elements available for the sequence.
 </itemizedlist>
    </para>
    <para>
-For the "faure" sequence (slow Faure sequence), the
+For the "faure" sequence (fast Faure sequence), the
 following field is available.
 <itemizedlist>
 <listitem>
 <para>
 <literal>"-faureprime"</literal> : a floating point integer,
-the prime integer used in the Faure sequence.
-This prime number is computed depending on the dimension of
-the sequence: this is the smallest prime number larger than
-the dimension.
-This prime number is used as the base of the Faure sequence.
-</para>
-</listitem>
-</itemizedlist>
-   </para>
-   <para>
-For the "fauref" sequence (fast Faure sequence), the
-following field is available.
-<itemizedlist>
-<listitem>
-<para>
-<literal>"-faurefprime"</literal> : a floating point integer,
 the prime integer used in the Faure fast sequence.
 This prime number is computed depending on the dimension of
 the sequence: this is the smallest prime number larger than
@@ -121,10 +105,10 @@ This prime number is used as the base of the Faure sequence.
 
 // Faure sequence: get the base associated with current dimension.
 // See the -skip option in action in the Faure fast sequence.
-lds = lowdisc_new("fauref");
+lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",4);
 // Skip qs^4 - 1 terms, as in TOMS implementation
-qs = lowdisc_get ( lds , "-faurefprime" );
+qs = lowdisc_get ( lds , "-faureprime" );
 lds = lowdisc_configure(lds,"-skip", qs^4 - 2);
 lds
 lds = lowdisc_startup (lds);
@@ -135,7 +119,7 @@ for i = 1:100
 mprintf ("%8d %14.6f %14.6f %14.6f %14.6f\n", ...
 i , computed(i,1) , computed(i,2) , computed(i,3) , computed(i,4) )
 end
-i = lowdisc_cget(lds,"-index")
+i = lowdisc_get(lds,"-index")
 lds = lowdisc_destroy(lds);
 
    ]]></programlisting>

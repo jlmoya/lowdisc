@@ -3,15 +3,16 @@
 //
 // This file must be used under the terms of the GNU LGPL license.
 
-function lowdisc_proj2d ( u , dimensions )
+function lowdisc_proj2d ( varargin )
     // Plots 2 dimensional projections.
     //
     // Calling Sequence
+    //   lowdisc_proj2d ( u )
     //   lowdisc_proj2d ( u , dimensions )
     //
     // Parameters
     //    u : a nsim-by-n matrix of doubles, the numbers in the interval [0,1]^n, where nsim is the number of simulations and n is the dimension of the space.
-    //    dimensions : a p-by-1 matrix of floating point integers, dimensions to plot.
+    //    dimensions : a p-by-1 matrix of floating point integers, dimensions to plot (default=1:n).
     //
     // Description
     // Plots the required two dimensionnal projections of u.
@@ -20,13 +21,12 @@ function lowdisc_proj2d ( u , dimensions )
     // of a multivariate vector u.
     //
     // Examples
-    // callf = 1.e2;
+    // callf = 100;
     // n = 6;
-    // ldseq = "haltonf";
-    // strict = %t;
-    // [ u , evalf ] = lowdisc_ldgen ( callf , n , ldseq );
+    // [ u , evalf ] = lowdisc_ldgen ( callf , n );
     // // See all possible projections.
-    // lowdisc_proj2d ( u , 1:n )
+    // scf();
+    // lowdisc_proj2d ( u )
     // // See all projections for dimensions 2,3,6.
     // scf();
     // lowdisc_proj2d ( u , [2,3,6] )
@@ -40,11 +40,30 @@ function lowdisc_proj2d ( u , dimensions )
     // Authors
     // Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
     // Copyright (C) 2013 - Michael Baudin
-    
-    nsim = size(u,"r")
-    n = size(u,"c")
-    useddim = size(dimensions,"*")
 
+    [lhs, rhs] = argn()
+    apifun_checkrhs ( "lowdisc_proj2d" , rhs , 1:2 )
+    apifun_checklhs ( "lowdisc_proj2d" , lhs , 1 )
+    //
+    u = varargin(1)
+    n = size(u,"c")
+    dimensions=apifun_argindefault ( varargin,2,1:n)
+    //
+    // Check type
+    apifun_checktype ( "lowdisc_proj2d" , u , "u" , 1 , "constant" )
+    apifun_checktype ( "lowdisc_proj2d" , dimensions , "dimensions" , 2 , "constant" )
+    //
+    // Check size
+    apifun_checkvector ( "lowdisc_proj2d" , dimensions , "dimensions" , 2 )
+    //
+    // Check content
+    apifun_checkgreq ( "lowdisc_proj2d" , dimensions , "dimensions" , 2 , 1 )
+    apifun_checkloweq ( "lowdisc_proj2d" , dimensions , "dimensions" , 2 , n )
+    apifun_checkflint ( "lowdisc_proj2d" , dimensions , "dimensions" , 2 )
+    //
+    nsim = size(u,"r")
+    useddim = size(dimensions,"*")
+    //
     p = 0  
     for i = 1 : useddim
         for j = 1 : useddim

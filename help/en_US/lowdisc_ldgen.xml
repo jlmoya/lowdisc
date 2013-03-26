@@ -40,7 +40,7 @@
    <varlistentry><term>n:</term>
       <listitem><para> a 1-by-1 matrix of floating point integers, the spatial dimension.</para></listitem></varlistentry>
    <varlistentry><term>ldseq :</term>
-      <listitem><para> a 1-by-1 matrix of strings, the name of the sequence (default <literal>ldseq = "sobolf"</literal>). The name can be equal to : <literal>"halton"</literal>, <literal>"haltonf"</literal>, <literal>"faure"</literal>, <literal>"fauref"</literal>, <literal>"reversehalton"</literal>, <literal>"reversehaltonf"</literal>, <literal>"sobol"</literal>, <literal>"sobolf"</literal>, <literal>"niederreiter-base-2"</literal>, <literal>"niederreiterf"</literal>. See below for details.</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of strings, the name of the sequence (default <literal>ldseq = "sobol"</literal>). The name can be equal to : <literal>"halton"</literal>, <literal>"faure"</literal>, <literal>"reversehalton"</literal>, <literal>"sobol"</literal>, <literal>"niederreiter"</literal>. See below for details.</para></listitem></varlistentry>
    <varlistentry><term>strict :</term>
       <listitem><para> a 1-by-1 matrix of boolean, set to %f to use potentially favorable parameters (default = %t).</para></listitem></varlistentry>
    <varlistentry><term>u :</term>
@@ -167,15 +167,15 @@ plot(u(:,1),u(:,2),"bo")
 
 // Generate 20 points from a
 // fast Halton sequence in dimension 4
-u=lowdisc_ldgen(20,4,"haltonf")
+u=lowdisc_ldgen(20,4,"halton")
 
 // Generate 20 points from
 // the fast Faure sequence in dimension 4.
-u=lowdisc_ldgen(20,4,"fauref")
+u=lowdisc_ldgen(20,4,"faure")
 
 // Generate more than 20 points with potentially
 // favorable parameters
-[u,evalf]=lowdisc_ldgen(20,4,"fauref",%f)
+[u,evalf]=lowdisc_ldgen(20,4,"faure",%f)
 
    ]]></programlisting>
 </refsection>

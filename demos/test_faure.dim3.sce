@@ -8,7 +8,7 @@
 // Check the Faure sequence in dimension 3
 mprintf("Check the Faure sequence in dimension 3.\n");
 path = get_absolute_file_path("test_faure.dim3.sce");
-filepath = fullfile(path,"test_faure.dim3.log.txt");
+filepath = fullfile(TMPDIR,"test_faure.dim3.log.txt");
 mprintf("Produced Filename: %s\n",filepath);
 reffilepath = fullfile(path,"test_faure.dim3.TOMS647.log.txt");
 mprintf("Reference Filename: %s\n",reffilepath);
@@ -21,7 +21,7 @@ mprintf("please comment the -skip option.\n");
 mfprintf ( fd , "SCILAB\n");
 rng = lowdisc_new("faure");
 rng = lowdisc_configure(rng,"-dimension",3);
-qs = lowdisc_get ( rng , "-faureprime" );
+qs = lowdisc_get ( rng , "-faurefprime" );
 // Skip qs^4 - 1 terms, as in TOMS implementation:
 // comment out this line in order to compare with Glasserman's 
 // data (Glasserman.faure.dim3.txt).

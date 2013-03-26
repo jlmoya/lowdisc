@@ -146,19 +146,6 @@ lds = lowdisc_startup (lds);
 lds = lowdisc_destroy(lds);
 disp(computed)
 
-// Use the minimum recommended number of simulations
-// for integration in dimension 4.
-// Use fast Sobol
-dim = 4;
-[nsim,skip,leap] = lowdisc_sobolsuggest ( dim );
-lds = lowdisc_new("sobolf");
-lds = lowdisc_configure(lds,"-dimension",dim);
-lds = lowdisc_configure(lds,"-skip",skip);
-lds = lowdisc_configure(lds,"-leap",leap);
-lds = lowdisc_startup (lds);
-[lds,experiments]=lowdisc_next(lds,nsim);
-lds = lowdisc_destroy(lds);
-
 // Display recommended number of simulations
 // for integration in various dimensions.
 // It grows extremely fast.

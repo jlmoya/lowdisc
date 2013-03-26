@@ -36,25 +36,15 @@ function this = lowdisc_destroy (this)
   apifun_checktype ( "lowdisc_cget" , this , "this" , 1 , "LOWDISC" )
   //
   select this.method
-  case "halton" then
-    this.sequence     = ldhalton_destroy ( this.sequence )
-  case "faure" then
-    this.sequence     = ldfaure_destroy ( this.sequence )
   case "reversehalton" then
-    this.sequence     = ldrevhal_destroy ( this.sequence )
-  case "sobol" then
-    this.sequence     = ldsobol_destroy ( this.sequence )
-  case "niederreiter-base-2" then
-    this.sequence     = ldnied2_destroy ( this.sequence )
-  case "reversehaltonf" then
     this.sequence     = ldrevhalf_destroy ( this.sequence )
-  case "niederreiterf" then
+  case "niederreiter" then
     this.sequence     = ldniedf_destroy ( this.sequence )
-  case "sobolf" then
+  case "sobol" then
     this.sequence     = ldsobolf_destroy ( this.sequence )
-  case "fauref" then
+  case "faure" then
     this.sequence     = ldfauref_destroy ( this.sequence )
-  case "haltonf" then
+  case "halton" then
     this.sequence     = ldhaltonf_destroy ( this.sequence )
   else
     errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_destroy" , this.method);

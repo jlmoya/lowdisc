@@ -19,7 +19,7 @@ function str = %LDSOBOLF_string ( this )
   k = k + 1
   str(k) = msprintf("Maximum dimension = %d",this.dimmax)
   k = k + 1
-  str(k) = msprintf("Maximum number of simulations = %e",this.nbsimmax)
+  str(k) = msprintf("Maximum number of simulations = %s",string(this.nbsimmax))
   k = k + 1
   //
   // Get the baseobj string

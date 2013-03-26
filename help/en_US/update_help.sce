@@ -65,17 +65,9 @@ helptbx_helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t )
 // Generate the support functions help
 helpdir = fullfile(cwd,"supportfunctions");
 funmat = [
-  "lowdisc_bitlo0"
-  "lowdisc_bithi1"
-  "lowdisc_bitxor"
-  "lowdisc_dec2bin"
-  "lowdisc_bitor"
-  "lowdisc_bitand"
   "lowdisc_proj2d"
   "lowdisc_plotelembox"
-  "lowdisc_combinesum"
   "lowdisc_plotbmbox"
-  "lowdisc_subplotdecompose"
   "lowdisc_getpath"
   ];
 macrosdir = cwd +"../../macros";
@@ -83,20 +75,6 @@ demosdir = [];
 modulename = "lowdisc";
 helptbx_helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t );
 
-//
-// Generate the macros-based generator help
-helpdir = fullfile(cwd,"macrogenerators");
-funmat = [
-  "lowdisc_vandercorput"
-  "lowdisc_haltonnext"
-  "lowdisc_sobolstart"
-  "lowdisc_sobolskip"
-  "lowdisc_sobolnext"
-  ];
-macrosdir = cwd +"../../macros";
-demosdir = [];
-modulename = "lowdisc";
-helptbx_helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t );
 
 endfunction 
 lowdisc_updatehelp();

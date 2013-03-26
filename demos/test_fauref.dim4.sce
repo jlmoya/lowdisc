@@ -8,14 +8,14 @@
 mprintf("Check the Fast Faure sequence in dimension 4\n");
 //
 path = get_absolute_file_path("test_fauref.dim4.sce");
-filepath = fullfile(path,"test_fauref.dim4.log.txt");
+filepath = fullfile(TMPDIR,"test_fauref.dim4.log.txt");
 mprintf("Produced Filename: %s\n",filepath);
 reffilepath = fullfile(path,"test_faure.dim4.TOMS647.log.txt");
 mprintf("Reference Filename: %s\n",reffilepath);
 //
 [fd,err]=mopen( filepath , "w" )
 mfprintf ( fd , "SCILAB\n")
-rng = lowdisc_new("fauref");
+rng = lowdisc_new("faure");
 rng = lowdisc_configure(rng,"-dimension",4);
 // Skip qs^4 - 1 terms, as in TOMS implementation
 qs = lowdisc_get ( rng , "-faurefprime" );

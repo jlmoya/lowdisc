@@ -9,7 +9,7 @@ function this = ldhaltonf_startup (this)
   //
   dimension = ldbase_cget ( this.baseobj , "-dimension" )
   if ( dimension > this.primessize ) then
-    errmsg = msprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"), "ldhaltonf_startup" , "fast reverse Halton",dimension,this.primessize);
+    errmsg = msprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"), "ldhaltonf_startup" , "fast Halton",dimension,this.primessize);
     error(errmsg);
   end
   //

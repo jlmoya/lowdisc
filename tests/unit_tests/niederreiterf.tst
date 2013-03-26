@@ -12,7 +12,7 @@
 // Check the Fast Niederreiter sequence 
 // Use base 2 - this is the default.
 //
-lds = lowdisc_new("niederreiterf");
+lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_startup (lds);
 // Term #1
@@ -38,7 +38,7 @@ lds = lowdisc_destroy(lds);
 // Check the Fast Niederreiter sequence 
 // Use base 7.
 //
-lds = lowdisc_new("niederreiterf");
+lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",6);
 lds = lowdisc_configure(lds,"-base",7);
 base = lowdisc_cget(lds,"-base");
@@ -63,7 +63,7 @@ lds = lowdisc_destroy(lds);
 //
 // Test skip
 //
-lds = lowdisc_new("niederreiterf");
+lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip",10);
 lds = lowdisc_startup (lds);
@@ -90,7 +90,7 @@ lds = lowdisc_destroy(lds);
 //
 // Test leap
 //
-lds = lowdisc_new("niederreiterf");
+lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap",1);
 lds = lowdisc_startup (lds);
@@ -118,7 +118,7 @@ lds = lowdisc_destroy(lds);
 // Check performance for large values of skip
 // This is fast because the code is compiled.
 t1 = timer();
-lds = lowdisc_new("niederreiterf");
+lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip", 1.e2);
 lds = lowdisc_startup (lds);
@@ -130,7 +130,7 @@ assert_checkequal ( (t2-t1)<1. , %t );
 // Check performance for large values of leap
 // This is fast because the code is compiled.
 t1 = timer();
-lds = lowdisc_new("niederreiterf");
+lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap", 1.e2);
 lds = lowdisc_startup (lds);

@@ -56,8 +56,8 @@ We return nsim = nsimmin.
 We return skip = 0.
    </para>
    <para>
-For dimension less or equal to 1000, the leap value is p-1,
-where p is the dim-th prime number.
+For dimension less or equal to 999, the leap value is p-1,
+where p is the (dim+1)-th prime number.
 If not we return leap = 0.
    </para>
    <para>
@@ -113,22 +113,10 @@ lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,nsim);
 lds = lowdisc_destroy(lds);
 
-// Use the fast Halton sequence in dimension 4.
-dim = 4;
-nsimmin = 1000;
-[nsim,skip,leap] = lowdisc_haltonsuggest ( dim , nsimmin );
-lds = lowdisc_new("haltonf");
-lds = lowdisc_configure(lds,"-dimension",dim);
-lds = lowdisc_configure(lds,"-skip",skip);
-lds = lowdisc_configure(lds,"-leap",leap);
-lds = lowdisc_startup (lds);
-[lds,computed]=lowdisc_next(lds,nsim);
-lds = lowdisc_destroy(lds);
-
 // See the number of simulations as the product of the
 // primes used in the Halton sequence.
 // It is assumed that leap = 0, skip = 0.
-prmat = lowdisc_primes100 ( );
+prmat = number_primes100 ( );
 for n = 1 : 15
 disp([n prod(1:n)])
 end

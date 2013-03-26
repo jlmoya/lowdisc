@@ -44,15 +44,10 @@ function seqmat = lowdisc_methods ()
 
   seqmat = [
    "halton" 
-   "haltonf" 
    "faure" 
-   "fauref" 
-   "reversehalton"
-   "reversehaltonf" 
+   "reversehalton" 
    "sobol"
-   "sobolf"
-   "niederreiter-base-2" 
-   "niederreiterf" 
+   "niederreiter" 
    ];
 endfunction
 

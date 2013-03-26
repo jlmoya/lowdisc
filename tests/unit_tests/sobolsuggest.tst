@@ -37,16 +37,3 @@ lds = lowdisc_configure(lds,"-leap",leap);
 lds = lowdisc_startup (lds);
 [lds,experiments]=lowdisc_next(lds,nsim);
 lds = lowdisc_destroy(lds);
-
-// Use the minimum number of simulations for integration in dimension 4.
-dim = 4;
-[nsim,skip,leap] = lowdisc_sobolsuggest ( dim );
-lds = lowdisc_new("sobolf");
-lds = lowdisc_configure(lds,"-dimension",dim);
-lds = lowdisc_configure(lds,"-skip",skip);
-lds = lowdisc_configure(lds,"-leap",leap);
-lds = lowdisc_startup (lds);
-[lds,experiments]=lowdisc_next(lds,nsim);
-lds = lowdisc_destroy(lds);
-
-

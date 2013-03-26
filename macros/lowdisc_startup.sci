@@ -49,25 +49,15 @@ function this = lowdisc_startup (this)
   //
   
   select this.method
-  case "halton" then
-    this.sequence     = ldhalton_startup ( this.sequence )
-  case "faure" then
-    this.sequence     = ldfaure_startup ( this.sequence )
   case "reversehalton" then
-    this.sequence     = ldrevhal_startup ( this.sequence )
-  case "sobol" then
-    this.sequence     = ldsobol_startup ( this.sequence )
-  case "niederreiter-base-2" then
-    this.sequence     = ldnied2_startup ( this.sequence )
-  case "reversehaltonf" then
     this.sequence     = ldrevhalf_startup ( this.sequence )
-  case "niederreiterf" then
+  case "niederreiter" then
     this.sequence     = ldniedf_startup ( this.sequence )
-  case "sobolf" then
+  case "sobol" then
     this.sequence     = ldsobolf_startup ( this.sequence )
-  case "fauref" then
+  case "faure" then
     this.sequence     = ldfauref_startup ( this.sequence )
-  case "haltonf" then
+  case "halton" then
     this.sequence     = ldhaltonf_startup ( this.sequence )
   else
     errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_startup" , this.method);

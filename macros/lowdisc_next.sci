@@ -24,9 +24,6 @@ function [this,next] = lowdisc_next ( varargin )
   //   both <literal>this</literal> and <literal>next</literal> are mandatory output arguments.
   //   This function is sensitive to the <literal>"-leap"</literal> option.
   //
-  //   Because of the limitation of floating point integers, 
-  //   the lowdisc_next function is able to generate at most 
-  //   2^52  = 4 503 599 627 370 496 experiments.
   //   Fast sequences are based on the intermediate storage of the 
   //   iteration index on a 32 bits C int. This implies 
   //   that these sequences are able to generate at most 
@@ -83,7 +80,7 @@ function [this,next] = lowdisc_next ( varargin )
   //   lds = lowdisc_destroy(lds);
   //
   //   // See the -skip option in action.
-  //   lds = lowdisc_new("fauref");
+  //   lds = lowdisc_new("faure");
   //   lds = lowdisc_configure(lds,"-dimension",4);
   //   // Skip qs^4 - 1 terms, as in TOMS implementation
   //   qs = lowdisc_get ( lds , "-faurefprime" );
@@ -132,25 +129,15 @@ function [this,next] = lowdisc_next ( varargin )
   apifun_checkgreq ( "lowdisc_next" , imax , "imax" , 2 , 1 )
   //
   select this.method
-  case "halton" then
-    [this.sequence,next]     = ldhalton_next ( this.sequence , imax )
-  case "faure" then
-    [this.sequence,next]     = ldfaure_next ( this.sequence , imax )
   case "reversehalton" then
-    [this.sequence,next]     = ldrevhal_next ( this.sequence , imax )
-  case "sobol" then
-    [this.sequence,next]     = ldsobol_next ( this.sequence , imax )
-  case "niederreiter-base-2" then
-    [this.sequence,next]     = ldnied2_next ( this.sequence , imax )
-  case "reversehaltonf" then
     [this.sequence,next]     = ldrevhalf_next ( this.sequence , imax )
-  case "niederreiterf" then
+  case "niederreiter" then
     [this.sequence,next]     = ldniedf_next ( this.sequence , imax )
-  case "sobolf" then
+  case "sobol" then
     [this.sequence,next]     = ldsobolf_next ( this.sequence , imax )
-  case "fauref" then
+  case "faure" then
     [this.sequence,next]     = ldfauref_next ( this.sequence , imax )
-  case "haltonf" then
+  case "halton" then
     [this.sequence,next]     = ldhaltonf_next ( this.sequence , imax )
   else
     errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_next" , this.method);

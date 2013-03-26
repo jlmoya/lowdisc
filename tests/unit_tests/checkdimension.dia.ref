@@ -52,24 +52,6 @@ Sequence=halton, Dimension=40/100
 Sequence=halton, Dimension=47/100
 Sequence=halton, Dimension=100/100
 ==============================
-Sequence=haltonf, Maximum Dimension=100
-Sequence=haltonf, Dimension=1/100
-Sequence=haltonf, Dimension=2/100
-Sequence=haltonf, Dimension=3/100
-Sequence=haltonf, Dimension=4/100
-Sequence=haltonf, Dimension=5/100
-Sequence=haltonf, Dimension=6/100
-Sequence=haltonf, Dimension=7/100
-Sequence=haltonf, Dimension=8/100
-Sequence=haltonf, Dimension=9/100
-Sequence=haltonf, Dimension=10/100
-Sequence=haltonf, Dimension=39/100
-Sequence=haltonf, Dimension=46/100
-Sequence=haltonf, Dimension=60/100
-Sequence=haltonf, Dimension=87/100
-Sequence=haltonf, Dimension=99/100
-Sequence=haltonf, Dimension=100/100
-==============================
 Sequence=faure, Maximum Dimension=541
 Sequence=faure, Dimension=1/541
 Sequence=faure, Dimension=2/541
@@ -81,30 +63,12 @@ Sequence=faure, Dimension=7/541
 Sequence=faure, Dimension=8/541
 Sequence=faure, Dimension=9/541
 Sequence=faure, Dimension=10/541
-Sequence=faure, Dimension=36/541
-Sequence=faure, Dimension=147/541
-Sequence=faure, Dimension=150/541
-Sequence=faure, Dimension=176/541
-Sequence=faure, Dimension=181/541
+Sequence=faure, Dimension=99/541
+Sequence=faure, Dimension=116/541
+Sequence=faure, Dimension=152/541
+Sequence=faure, Dimension=420/541
+Sequence=faure, Dimension=534/541
 Sequence=faure, Dimension=541/541
-==============================
-Sequence=fauref, Maximum Dimension=541
-Sequence=fauref, Dimension=1/541
-Sequence=fauref, Dimension=2/541
-Sequence=fauref, Dimension=3/541
-Sequence=fauref, Dimension=4/541
-Sequence=fauref, Dimension=5/541
-Sequence=fauref, Dimension=6/541
-Sequence=fauref, Dimension=7/541
-Sequence=fauref, Dimension=8/541
-Sequence=fauref, Dimension=9/541
-Sequence=fauref, Dimension=10/541
-Sequence=fauref, Dimension=11/541
-Sequence=fauref, Dimension=260/541
-Sequence=fauref, Dimension=265/541
-Sequence=fauref, Dimension=368/541
-Sequence=fauref, Dimension=517/541
-Sequence=fauref, Dimension=541/541
 ==============================
 Sequence=reversehalton, Maximum Dimension=100
 Sequence=reversehalton, Dimension=1/100
@@ -117,117 +81,58 @@ Sequence=reversehalton, Dimension=7/100
 Sequence=reversehalton, Dimension=8/100
 Sequence=reversehalton, Dimension=9/100
 Sequence=reversehalton, Dimension=10/100
-Sequence=reversehalton, Dimension=18/100
-Sequence=reversehalton, Dimension=31/100
-Sequence=reversehalton, Dimension=66/100
-Sequence=reversehalton, Dimension=89/100
-Sequence=reversehalton, Dimension=89/100
+Sequence=reversehalton, Dimension=20/100
+Sequence=reversehalton, Dimension=56/100
+Sequence=reversehalton, Dimension=64/100
+Sequence=reversehalton, Dimension=65/100
+Sequence=reversehalton, Dimension=90/100
 Sequence=reversehalton, Dimension=100/100
 ==============================
-Sequence=reversehaltonf, Maximum Dimension=100
-Sequence=reversehaltonf, Dimension=1/100
-Sequence=reversehaltonf, Dimension=2/100
-Sequence=reversehaltonf, Dimension=3/100
-Sequence=reversehaltonf, Dimension=4/100
-Sequence=reversehaltonf, Dimension=5/100
-Sequence=reversehaltonf, Dimension=6/100
-Sequence=reversehaltonf, Dimension=7/100
-Sequence=reversehaltonf, Dimension=8/100
-Sequence=reversehaltonf, Dimension=9/100
-Sequence=reversehaltonf, Dimension=10/100
-Sequence=reversehaltonf, Dimension=73/100
-Sequence=reversehaltonf, Dimension=86/100
-Sequence=reversehaltonf, Dimension=91/100
-Sequence=reversehaltonf, Dimension=93/100
-Sequence=reversehaltonf, Dimension=93/100
-Sequence=reversehaltonf, Dimension=100/100
+Sequence=sobol, Maximum Dimension=1111
+Sequence=sobol, Dimension=1/1111
+Sequence=sobol, Dimension=2/1111
+Sequence=sobol, Dimension=3/1111
+Sequence=sobol, Dimension=4/1111
+Sequence=sobol, Dimension=5/1111
+Sequence=sobol, Dimension=6/1111
+Sequence=sobol, Dimension=7/1111
+Sequence=sobol, Dimension=8/1111
+Sequence=sobol, Dimension=9/1111
+Sequence=sobol, Dimension=10/1111
+Sequence=sobol, Dimension=117/1111
+Sequence=sobol, Dimension=508/1111
+Sequence=sobol, Dimension=530/1111
+Sequence=sobol, Dimension=731/1111
+Sequence=sobol, Dimension=1015/1111
+Sequence=sobol, Dimension=1111/1111
 ==============================
-Sequence=sobol, Maximum Dimension=40
-Sequence=sobol, Dimension=1/40
-Sequence=sobol, Dimension=2/40
-Sequence=sobol, Dimension=3/40
-Sequence=sobol, Dimension=4/40
-Sequence=sobol, Dimension=5/40
-Sequence=sobol, Dimension=6/40
-Sequence=sobol, Dimension=7/40
-Sequence=sobol, Dimension=8/40
-Sequence=sobol, Dimension=9/40
-Sequence=sobol, Dimension=10/40
-Sequence=sobol, Dimension=13/40
-Sequence=sobol, Dimension=15/40
-Sequence=sobol, Dimension=15/40
-Sequence=sobol, Dimension=34/40
-Sequence=sobol, Dimension=39/40
-Sequence=sobol, Dimension=40/40
-==============================
-Sequence=sobolf, Maximum Dimension=1111
-Sequence=sobolf, Dimension=1/1111
-Sequence=sobolf, Dimension=2/1111
-Sequence=sobolf, Dimension=3/1111
-Sequence=sobolf, Dimension=4/1111
-Sequence=sobolf, Dimension=5/1111
-Sequence=sobolf, Dimension=6/1111
-Sequence=sobolf, Dimension=7/1111
-Sequence=sobolf, Dimension=8/1111
-Sequence=sobolf, Dimension=9/1111
-Sequence=sobolf, Dimension=10/1111
-Sequence=sobolf, Dimension=106/1111
-Sequence=sobolf, Dimension=298/1111
-Sequence=sobolf, Dimension=304/1111
-Sequence=sobolf, Dimension=939/1111
-Sequence=sobolf, Dimension=1064/1111
-Sequence=sobolf, Dimension=1111/1111
-==============================
-Sequence=niederreiter-base-2, Maximum Dimension=20
-Sequence=niederreiter-base-2, Dimension=1/20
-Sequence=niederreiter-base-2, Dimension=2/20
-Sequence=niederreiter-base-2, Dimension=3/20
-Sequence=niederreiter-base-2, Dimension=4/20
-Sequence=niederreiter-base-2, Dimension=5/20
-Sequence=niederreiter-base-2, Dimension=6/20
-Sequence=niederreiter-base-2, Dimension=7/20
-Sequence=niederreiter-base-2, Dimension=8/20
-Sequence=niederreiter-base-2, Dimension=9/20
-Sequence=niederreiter-base-2, Dimension=10/20
-Sequence=niederreiter-base-2, Dimension=13/20
-Sequence=niederreiter-base-2, Dimension=14/20
-Sequence=niederreiter-base-2, Dimension=14/20
-Sequence=niederreiter-base-2, Dimension=14/20
-Sequence=niederreiter-base-2, Dimension=16/20
-Sequence=niederreiter-base-2, Dimension=20/20
-==============================
-Sequence=niederreiterf, Maximum Dimension=50
-Sequence=niederreiterf, Dimension=1/50
-Sequence=niederreiterf, Dimension=2/50
-Sequence=niederreiterf, Dimension=3/50
-Sequence=niederreiterf, Dimension=4/50
-Sequence=niederreiterf, Dimension=5/50
-Sequence=niederreiterf, Dimension=6/50
-Sequence=niederreiterf, Dimension=7/50
-Sequence=niederreiterf, Dimension=8/50
-Sequence=niederreiterf, Dimension=9/50
-Sequence=niederreiterf, Dimension=10/50
-Sequence=niederreiterf, Dimension=16/50
-Sequence=niederreiterf, Dimension=32/50
-Sequence=niederreiterf, Dimension=33/50
-Sequence=niederreiterf, Dimension=35/50
-Sequence=niederreiterf, Dimension=36/50
-Sequence=niederreiterf, Dimension=50/50
+Sequence=niederreiter, Maximum Dimension=50
+Sequence=niederreiter, Dimension=1/50
+Sequence=niederreiter, Dimension=2/50
+Sequence=niederreiter, Dimension=3/50
+Sequence=niederreiter, Dimension=4/50
+Sequence=niederreiter, Dimension=5/50
+Sequence=niederreiter, Dimension=6/50
+Sequence=niederreiter, Dimension=7/50
+Sequence=niederreiter, Dimension=8/50
+Sequence=niederreiter, Dimension=9/50
+Sequence=niederreiter, Dimension=10/50
+Sequence=niederreiter, Dimension=13/50
+Sequence=niederreiter, Dimension=32/50
+Sequence=niederreiter, Dimension=33/50
+Sequence=niederreiter, Dimension=36/50
+Sequence=niederreiter, Dimension=40/50
+Sequence=niederreiter, Dimension=50/50
 //
 // Check the error messages when the sequences go beyond their available range of dimensions.
 //
 // Map from sequence name to error message
 name2error = [
-"halton"                "ldhalton_startup: The halton method is not available for 101 dimension because the database contains only 100 primes"
-"haltonf"               "ldhaltonf_startup: The fast reverse Halton method is not available for 101 dimension because the database contains only 100 primes"
-"faure"                 "ldfaure_startup: Faure sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
-"fauref"                "ldfauref_startup: Faure Fast sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
-"reversehalton"         "ldrevhal_startup: The reverse Halton method is not available for 101 dimension because the database contains only 100 primes"
-"reversehaltonf"        "ldrevhalf_startup: Reverse Halton sequence : the dimension 101 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
-"sobol"                 "ldsobol_startup: Dimension 41 is greater than maximum 40."
-"sobolf"                "Lowdisc: Error at the library level:sobol - i4_sobol_start - Fatal Error  The spatial dimension DIM_NUM should satisfy    1 <= DIM_NUM <= 1111  But this input value is DIM_NUM = 1112"
-"niederreiter-base-2"   "ldbase_startup: Dimension 21 is greater than maximum 20"
-"niederreiterf"         "Lowdisc: Error at the library level:niederreiter - INLO - Error!  Bad spatial dimension."
+"halton"               "ldhaltonf_startup: The fast Halton method is not available for 101 dimension because the database contains only 100 primes"
+"faure"                "ldfauref_startup: Faure Fast sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
+"reversehalton"        "ldrevhalf_startup: Reverse Halton sequence : the dimension 101 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
+"sobol"                "Lowdisc: Error at the library level:sobol - i4_sobol_start - Fatal Error  The spatial dimension DIM_NUM should satisfy    1 <= DIM_NUM <= 1111  But this input value is DIM_NUM = 1112"
+"niederreiter"         "Lowdisc: Error at the library level:niederreiter - INLO - Error!  Bad spatial dimension."
 ];        
 seqmat = lowdisc_methods ();
 for seqname = seqmat'
@@ -254,61 +159,31 @@ end
 end
 ==============================
 Sequence=halton, Dimension=101/100
-Error (code=10000): ldhalton_startup: The halton method is not available for 101 dimension because the database contains only 100 primes
+Error (code=10000): ldhaltonf_startup: The fast Halton method is not available for 101 dimension because the database contains only 100 primes
 ==============================
 Sequence=halton, Dimension=101/100
-Error (code=10000): ldhalton_startup: The halton method is not available for 101 dimension because the database contains only 100 primes
-==============================
-Sequence=haltonf, Dimension=101/100
-Error (code=10000): ldhaltonf_startup: The fast reverse Halton method is not available for 101 dimension because the database contains only 100 primes
-==============================
-Sequence=haltonf, Dimension=101/100
-Error (code=10000): ldhaltonf_startup: The fast reverse Halton method is not available for 101 dimension because the database contains only 100 primes
+Error (code=10000): ldhaltonf_startup: The fast Halton method is not available for 101 dimension because the database contains only 100 primes
 ==============================
 Sequence=faure, Dimension=542/541
-Error (code=10000): ldfaure_startup: Faure sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table.
-==============================
-Sequence=faure, Dimension=542/541
-Error (code=10000): ldfaure_startup: Faure sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table.
-==============================
-Sequence=fauref, Dimension=542/541
 Error (code=10000): ldfauref_startup: Faure Fast sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table.
 ==============================
-Sequence=fauref, Dimension=542/541
+Sequence=faure, Dimension=542/541
 Error (code=10000): ldfauref_startup: Faure Fast sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table.
 ==============================
 Sequence=reversehalton, Dimension=101/100
-Error (code=10000): ldrevhal_startup: The reverse Halton method is not available for 101 dimension because the database contains only 100 primes
+Error (code=10000): ldrevhalf_startup: Reverse Halton sequence : the dimension 101 is larger than any prime in the table. Configure the -primeslist option to increase the prime table.
 ==============================
 Sequence=reversehalton, Dimension=101/100
-Error (code=10000): ldrevhal_startup: The reverse Halton method is not available for 101 dimension because the database contains only 100 primes
-==============================
-Sequence=reversehaltonf, Dimension=101/100
 Error (code=10000): ldrevhalf_startup: Reverse Halton sequence : the dimension 101 is larger than any prime in the table. Configure the -primeslist option to increase the prime table.
 ==============================
-Sequence=reversehaltonf, Dimension=101/100
-Error (code=10000): ldrevhalf_startup: Reverse Halton sequence : the dimension 101 is larger than any prime in the table. Configure the -primeslist option to increase the prime table.
-==============================
-Sequence=sobol, Dimension=41/40
-Error (code=10000): ldsobol_startup: Dimension 41 is greater than maximum 40.
-==============================
-Sequence=sobol, Dimension=41/40
-Error (code=10000): ldsobol_startup: Dimension 41 is greater than maximum 40.
-==============================
-Sequence=sobolf, Dimension=1112/1111
+Sequence=sobol, Dimension=1112/1111
 Low Discrepancy Module Error !Error (code=999): Lowdisc: Error at the library level:sobol - i4_sobol_start - Fatal Error  The spatial dimension DIM_NUM should satisfy    1 <= DIM_NUM <= 1111  But this input value is DIM_NUM = 1112
 ==============================
-Sequence=sobolf, Dimension=1112/1111
+Sequence=sobol, Dimension=1112/1111
 Low Discrepancy Module Error !Error (code=999): Lowdisc: Error at the library level:sobol - i4_sobol_start - Fatal Error  The spatial dimension DIM_NUM should satisfy    1 <= DIM_NUM <= 1111  But this input value is DIM_NUM = 1112
 ==============================
-Sequence=niederreiter-base-2, Dimension=21/20
-Error (code=10000): ldbase_startup: Dimension 21 is greater than maximum 20
-==============================
-Sequence=niederreiter-base-2, Dimension=21/20
-Error (code=10000): ldbase_startup: Dimension 21 is greater than maximum 20
-==============================
-Sequence=niederreiterf, Dimension=51/50
+Sequence=niederreiter, Dimension=51/50
 Low Discrepancy Module Error !Error (code=999): Lowdisc: Error at the library level:niederreiter - INLO - Error!  Bad spatial dimension.
 ==============================
-Sequence=niederreiterf, Dimension=51/50
+Sequence=niederreiter, Dimension=51/50
 Low Discrepancy Module Error !Error (code=999): Lowdisc: Error at the library level:niederreiter - INLO - Error!  Bad spatial dimension.

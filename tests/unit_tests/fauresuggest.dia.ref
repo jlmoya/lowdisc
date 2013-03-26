@@ -37,35 +37,10 @@ lds = lowdisc_startup (lds);
 lds = lowdisc_destroy(lds);
 // Use the minimum number of simulations for integration in dimension 4.
 dim = 4;
-lds = lowdisc_new("fauref");
-lds = lowdisc_configure(lds,"-dimension",dim);
-base = lowdisc_get(lds,"-faurefprime");
-[nsim,skip,leap] = lowdisc_fauresuggest ( dim , base );
-assert_checkequal ( [nsim,skip,leap] , [125 623 0] );
-lds = lowdisc_configure(lds,"-skip",skip);
-lds = lowdisc_configure(lds,"-leap",leap);
-lds = lowdisc_startup (lds);
-[lds,experiments]=lowdisc_next(lds,nsim);
-lds = lowdisc_destroy(lds);
-// Use the minimum number of simulations for integration in dimension 4.
-dim = 4;
 nsimmin = 1000;
 lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",dim);
 base = lowdisc_get(lds,"-faureprime");
-[nsim,skip,leap] = lowdisc_fauresuggest ( dim , base , nsimmin );
-assert_checkequal ( [nsim,skip,leap] , [3125 623 0] );
-lds = lowdisc_configure(lds,"-skip",skip);
-lds = lowdisc_configure(lds,"-leap",leap);
-lds = lowdisc_startup (lds);
-[lds,experiments]=lowdisc_next(lds,nsim);
-lds = lowdisc_destroy(lds);
-// Use the minimum number of simulations for integration in dimension 4.
-dim = 4;
-nsimmin = 1000;
-lds = lowdisc_new("fauref");
-lds = lowdisc_configure(lds,"-dimension",dim);
-base = lowdisc_get(lds,"-faurefprime");
 [nsim,skip,leap] = lowdisc_fauresuggest ( dim , base , nsimmin );
 assert_checkequal ( [nsim,skip,leap] , [3125 623 0] );
 lds = lowdisc_configure(lds,"-skip",skip);

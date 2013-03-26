@@ -123,21 +123,9 @@ base = 5;
 dim = 4;
 base = lowdisc_niederbase ( dim );
 [nsim,skip,leap] = lowdisc_niedersuggest ( dim , base );
-lds = lowdisc_new("niederreiterf");
+lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",dim);
 lds = lowdisc_configure(lds,"-base",base);
-lds = lowdisc_configure(lds,"-skip",skip);
-lds = lowdisc_configure(lds,"-leap",leap);
-lds = lowdisc_startup (lds);
-[lds,computed]=lowdisc_next(lds,nsim);
-lds = lowdisc_destroy(lds);
-
-// Use the slow Base 2 Niederreiter and minimum
-// number of simulations in dimension 4.
-dim = 4;
-[nsim,skip,leap] = lowdisc_niedersuggest ( dim );
-lds = lowdisc_new("niederreiter-base-2");
-lds = lowdisc_configure(lds,"-dimension",dim);
 lds = lowdisc_configure(lds,"-skip",skip);
 lds = lowdisc_configure(lds,"-leap",leap);
 lds = lowdisc_startup (lds);

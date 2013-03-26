@@ -47,7 +47,7 @@
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 4096 , 29 , "haltonf" );
+u=lowdisc_ldgen ( 4096 , 29 , "halton" );
 scf(); 
 lowdisc_proj2d ( u , [28 29] );
 // Compute the correlation coefficient for dimensions (28,29)
@@ -93,7 +93,7 @@ corrcoef ( [u(:,28) u(:,29)] )
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 4096 , 29 , "haltonf" , %f);
+u=lowdisc_ldgen ( 4096 , 29 , "halton" , %f);
 scf(); 
 lowdisc_proj2d ( u , [28 29] );
    ]]>
@@ -122,7 +122,7 @@ lowdisc_proj2d ( u , [28 29] );
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 2000 , 40 , "haltonf" );
+u=lowdisc_ldgen ( 2000 , 40 , "halton" );
 scf();
 lowdisc_proj2d ( u , [39 40] );
 // Compute the correlation coefficient for dimensions (39,40)
@@ -165,7 +165,7 @@ corrcoef ( [u(:,39) u(:,40)] )
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 2000 , 40 , "haltonf" , %f );
+u=lowdisc_ldgen ( 2000 , 40 , "halton" , %f );
 scf();
 lowdisc_proj2d ( u , [39 40] );
    ]]>
@@ -194,7 +194,7 @@ lowdisc_proj2d ( u , [39 40] );
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 2000 , 40 , "haltonf" );
+u=lowdisc_ldgen ( 2000 , 40 , "halton" );
 // Compute correlation coefficients
 c = corrcoef ( u );
 // Get the maximum correlation coefficient 
@@ -241,7 +241,7 @@ lowdisc_proj2d ( u , k );
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 2000 , 40 , "fauref" );
+u=lowdisc_ldgen ( 2000 , 40 , "faure" );
 // Compute correlation coefficients
 c = corrcoef ( u );
 // Get the maximum correlation coefficient 
@@ -280,7 +280,7 @@ lowdisc_proj2d ( u , k );
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 300 , 40 , "fauref" );
+u=lowdisc_ldgen ( 300 , 40 , "faure" );
 scf();
 lowdisc_proj2d ( u , [39 40] );
    ]]>
@@ -305,7 +305,7 @@ lowdisc_proj2d ( u , [39 40] );
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 300 , 40 , "fauref" , %f);
+u=lowdisc_ldgen ( 300 , 40 , "faure" , %f);
 scf();
 lowdisc_proj2d ( u , [39 40] );
 size(u)
@@ -352,7 +352,7 @@ size(u)
 
     <programlisting role="example">
       <![CDATA[
-lds = lowdisc_new("fauref");
+lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",40);
 lds = lowdisc_configure(lds,"-leap",5);
 lds = lowdisc_startup (lds);

@@ -42,16 +42,11 @@ end
 //
 // Map from sequence name to error message
 name2error = [
-"halton"                "ldhalton_startup: The halton method is not available for 101 dimension because the database contains only 100 primes"
-"haltonf"               "ldhaltonf_startup: The fast reverse Halton method is not available for 101 dimension because the database contains only 100 primes"
-"faure"                 "ldfaure_startup: Faure sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
-"fauref"                "ldfauref_startup: Faure Fast sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
-"reversehalton"         "ldrevhal_startup: The reverse Halton method is not available for 101 dimension because the database contains only 100 primes"
-"reversehaltonf"        "ldrevhalf_startup: Reverse Halton sequence : the dimension 101 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
-"sobol"                 "ldsobol_startup: Dimension 41 is greater than maximum 40."
-"sobolf"                "Lowdisc: Error at the library level:sobol - i4_sobol_start - Fatal Error  The spatial dimension DIM_NUM should satisfy    1 <= DIM_NUM <= 1111  But this input value is DIM_NUM = 1112"
-"niederreiter-base-2"   "ldbase_startup: Dimension 21 is greater than maximum 20"
-"niederreiterf"         "Lowdisc: Error at the library level:niederreiter - INLO - Error!  Bad spatial dimension."
+"halton"               "ldhaltonf_startup: The fast Halton method is not available for 101 dimension because the database contains only 100 primes"
+"faure"                "ldfauref_startup: Faure Fast sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
+"reversehalton"        "ldrevhalf_startup: Reverse Halton sequence : the dimension 101 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
+"sobol"                "Lowdisc: Error at the library level:sobol - i4_sobol_start - Fatal Error  The spatial dimension DIM_NUM should satisfy    1 <= DIM_NUM <= 1111  But this input value is DIM_NUM = 1112"
+"niederreiter"         "Lowdisc: Error at the library level:niederreiter - INLO - Error!  Bad spatial dimension."
 ];        
 
 seqmat = lowdisc_methods ();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
+ * Copyright (C) 2013 - Michael Baudin
  * Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
  * This file is released under the terms of the GNU LGPL license.
 -->
@@ -97,10 +98,6 @@
         </listitem>
 
         <listitem>
-          <para>slow sequences based on macros, for training or research purposes,</para>
-        </listitem>
-
-        <listitem>
           <para>fast sequences based on compiled source code,</para>
         </listitem>
 
@@ -177,11 +174,9 @@ rng = lowdisc_destroy(rng);
     </programlisting>
 
     <para>
-      There are currently 5 sequences available in two flavors:
-      slow sequences are based on macros and fast sequences are based
-      on compiled source code.
       The function lowdisc_methods returns the list of available
-      sequences. The following script displays the available sequences
+      sequences. 
+      The following script displays the available sequences
       and a table displaying the speed, maximum dimension and
       maximum number of calls for all sequences.
     </para>
@@ -217,52 +212,13 @@ end
 
     <screen>
       Name                 Speed      Max Dim    Max Call
-      halton               slow        100        -1
       haltonf              fast        100        2147483647
-      faure                slow        541        -1
       fauref               fast        541        2147483647
-      reversehalton        slow        100        -1
       reversehaltonf       fast        100        2147483647
-      sobol                slow        40         1073741823
       sobolf               fast        1111       1073741823
-      niederreiter-base-2  slow        20         2147483647
       niederreiterf        fast        50         2147483647
     </screen>
 
-  </refsection>
-
-  <refsection>
-    <title>Sources of Sequences</title>
-
-    <para>
-      Although the random number toolbox provides the same interface for
-      all generators, what happens behind the scenes is not the same, depending
-      on the sequence.
-    </para>
-    <para>
-      Two main sources are used in this toolbox.
-      <itemizedlist>
-        <listitem>
-          <para>Scripts</para>
-
-          <para>
-            Scripts are provided with this toolbox to implement both
-            low-discrepancy sequences (such as Halton for instance). These
-            sequences may be slow if a large number of data is to be generated,
-            but may provide greater flexibility for some users.
-          </para>
-        </listitem>
-
-        <listitem>
-          <para>C source codes</para>
-
-          <para>
-            These sequences are based on compiled C source code and are
-            as fast as possible.
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
   </refsection>
 
   <refsection>
@@ -274,7 +230,7 @@ end
       <itemizedlist>
         <listitem>
           <para>
-            The <literal>lowdisc_gen</literal> function
+            The <literal>lowdisc_ldgen</literal> function
             can produce a complete set of points, given the name of a sequence and
             the number of dimension.
             Moreover, this function makes use of optimized <literal>skip</literal>
@@ -294,24 +250,12 @@ end
             The <literal>lowdisc_*</literal> functions provide the highest level object oriented
             functions.
             They allow to access to any sequence with a constructor based
-            on a string representing the sequence. For example, <literal>lds = lowdisc_new("halton")</literal>
+            on a string representing the sequence. For example, 
+            <literal>lds = lowdisc_new("haltonf")</literal>
             creates a new Halton sequence.
             In this framework, the lowdisc component allows to access to all sequences
             with a single API, where all the methods are valid for all sequences and
             all sequences share the same options.
-          </para>
-        </listitem>
-
-        <listitem>
-          <para>
-            Macro generators:
-          </para>
-          <para>
-            These functions are macros which produce quasi-random sequences.
-            These functions can be interesting to experiment low discrepancy
-            sequences, because it is easy to edit them with Scilab's editor.
-            On the other, these functions are rather slow if the number
-            points to generate is large.
           </para>
         </listitem>
 
@@ -323,19 +267,6 @@ end
             These functions are macros which provides parameters which can
             be used in low discrepancy sequences such as <literal>skip</literal>
             and <literal>leap</literal> parameters, or tables of prime numbers.
-          </para>
-        </listitem>
-
-        <listitem>
-          <para>
-            Support Functions:
-          </para>
-          <para>
-            These functions are macros which provide basic functions which
-            are used in slow sequences.
-            For example, the <literal>lowdisc_bit*</literal> functions
-            compute various numbers based on the b-ary decomposition of
-            an integer.
           </para>
         </listitem>
 
@@ -368,12 +299,6 @@ end
     </para>
 
     <para>
-      In the macros-based sequences, each sequence has a state which
-      is stored in a typed list, created transparently by the user.
-      There is no global variable in macros-based sequences.
-    </para>
-
-    <para>
       In the C-based sequences, each sequence has an associated
       collection of variables declared as static variables at the
       begining of each source code.
@@ -391,63 +316,6 @@ end
       will be necessary to use C++ classes.
     </para>
 
-  </refsection>
-
-  <refsection>
-    <title>History of the source code</title>
-
-    <para>
-      The source code provided here is the result of the cumulated
-      work of several authors at different times.
-
-      <itemizedlist>
-        <listitem>
-          <para>
-            From 1986 to 1992, Bennett Fox and then Paul Bratley and
-            Harald Niederreiter developped Fortran algorithms which
-            provided the Sobol, Faure and Niederreiter sequences.
-            These algorithms are described in several papers called Algorithm 647,
-            Algorithm 659 and Algorithm 738.
-          </para>
-        </listitem>
-
-        <listitem>
-          <para>
-            From 2003 to 2009, John Burkardt translated these
-            source codes into Matlab and C. He also developped a leaped Halton
-            sequence based on the 1997 paper by Kocis and Whiten.
-          </para>
-        </listitem>
-
-        <listitem>
-          <para>
-            From 2008 to 2011, Michael Baudin did early experiments
-            with interfacing the low discrepancy sequences from the Gnu Scientific Library.
-            Problems with the portability of the library under Windows and
-            limitations of the licence led me to the search for another
-            source of sequences.
-            I developped the Halton and Faure sequences as
-            Scilab macros from the algorithms provided by Paul Glasserman in his book.
-            Then I translated and re-structured the
-            Matlab and, later, the C source codes from John Burkardt.
-            I updated all the sequences, so that they all share the same parameters,
-            such as the skip and the leap parameters.
-            I also created the Reverse Halton sequence from the 2006 paper
-            by Vandewoestyne and Cools. This work was inspired by the
-            work done by O. Teytaud in the Gnu Scientific Library.
-            Much time was spent on the validation of the sequences provided in this
-            module.
-            Each sequence is associated with a collection of unit
-            tests which ensure the that the sequence is correctly computed.
-            We used the original Fortran 77 implementations as a base to compare
-            our results.
-            Several bugs were discovered this way and fixed in the
-            source code provided here.
-          </para>
-        </listitem>
-
-      </itemizedlist>
-    </para>
   </refsection>
 
   <refsection>
@@ -487,6 +355,7 @@ end
     <title>Authors</title>
 
     <simplelist type="vert">
+      <member>2012-2013 - Michael Baudin</member>
       <member>2009-2011 - DIGITEO - Michael Baudin</member>
       <member>2008-2009 - INRIA - Michael Baudin</member>
       <member>2003-2009 - John Burkardt</member>

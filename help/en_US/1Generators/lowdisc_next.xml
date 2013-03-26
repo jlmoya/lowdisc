@@ -50,9 +50,6 @@ both <literal>this</literal> and <literal>next</literal> are mandatory output ar
 This function is sensitive to the <literal>"-leap"</literal> option.
    </para>
    <para>
-Because of the limitation of floating point integers,
-the lowdisc_next function is able to generate at most
-2^52  = 4 503 599 627 370 496 experiments.
 Fast sequences are based on the intermediate storage of the
 iteration index on a 32 bits C int. This implies
 that these sequences are able to generate at most
@@ -116,7 +113,7 @@ lds
 lds = lowdisc_destroy(lds);
 
 // See the -skip option in action.
-lds = lowdisc_new("fauref");
+lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",4);
 // Skip qs^4 - 1 terms, as in TOMS implementation
 qs = lowdisc_get ( lds , "-faurefprime" );

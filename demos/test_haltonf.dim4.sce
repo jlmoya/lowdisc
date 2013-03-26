@@ -8,7 +8,7 @@
 // Check the Fast Halton sequence in dimension 4
 mprintf("Check the Fast Halton sequence in dimension 4.\n");
 path = get_absolute_file_path("test_haltonf.dim4.sce");
-filepath = fullfile(path,"test_haltonf.dim4.log.txt");
+filepath = fullfile(TMPDIR,"test_haltonf.dim4.log.txt");
 mprintf("Produced Filename: %s\n",filepath);
 reffilepath = fullfile(path,"test_halton.dim4.TOMS647.log.txt");
 mprintf("Reference Filename: %s\n",reffilepath);

@@ -24,6 +24,7 @@
 <refsynopsisdiv>
    <title>Calling Sequence</title>
    <synopsis>
+   lowdisc_proj2d ( u )
    lowdisc_proj2d ( u , dimensions )
    
    </synopsis>
@@ -35,7 +36,7 @@
    <varlistentry><term>u :</term>
       <listitem><para> a nsim-by-n matrix of doubles, the numbers in the interval [0,1]^n, where nsim is the number of simulations and n is the dimension of the space.</para></listitem></varlistentry>
    <varlistentry><term>dimensions :</term>
-      <listitem><para> a p-by-1 matrix of floating point integers, dimensions to plot.</para></listitem></varlistentry>
+      <listitem><para> a p-by-1 matrix of floating point integers, dimensions to plot (default=1:n).</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
@@ -55,13 +56,12 @@ of a multivariate vector u.
 <refsection>
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
-callf = 1.e2;
+callf = 100;
 n = 6;
-ldseq = "haltonf";
-strict = %t;
-[ u , evalf ] = lowdisc_ldgen ( callf , n , ldseq );
+[ u , evalf ] = lowdisc_ldgen ( callf , n );
 // See all possible projections.
-lowdisc_proj2d ( u , 1:n )
+scf();
+lowdisc_proj2d ( u )
 // See all projections for dimensions 2,3,6.
 scf();
 lowdisc_proj2d ( u , [2,3,6] )

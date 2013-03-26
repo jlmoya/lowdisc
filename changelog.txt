@@ -4,14 +4,138 @@ lowdisc (Not released yet)
  * Fixed a typo in the help page of lowdisc_combinesum.
  * Added a separate help page for (t,m,s)-nets.
  * Created a separate Tutorials section in the help page.
- * Fixed bug #1115:
+ * Fixed bug #1011:
+   The "basic" unit test fails.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1011
+   Moved the printing unit tests from basic.tst into 
+   a separate print.tst, but with "no-check-ref" option. 
+   Updated the format of "max. number of sim." in the sequences 
+   from "%e" to string(x) with "%s", to increase portability.
+ * Fixed bug #1112:
    The Halton leaped sequence in dimension 2 had a huge flaw.
    http://forge.scilab.org/index.php/p/lowdisc/issues/1112/
    The leap is now computed according to Matlab's rule.
  * Fixed bug #1114: lowdisc_corrcoef was duplicated in Stixbox.
    http://forge.scilab.org/index.php/p/lowdisc/issues/1114/
+ * Fixed bug #1115:
+   The toolbox design was complicated.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1115/
+   Many functions are removed, but the features are still 
+   there. 
+   The macro generates are now available as demos (see below).
+ * Fixed bug #1116:
+   The lowdisc_bit* functions should be internal.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1116/
+   These functions are removed from the toolbox.
+ * Fixed bug #1117:
+   lowdisc_bitxor was duplicated in Scilab
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1117/
+   These functions are removed from the toolbox.
+ * Fixed bug #1118: 
+   lowdisc_subplotdecompose is internal to lowdisc_plotbmbox
+   bug http://forge.scilab.org/index.php/p/lowdisc/issues/1118/  
  * Removed lowdisc_soboltau.
    This function did not serve a straightforward purpose. 
+ * Removed the slow (macros) sequences, in order to
+   * simplify the design of the toolbox
+   * reduce the number of functions
+   * reduce the number of unit tests
+   * prevent the users from using slow sequences
+   * reduce the maintenance work
+   These functions were provided only for educational purposes, 
+   but the feature can be provided at much simpler cost in simple 
+   scripts:
+   * demos/ld-macros/macros-vandercorput.sce : Van Der Corput sequence
+   * demos/ld-macros/macros-halton.sce : Halton sequence
+   * demos/ld-macros/macros-faure.sce : Faure sequence
+   * demos/ld-macros/macros-niederreiter2.sce : Niederreiter Base 2 sequence
+   * demos/ld-macros/macros-reversehalton.sce : Reverse Halton sequence
+   The following functions were removed:
+   * lowdisc_haltonnext — Returns the next element of the Halton sequence.
+   * lowdisc_sobolnext — Generates a new quasirandom Sobol vector.
+   * lowdisc_sobolskip — Skip elements in the Sobol sequence.
+   * lowdisc_sobolstart — Initialize the Sobol sequence.
+   * lowdisc_vandercorput — Returns the i-th term of the Van Der Corput sequence.
+   * lowdisc_bitand — Bitwise AND.
+   * lowdisc_bithi1 — Returns the position of the high one bit base 2 in an integer.
+   * lowdisc_bitlo0 — Returns the position of the low zero bit base 2 in an integer.
+   * lowdisc_bitor — bitwise OR
+   * lowdisc_bitxor — Bitwise logical XOR operator.
+   * lowdisc_dec2bin — Convert a decimal floating point integer into binary.
+   * lowdisc_combinesum — Search 2D combinations with given sum.
+   * lowdisc_subplotdecompose — Compute the rows and columns of a matrix of subplots
+   To update your code, please use the following steps:
+   * lowdisc_haltonnext : see demos/ld-macros/macros-halton.sce
+   * lowdisc_sobolnext : see demos/ld-macros/macros-sobol.sce
+   * lowdisc_sobolskip : see demos/ld-macros/macros-sobol.sce
+   * lowdisc_sobolstart : see demos/ld-macros/macros-sobol.sce
+   * lowdisc_vandercorput : see demos/ld-macros/macros-vandercorput.sce
+   * lowdisc_bitand : replace with bitand (from Scilab)
+   * lowdisc_bitor : replace with bitor (from Scilab)
+   * lowdisc_bitxor : replace with bitxor (from Scilab)
+   * lowdisc_bithi1 : see demos/ld-macros/bithi1.sci
+   * lowdisc_bitlo0 : see demos/ld-macros/bitlo0.sci
+   * lowdisc_dec2bin : 
+     For y=lowdisc_dec2bin(x), replace:
+   
+y=lowdisc_dec2bin(x)
+
+  with
+
+y=dec2bin(x)
+
+     For y=lowdisc_dec2bin(x,n), replace:
+	 
+y=lowdisc_dec2bin(x,n)
+
+with
+
+y=dec2bin(x)
+y=strcat(string(zeros(1,n-length(y))))+y
+
+     For y=lowdisc_dec2bin(x,[],m), replace:
+
+y=lowdisc_dec2bin(x,[],2)
+
+with
+
+y=asciimat(dec2bin(x))-48
+
+ * Simplified the names of the sequences:
+   The new sequences available in lowdisc_new and lowdisc_ldgen are 
+   only fast sequences.
+   This was done for the following reasons:
+   * It prevents users from inadvertently using slow sequences.
+   * It simplifies the design of the toolbox.
+   * It simplifies the descriptions in the help pages.
+   Here is the change map:
+    v0.4         v0.5
+    "halton"     "halton"
+    "haltonf"    "halton"
+    "sobol"      "sobol"
+    "sobolf"     "sobol"
+    "faure"      "faure"
+    "fauref"     "faure"
+    "niederreiter-base-2"   "niederreiter"
+    "niederreiterf"         "niederreiter"
+    "reversehalton"         "reversehalton"
+    "reversehaltonf"        "reversehalton"
+  So, for example, replace the statement :
+  
+u=lowdisc_ldgen(20,4,"haltonf")
+
+with
+
+u=lowdisc_ldgen(20,4,"halton")
+
+Or, replace the statement:
+
+lds = lowdisc_new("haltonf");
+
+with:
+
+lds = lowdisc_new("halton");
+
 
 lowdisc (v0.4)
  * Created lowdisc_combinesum.

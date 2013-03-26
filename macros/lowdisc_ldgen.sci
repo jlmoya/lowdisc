@@ -14,7 +14,7 @@ function [ u , evalf ] = lowdisc_ldgen ( varargin )
   // Parameters
   //   callf : a 1-by-1 matrix of floating point integers, the number of calls to the function.
   //   n: a 1-by-1 matrix of floating point integers, the spatial dimension.
-  //   ldseq : a 1-by-1 matrix of strings, the name of the sequence (default <literal>ldseq = "sobolf"</literal>). The name can be equal to : <literal>"halton"</literal>, <literal>"haltonf"</literal>, <literal>"faure"</literal>, <literal>"fauref"</literal>, <literal>"reversehalton"</literal>, <literal>"reversehaltonf"</literal>, <literal>"sobol"</literal>, <literal>"sobolf"</literal>, <literal>"niederreiter-base-2"</literal>, <literal>"niederreiterf"</literal>. See below for details.
+  //   ldseq : a 1-by-1 matrix of strings, the name of the sequence (default <literal>ldseq = "sobol"</literal>). The name can be equal to : <literal>"halton"</literal>, <literal>"faure"</literal>, <literal>"reversehalton"</literal>, <literal>"sobol"</literal>, <literal>"niederreiter"</literal>. See below for details.
   //   strict : a 1-by-1 matrix of boolean, set to %f to use potentially favorable parameters (default = %t).
   //   u : a evalf-by-n matrix of doubles, the uniform random numbers in <literal>[0,1]^n</literal>.
   //   evalf : a 1-by-1 matrix of floating point integers, the actual number of function evaluations. We have <literal>evalf==callf</literal> if strict is true and <literal>evalf >= callf</literal> if strict is false.
@@ -121,15 +121,15 @@ function [ u , evalf ] = lowdisc_ldgen ( varargin )
   //
   // // Generate 20 points from a 
   // // fast Halton sequence in dimension 4
-  // u=lowdisc_ldgen(20,4,"haltonf")
+  // u=lowdisc_ldgen(20,4,"halton")
   //
   // // Generate 20 points from 
   // // the fast Faure sequence in dimension 4.
-  // u=lowdisc_ldgen(20,4,"fauref")
+  // u=lowdisc_ldgen(20,4,"faure")
   //
   // // Generate more than 20 points with potentially 
   // // favorable parameters
-  // [u,evalf]=lowdisc_ldgen(20,4,"fauref",%f)
+  // [u,evalf]=lowdisc_ldgen(20,4,"faure",%f)
   //
   // Authors
   //   Michael Baudin - 2010 - 2011 - DIGITEO
@@ -140,7 +140,7 @@ function [ u , evalf ] = lowdisc_ldgen ( varargin )
   //
   callf = varargin(1)
   n = varargin(2)
-  ldseq = apifun_argindefault ( varargin , 3 , "sobolf" )
+  ldseq = apifun_argindefault ( varargin , 3 , "sobol" )
   strict = apifun_argindefault ( varargin , 4 , %t )
   //
   // Check type
@@ -158,42 +158,21 @@ function [ u , evalf ] = lowdisc_ldgen ( varargin )
   // Check content
   apifun_checkflint ( "lowdisc_ldgen" , callf , "callf" , 1 )
   apifun_checkflint ( "lowdisc_ldgen" , n , "n" , 2 )
-  availablemethods = [
-   "halton" 
-   "haltonf" 
-   "faure" 
-   "fauref" 
-   "reversehalton"
-   "reversehaltonf" 
-   "sobol"
-   "sobolf"
-   "niederreiter-base-2" 
-   "niederreiterf" 
-   ];
+  availablemethods = lowdisc_methods ()
   apifun_checkoption ( "lowdisc_ldgen" , ldseq , "ldseq" , 3 , availablemethods )
   //
   lds = lowdisc_new(ldseq);
   lds = lowdisc_configure(lds,"-dimension",n);
   select ldseq
-  case "fauref"
-    base = lowdisc_get(lds,"-faurefprime");
   case "faure"
     base = lowdisc_get(lds,"-faureprime");
   case "halton"
     // Nothing to do
-  case "haltonf"
-    // Nothing to do
-  case "niederreiter-base-2"
-    base = 2
-  case "niederreiterf"
+  case "niederreiter"
     base = lowdisc_niederbase ( n );
   case "reversehalton"
     // Nothing to do
-  case "reversehaltonf"
-    // Nothing to do
   case "sobol"
-    // Nothing to do
-  case "sobolf"
     // Nothing to do
   else
     lds = lowdisc_destroy(lds);
@@ -205,18 +184,18 @@ function [ u , evalf ] = lowdisc_ldgen ( varargin )
     skip = 0
     leap = 0
   else
-    if ( or ( ldseq == [ "faure" "fauref" ] ) ) then
+    if ( ldseq == "faure" ) then
       [evalf,skip,leap] = lowdisc_fauresuggest ( n , base , callf )
-    elseif ( or ( ldseq == [ "halton" "haltonf" ] ) ) then
+    elseif ( ldseq == "halton" ) then
       [evalf,skip,leap] = lowdisc_haltonsuggest ( n , callf )
-    elseif ( or ( ldseq == [ "niederreiter-base-2" "niederreiterf" ] ) ) then
+    elseif ( ldseq == "niederreiter" ) then
       [evalf,skip,leap] = lowdisc_niedersuggest ( n , base , callf )
-    elseif ( or ( ldseq == [ "reversehalton" "reversehaltonf" ] ) ) then
+    elseif ( ldseq == "reversehalton" ) then
       // No parameter
       evalf = callf
       skip = 0
       leap = 0
-    elseif ( or ( ldseq == [ "sobol" "sobolf" ] ) ) then
+    elseif ( ldseq == "sobol" ) then
       // Do not use lowdisc_sobolsuggest which suggests excessively 
       // large number of simulations.
       evalf = 2^ceil(log2(callf))

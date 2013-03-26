@@ -8,7 +8,7 @@
 // Check the Fast Sobol sequence in dimension 4
 mprintf("Check the Fast Sobol sequence in dimension 4.\n");
 path = get_absolute_file_path("test_sobolf.dim4.sce");
-filepath = fullfile(path,"test_sobolf.dim4.log.txt");
+filepath = fullfile(TMPDIR,"test_sobolf.dim4.log.txt");
 mprintf("Produced Filename: %s\n",filepath);
 reffilepath = fullfile(path,"test_sobol.dim4.TOMS647.log.txt");
 mprintf("Reference Filename: %s\n",reffilepath);
@@ -17,7 +17,7 @@ mprintf("Reference Filename: %s\n",reffilepath);
 DIMEN = 4;
 mfprintf (fd,"SCILAB\n")
 mfprintf (fd,"DIMENSION = %d\n", DIMEN)
-rng = lowdisc_new("sobolf");
+rng = lowdisc_new("sobol");
 rng = lowdisc_configure(rng,"-dimension",DIMEN);
 rng = lowdisc_startup (rng);
 [rng,computed]=lowdisc_next(rng);

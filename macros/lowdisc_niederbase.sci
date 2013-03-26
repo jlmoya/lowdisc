@@ -72,7 +72,7 @@ function base = lowdisc_niederbase ( dim )
   // // Use the optimal base in dimension 4.
   // dim = 4;
   // base = lowdisc_niederbase ( dim );
-  // lds = lowdisc_new("niederreiterf");
+  // lds = lowdisc_new("niederreiter");
   // lds = lowdisc_configure(lds,"-dimension",dim);
   // lds = lowdisc_configure(lds,"-base",base);
   // lds = lowdisc_startup (lds);
