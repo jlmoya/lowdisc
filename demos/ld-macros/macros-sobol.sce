@@ -368,7 +368,7 @@ function lowdisc_demossobol()
         next(k,1:dim_num) = quasi';
     end
     scf();
-    strtitle=msprintf("Sobol (base 2) : %d points",nbpoints)
+    strtitle=msprintf("Sobol (base 2) : %d points",npoints)
     plot ( next(:,1) , next(:,2) , "bo" )
     xtitle(strtitle,"X1","X2");
 

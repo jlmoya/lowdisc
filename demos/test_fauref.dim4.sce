@@ -18,7 +18,7 @@ mfprintf ( fd , "SCILAB\n")
 rng = lowdisc_new("faure");
 rng = lowdisc_configure(rng,"-dimension",4);
 // Skip qs^4 - 1 terms, as in TOMS implementation
-qs = lowdisc_get ( rng , "-faurefprime" );
+qs = lowdisc_get ( rng , "-faureprime" );
 rng = lowdisc_configure(rng,"-skip", qs^4 - 2);
 str = string(rng);
 nrows = size(str,"r");

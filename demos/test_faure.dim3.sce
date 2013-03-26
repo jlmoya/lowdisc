@@ -21,7 +21,7 @@ mprintf("please comment the -skip option.\n");
 mfprintf ( fd , "SCILAB\n");
 rng = lowdisc_new("faure");
 rng = lowdisc_configure(rng,"-dimension",3);
-qs = lowdisc_get ( rng , "-faurefprime" );
+qs = lowdisc_get ( rng , "-faureprime" );
 // Skip qs^4 - 1 terms, as in TOMS implementation:
 // comment out this line in order to compare with Glasserman's 
 // data (Glasserman.faure.dim3.txt).
