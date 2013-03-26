@@ -24,11 +24,11 @@ function lowdisc_plotbmbox(varargin)
     // If the point set u is provided, we plot it.
     //
     // Examples
-    // // Plot all elementary intervals with volume 2^3
+    // // Plot all elementary intervals with volume 1/2^3
     // scf();
     // lowdisc_plotbmbox(2,3)
     //
-    // // Plot elementary intervals with volume 2^3, 
+    // // Plot elementary intervals with volume 1/2^3, 
     // // and add Sobol points (insert zero).
     // [ u , evalf ] = lowdisc_ldgen ( 2^4-1 , 2 );
     // u = [0,0;u];

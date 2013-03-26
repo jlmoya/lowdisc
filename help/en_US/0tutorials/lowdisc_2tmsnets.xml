@@ -65,6 +65,30 @@
     </para>
 
     <para>
+      The following example plots all base-2 
+	  elementary intervals with volume 1/2^3=1/8.
+    </para>
+
+	<programlisting role="example">
+      <![CDATA[
+scf();
+lowdisc_plotbmbox(2,3)
+   ]]>
+    </programlisting>
+	
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/eleminter-v8.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
       Definition: (t,m,s)-net in base b.
       Let b&#8805;2, s&#8805;1 and 0&#8804;t&#8804;m be integers.
       Then a point set with b^m points in <latex>[0,1]^s</latex> is a (t,m,s)-net
@@ -288,7 +312,7 @@ Nieder.  0.26  0.13  0.086  0.025  0.019  0.0041  0.0030  6.1x10-4  4.2x10-4
     <programlisting role="example">
       <![CDATA[
 // Get the points 0,1,...,11 (insert zero)
-u=lowdisc_ldgen ( 11 , 2 , "haltonf" );
+u=lowdisc_ldgen ( 11 , 2 , "halton" );
 u = [0,0;u];
 //
 scf();
@@ -339,7 +363,7 @@ h.isoview="off";
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 2^4-1 , 2 , "fauref" );
+u=lowdisc_ldgen ( 2^4-1 , 2 , "faure" );
 u = [0,0;u];
 scf();
 lowdisc_plotbmbox(2,4,u);
@@ -366,7 +390,7 @@ lowdisc_plotbmbox(2,4,u);
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 2^4-1 , 2 , "fauref" );
+u=lowdisc_ldgen ( 2^4-1 , 2 , "faure" );
 u = [0,0;u];
 scf();
 lowdisc_plotbmbox(2,3,u);
@@ -395,7 +419,7 @@ lowdisc_plotbmbox(2,3,u);
     <programlisting role="example">
       <![CDATA[
 // Get the points 0,1,...,15 (insert zero)
-u=lowdisc_ldgen ( 2^4-1 , 2 , "fauref" );
+u=lowdisc_ldgen ( 2^4-1 , 2 , "faure" );
 u = [0,0;u];
 scf();
 //
@@ -455,14 +479,14 @@ h.isoview="off";
     <title>Niederreiter base 2 sequence</title>
 
     <para>
-      Plot elementary intervals with Niederreiter points (insert zero)
+      Plot elementary intervals with Niederreiter (base 2) points (insert zero)
       Plot elementary intervals with volume 2^4:
       2 points by elementary interval.
       Niederreiter is a (0,5,2)-net in base 2
     </para>
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 2^5-1 , 2 , "niederreiter-base-2" );
+u=lowdisc_ldgen ( 2^5-1 , 2 , "niederreiter" );
 u = [0,0;u];
 scf();
 lowdisc_plotbmbox(2,4,u);
@@ -482,14 +506,14 @@ lowdisc_plotbmbox(2,4,u);
     </para>
 
     <para>
-      Plot elementary intervals with Niederreiter points (insert zero)
+      Plot elementary intervals with Niederreiter (base 2) points (insert zero)
       Plot elementary intervals with volume 2^3:
       4 points by elementary interval.
       Niederreiter is a (0,5,2)-net in base 2
     </para>
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 2^5-1 , 2 , "niederreiter-base-2" );
+u=lowdisc_ldgen ( 2^5-1 , 2 , "niederreiter" );
 u = [0,0;u];
 scf();
 lowdisc_plotbmbox(2,3,u);
@@ -523,7 +547,7 @@ lowdisc_plotbmbox(2,3,u);
     </para>
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 2^4-1 , 2 , "sobolf" , %t );
+u=lowdisc_ldgen ( 2^4-1 , 2 , "sobol" , %t );
 u = [0,0;u];
 h = scf();
 lowdisc_plotbmbox(2,4,u);
@@ -552,7 +576,7 @@ lowdisc_plotbmbox(2,4,u);
     </para>
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 2^6-1 , 2 , "sobolf" );
+u=lowdisc_ldgen ( 2^6-1 , 2 , "sobol" );
 u = [0,0;u];
 h = scf();
 plot(u(1:2^5,1),u(1:2^5,2),"bo")
@@ -590,7 +614,7 @@ xtitle("Sobol, Volume=1/32, 64 Points");
     </para>
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 11 , 2 , "haltonf" , %f );
+u=lowdisc_ldgen ( 11 , 2 , "halton" , %f );
 u = [0,0;u];
 //
 scf();
@@ -636,7 +660,7 @@ h.isoview="off";
 
     <programlisting role="example">
       <![CDATA[
-lds = lowdisc_new("fauref");
+lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",2);
 lds = lowdisc_configure(lds,"-leap",5);
 lds = lowdisc_startup (lds);
