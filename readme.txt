@@ -38,8 +38,10 @@ The flagship of this module is:
  
 Tutorials
 
+ * lowdisc_plots — A gallery of low discrepancy sequences.
  * lowdisc_projections — An overview of bad 2D projections.
  * lowdisc_tmsnets — (t,m,s)-nets and low discrepancy sequences.
+ * lowdisc_efficiency — Efficiency of Monte-Carlo and QMC.
 
 Sequences:
  * lowdisc_cget : Returns the value associated with the given key.

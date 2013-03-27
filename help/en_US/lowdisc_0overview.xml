@@ -118,39 +118,37 @@
     <title>Quick Start</title>
 
     <para>
-      The following example generates more than 20 points from a Halton and
-      Faure sequences in dimension 4.
+      The following example generates 20 points from a Sobol 
+	  sequence in dimension 4.
       This is a simplified use of the library, where we know in advance the number
       of experiments to perform.
-      The generated low discrepancy sequence tries to use "optimal" settings,
-      based on the parameters suggested in the bibliography.
     </para>
 
     <programlisting role="example">
       <![CDATA[
-   [ u , evalf ] = lowdisc_ldgen ( 20 , 4 , "haltonf" )
-   [ u , evalf ] = lowdisc_ldgen ( 20 , 4 , "fauref" )
+u=lowdisc_ldgen(20,4)
    ]]>
     </programlisting>
 
     <para>
-      The parameter evalf is the actual number of points in the sequence.
-      In order to reduce the discrepancy of the point set, it may be larger
-      than the given number of calls.
-      In order to get the exact number of calls, activate the "strict" option.
-      While this is not recommended (it may increase the discrepancy of the
-      generated point set), it might be useful in some situations.
-      This is done in the following example, where we generate
-      exactly 20 points from the Faure sequence.
+      Assume now that we want to use a Halton sequence, but with 
+	  favorable leap parameters. 
+	  The following calling sequence creates a 
+	  leaped Halton sequence with 20 points in 4 dimensions. 
+	  This may potentially reduce the correlations 
+	  which may appear in high dimensions.
     </para>
 
     <programlisting role="example">
       <![CDATA[
-   [ u , evalf ] = lowdisc_ldgen ( 20 , 4 , "fauref" , %t )
+u=lowdisc_ldgen(20,4,"halton",%f)
    ]]>
     </programlisting>
 
     <para>
+	  It may happen that we have to generate the points block-by-block, 
+	  instead of all-at-once. 
+	  In this case, we may use the following functions. 
       The following example creates 1000 points in dimension 4 from the Sobol sequence.
       This way of using the library allows to get a complete control over the
       parameters of the sequence.
@@ -160,7 +158,7 @@
 
     <programlisting role="example">
       <![CDATA[
-rng = lowdisc_new("sobolf");
+rng = lowdisc_new("sobol");
 rng = lowdisc_configure(rng,"-dimension",4);
 rng = lowdisc_startup (rng);
 // Get first point
@@ -211,12 +209,12 @@ end
     </para>
 
     <screen>
-      Name                 Speed      Max Dim    Max Call
-      haltonf              fast        100        2147483647
-      fauref               fast        541        2147483647
-      reversehaltonf       fast        100        2147483647
-      sobolf               fast        1111       1073741823
-      niederreiterf        fast        50         2147483647
+      Name                Speed       Max Dim    Max Call
+      halton              fast        100        2147483647
+      faure               fast        541        2147483647
+      reversehalton       fast        100        2147483647
+      sobol               fast        1111       1073741823
+      niederreiter        fast        50         2147483647
     </screen>
 
   </refsection>
@@ -251,7 +249,7 @@ end
             functions.
             They allow to access to any sequence with a constructor based
             on a string representing the sequence. For example, 
-            <literal>lds = lowdisc_new("haltonf")</literal>
+            <literal>lds = lowdisc_new("halton")</literal>
             creates a new Halton sequence.
             In this framework, the lowdisc component allows to access to all sequences
             with a single API, where all the methods are valid for all sequences and
@@ -316,39 +314,6 @@ end
       will be necessary to use C++ classes.
     </para>
 
-  </refsection>
-
-  <refsection>
-    <title>Efficiency of Quasi Monte-Carlo</title>
-    <para>
-      The actual efficiency of quasi-Monte-Carlo methods over crude Monte-Carlo
-      may depend on the nature of the function to be integrated and
-      the number of variables n.
-    </para>
-
-    <para>
-      In "A primer for the Monte-Carlo method", Sobol suggests
-      the following. If all the variables are
-      equally important and n is large (say, n>15), then there is no
-      advantage in switching to quasi-Monte-Carlo. However, if all the
-      variables are independent or if the dependence on xi decreases as
-      i increases (in other words, the initial coordinates are the leading ones),
-      one can expect a considerable benefit for QMC, even if n is
-      large (from n=10 to n=100, may be 1000).
-    </para>
-
-    <para>
-      Caflish, Morokoff and Owen defined the effective dimension of a function
-      in the superposition or in the truncation sense. Both these definitions
-      are making use of the functional ANOVA decomposition and lead
-      to global sensitivity indices, which normalized versions were defined
-      by Sobol.
-      Functions with a small effective dimension dT are easy to integrate as long
-      as the point set used has good properties for its projections over the first dT
-      coordinates. The original Halton sequence should be quite sensitive to the
-      effective dimension dT, since we know its projections deteriorate quickly as
-      the dimension increases.
-    </para>
   </refsection>
 
   <refsection>

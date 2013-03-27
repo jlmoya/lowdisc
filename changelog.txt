@@ -4,6 +4,7 @@ lowdisc (Not released yet)
  * Fixed a typo in the help page of lowdisc_combinesum.
  * Added a separate help page for (t,m,s)-nets.
  * Created a separate Tutorials section in the help page.
+ * Added a help page on efficiency of QMC.
  * Fixed bug #1011:
    The "basic" unit test fails.
    http://forge.scilab.org/index.php/p/lowdisc/issues/1011
@@ -138,7 +139,6 @@ lds = lowdisc_new("haltonf");
 with:
 
 lds = lowdisc_new("halton");
-
 
 lowdisc (v0.4)
  * Created lowdisc_combinesum.

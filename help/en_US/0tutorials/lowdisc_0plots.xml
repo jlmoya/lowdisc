@@ -33,8 +33,10 @@
     <title>Van Der Corput Sequence</title>
 
 	<para>
-      The Van Der Corput sequence is just the first dimension of 
-	  the Halton sequence in 1 dimension.
+      The Van Der Corput base 2 sequence is just the first dimension of 
+	  the Halton sequence in 1 dimension. 
+	  In the following script, we generate 15 points from the 
+	  Halton sequence in 1 dimension.
     </para>
 
     <programlisting role="example">
@@ -70,11 +72,22 @@ u=lowdisc_ldgen(15,1,"halton")
     </screen>
 
     <para>
+      We notice that the values are organized block by block, 
+	  where the size of a block is a power of two. 
+	  The block #1 has x=0.5 (1 point). 
+	  The block #2 has x=0.25 and x=0.75 (2 points). 
+	  The block #3 has x=0.125 to x=0.875 (4 points). 
+	  This is consistent with the fact that the Van Der Corput 
+	  sequence that we consider here has base 2.
+    </para>
+
+    <para>
       In order to understand how this sequence fills the interval [0,1], 
 	  we analyze the elements of the sequence in more detail. 
 	  The following function prints each element of the sequence, 
 	  by decomposing the number n=u*2^p, where u is the low discrepancy 
 	  number and p is an appropriate integer. 
+	  This allows to get the binary decomposition of the number u.
     </para>
 
     <programlisting role="example">
@@ -140,6 +153,66 @@ u=0.437500, n=  7, binary=0.0111
 u=0.937500, n= 15, binary=0.1111
     ]]>
     </screen>
+
+    <para>
+      Notice that the most significant digit (the 0 or 1 just after the 
+	  decimal point) is alternatively 0, 1, 0, etc... 
+	  Hence, the point altenates below and over the central value x=0.5.
+    </para>
+
+    <para>
+      In order to see where the points are located in the interval [0,1], 
+	  we plot the points block-by-block, where the y-coordinate corresponds 
+	  to the index of the block.
+    </para>
+	
+    <programlisting role="example">
+      <![CDATA[
+scf();
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-dimension",1);
+lds = lowdisc_startup (lds);
+k=1;
+imax=5;
+for i=1:5
+    npoints=2^(i-1);
+    [lds,u]=lowdisc_next(lds,npoints);
+    plot(u',i,"bo")
+    xstring(u',i,string(k:k+npoints-1))
+    k=k+npoints;
+end
+lds = lowdisc_destroy (lds);
+a = gca();
+a.data_bounds=[
+0 0
+1 imax+1
+];
+xtitle("Van Der Corput Sequence (base 2)",..
+"X","Block Index")
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="vandercorput-base2.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+	
+    <para>
+      We see that each block fills the interval with regular spacings, 
+	  but that the order of the points is so that 
+	  two consecutive points in the sequence always have x=0.5 in-between.
+    </para>
 
   </refsection>
 
@@ -302,31 +375,31 @@ xtitle("Niederreiter: 1000 points","X1","X2")
     <programlisting role="example">
       <![CDATA[
 i=(1:2^4-1)';
-u1=lowdisc_ldgen ( 2^4-1 , 2 , "niederreiter" );
+u1=lowdisc_ldgen ( 2^4-1 , 2 , "sobol" );
 u2=lowdisc_ldgen ( 2^4-1 , 2 , "faure" );
-u3=lowdisc_ldgen ( 2^4-1 , 2 , "sobol" );
+u3=lowdisc_ldgen ( 2^4-1 , 2 , "niederreiter" );
 disp([i,u1,u2,u3])
    ]]>
     </programlisting>
 	<screen>
       <![CDATA[
-           Niderreiter         Faure               Sobol
-    n      X1        X2        X1        X2        X1        X2
-    1.     0.5       0.5       0.5       0.5       0.5       0.5     
-    2.     0.25      0.75      0.25      0.75      0.75      0.25    
-    3.     0.75      0.25      0.75      0.25      0.25      0.75    
-    4.     0.125     0.625     0.125     0.625     0.375     0.375   
-    5.     0.625     0.125     0.625     0.125     0.875     0.875   
-    6.     0.375     0.375     0.375     0.375     0.625     0.125   
-    7.     0.875     0.875     0.875     0.875     0.125     0.625   
-    8.     0.0625    0.9375    0.0625    0.9375    0.1875    0.3125  
-    9.     0.5625    0.4375    0.5625    0.4375    0.6875    0.8125  
-    10.    0.3125    0.1875    0.3125    0.1875    0.9375    0.0625  
-    11.    0.8125    0.6875    0.8125    0.6875    0.4375    0.5625  
-    12.    0.1875    0.3125    0.1875    0.3125    0.3125    0.1875  
-    13.    0.6875    0.8125    0.6875    0.8125    0.8125    0.6875  
-    14.    0.4375    0.5625    0.4375    0.5625    0.5625    0.4375  
-    15.    0.9375    0.0625    0.9375    0.0625    0.0625    0.9375  
+           Sobol              Faure              Niederreiter        
+    n      X1        X2       X1        X2       X1        X2        
+    1.     0.5       0.5      0.5       0.5      0.5       0.5       
+    2.     0.75      0.25     0.25      0.75     0.25      0.75      
+    3.     0.25      0.75     0.75      0.25     0.75      0.25      
+    4.     0.375     0.375    0.125     0.625    0.125     0.625     
+    5.     0.875     0.875    0.625     0.125    0.625     0.125     
+    6.     0.625     0.125    0.375     0.375    0.375     0.375     
+    7.     0.125     0.625    0.875     0.875    0.875     0.875     
+    8.     0.1875    0.3125   0.0625    0.9375   0.0625    0.9375    
+    9.     0.6875    0.8125   0.5625    0.4375   0.5625    0.4375    
+    10.    0.9375    0.0625   0.3125    0.1875   0.3125    0.1875    
+    11.    0.4375    0.5625   0.8125    0.6875   0.8125    0.6875    
+    12.    0.3125    0.1875   0.1875    0.3125   0.1875    0.3125    
+    13.    0.8125    0.6875   0.6875    0.8125   0.6875    0.8125    
+    14.    0.5625    0.4375   0.4375    0.5625   0.4375    0.5625    
+    15.    0.0625    0.9375   0.9375    0.0625   0.9375    0.0625    
    ]]>
 	</screen>
 	<para>
@@ -338,8 +411,8 @@ disp([i,u1,u2,u3])
 	  The Niederreiter (base 2) and Faure sequences produce 
 	  exactly the same points, in the same order. 
 	  The Sobol points are also the same, but come in a different order. 
-	  For example, the point #15 in Sobol sequence (columns #6 and #7) 
-	  is the same as point #8 in Niederreiter (base 2) sequence.
+	  For example, the point n=15 in Sobol sequence 
+	  is the same as point n=8 in Niederreiter (base 2) sequence.
 	</para>
   </refsection>
   
@@ -411,6 +484,25 @@ xstring(0.5,0.5,"Faure: 1000 points")
 			/>
         </imageobject>
       </inlinemediaobject>
+    </para>
+
+    <para>
+      We see that the projection (x1,x2) is the same for 
+	  Sobol and Niederreiter (base 2), as was seen for 2D sequences. 
+	  But, the projections (x1,x3) and (x2,x3) of Sobol and Niederreiter 
+	  are different. 
+	  Moreover, all projections of Faure sequence are now different from the 
+	  other sequences. 
+	  Furthermore, the projection (x1,x2) of Faure is different from the 
+	  Faure 2D sequence.
+    </para>
+	
+    <para>
+	  Indeed, the Faure sequence uses a basis which is the smallest prime number 
+	  larger than the number of dimensions. 
+	  In dimension s=3, the basis used by Faure is p=3. 
+	  Since Sobol and Niederreiter (base 2) use the base 2, this explains 
+	  why the sequences cannot be equal anymore.
     </para>
 
   </refsection>
