@@ -1,9 +1,10 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2010-2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 // <-- JVM NOT MANDATORY -->
 // <-- ENGLISH IMPOSED -->
-// Check all sequences in dimensions 10
+// Check all sequences in dimension 2
 callf = 10;
 n = 2;
 seqmat = lowdisc_methods ();

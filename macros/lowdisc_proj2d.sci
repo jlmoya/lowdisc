@@ -38,8 +38,8 @@ function lowdisc_proj2d ( varargin )
     // plot( u(:,3) , u(:,6) , "bo" )
     //
     // Authors
-    // Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
     // Copyright (C) 2013 - Michael Baudin
+    // Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 
     [lhs, rhs] = argn()
     apifun_checkrhs ( "lowdisc_proj2d" , rhs , 1:2 )

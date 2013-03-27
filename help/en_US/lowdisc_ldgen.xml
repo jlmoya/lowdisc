@@ -183,7 +183,8 @@ u=lowdisc_ldgen(20,4,"faure")
 <refsection>
    <title>Authors</title>
    <simplelist type="vert">
-   <member>Michael Baudin - 2010 - 2011 - DIGITEO</member>
+   <member>Copyright (C) 2013 - Michael Baudin</member>
+   <member>Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin</member>
    </simplelist>
 </refsection>
 </refentry>

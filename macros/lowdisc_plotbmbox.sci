@@ -1,4 +1,4 @@
-// Copyright (C) 2012 - Michael Baudin
+// Copyright (C) 2012-2013 - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 //
@@ -39,7 +39,7 @@ function lowdisc_plotbmbox(varargin)
     // "Random number generation and quasi-Monte Carlo methods", H. Niederreiter, CBMS-NSF Series in Applied Mathematics, No. 63, SIAM, Philadelphia, 1992.
     //
     // Authors
-    // Copyright (C) 2012 - Michael Baudin
+    // Copyright (C) 2012-2013 - Michael Baudin
 
     function [m,n] = lowdisc_subplotdecompose(varargin)
         // Compute the rows and columns of a matrix of subplots

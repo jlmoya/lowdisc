@@ -78,8 +78,8 @@ plot( u(:,3) , u(:,6) , "bo" )
 <refsection>
    <title>Authors</title>
    <simplelist type="vert">
-   <member>Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin</member>
    <member>Copyright (C) 2013 - Michael Baudin</member>
+   <member>Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin</member>
    </simplelist>
 </refsection>
 </refentry>

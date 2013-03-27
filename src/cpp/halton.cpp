@@ -89,25 +89,9 @@ void halton ( int step , double r[] )
 //
 //    The arguments that the user may set include:
 //
-//    * DIM_NUM, the spatial dimension, 
-//      Default: DIM_NUM = 1;
-//      Required: 1 <= DIM_NUM is required.
-//
 //    * STEP, the subsequence index.
 //      Default: STEP = 0.
 //      Required: 0 <= STEP.
-//
-//    * SEED(1:DIM_NUM), the Halton sequence element corresponding to STEP = 0.
-//      Default SEED = (0, 0, ... 0).  
-//      Required: 0 <= SEED(1:DIM_NUM).
-//
-//    * LEAP(1:DIM_NUM), the succesive jumps in the Halton sequence.
-//      Default: LEAP = (1, 1, ..., 1). 
-//      Required: 1 <= LEAP(1:DIM_NUM).
-//
-//    * BASE(1:DIM_NUM), the Halton bases.
-//      Default: BASE = (2, 3, 5, 7, 11, ... ). 
-//      Required: 1 < BASE(1:DIM_NUM).
 //
 //  Parameters:
 //
@@ -293,7 +277,7 @@ void halton_start ( int dim_num , int base[] , int seed[] , int leap[] )
 			lowdisc_error ( msg.str() );
 			return;
 		}
-		halton_LEAP[i] = leap[1];
+		halton_LEAP[i] = leap[i];
 	}
 	//
 	// Set the base

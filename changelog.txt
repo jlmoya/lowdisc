@@ -34,6 +34,9 @@ lowdisc (Not released yet)
  * Fixed bug #1118: 
    lowdisc_subplotdecompose is internal to lowdisc_plotbmbox
    bug http://forge.scilab.org/index.php/p/lowdisc/issues/1118/  
+ * Fixed bug #1122:
+   The Halton sequence was wrong in dimension 1.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1122
  * Removed lowdisc_soboltau.
    This function did not serve a straightforward purpose. 
  * Removed the slow (macros) sequences, in order to

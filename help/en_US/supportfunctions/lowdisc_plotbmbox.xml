@@ -82,7 +82,7 @@ lowdisc_plotbmbox(2,3,u);
 <refsection>
    <title>Authors</title>
    <simplelist type="vert">
-   <member>Copyright (C) 2012 - Michael Baudin</member>
+   <member>Copyright (C) 2012-2013 - Michael Baudin</member>
    </simplelist>
 </refsection>
 </refentry>
