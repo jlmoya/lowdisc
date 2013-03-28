@@ -67,6 +67,70 @@
 	then QMC can reach its peak performance, which is very near 1/n 
 	when s is moderate.
 	</para>
+	
+	<para>
+	The following script plots the Monte-Carlo and Quasi-Monte-Carlo convergence 
+	rates, for increasing values of n and s=1,2 and 4. 
+	</para>
+	
+    <programlisting role="example">
+      <![CDATA[
+scf();
+n=2.^(1:30);
+mcconv=1 ./sqrt(n);
+qmcconv1=log(n).^1 ./n;
+qmcconv2=log(n).^2 ./n;
+qmcconv4=log(n).^4 ./n;
+plot(n,mcconv,"k-");
+plot(n,qmcconv1,"r-");
+plot(n,qmcconv2,"g-");
+plot(n,qmcconv4,"b-");
+legend(["Monte-Carlo" ..
+"Quasi-Monte-Carlo s=1" ..
+"Quasi-Monte-Carlo s=2" ..
+"Quasi-Monte-Carlo s=4" ..
+]);
+a=gca();
+a.log_flags="lln";
+xtitle("Convergence rate","Number of Simulations",..
+"Absolute Error");
+
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="mcVsQmc-convergence.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      We can see that the theoretical QMC convergence rate 
+	  first increases, then decreases. 
+	  It can be shown that the rate log(n)^s/n is increasing 
+	  for n lower than exp(s), and then decreasing. 
+	  For s=3, this is n=exp(3), which is almost equal to n=20, after 
+	  which the asymptotic rate of QMC sets in. 
+	  Hence, we see that the number of points n after which 
+	  the asymptotic convergence sets in is larger when s increases. 
+	  Moreover, we see that the accuracy of the integral as predicted 
+	  by the QMC error bound is much larger when s increases. 
+	  Fortunately, QMC can be, in some cases, 
+	  much more accurate than the accuracy predicted by the error 
+	  bound. 
+    </para>
+
+		
   </refsection>
 
   <refsection>
@@ -141,6 +205,10 @@ xtitle("Quasi Monte-Carlo versus Monte-Carlo",..
     </programlisting>
 
     <para>
+  	  In the previous script, the constants 10 and 0.1 in 
+	  <literal>mcconv</literal> and <literal>qmcconv</literal> are 
+	  only there to be able to make the difference between the lines: 
+	  only the slopes are meaningful in this convergence plot. 
       The previous script produces the following output.
     </para>
 
@@ -154,15 +222,6 @@ xtitle("Quasi Monte-Carlo versus Monte-Carlo",..
 			/>
         </imageobject>
       </inlinemediaobject>
-    </para>
-
-    <para>
-      We can see that the theoretical QMC convergence rate 
-	  first increases, then decreases. 
-	  It can be shown that the rate log(n)^s/n is increasing 
-	  for n lower than exp(s), and then decreasing. 
-	  For s=3, this is n=exp(3), which is almost equal to n=20, after 
-	  which the asymptotic rate of QMC sets in.
     </para>
 
     <para>
