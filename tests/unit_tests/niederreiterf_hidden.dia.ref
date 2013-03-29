@@ -1,3 +1,4 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 //
@@ -32,12 +33,6 @@ init = 1;
 _lowdisc_niedfstart ( dim , base , skip , gfaritfile , gfplysfile , init );
 start = _lowdisc_niedfisstart ( );
 assert_checkequal ( start , 1 );
-dim2 = _lowdisc_niedfdimget( );
-assert_checkequal ( dim2 , dim );
-base2 = _lowdisc_niedfbaseget( );
-assert_checkequal ( base2 , base );
-skip2 = _lowdisc_niedfskipget( );
-assert_checkequal ( skip2 , skip );
 computed = [];
 // Skip first term
 imax = 1;

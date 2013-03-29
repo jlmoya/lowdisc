@@ -130,6 +130,20 @@ base, depending on the dimension.
 </itemizedlist>
    </para>
    <para>
+For the "halton" sequence,
+we can configure the scrambling as following.
+<itemizedlist>
+<listitem>
+<para>
+<literal>"-scrambling"</literal> : a 1-by-1 matrix of strings, the empty string "" (no scrambling),
+or "RR2" for the scrambling (digit permutation) of Kocis-Whiten [1].
+The "RR2" scrambling can improve the correlation in high dimensions,
+leading to better low-dimensionnal projects.
+</para>
+</listitem>
+</itemizedlist>
+   </para>
+   <para>
 Some expertise is required to configure the <literal>skip</literal> and <literal>leap</literal> options.
 The <literal>skip</literal> option can improve the Faure, Sobol and Niederreiter sequences.
 The <literal>leap</literal> option can improve the Halton sequence, although
@@ -175,6 +189,16 @@ verbose = lowdisc_cget(lds,"-verbose")
 lds
 lds = lowdisc_destroy(lds);
 
+// See a Scrambled Halton sequence.
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-dimension",44);
+lds = lowdisc_configure(lds,"-scrambling","RR2");
+lds = lowdisc_startup (lds);
+[lds,u] = lowdisc_next (lds,500);
+lds = lowdisc_destroy(lds);
+scf();
+plot(u(:,43),u(:,44),"b.");
+
    ]]></programlisting>
 </refsection>
 
@@ -184,5 +208,10 @@ lds = lowdisc_destroy(lds);
    <member>Michael Baudin - 2008 - 2009 - INRIA</member>
    <member>Michael Baudin - 2010 - 2011 - DIGITEO</member>
    </simplelist>
+</refsection>
+
+<refsection>
+   <title>Bibliography</title>
+   <para>[1] Kocis, L., and W. J. Whiten. "Computational Investigations of Low-Discrepancy Sequences." ACM Transactions on Mathematical Software. Vol. 23, No. 2, 1997, pp. 266–294.</para>
 </refsection>
 </refentry>

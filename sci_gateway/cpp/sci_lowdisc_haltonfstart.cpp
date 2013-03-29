@@ -20,12 +20,13 @@ extern "C" {
 #include "halton.h" 
 
 
-// _lowdisc_haltonfstart ( dim , base , seed )
+// _lowdisc_haltonfstart ( dim , base , seed , scrambling )
 //   Start the Halton sequence.
 // Parameters
 //   dim : the number of dimensions (e.g. 1)
 //   base : a 1 x dim matrix of doubles, a list of successive prime numbers (e.g. (0,0,0,0) for automatic setup or (2,3,5,7) for user-defined setup)
-//   seed : a 1 x dim matrix of doubles, the Halton sequence element corresponding to STEP = 0 (e.g. (0,0,0,0) for default setup)
+//   seed : a 1 x dim matrix of doubles, the Halton sequence element corresponding to index = 0 (e.g. (0,0,0,0) for default setup)
+//   scrambling : a 1x1 matrix of doubles, the scrambling. scrambling=1 for no scrambling, scrambling=2 for RR2 (Kocis-Whiten) scrambling
 //
 //      If base(i) = 0 then the prime number #i is automatically set.
 //	    If base(i) > 1 then the base is directly used.
@@ -45,8 +46,9 @@ int sci_lowdisc_haltonfstart (char *fname) {
 	double *dseed = NULL;
 	int * seed = NULL;
 	int * leap = NULL;
+	int scrambling = NULL;
 	
-	CheckRhs(3,3) ;
+	CheckRhs(4,4) ;
 	CheckLhs(0,1) ;
 	//
 	// Get Arg #1: dim
@@ -100,6 +102,12 @@ int sci_lowdisc_haltonfstart (char *fname) {
 			return 0;
 		}
 	}
+	//
+	// Get Arg #4: scrambling
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 4 , &scrambling );
+	if ( ierr==0 ) {
+		return 0;
+	}
 	// Createthe leap vector
 	leap = ivector ( dim );
 	for(int k = 0; k < dim; k++) {
@@ -107,7 +115,7 @@ int sci_lowdisc_haltonfstart (char *fname) {
 	}
 	//
 	// Start the Halton sequence
-	halton_start ( dim , base , seed, leap );
+	halton_start ( dim , base , seed, leap , scrambling);
 	//
 	// Free the vectors
 	free_ivector ( base );

@@ -1,3 +1,4 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 //
@@ -15,10 +16,6 @@ primelist = number_primes100();
 _lowdisc_revhaltfstart ( dim , primelist(1:dim) );
 start = _lowdisc_revhaltfisstart ( );
 assert_checkequal ( start , 1 );
-dim2 = _lowdisc_revhaltfdimget ( );
-assert_checkequal ( dim , dim2 );
-prime2 = _lowdisc_revhaltfbaseget ( );
-assert_checkequal ( primelist(1:dim) , prime2 );
 computed = [];
 imax = 1;
 leap = 0;

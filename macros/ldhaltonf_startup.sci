@@ -1,3 +1,4 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
@@ -15,7 +16,12 @@ function this = ldhaltonf_startup (this)
   //
   base = this.primeslist(1:dimension)
   seed = zeros(1,dimension)
-  _lowdisc_haltonfstart ( dimension , base , seed )
+  //
+  if (this.scrambling=="") then
+      _lowdisc_haltonfstart ( dimension , base , seed , 1 )
+  else
+      _lowdisc_haltonfstart ( dimension , base , seed , 2 )
+  end
   //
   skip = ldbase_cget ( this.baseobj , "-skip" )
   if ( skip > 0 ) then

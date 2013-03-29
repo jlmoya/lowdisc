@@ -1,11 +1,8 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
-
-
-
-
 
 function this = lowdisc_configure (this,key,value)
   // Configure a field of the object and returns the modified object.
@@ -101,6 +98,19 @@ function this = lowdisc_configure (this,key,value)
   //  </listitem>
   //  </itemizedlist>
   //
+  //  For the "halton" sequence, 
+  //  we can configure the scrambling as following. 
+  //  <itemizedlist>
+  //  <listitem>
+  //     <para>
+  //     <literal>"-scrambling"</literal> : a 1-by-1 matrix of strings, the empty string "" (no scrambling), 
+  //     or "RR2" for the scrambling (digit permutation) of Kocis-Whiten [1].
+  //     The "RR2" scrambling can improve the correlation in high dimensions, 
+  //     leading to better low-dimensionnal projects.
+  //     </para>
+  //  </listitem>
+  //  </itemizedlist>
+  //
   //  Some expertise is required to configure the <literal>skip</literal> and <literal>leap</literal> options.
   //  The <literal>skip</literal> option can improve the Faure, Sobol and Niederreiter sequences.
   //  The <literal>leap</literal> option can improve the Halton sequence, although 
@@ -139,9 +149,22 @@ function this = lowdisc_configure (this,key,value)
   //   lds
   //   lds = lowdisc_destroy(lds);
   //
+  // // See a Scrambled Halton sequence.
+  // lds = lowdisc_new("halton");
+  // lds = lowdisc_configure(lds,"-dimension",44);
+  // lds = lowdisc_configure(lds,"-scrambling","RR2");
+  // lds = lowdisc_startup (lds);
+  // [lds,u] = lowdisc_next (lds,500);
+  // lds = lowdisc_destroy(lds);
+  // scf();
+  // plot(u(:,43),u(:,44),"b.");
+  //
   // Authors
   //   Michael Baudin - 2008 - 2009 - INRIA
   //   Michael Baudin - 2010 - 2011 - DIGITEO
+  //
+  // Bibliography
+  // [1] Kocis, L., and W. J. Whiten. "Computational Investigations of Low-Discrepancy Sequences." ACM Transactions on Mathematical Software. Vol. 23, No. 2, 1997, pp. 266–294.
 
   [lhs, rhs] = argn()
   apifun_checkrhs ( "lowdisc_configure" , rhs , 3:3 )

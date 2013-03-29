@@ -1,3 +1,4 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 
@@ -18,8 +19,6 @@ seed = 0;
 _lowdisc_sobolfstart ( dim );
 start = _lowdisc_sobolfisstart ( );
 assert_checkequal ( start , 1 );
-dim2 = _lowdisc_sobolfdimget( );
-assert_checkequal ( dim2 , dim );
 computed = [];
 imax = 1;
 leap = 0;

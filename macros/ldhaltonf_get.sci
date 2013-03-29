@@ -13,6 +13,8 @@ function value = ldhaltonf_get (this,key)
     value = this.primessize
   case "-nbsimmax" then
     value = this.nbsimmax
+  case "-scrambling" then
+    value = this.scrambling
   else
     // Delegate to ldbase
     value = ldbase_get ( this.baseobj , key )

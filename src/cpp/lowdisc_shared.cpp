@@ -21,6 +21,15 @@ using namespace std;
 #include "lowdisc.h"
 #include "lowdisc_shared.h"
 
+// warning C4996: 'strcpy': This function or variable may be unsafe. 
+// Consider using strcpy_s instead. 
+// To disable deprecation, use _CRT_SECURE_NO_WARNINGS. 
+// See online help for details.
+#ifdef _MSC_VER
+#pragma warning( disable : 4996 )
+#endif
+
+
 // If this function is non-NULL, it is used to when an error is generated.
 // It can be configure with the public function "lowdisc_errorsetfunction".
 void (* lowdisc_errorfunction)(char * message) = NULL;

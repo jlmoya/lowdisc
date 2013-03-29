@@ -1,3 +1,4 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
@@ -21,6 +22,8 @@ function str = %LDHLTNF_string ( this )
   end
   k = k + 1
   str(k) = msprintf("Maximum number of simulations = %s",string(this.nbsimmax))
+  k = k + 1
+  str(k) = msprintf("Scrambling = %s",string(this.scrambling))
   k = k + 1
   //
   // Get the baseobj string

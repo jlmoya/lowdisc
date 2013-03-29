@@ -1,0 +1,72 @@
+// Copyright (C) 2013 - Michael Baudin
+//
+// This file must be used under the terms of the GNU LGPL license.
+// 
+// <-- JVM NOT MANDATORY -->
+// <-- ENGLISH IMPOSED -->
+//
+// Check the Scrambled RR2 Halton sequence in dimension 1
+//
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-dimension",1);
+lds = lowdisc_configure(lds,"-scrambling","RR2");
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected= [
+    0.5   
+    0.25  
+    0.75  
+    0.125 
+    0.625 
+    0.375 
+    0.875 
+    0.0625
+    0.5625
+    0.3125
+];
+assert_checkalmostequal ( computed, expected, [],1.e-5);
+lds = lowdisc_destroy(lds);
+//
+// Check the Scrambled RR2 Halton sequence in dimension 2
+//
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-dimension",2);
+lds = lowdisc_configure(lds,"-scrambling","RR2");
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected= [
+    0.5       0.6666667
+    0.25      0.3333333
+    0.75      0.2222222
+    0.125     0.8888889
+    0.625     0.5555556
+    0.375     0.1111111
+    0.875     0.7777778
+    0.0625    0.4444444
+    0.5625    0.0740741
+    0.3125    0.7407407
+];
+assert_checkalmostequal ( computed, expected, [],1.e-5);
+lds = lowdisc_destroy(lds);
+//
+// Check the Scrambled RR2 Halton sequence in dimension 3
+//
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-dimension",3);
+lds = lowdisc_configure(lds,"-scrambling","RR2");
+lds = lowdisc_startup (lds);
+[lds,computed]=lowdisc_next(lds,10);
+expected= [
+    0.5       0.6666667    0.8   
+    0.25      0.3333333    0.4   
+    0.75      0.2222222    0.2   
+    0.125     0.8888889    0.6   
+    0.625     0.5555556    0.16  
+    0.375     0.1111111    0.96  
+    0.875     0.7777778    0.56  
+    0.0625    0.4444444    0.36  
+    0.5625    0.0740741    0.76  
+    0.3125    0.7407407    0.08  
+];
+assert_checkalmostequal ( computed, expected, [],1.e-5);
+lds = lowdisc_destroy(lds);

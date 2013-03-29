@@ -1,3 +1,4 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 
@@ -18,19 +19,9 @@ dim = 4;
 primeslist = number_primes100 ( );
 base = primeslist(1:dim);
 seed = zeros(1,dim);
-_lowdisc_haltonfstart ( dim , base , seed );
+_lowdisc_haltonfstart ( dim , base , seed , 1);
 start = _lowdisc_haltonfisstart ( );
 assert_checkequal ( start , 1 );
-// Check get methods
-dim2 = _lowdisc_haltonfdimget ( );
-assert_checkequal ( dim2 , dim );
-base2 = _lowdisc_haltonfbaseget ( );
-assert_checkequal ( base2 , base );
-seed2 = _lowdisc_haltonfseedget ( );
-assert_checkequal ( seed2 , seed );
-leap2 = _lowdisc_haltonfleapget ( );
-leap = ones(1,dim);
-assert_checkequal ( leap2 , leap );
 // Skip the first and second terms
 leap = 0;
 for i = 1 : 100
@@ -152,7 +143,7 @@ dim = 4;
 primeslist = number_primes100 ( );
 base = primeslist(1:dim);
 seed = zeros(1,dim);
-_lowdisc_haltonfstart ( dim , base , seed );
+_lowdisc_haltonfstart ( dim , base , seed , 1);
 scenario = [0 1 2 3 5 6 7 1 2 3];
 computed = [];
 leap = 0;
@@ -184,7 +175,7 @@ dim = 4;
 primeslist = number_primes100 ( );
 base = primeslist(1:dim);
 seed = zeros(1,dim);
-_lowdisc_haltonfstart ( dim , base , seed );
+_lowdisc_haltonfstart ( dim , base , seed , 1);
 // Skip the first and second terms
 leap = 0;
 computed = _lowdisc_haltonfnext ( 2 , 10 , leap );

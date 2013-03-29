@@ -1,6 +1,15 @@
 changelog of the Low Discrepancy Toolbox
 
 lowdisc (Not released yet)
+ * Fixed bug #1112:
+   The Halton leaped sequence in dimension 2 had a huge flaw.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1112/
+   Some hyperrectangles in the sample space were not 
+   sampled.
+   The leap is now computed according to Matlab's rule.
+ * Fixed bug #1122:
+   The Halton sequence was wrong in dimension 1.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/
  * Fixed a typo in the help page of lowdisc_combinesum.
  * Added a separate help page for (t,m,s)-nets.
  * Created a separate Tutorials section in the help page.
@@ -12,10 +21,6 @@ lowdisc (Not released yet)
    a separate print.tst, but with "no-check-ref" option. 
    Updated the format of "max. number of sim." in the sequences 
    from "%e" to string(x) with "%s", to increase portability.
- * Fixed bug #1112:
-   The Halton leaped sequence in dimension 2 had a huge flaw.
-   http://forge.scilab.org/index.php/p/lowdisc/issues/1112/
-   The leap is now computed according to Matlab's rule.
  * Fixed bug #1114: lowdisc_corrcoef was duplicated in Stixbox.
    http://forge.scilab.org/index.php/p/lowdisc/issues/1114/
  * Fixed bug #1115:
@@ -35,9 +40,14 @@ lowdisc (Not released yet)
  * Fixed bug #1118: 
    lowdisc_subplotdecompose is internal to lowdisc_plotbmbox
    bug http://forge.scilab.org/index.php/p/lowdisc/issues/1118/  
- * Fixed bug #1122:
-   The Halton sequence was wrong in dimension 1.
-   http://forge.scilab.org/index.php/p/lowdisc/issues/1122
+ * Fixed bug #1121: 
+   Provide the RR2 scrambling for Halton sequence.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1121/
+   This can be done with the lowdisc_configure(lds,"-scrambling","RR2") 
+   option for the Halton sequence.
+ * Fixed bug #1132
+   internal _lowdisc_*get functions are unnecessary
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1132/
  * Removed lowdisc_soboltau.
    This function did not serve a straightforward purpose. 
  * Removed the slow (macros) sequences, in order to

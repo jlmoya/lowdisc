@@ -1,3 +1,4 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 
@@ -17,12 +18,8 @@ start = _lowdisc_faurefisstart ( );
 assert_checkequal ( start , 0 );
 // Skip first term
 _lowdisc_faurefstart ( dim );
-dim2 = _lowdisc_faurefdimget ( );
-assert_checkequal ( dim2 , dim );
 start = _lowdisc_faurefisstart ( );
 assert_checkequal ( start , 1 );
-qs = _lowdisc_faurefbaseget ( );
-assert_checkequal ( qs , 3 );
 imax = 1;
 leap = 0;
 next = _lowdisc_faurefnext ( 0 , imax , leap );
@@ -51,8 +48,6 @@ assert_checkequal ( start , 0 );
 dim = 4;
 computed = [];
 _lowdisc_faurefstart ( dim );
-qs = _lowdisc_faurefbaseget ( );
-assert_checkequal ( qs , 5 );
 imax = 1;
 leap = 0;
 // Skip first term
@@ -113,8 +108,6 @@ primelist = number_primes10000();
 k = find(primelist>dim,1);
 qs = primelist(k);
 _lowdisc_faurefstart ( dim , qs );
-qs2 = _lowdisc_faurefbaseget ( );
-assert_checkequal ( qs , qs2 );
 imax = 1;
 leap = 0;
 next = _lowdisc_faurefnext ( 0 , imax , leap );
@@ -129,8 +122,6 @@ _lowdisc_faurefstop ( );
 dim = 4;
 computed = [];
 _lowdisc_faurefstart ( dim );
-qs = _lowdisc_faurefbaseget ( );
-assert_checkequal ( qs , 5 );
 leap = 0;
 // Skip first term
 next = _lowdisc_faurefnext ( 0 , 1 , leap );

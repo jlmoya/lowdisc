@@ -1,4 +1,4 @@
-
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008 - INRIA - Michael Baudin
 // Copyright (C) 2009 - 2011 - Digiteo - Michael Baudin
 //
@@ -13,17 +13,13 @@ extern "C" {
 #include "gw_lowdisc.h"
 }
 
-/* ==================================================================== */
-
-
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
 #include "halton.h" 
 
-
-// quasi = _lowdisc_haltonfnext ( step , imax , leap )
+// quasi = _lowdisc_haltonfnext ( index , imax , leap )
 // Arguments
-// step: a 1-by-1 matrix of doubles, integer value
+// index: a 1-by-1 matrix of doubles, integer value
 //       The index of the first element in the sequence
 // imax: a 1-by-1 matrix of doubles, integer value
 //       The number of elements to generate
@@ -43,7 +39,7 @@ extern "C" {
 //   seed, seed+2, seed+4, etc...
 //
 int sci_lowdisc_haltonfnext (char *fname) {
-	int step;
+	int index;
 	int dim;
 	double * quasi = NULL;
 	int ierr;
@@ -55,8 +51,8 @@ int sci_lowdisc_haltonfnext (char *fname) {
 	CheckRhs(3,3);
 	CheckLhs(0,1);
 	//
-	// Get Arg #1: step
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &step );
+	// Get Arg #1: index
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &index );
 	if ( ierr==0 ) {
 		return 0;
 	}
@@ -83,17 +79,17 @@ int sci_lowdisc_haltonfnext (char *fname) {
 	lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi );
 	for ( k = 0; k < imax; k++ )
 	{
-		halton ( step , next );
+		halton_next ( index , next );
 		for(i=0; i<dim; i++) 
 		{
 			*(quasi + i * imax + k) = next[i];
 		}
-		step = step + 1;
+		index = index + 1;
 		if ( leap > 0 ) 
 		{
 			// Leap over (i.e. ignore) as many elements as required
-			// Directly set the step.
-			step = step + leap;
+			// Directly set the index.
+			index = index + leap;
 		}
 	}
 	free(next);

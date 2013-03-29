@@ -1,3 +1,4 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2009-2010 - Digiteo - Michael Baudin
 //
 // This file must be used under the terms of the GNU Lesser General Public License license
@@ -31,7 +32,7 @@ int * revhal_base = NULL;
 
 //
 // Private functions
-double vdcinv ( int iter , int b );
+double vdcinv ( int index , int b );
 
 //  reversehalton --
 //     computes the next element in a reverse Halton subsequence.
@@ -42,10 +43,10 @@ double vdcinv ( int iter , int b );
 //
 //  Parameters:
 //
-//    Input, int iter, the current iteration index
+//    Input, int index, the current iteration index
 //    Output, double next[dim], the next element of the reverse Halton sequence.
 //
-void reversehalton ( int iter, double next[] )
+void reversehalton ( int index, double next[] )
 {
 	int b;
 	int idim;
@@ -66,29 +67,29 @@ void reversehalton ( int iter, double next[] )
 	for ( idim = 0; idim < revhal_dim; idim++ )
 	{
 		b = revhal_base [idim];
-		next[idim] = vdcinv ( iter , b );
+		next[idim] = vdcinv ( index , b );
 	}
 	return;
 }
 //***************************************************************************
 //
 // vdcinv --
-//   Returns the term #iter of the inverted Van Der Corput low discrepancy sequence in 
+//   Returns the term #index of the inverted Van Der Corput low discrepancy sequence in 
 //   given base.
 //
-// Paramters
-//   iter, input : the index in the sequence
-//   base, input : the base of the sequence
-//   vdcinv, output : the next element in the sequence, uniform in [0,1]
+// Parameters
+//   index, input : the index in the sequence, index>=0
+//   base, input : the base of the sequence, base>=2 (base must be a prime number)
+//   vdcinv, output : the next element in the sequence, in [0,1]
 //
-double vdcinv ( int iter , int b )
+double vdcinv ( int index , int b )
 {
 	double result;
 	int current;
 	// ib = inverse of the base : 1/b, 1/b^2, 1/b^3, etc...
 	double ib;
 	int digit;
-	current = iter;
+	current = index;
 	ib = 1.0 / (double) b;
 	result = 0.0;
 	while (current>0)

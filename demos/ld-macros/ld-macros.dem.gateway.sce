@@ -6,6 +6,7 @@ demopath = get_absolute_file_path("ld-macros.dem.gateway.sce");
 subdemolist = [
 "Van Der Corput", "macros-vandercorput.sce"; ..
 "Halton", "macros-halton.sce"; ..
+"Halton-RR2", "macros-halton-RR2.sce"; ..
 "Sobol", "macros-sobol.sce"; ..
 "Faure", "macros-faure.sce"; ..
 "Niederreiter2", "macros-niederreiter2.sce"; ..
