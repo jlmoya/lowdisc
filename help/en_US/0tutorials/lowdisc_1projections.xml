@@ -2,6 +2,11 @@
 <!--
  * Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
  * This file is released under the terms of the GNU LGPL license.
+ *
+ * Reminder:
+ * &lt;	less than (i.e. <)
+ * &#8804;	less-than or equal to (i.e. <=)
+ * &#8805;	greater-than or equal to (i.e. >=)
 -->
 <refentry version="5.0-subset Scilab" xml:id="lowdisc_projections" xml:lang="fr"
           xmlns="http://docbook.org/ns/docbook"
@@ -22,7 +27,12 @@
 
     <para>
       The goal of this page is to gather experiments showing bad 2D projections
-      for low disrepancy sequences.
+      for low disrepancy sequences. 
+	  These tests suggest that the Sobol sequence is better 
+	  for small dimensions (s&lt;25), the Faure sequence 
+	  is better for large dimensions (s>25) and that the scrambled 
+	  Halton sequence is generally better than a classical Halton 
+	  sequence.
     </para>
 
   </refsection>
@@ -85,15 +95,13 @@ corrcoef ( [u(:,28) u(:,29)] )
     </para>
 
     <para>
-      See our Leaped - Halton projection.
-      We check what is the behavior with the favorable parameters and
-      disable the <literal>strict</literal> option.
+      See our Leaped - Halton sequence.
       There is no obvious problem anymore.
     </para>
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 4096 , 29 , "halton" , %f);
+u=lowdisc_ldgen ( 4096 , 29 , "halton-leaped");
 scf(); 
 lowdisc_proj2d ( u , [28 29] );
    ]]>
@@ -165,7 +173,7 @@ corrcoef ( [u(:,39) u(:,40)] )
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 2000 , 40 , "halton" , %f );
+u=lowdisc_ldgen ( 2000 , 40 , "halton-leaped");
 scf();
 lowdisc_proj2d ( u , [39 40] );
    ]]>
@@ -234,7 +242,7 @@ lowdisc_proj2d ( u , k );
 
     <para>
       In the following example, we search for the worst
-      projection of the Faure sequence in dimension 40.
+      projection of 2000 points of the Faure sequence in dimension 40.
       The worst projection is relatively good, which
       indicates how Faure's sequence is much better than Halton's sequence.
     </para>
@@ -270,7 +278,8 @@ lowdisc_proj2d ( u , k );
     </para>
 
     <para>
-      In the following example, we consider the Faure sequence in dimension 40,
+      In the following example, we consider 300 points of the Faure 
+	  sequence in dimension 40,
       and consider the projection (39,40)
       as in "Computational Investigations of Low-Discrepancy Sequences",
       Kocis, Whiten,
@@ -299,16 +308,24 @@ lowdisc_proj2d ( u , [39 40] );
     </para>
 
     <para>
-      We check what is the behavior with the favorable parameters and 
-      disable the <literal>strict</literal> option. 
+      We check what is the behavior with more favorable parameters. 
     </para>
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 300 , 40 , "faure" , %f);
+dim = 40;
+nsimmin = 300;
+lds = lowdisc_new("faure");
+lds = lowdisc_configure(lds,"-dimension",dim);
+base = lowdisc_get(lds,"-faureprime");
+[nsim,skip,leap] = lowdisc_fauresuggest ( dim , base , nsimmin );
+lds = lowdisc_configure(lds,"-skip",skip);
+lds = lowdisc_configure(lds,"-leap",leap);
+lds = lowdisc_startup (lds);
+[lds,u]=lowdisc_next(lds,nsim);
+lds = lowdisc_destroy(lds);
 scf();
 lowdisc_proj2d ( u , [39 40] );
-size(u)
    ]]>
   </programlisting>
 
@@ -326,7 +343,9 @@ size(u)
   </screen>
 
     <para>
-      The following figure shows that there are no correlation problem anymore.
+      The following figure shows that there the correlation problem 
+	  is greatly reduced, although the points seems to be located 
+	  on lines.
     </para>
 
     <para>
@@ -368,6 +387,244 @@ lowdisc_proj2d ( u , [39 40] );
         <imageobject>
           <imagedata
           fileref ="../figures/faure-n300-leaped-proj39-40.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Sobol Sequence</title>
+
+    <para>
+      In this section, we present some bad 2D projections of the Sobol sequence.
+    </para>
+
+    <para>
+      In the following example, we consider 1000 points of the  
+	  Sobol sequence in 23 dimensions and check the 
+	  projection (16,23).
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen(1000,30,"sobol");
+scf();
+lowdisc_proj2d(u,[16 23])
+xtitle("Sobol : 1000 points","X16","X23")
+   ]]>
+    </programlisting>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/sobol-s23-proj16-23.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      In the following example, we consider 
+	  1000 points of the Sobol sequence in 36 dimensions and 
+	  check the projection (11,36).
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen(1000,36,"sobol");
+scf();
+lowdisc_proj2d(u,[11 36])
+xtitle("Sobol : 1000 points","X11","X36")
+   ]]>
+    </programlisting>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/sobol-s36-proj11-36.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+  
+  <refsection>
+    <title>Niederreiter (base 2) Sequence</title>
+
+    <para>
+      In this section, we consider 1000 points of the 
+	  Niederreiter (base 2) sequence in 26 dimensions, 
+	  and consider the projection (25,26).
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen(1000,30,"niederreiter");
+scf();
+lowdisc_proj2d(u,[25 26])
+   ]]>
+  </programlisting>
+    
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="niederreiter-s30-n1000.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Two-dimensionnal correlations with increasing dimensions</title>
+
+    <para>
+      In this section, we present how the linear correlation 
+	  coefficient between dimensions of the sequence deteriorates 
+	  when the number of dimensions increases. 
+	  Given a number of dimensions and 1000 points, we are 
+	  interested in the worst 2D projection, as defined by 
+	  the largest correlation coefficient.
+    </para>
+
+    <para>
+      The following function test for low discrepancy sequences for 
+	  dimensions s from 2 to smax. 
+	  It generates a low discrepancy point set for n points and computes 
+	  the correlation coefficient between columns of the matrix. 
+	  Then the diagonal terms are set to zero and the largest entry is computed. 
+	  We assume here that this identifies the worst 2D projection. 
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+function m=worstCorrelation(n,smax,seqname)
+    for s=2:smax
+        u=lowdisc_ldgen(n,s,seqname);
+        c = corrcoef ( u );
+        m(s-1) = max(abs(c-eye(c)));
+    end
+endfunction
+   ]]>
+  </programlisting>
+
+    <para>
+      The following script tests the Halton, Sobol, Faure and Niederreiter (optimal base) 
+      sequences.	  
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+n=1000;
+smax=50;
+scf();
+m=worstCorrelation(n,smax,"halton");
+plot(2:smax,m,"r-")
+m=worstCorrelation(n,smax,"sobol");
+plot(2:smax,m,"b-")
+m=worstCorrelation(n,smax,"faure");
+plot(2:smax,m,"g-")
+m=worstCorrelation(n,smax,"niederreiter");
+plot(2:smax,m,"k-")
+legend(["Halton","Sobol","Faure",..
+"Niederreiter"]);
+a=gca();
+a.children(1).legend_location="in_upper_left";
+xtitle("1000 Points","Number of dimensions",..
+"Maximum Correlation Coefficient")
+   ]]>
+  </programlisting>
+  
+    <para>
+      The previous script produces following figure.
+      This shows that, according to this test, the Niederreiter 
+	  sequence in base 2 performs well for s&lt;15, but 
+	  rapidely deteriorates for s&#8805;15. 
+	  Notice that that optimal base of Niederreiter sequence is known 
+	  by our implementation only for s&lt;13. 
+	  As expected, the Halton sequence has poor 2D projections, 
+	  especially for s&#8805;20 where the correlation coefficient 
+	  becomes larger than 0.1. 
+	  The Sobol sequence is better than Halton, but can have poor 2D projections, 
+	  especially for s&#8805;35. 
+	  However, the projections for s&lt;25 are the best of this test. 
+	  The Faure sequence appears to be the most robust sequence in this 
+	  test for high dimensions.
+    </para>
+  
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="badcorr1.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      The following script tests various Halton 
+      sequences.	  
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+n=1000;
+smax=50;
+scf();
+m=worstCorrelation(n,smax,"halton");
+plot(2:smax,m,"r-")
+m=worstCorrelation(n,smax,"sobol");
+plot(2:smax,m,"b-")
+m=worstCorrelation(n,smax,"faure");
+plot(2:smax,m,"g-")
+m=worstCorrelation(n,smax,"niederreiter");
+plot(2:smax,m,"k-")
+legend(["Halton","Sobol","Faure",..
+"Niederreiter"]);
+a=gca();
+a.children(1).legend_location="in_upper_left";
+xtitle("1000 Points","Number of dimensions",..
+"Maximum Correlation Coefficient")
+   ]]>
+  </programlisting>
+  
+    <para>
+      The previous script produces following figure.
+      This shows that, according to this test, the Reverse Halton 
+	  sequence has almost the same poor 2D projections as the Halton 
+	  sequences (the two red lines are almost the same). 
+	  Our Leaped Halton sequence generally has better projections than Halton, 
+	  but can also have larger correlations (s=16, 24, 42). 
+	  The Scrambled (Kocis-Whiten) Halton sequence is the most robust 
+	  sequence in this test, at the exception of s=25, for which 
+	  the correlation is slightly larger. 
+	  These graphics suggest that the scrambled Halton sequence is the best of 
+	  this set of tests.
+    </para>
+  
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="badcorr2.png"
           align ="center"
           valign ="middle"
 			/>

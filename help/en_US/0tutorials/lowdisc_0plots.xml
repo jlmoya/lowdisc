@@ -247,6 +247,76 @@ xtitle("Halton: 1000 points","X1","X2")
   </refsection>
 
   <refsection>
+    <title>Scrambled (RR2) Halton Sequence</title>
+
+	<para>
+      The following script produces a scrambled Halton sequence, 
+	  with the permutation of Kocis and Whiten (RR2).
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 1000 , 2 , "halton-scrambled" );
+scf(); 
+plot(u(:,1),u(:,2),"bo")
+xtitle("Scrambled Halton: 1000 points","X1","X2")
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="halton-RR2-s2-n1000.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Leaped Halton Sequence</title>
+
+	<para>
+      The following script produces a leaped Halton sequence. 
+	  The leap is computed by <literal>lowdisc_haltonsuggest</literal>. 
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen ( 1000 , 2 , "halton-leaped" );
+scf(); 
+plot(u(:,1),u(:,2),"bo")
+xtitle("Leaped Halton: 1000 points","X1","X2")
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="halton-leaped-s2-n1000.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+  <refsection>
     <title>Reverse-Halton Sequence</title>
 
     <programlisting role="example">
