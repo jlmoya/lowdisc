@@ -58,11 +58,19 @@
         </listitem>
 
         <listitem>
-          <para>The Faure sequence.</para>
+          <para>The leaped Halton sequence.</para>
+        </listitem>
+
+        <listitem>
+          <para>The scrambled (Kocis-Whiten) Halton sequence.</para>
         </listitem>
 
         <listitem>
           <para>The Reverse Halton sequence of Vandewoestyne and Cools.</para>
+        </listitem>
+
+        <listitem>
+          <para>The Faure sequence.</para>
         </listitem>
 
         <listitem>
@@ -131,17 +139,16 @@ u=lowdisc_ldgen(20,4)
     </programlisting>
 
     <para>
-      Assume now that we want to use a Halton sequence, but with 
-	  favorable leap parameters. 
+      Assume now that we want to use a scrambled Halton sequence. 
 	  The following calling sequence creates a 
-	  leaped Halton sequence with 20 points in 4 dimensions. 
+	  scrambled Halton sequence with 20 points in 4 dimensions. 
 	  This may potentially reduce the correlations 
 	  which may appear in high dimensions.
     </para>
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen(20,4,"halton",%f)
+u=lowdisc_ldgen(20,4,"halton-scrambled")
    ]]>
     </programlisting>
 

@@ -26,8 +26,6 @@
    <synopsis>
    u=lowdisc_ldgen(callf,n)
    u=lowdisc_ldgen(callf,n,ldseq)
-   u=lowdisc_ldgen(callf,n,ldseq,strict)
-   [u,evalf]=lowdisc_ldgen(...)
    
    </synopsis>
 </refsynopsisdiv>
@@ -40,13 +38,11 @@
    <varlistentry><term>n:</term>
       <listitem><para> a 1-by-1 matrix of floating point integers, the spatial dimension.</para></listitem></varlistentry>
    <varlistentry><term>ldseq :</term>
-      <listitem><para> a 1-by-1 matrix of strings, the name of the sequence (default <literal>ldseq = "sobol"</literal>). The name can be equal to : <literal>"halton"</literal>, <literal>"faure"</literal>, <literal>"reversehalton"</literal>, <literal>"sobol"</literal>, <literal>"niederreiter"</literal>. See below for details.</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of strings, the name of the sequence (default <literal>ldseq = "sobol"</literal>). The name can be equal to : <literal>"halton"</literal>, <literal>"faure"</literal>, <literal>"reversehalton"</literal>, <literal>"sobol"</literal>, <literal>"niederreiter"</literal>, <literal>"halton-leaped"</literal>, <literal>"halton-scrambled"</literal>. See below for details.</para></listitem></varlistentry>
    <varlistentry><term>strict :</term>
       <listitem><para> a 1-by-1 matrix of boolean, set to %f to use potentially favorable parameters (default = %t).</para></listitem></varlistentry>
    <varlistentry><term>u :</term>
-      <listitem><para> a evalf-by-n matrix of doubles, the uniform random numbers in <literal>[0,1]^n</literal>.</para></listitem></varlistentry>
-   <varlistentry><term>evalf :</term>
-      <listitem><para> a 1-by-1 matrix of floating point integers, the actual number of function evaluations. We have <literal>evalf==callf</literal> if strict is true and <literal>evalf &gt;= callf</literal> if strict is false.</para></listitem></varlistentry>
+      <listitem><para> a callf-by-n matrix of doubles, the uniform random numbers in <literal>[0,1]^n</literal>.</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
@@ -57,99 +53,51 @@ In dimension n, this function generates <literal>callf</literal> experiments wit
 the low discrepancy sequence <literal>ldseq</literal>.
    </para>
    <para>
-Returns the number of suggested function evaluations <literal>evalf</literal>
-and the uniform numbers u in <literal>[0,1]^n</literal>.
+Returns the numbers u in <literal>[0,1]^n</literal>.
    </para>
    <para>
-Depending on the value of <literal>strict</literal>, the function
-uses different values of <literal>evalf</literal>, <literal>skip</literal>
-and <literal>leap</literal>.
-   </para>
-   <para>
-If <literal>strict</literal> is true (the default), then
 <itemizedlist>
 <listitem>
 <para>
-the required number of simulations <literal>callf</literal> is used,
-i.e. <literal>evalf=callf</literal>,
+"halton": the Halton sequence.
 </para>
 </listitem>
 <listitem>
 <para>
-<literal>skip=0</literal>,
+"halton-leaped": a leaped Halton sequence.
+For dimension less or equal to 999, the leap value is p-1,
+where p is the (dim+1)-th prime number.
+If not we return leap = 0.
 </para>
 </listitem>
 <listitem>
 <para>
-<literal>leap=0</literal>.
+"halton-scrambled": a scrambled Halton sequence,
+with the permutation used in Kocis and Whiten (RR2).
+</para>
+</listitem>
+<listitem>
+<para>
+"faure": the Faure sequence.
+</para>
+</listitem>
+<listitem>
+<para>
+"reversehalton": the Reverse Halton sequence
+of Vandewoestyne and Cools.
+</para>
+</listitem>
+<listitem>
+<para>
+"faure": the Faure sequence.
+</para>
+</listitem>
+<listitem>
+<para>
+"niederreiter": the Niederreiter sequence with optimal base.
 </para>
 </listitem>
 </itemizedlist>
-   </para>
-   <para>
-If <literal>strict</literal> is false, then
-<itemizedlist>
-<listitem>
-<para>
-a potentially favorable number of simulations <literal>evalf</literal> is used,
-</para>
-</listitem>
-<listitem>
-<para>
-a potentially favorable value of <literal>skip</literal> is used,
-</para>
-</listitem>
-<listitem>
-<para>
-a potentially favorable value of <literal>leap</literal> is used.
-</para>
-</listitem>
-</itemizedlist>
-   </para>
-   <para>
-In general, using <literal>strict=%f</literal>
-may produce a set of points with greater quality.
-On the other hand, the value of <literal>evalf</literal> may be much larger
-than the value of <literal>callf</literal>, so that, in practice,
-it may be necessary to use <literal>strict=%t</literal>.
-   </para>
-   <para>
-If <literal>strict=%f</literal>, the actual behavior depends on the sequence.
-<itemizedlist>
-<listitem>
-<para>
-Halton: we use the values computed by <literal>lowdisc_haltonsuggest</literal>.
-</para>
-</listitem>
-<listitem>
-<para>
-Faure: we use the values computed by <literal>lowdisc_fauresuggest</literal>.
-</para>
-</listitem>
-<listitem>
-<para>
-Sobol: we use <literal>evalf=2^ceil(log2(callf))</literal>,
-<literal>skip=0</literal> and <literal>leap=0</literal>.
-We do not use <literal>lowdisc_sobolsuggest</literal> which may compute
-excessively large number of simulations.
-</para>
-</listitem>
-<listitem>
-<para>
-Niederreiter: we use the values computed by <literal>lowdisc_niedersuggest</literal>.
-</para>
-</listitem>
-<listitem>
-<para>
-Reverse-Halton: we use <literal>evalf=callf</literal>,
-<literal>skip=0</literal> and <literal>leap=0</literal>.
-</para>
-</listitem>
-</itemizedlist>
-   </para>
-   <para>
-The sequences which are available are described in depth in
-the <literal>lowdisc_new</literal> function.
    </para>
    <para>
 </para>

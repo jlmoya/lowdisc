@@ -19,7 +19,7 @@ The current prototype has the following features :
  * object oriented programming.
 
 Overview of sequences
- * The Halton sequence,
+ * The Halton sequence (leaped, scrambled),
  * The Sobol sequence,
  * The Faure sequence,
  * The Reverse Halton sequence of Vandewoestyne and Cools,
@@ -51,13 +51,6 @@ Sequences:
  * lowdisc_new : Create a new object.
  * lowdisc_next : Returns the next term of the sequence
  * lowdisc_startup : Startup the sequence.
- 
-Macro Generators:
- * lowdisc_haltonnext : Returns the next element of the Halton sequence.
- * lowdisc_sobolnext : Generates a new quasirandom Sobol vector.
- * lowdisc_sobolskip : Skip elements in the Sobol sequence.
- * lowdisc_sobolstart : Initialize the Sobol sequence.
- * lowdisc_vandercorput : Returns the i-th term of the Van Der Corput sequence.
  
 Static Functions:
  * lowdisc_methods : Returns available sequences.

@@ -91,25 +91,22 @@ function u=lowdisc_ldgen( varargin )
     // Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 
     [lhs, rhs] = argn()
-    apifun_checkrhs ( "lowdisc_ldgen" , rhs , 2:4 )
-    apifun_checklhs ( "lowdisc_ldgen" , lhs , 1:2 )
+    apifun_checkrhs ( "lowdisc_ldgen" , rhs , 2:3 )
+    apifun_checklhs ( "lowdisc_ldgen" , lhs , 1:1 )
     //
     callf = varargin(1)
     n = varargin(2)
     ldseq = apifun_argindefault ( varargin , 3 , "sobol" )
-    strict = apifun_argindefault ( varargin , 4 , %t )
     //
     // Check type
     apifun_checktype ( "lowdisc_ldgen" , callf , "callf" , 1 , "constant" )
     apifun_checktype ( "lowdisc_ldgen" , n , "n" , 2, "constant" )
     apifun_checktype ( "lowdisc_ldgen" , ldseq , "ldseq" , 3, "string" )
-    apifun_checktype ( "lowdisc_ldgen" , strict , "strict" , 4, "boolean" )
     //
     // Check size
     apifun_checkscalar ( "lowdisc_ldgen" , callf , "callf" , 1 )
     apifun_checkscalar ( "lowdisc_ldgen" , n , "n" , 2 )
     apifun_checkscalar ( "lowdisc_ldgen" , ldseq , "ldseq" , 3 )
-    apifun_checkscalar ( "lowdisc_ldgen" , strict , "strict" , 4 )
     //
     // Check content
     apifun_checkflint ( "lowdisc_ldgen" , callf , "callf" , 1 )
