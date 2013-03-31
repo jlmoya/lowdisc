@@ -45,6 +45,7 @@ lowdisc (Not released yet)
    http://forge.scilab.org/index.php/p/lowdisc/issues/1121/
    This can be done with the lowdisc_configure(lds,"-scrambling","RR2") 
    option for the Halton sequence.
+ * Fixed bug #1131: Sobol should use doubles.
  * Fixed bug #1132
    internal _lowdisc_*get functions are unnecessary
    http://forge.scilab.org/index.php/p/lowdisc/issues/1132/

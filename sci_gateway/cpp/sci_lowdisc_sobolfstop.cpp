@@ -1,6 +1,6 @@
-
-// Copyright (C) 2008 - INRIA - Michael Baudin
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2009-2010 - Digiteo - Michael Baudin
+// Copyright (C) 2008 - INRIA - Michael Baudin
 //
 // This file must be used under the terms of the GNU Lesser General Public License license :
 // http://www.gnu.org/copyleft/lesser.html
@@ -17,7 +17,7 @@ extern "C" {
 
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
-#include "sobol_i4.h"
+#include "sobol_i8.h"
 
 
 // _lowdisc_sobolfstop ( )
@@ -27,7 +27,7 @@ int sci_lowdisc_sobolfstop (char *fname) {
 	CheckRhs(0,0) ;
 	CheckLhs(0,1) ;
 
-	i4_sobol_stop ( );
+	i8_sobol_stop ( );
 	lowdisc_CreateLhsInteger ( 1 , 0 );
 	return 0;
 }

@@ -23,7 +23,6 @@ function lowdiscBuildSrcCpp()
     "halton.cpp"
     "niederreiter.cpp"
     "reversehalton.cpp"
-    "sobol_i4.cpp"
     "sobol_i8.cpp"
     "lowdisc_math.cpp"
     ];

@@ -1,6 +1,6 @@
-
-// Copyright (C) 2008 - INRIA - Michael Baudin
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2009-2010 - Digiteo - Michael Baudin
+// Copyright (C) 2008 - INRIA - Michael Baudin
 //
 // This file must be used under the terms of the GNU Lesser General Public License license :
 // http://www.gnu.org/copyleft/lesser.html
@@ -18,7 +18,7 @@ extern "C" {
 
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
-#include "sobol_i4.h"
+#include "sobol_i8.h"
 
 
 // quasi = _lowdisc_sobolfnext ( seed , imax , leap )
@@ -46,12 +46,16 @@ extern "C" {
 int sci_lowdisc_sobolfnext (char *fname) {
 	int dim;
 	int seed = 0;
-	float * next = NULL;
+	// next : an array [0,1,...,dim-1]
+	double * next = NULL;
+	// next : an array [0,1,...,(dim-1)(imax-1)]
+	// Organized column-by-column
 	double *quasi = NULL; //SCILAB return quasi
 	int i, k;
 	int ierr;
 	int imax = 0;
 	int leap = 0;
+	long long int longseed;
 
 	CheckRhs(3,3) ;
 	CheckLhs(0,1) ;
@@ -71,22 +75,23 @@ int sci_lowdisc_sobolfnext (char *fname) {
 		return 0;
 	}
 	// Proceed...
-	dim = i4_sobol_dimget ( );
-	next = (float *)malloc(dim*sizeof(float));
+	dim = i8_sobol_dimget ( );
+	next = (double *)malloc(dim*sizeof(double));
+	longseed = (long long int) seed;
 	lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi );
 	for ( k = 0; k < imax; k++ )
 	{
 		// Call Sobol sequence
-		i4_sobol ( & seed , next );
+		i8_sobol ( & longseed , next );
 		for(i=0; i<dim; i++) 
 		{
-			*(quasi + i * imax + k) = (double)next[i];
+			*(quasi + i * imax + k) = next[i];
 		}
 		if ( leap > 0 ) 
 		{
 			// Leap over (i.e. ignore) as many elements as required
 			// Directly set the index.
-			seed = seed + leap;
+			longseed = longseed + leap;
 		}
 	}
 	free(next);

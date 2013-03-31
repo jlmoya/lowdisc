@@ -41,7 +41,7 @@ void i8_sobol_stop ( );
 //    I8_SOBOL generates a new quasirandom Sobol vector with each call.
 //    This function is able to generate at most 2^62-1 = 4 611 686 018 427 387 903
 //    experiments in dimension 1111.
-void i8_sobol ( int dim_num, long long int *seed, double quasi[ ] );
+void i8_sobol ( long long int *seed, double quasi[ ] );
 
 // i8_sobol_dimget : Returns the dimension.
 int i8_sobol_dimget ( );
