@@ -8,7 +8,9 @@
  * &#8804;	less-than or equal to (i.e. <=)
  * &#8805;	greater-than or equal to (i.e. >=)
 -->
-<refentry version="5.0-subset Scilab" xml:id="lowdisc_projections" xml:lang="fr"
+<refentry version="5.0-subset Scilab" 
+          xml:id="lowdisc_projections" 
+		  xml:lang="fr"
           xmlns="http://docbook.org/ns/docbook"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           xmlns:svg="http://www.w3.org/2000/svg"

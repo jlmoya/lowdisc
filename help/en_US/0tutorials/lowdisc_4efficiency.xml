@@ -94,7 +94,6 @@ a=gca();
 a.log_flags="lln";
 xtitle("Convergence rate","Number of Simulations",..
 "Absolute Error");
-
    ]]>
     </programlisting>
 
