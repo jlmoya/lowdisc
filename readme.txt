@@ -19,7 +19,7 @@ The current prototype has the following features :
  * object oriented programming.
 
 Overview of sequences
- * The Halton sequence (leaped, scrambled),
+ * The Halton sequence (classic, leaped or scrambled),
  * The Sobol sequence,
  * The Faure sequence,
  * The Reverse Halton sequence of Vandewoestyne and Cools,
