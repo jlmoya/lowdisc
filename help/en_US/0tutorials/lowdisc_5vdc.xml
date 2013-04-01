@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ * Copyright (C) 2013 - Michael Baudin
+ * This file is released under the terms of the GNU LGPL license.
+ *
+ * Reminder:
+ * &lt;	less than (i.e. <)
+ * &#8804;	less-than or equal to (i.e. <=)
+ * &#8805;	greater-than or equal to (i.e. >=)
+-->
+<refentry version="5.0-subset Scilab"
+          xml:id="lowdisc_theoryvdc"
+		  xml:lang="fr"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns4="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <refnamediv>
+    <refname>The Van Der Corput sequence</refname>
+
+    <refpurpose>Introduction to Van Der Corput sequence</refpurpose>
+  </refnamediv>
+
+  <refsection>
+    <title>Purpose</title>
+
+    <para>
+      The goal of this page is to present elements of the theory
+      of the Van Der Corput sequence.
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Van Der Corput Sequence</title>
+
+    <para>
+      Let k&#8805;0 be an integer and let b be a prime number.
+      We decompose k into base b:
+    </para>
+
+    <para>
+      <latex>
+        k=a_r b^r + ...+ a_2 b^2 + a_1 b + a_0
+      </latex>
+    </para>
+
+    <para>
+      where r is the number of digits required in the decomposition. 
+    </para>
+
+    <para>
+      We can also write this decomposition as the sum:
+    </para>
+
+    <para>
+      <latex>
+        k=\sum_{i=0}^r a_i b^i.
+      </latex>
+    </para>
+
+    <para>
+      The radical inverse function is
+    </para>
+
+    <para>
+      <latex>
+        \psi_b(k)=\sum_{i=0}^r \frac{a_{i}}{b^{i+1}}.
+      </latex>
+    </para>
+
+    <para>
+      This can be expanded in:
+    </para>
+
+    <para>
+      <latex>
+        \psi_b(k)=\frac{a_0}{b} + \frac{a_1}{b^2} + .. + \frac{a_r}{b^{r+1}}.
+      </latex>
+    </para>
+
+    <para>
+      In this function, the low order digits of k (with low values of i)
+      are in the high order digits of the radical inverse
+      (with large values of powers of 1/b).
+    </para>
+
+    <para>
+      The base-b Van Der Corput sequence is
+    </para>
+
+    <para>
+      <latex>
+        \psi_b(0), \psi_b(1), \psi_b(2), ...
+      </latex>
+    </para>
+
+    <para>
+      Notice that
+    </para>
+
+    <para>
+      <latex>
+        \psi_b(0)=0.
+      </latex>
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Examples</title>
+    <para>
+      The following function defines the base-b Van Der Corput sequence.
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+function r = vandercorput ( i , b )
+    current = i
+    ib = 1.0 / b
+    r = 0.0
+    while (current>0)
+        digit = modulo ( current , b )
+        current = int ( current / b )
+        r = r + digit * ib
+        ib = ib / b
+    end
+endfunction
+   ]]>
+    </programlisting>
+
+    <para>
+      The following script considers the numbers k from
+      zero to 9, decompose them in base 2 and compute the
+      k-th element of the Van Der Corput sequence in base 2.
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+b=2;
+for k=0:9
+    d=number_tobary(k,b);
+    dstr=strcat(string(d),",");
+    r=vandercorput(k,b);
+    mprintf("%d [%s] %f\n",k,dstr,r)
+end
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <screen>
+      <![CDATA[
+0 [0] 0.000000
+1 [1] 0.500000
+2 [1,0] 0.250000
+3 [1,1] 0.750000
+4 [1,0,0] 0.125000
+5 [1,0,1] 0.625000
+6 [1,1,0] 0.375000
+7 [1,1,1] 0.875000
+8 [1,0,0,0] 0.062500
+9 [1,0,0,1] 0.562500
+   ]]>
+    </screen>
+
+    <para>
+      For example, the integer k=6 decomposes as 110 in base 2.
+      Its inverse is 0.011 in base 2, which is associated to
+      the radical inverse value 0/2+1/4+1/8=0.375.
+    </para>
+
+    <para>
+      In base 2, the lowest order digits are alternatively 0, 1, 0, etc...
+      This is why the radical inverse in base 2 is alternatively lower
+      and greater than 1/2.
+    </para>
+
+    <para>
+      Here is the same script in base b=3.
+    </para>
+
+    <screen>
+      <![CDATA[
+0 [0] 0.000000
+1 [1] 0.333333
+2 [2] 0.666667
+3 [1,0] 0.111111
+4 [1,1] 0.444444
+5 [1,2] 0.777778
+6 [2,0] 0.222222
+7 [2,1] 0.555556
+8 [2,2] 0.888889
+9 [1,0,0] 0.037037
+   ]]>
+    </screen>
+
+  </refsection>
+
+  <refsection>
+    <title>Halton Sequence</title>
+
+    <para>
+      The Halton sequence in s dimensions uses s primes 
+      numbers. 
+      Although this is not required by the theory, we usually 
+      use the s first prime numbers: 2, 3, 5, 7, 11, etc...
+    </para>
+
+    <para>
+      Denote by p(i) the i-th prime number. 
+      The dimension i of the Halton sequence is 
+      the Van Der Corput in base p(i).
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+s=4;
+p=number_primes100();
+for k=1:10
+    for j=1:s
+        x(j)=vandercorput(k,p(j));
+    end
+    xstr=strcat(string(x),",");
+    mprintf("k=%d, [%s]\n",k,xstr);
+end
+   ]]>
+    </programlisting>
+
+    <para>
+      The following script produces 10 points of the Halton sequence
+      in 4 dimensions.
+      The prime number used here are: 2, 3, 5, 7.
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+k=1, [0.5,0.3333333,0.2,0.1428571]
+k=2, [0.25,0.6666667,0.4,0.2857143]
+k=3, [0.75,0.1111111,0.6,0.4285714]
+k=4, [0.125,0.4444444,0.8,0.5714286]
+k=5, [0.625,0.7777778,0.04,0.7142857]
+k=6, [0.375,0.2222222,0.24,0.8571429]
+k=7, [0.875,0.5555556,0.44,0.0204082]
+k=8, [0.0625,0.8888889,0.64,0.1632653]
+k=9, [0.5625,0.0370370,0.84,0.3061224]
+k=10, [0.3125,0.3703704,0.08,0.4489796]
+   ]]>
+    </programlisting>
+
+  </refsection>
+  
+  <refsection>
+    <title>Bibliography</title>
+
+    <para>
+      "Monte-Carlo methods in Financial Engineering", Paul Glasserman,
+      Springer, 2003
+    </para>
+
+    <para>
+      "Algorithm 247: Radical-inverse quasi-random point sequence", J. H.
+      Halton, 1964. Commun. ACM 7, 12 (Dec. 1964), 701-702
+    </para>
+
+  </refsection>
+</refentry>
+
