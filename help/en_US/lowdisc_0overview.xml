@@ -59,7 +59,8 @@
         </listitem>
 
         <listitem>
-          <para>The scrambled (Kocis-Whiten) Halton sequence.</para>
+          <para>The scrambled Halton sequence of Kocis and Whiten 
+		  ("Reverse Radix" or "RR2").</para>
         </listitem>
 
         <listitem>

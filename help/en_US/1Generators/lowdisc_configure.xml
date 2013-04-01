@@ -136,7 +136,7 @@ we can configure the scrambling as following.
 <listitem>
 <para>
 <literal>"-scrambling"</literal> : a 1-by-1 matrix of strings, the empty string "" (no scrambling),
-or "RR2" for the scrambling (digit permutation) of Kocis-Whiten [1].
+or "RR2" for the scrambling ("Reverse-Radix") of Kocis-Whiten [1].
 The "RR2" scrambling can improve the correlation in high dimensions,
 leading to better low-dimensionnal projects.
 </para>
