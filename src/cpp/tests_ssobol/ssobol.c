@@ -14,9 +14,13 @@ http://www.netlib.org/f2c/libf2c.zip
 #include <stdlib.h>
 
 int exor_(int *iin, int *jin);
-int genscrml_(int *max__, int *lsm, int *shift);
+int genscrml_(int *maxd, int *lsm, int *shift);
 int genscrmu_(int *usm, int *ushift);
 double uni_(void);
+
+static int ssobol_poly[39] = {3, 7, 11, 13, 19, 25, 37, 59, 47, 61, 55, 41, 67, 97, 91, 
+	109, 103, 115, 131, 193, 137, 145, 143, 241, 157, 185, 167, 229, 
+	171, 213, 191, 253, 203, 211, 239, 247, 285, 369, 299};
 
 /* Common Block Declarations */
 
@@ -141,7 +145,7 @@ double pow_ri(double *ap, int *bp)
 
 
 /* Subroutine */ int inssobl_(int *flag__, int *dimen, int *
-	atmost, int *taus, double *quasi, int *max__, int *
+	atmost, int *taus, double *quasi, int *maxd, int *
 	iflag)
 {
 	/* Initialized data */
@@ -267,7 +271,7 @@ L10:
 		/*     (SEE COMMENTS TO "BDSOBL") */
 		/*     FIND DEGREE OF POLYNOMIAL I FROM BINARY ENCODING */
 
-		j = sobdat_1.poly[i__ - 2];
+		j = ssobol_poly[i__ - 2];
 		m = 0;
 L30:
 		j /= 2;
@@ -279,7 +283,7 @@ L30:
 		/*     WE EXPAND THIS BIT PATTERN TO SEPARATE COMPONENTS */
 		/*     OF THE LOGICAL ARRAY INCLUD. */
 
-		j = sobdat_1.poly[i__ - 2];
+		j = ssobol_poly[i__ - 2];
 		for (k = m; k >= 1; --k) {
 			includ[k - 1] = j % 2 == 1;
 			j /= 2;
@@ -354,14 +358,14 @@ L30:
 		ll = pow_ri(&c_b15, &sobol_1.maxcol);
 	} else {
 		if (*iflag == 1 || *iflag == 3) {
-			genscrml_(max__, lsm, shift);
+			genscrml_(maxd, lsm, shift);
 			i__1 = sobol_1.s;
 			for (i__ = 1; i__ <= i__1; ++i__) {
 				i__2 = sobol_1.maxcol;
 				for (j = 1; j <= i__2; ++j) {
 					l = 1;
 					temp2 = 0;
-					for (p = *max__; p >= 1; --p) {
+					for (p = *maxd; p >= 1; --p) {
 						temp1 = 0;
 						i__3 = sobol_1.maxcol;
 						for (k = 1; k <= i__3; ++k) {
@@ -380,14 +384,14 @@ L30:
 				}
 				/* L230: */
 			}
-			ll = pow_ri(&c_b15, max__);
+			ll = pow_ri(&c_b15, maxd);
 		}
 		if (*iflag == 2 || *iflag == 3) {
 			genscrmu_(usm, ushift);
 			if (*iflag == 2) {
 				maxx = sobol_1.maxcol;
 			} else {
-				maxx = *max__;
+				maxx = *maxd;
 			}
 			i__1 = sobol_1.s;
 			for (i__ = 1; i__ <= i__1; ++i__) {
@@ -468,7 +472,7 @@ L30:
 	return 0;
 } /* inssobl_ */
 
-/* Subroutine */ int genscrml_(int *max__, int *lsm, int *shift)
+/* Subroutine */ int genscrml_(int *maxd, int *lsm, int *shift)
 {
 	/* System generated locals */
 	int i__1;
@@ -493,7 +497,7 @@ L30:
 	for (p = 1; p <= i__1; ++p) {
 		shift[p] = 0;
 		l = 1;
-		for (i__ = *max__; i__ >= 1; --i__) {
+		for (i__ = *maxd; i__ >= 1; --i__) {
 			lsm[p + i__ * 40] = 0;
 			stemp = (int) (uni_() * 1e3f) % 2;
 			shift[p] += stemp * l;
@@ -759,7 +763,7 @@ typedef struct
 /* Main program */ int main(void)
 {
 	/* Local variables */
-	int i, j, sam, max__;
+	int i, j, sam, maxd;
 	int flag__[2];
 	int taus, iflag, dimen;
 	double quasi[40];
@@ -777,11 +781,15 @@ typedef struct
 	/*        IFLAG = 3 : Owen + Faure-Tezuka type Scrambling */
 
 	sam = 1;
-	max__ = 30;
-	dimen = 2;
-	iflag = 1;
+	maxd = 30;
+	dimen = 6;
+	iflag = 2;
 	atmost = 50;
-	inssobl_(flag__, &dimen, &atmost, &taus, quasi, &max__, &iflag);
+	printf("iflag=%d\n",iflag);
+	printf("atmost=%d\n",atmost);
+	printf("dimen=%d\n",dimen);
+	printf("maxd=%d\n",maxd);
+	inssobl_(flag__, &dimen, &atmost, &taus, quasi, &maxd, &iflag);
 	for (i = 2; i <= atmost; i++) {
 		gossobl_(quasi);
 		printf("quasi(%d)=",i);
