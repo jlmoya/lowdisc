@@ -1,21 +1,22 @@
-/* ssobol.f -- translated by f2c (version 20100827).
-You must link the resulting object file with libf2c:
-on Microsoft Windows system, link with libf2c.lib;
-on Linux or Unix systems, link with .../path/to/libf2c.a -lm
-or, if you install libf2c.a in a standard place, with -lf2c -lm
--- in that order, at the end of the command line, as in
-cc *.o -lf2c -lm
-Source for libf2c is in /netlib/f2c/libf2c.zip, e.g.,
+// Copyright (C) 2013 - Michael Baudin
+//
+// This file must be used under the terms of the 
+// GNU Lesser General Public License license
+// http://www.gnu.org/copyleft/lesser.html
 
-http://www.netlib.org/f2c/libf2c.zip
-*/
+// Reference:
+// http://www.netlib.org/toms/823
+// ALGORITHM 823, COLLECTED ALGORITHMS FROM ACM.
+// THIS WORK PUBLISHED IN TRANSACTIONS ON MATHEMATICAL SOFTWARE,
+// VOL. 29,NO. 2,      June, 2003, P.   95--109.
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 int exor_(int *iin, int *jin);
-int genscrml_(int *maxd, int *lsm, int *shift);
-int genscrmu_(int *usm, int *ushift);
+int genscrml_(int *maxd, int lsm[][31], int *shift);
+int genscrmu_(int usm[][31], int *ushift);
 double uni_(void);
 int lbit_bits(int a, int b, int len);
 
@@ -34,7 +35,9 @@ static int ssobol_count;
 static int ssobol_s;
 static int ssobol_sv[40][31];
 static int ssobol_tau[13] = { 0,0,1,3,5,8,11,15,19,23,27,31,35 };
+static unsigned int ssobol_unifseed = 0;
 
+// CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 
 /*     INITIALIZES LABELLED COMMON /SOBDAT/ */
 /*     FOR "INSOBL". */
@@ -64,18 +67,19 @@ int ssobol_startup(int dimen, int atmost, int *taus, double *quasi, int *maxd, i
 
 
 	/* System generated locals */
-	int i__4;
-	double r__1;
+	int i4;
 
 	/* Local variables */
-	static int i, j, k, l, m, p;
-	static int v[1240]	/* was [40][31] */;
-	static double ll;
-	static double pp;
-	static int tv[38440]	/* was [40][31][31] */, lsm[1240]	/* was [40][31] */, usm[961]	/* was [31][31] */;
-	static int maxx, newv, temp1, temp2, temp3, temp4, shift[40];
-	static int includ[8];
-	static int ushift[31];
+	int i, j, k, l, m, p;
+	int v[40][31];
+	double ll;
+	int pp;
+	int tv[40][31][31];
+	int lsm[40][31];
+	int usm[31][31];
+	int maxx, newv, temp1, temp2, temp3, temp4, shift[40];
+	int includ[8];
+	int ushift[31];
 
 
 	/*     THIS IS MODIFIED ROUTINE OF "INSOBL". */
@@ -175,7 +179,7 @@ L10:
 	/*     INITIALIZE ROW 1 OF V */
 
 	for (i = 1; i <= ssobol_maxcol; ++i) {
-		v[i * 40 - 40] = 1;
+		v[0][i-1] = 1;
 	}
 
 	/*     INITIALIZE REMAINING ROWS OF V */
@@ -207,27 +211,28 @@ L30:
 		/*     THE LEADING ELEMENTS OF ROW I COME FROM VINIT */
 
 		for (j = 1; j <= m; ++j) {
-			v[i + j * 40 - 41] = ssobol_vinit[i-1][j-1];
+			v[i-1][j-1] = ssobol_vinit[i-1][j-1];
 		}
 
 		/*     CALCULATE REMAINING ELEMENTS OF ROW I AS EXPLAINED */
 		/*     IN BRATLEY AND FOX, SECTION 2 */
 
 		for (j = m + 1; j <= ssobol_maxcol; ++j) {
-			newv = v[i + (j - m) * 40 - 41];
+			//newv = v[i + (j - m) * 40 - 41];
+			newv = v[i-1][j-m-1];
 			l = 1;
 			for (k = 1; k <= m; ++k) {
 				l <<= 1;
 				if (includ[k - 1]) {
-					i__4 = l * v[i + (j - k) * 40 - 41];
-					newv = exor_(&newv, &i__4);
+					i4 = l * v[i-1][j-k-1];
+					newv = exor_(&newv, &i4);
 				}
 				/*     IF A FULL-WORD EXCLUSIVE-OR, SAY .XOR., IS AVAILABLE, */
 				/*     THEN REPLACE THE PRECEDING STATEMENT BY */
 				/*         IF (INCLUD(K)) NEWV = NEWV .XOR. (L * V(I, J-K)) */
 				/*     TO GET A FASTER, EXTENDED FORTRAN PROGRAM */
 			}
-			v[i + j * 40 - 41] = newv;
+			v[i-1][j-1] = newv;
 		}
 	}
 
@@ -237,7 +242,7 @@ L30:
 	for (j = ssobol_maxcol - 1; j >= 1; --j) {
 		l <<= 1;
 		for (i = 1; i <= ssobol_s; ++i) {
-			v[i + j * 40 - 41] *= l;
+			v[i-1][j-1] *= l;
 		}
 	}
 
@@ -246,7 +251,7 @@ L30:
 	if (*iflag == 0) {
 		for (i = 1; i <= ssobol_s; ++i) {
 			for (j = 1; j <= ssobol_maxcol; ++j) {
-				ssobol_sv[i-1][j-1] = v[i + j * 40 - 41];
+				ssobol_sv[i-1][j-1] = v[i-1][j-1];
 			}
 			shift[i - 1] = 0;
 		}
@@ -261,9 +266,7 @@ L30:
 					for (p = *maxd; p >= 1; --p) {
 						temp1 = 0;
 						for (k = 1; k <= ssobol_maxcol; ++k) {
-							temp1 += lbit_bits(lsm[i + p * 40 - 41], k - 1, 
-								(int)1) * lbit_bits(v[i + j * 40 - 
-								41], k - 1, (int)1);
+							temp1 += lbit_bits(lsm[i-1][p-1], k - 1, 1) * lbit_bits(v[i-1][j-1], k - 1, 1);
 						}
 						temp1 %= 2;
 						temp2 += temp1 * l;
@@ -286,18 +289,14 @@ L30:
 					p = maxx;
 					for (k = 1; k <= maxx; ++k) {
 						if (*iflag == 2) {
-							tv[i + (p + j * 31) * 40 - 1281] = lbit_bits(v[
-								i + j * 40 - 41], k - 1, (int)1);
+							tv[i-1][p-1][j-1] = lbit_bits(v[i-1][j-1], k - 1, 1);
 						} else {
-							tv[i + (p + j * 31) * 40 - 1281] = lbit_bits(
-								ssobol_sv[i-1][j-1], k - 1, (
-								int)1);
+							tv[i-1][p-1][j-1] = lbit_bits(ssobol_sv[i-1][j-1], k - 1, 1);
 						}
 						--p;
 					}
 				}
-				r__1 = (double) ssobol_maxcol;
-				for (pp = 1.f; pp <= r__1; pp += 1.f) {
+				for (pp = 1; pp <= ssobol_maxcol; pp++) {
 					temp2 = 0;
 					temp4 = 0;
 					l = 1;
@@ -305,12 +304,10 @@ L30:
 						temp1 = 0;
 						temp3 = 0;
 						for (p = 1; p <= ssobol_maxcol; ++p) {
-							temp1 += tv[i + (j + p * 31) * 40 - 1281] * usm[
-								p + (int) pp * 31 - 32];
-								if (pp == 1.f) {
-									temp3 += tv[i + (j + p * 31) * 40 - 1281] * 
-										ushift[p - 1];
-								}
+							temp1 += tv[i-1][j-1][p-1] * usm[p-1][pp-1];
+							if (pp == 1.f) {
+								temp3 += tv[i-1][j-1][p-1] * ushift[p - 1];
+							}
 						}
 						temp1 %= 2;
 						temp2 += temp1 * l;
@@ -348,11 +345,11 @@ L30:
 	return 0;
 }
 
-/* Subroutine */ int genscrml_(int *maxd, int *lsm, int *shift)
+int genscrml_(int *maxd, int lsm[][31], int *shift)
 {
 	/* Local variables */
-	static int i, j, l, p, ll;
-	static int temp, stemp;
+	int i, j, l, p, ll;
+	int temp, stemp;
 
 	/*     GENERATING LOWER TRIANULAR SCRMABLING MATRICES AND SHIFT VECTORS. */
 	/*     INPUTS : */
@@ -361,16 +358,16 @@ L30:
 
 	/*     OUTPUTS : */
 	/*       TO INSSOBL : LSM, SHIFT */
+
 	/* Parameter adjustments */
 	--shift;
-	lsm -= 41;
 
 	/* Function Body */
 	for (p = 1; p <= ssobol_s; ++p) {
 		shift[p] = 0;
 		l = 1;
 		for (i = *maxd; i >= 1; --i) {
-			lsm[p + i * 40] = 0;
+			lsm[p-1][i-1] = 0;
 			stemp = (int) (uni_() * 1e3f) % 2;
 			shift[p] += stemp * l;
 			l <<= 1;
@@ -383,15 +380,15 @@ L30:
 				} else {
 					temp = 0;
 				}
-				lsm[p + i * 40] += temp * ll;
+				lsm[p-1][i-1] += temp * ll;
 				ll <<= 1;
 			}
 		}
 	}
 	return 0;
-} /* genscrml_ */
+}
 
-/* Subroutine */ int genscrmu_(int *usm, int *ushift)
+int genscrmu_(int usm[][31], int *ushift)
 {
 	/* Local variables */
 	static int i, j;
@@ -404,9 +401,9 @@ L30:
 
 	/*     OUTPUTS : */
 	/*       TO INSSOBL : USM, USHIFT */
+
 	/* Parameter adjustments */
 	--ushift;
-	usm -= 32;
 
 	/* Function Body */
 	for (i = 1; i <= ssobol_maxcol; ++i) {
@@ -420,11 +417,11 @@ L30:
 			} else {
 				temp = 0;
 			}
-			usm[i + j * 31] = temp;
+			usm[i-1][j-1] = temp;
 		}
 	}
 	return 0;
-} /* genscrmu_ */
+}
 
 /*
 *   PURPOSE
@@ -447,23 +444,22 @@ L30:
 *   School of Humanities and Sciences, STANFORD UNIVERSITY, 
 *   ftp://reports.stanford.edu/pub/cstr/reports/cs/tr/73/334/CS-TR-73-334.pdf
 */
-static unsigned int s = 0;
 
 unsigned int myurand_raw()
 {
 	do
 	{
 		/* We get a result modulo 2^32 */
-		s = 843314861ul * s + 453816693ul;  
+		ssobol_unifseed = 843314861ul * ssobol_unifseed + 453816693ul;  
 
 		/* This is to get modulo 2^31 */
-		if (s >= 2147483648ul) 
+		if (ssobol_unifseed >= 2147483648ul) 
 		{
-			s -= 2147483648ul;
+			ssobol_unifseed -= 2147483648ul;
 		}
-	} while(s==0);
+	} while(ssobol_unifseed==0);
 
-	return ( s );
+	return ( ssobol_unifseed );
 }
 
 // Returns a double randomly uniform in (0,1).
@@ -479,6 +475,37 @@ double uni_(void)
 	return output;
 }
 
+double uni_bis_(void)
+{
+	/* Initialized data */
+
+	static int i = 24;
+	static int j = 10;
+	static double carry = 0.;
+	static double seeds[24] = { .8804418,.2694365,.0367681,.4068699,
+		.4554052,.2880635,.1463408,.2390333,.6407298,.1755283,.713294,
+		.4913043,.2979918,.1396858,.3589528,.5254809,.9857749,.4612127,
+		.2196441,.7848351,.40961,.9807353,.2689915,.5140357 };
+
+	/* System generated locals */
+	double ret_val;
+
+	/*     Random number generator, adapted from F. James */
+	/*     "A Review of Random Number Generators" */
+	/*      Comp. Phys. Comm. 60(1990), pp. 329-344. */
+
+	ret_val = seeds[i-1] - seeds[j-1] - carry;
+	if (ret_val < 0.) {
+		ret_val += 1;
+		carry = 5.9604644775390625e-8;
+	} else {
+		carry = 0.;
+	}
+	seeds[i - 1] = ret_val;
+	i = 24 - (25 - i) % 24;
+	j = 24 - (25 - j) % 24;
+	return ret_val;
+}
 int ssobol_next(double *quasi)
 {
 	/* Local variables */
@@ -587,7 +614,7 @@ L1:
 	j /= 2;
 	l <<= 1;
 	goto L1;
-} /* exor_ */
+}
 
 int lbit_bits(int a, int b, int len)
 {
@@ -624,7 +651,7 @@ int main(void)
 
 	sam = 1;
 	maxd = 30;
-	dimen = 5;
+	dimen = 2;
 	iflag = 3;
 	atmost = 50;
 	printf("iflag=%d\n",iflag);
