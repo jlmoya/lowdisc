@@ -113,26 +113,8 @@
   <refsection>
     <title>Examples</title>
     <para>
-      The following function defines the base-b Van Der Corput sequence.
-    </para>
-
-    <programlisting role="example">
-      <![CDATA[
-function r = vandercorput ( i , b )
-    current = i
-    ib = 1.0 / b
-    r = 0.0
-    while (current>0)
-        digit = modulo ( current , b )
-        current = int ( current / b )
-        r = r + digit * ib
-        ib = ib / b
-    end
-endfunction
-   ]]>
-    </programlisting>
-
-    <para>
+      The Van Der Corput sequence in base 2 is just the first component 
+	  of the Halton sequence.
       The following script considers the numbers k from
       zero to 9, decompose them in base 2 and compute the
       k-th element of the Van Der Corput sequence in base 2.
@@ -140,12 +122,12 @@ endfunction
 
     <programlisting role="example">
       <![CDATA[
+u=lowdisc_ldgen(9,1,"halton");
 b=2;
-for k=0:9
+for k=1:9
     d=number_tobary(k,b);
     dstr=strcat(string(d),",");
-    r=vandercorput(k,b);
-    mprintf("%d [%s] %f\n",k,dstr,r)
+    mprintf("%d [%s] %f\n",k,dstr,u(k))
 end
    ]]>
     </programlisting>
@@ -156,7 +138,6 @@ end
 
     <screen>
       <![CDATA[
-0 [0] 0.000000
 1 [1] 0.500000
 2 [1,0] 0.250000
 3 [1,1] 0.750000
@@ -171,7 +152,7 @@ end
 
     <para>
       For example, the integer k=6 decomposes as 110 in base 2.
-      Its inverse is 0.011 in base 2, which is associated to
+      Its radical inverse is 0.011 in base 2, which is associated to
       the radical inverse value 0/2+1/4+1/8=0.375.
     </para>
 
@@ -182,12 +163,24 @@ end
     </para>
 
     <para>
-      Here is the same script in base b=3.
+      To get the Van Der Corput sequence in base 3, we just use 
+	  the second dimension of the Halton sequence in two dimensions.
     </para>
+
+    <programlisting role="example">
+      <![CDATA[
+u=lowdisc_ldgen(9,2,"halton");
+b=3;
+for k=1:9
+    d=number_tobary(k,b);
+    dstr=strcat(string(d),",");
+    mprintf("%d [%s] %f\n",k,dstr,u(k,2))
+end
+   ]]>
+    </programlisting>
 
     <screen>
       <![CDATA[
-0 [0] 0.000000
 1 [1] 0.333333
 2 [2] 0.666667
 3 [1,0] 0.111111
@@ -199,6 +192,12 @@ end
 9 [1,0,0] 0.037037
    ]]>
     </screen>
+
+    <para>
+      For example, the integer k=6 decomposes as 20 in base 3.
+      Its radical inverse is 0.02 in base 3, which is associated to
+      the radical inverse value 2/9=0.2222...
+    </para>
 
   </refsection>
 
@@ -237,41 +236,27 @@ end
       for k&#8805;0.
     </para>
 
-
-    <programlisting role="example">
-      <![CDATA[
-s=4;
-p=number_primes100();
-for k=1:10
-    for j=1:s
-        x(j)=vandercorput(k,p(j));
-    end
-    xstr=strcat(string(x),",");
-    mprintf("k=%d, [%s]\n",k,xstr);
-end
-   ]]>
-    </programlisting>
-
     <para>
       The following script produces 10 points of the Halton sequence
       in 4 dimensions.
       The prime number used here are: 2, 3, 5, 7.
     </para>
 
-    <programlisting role="example">
+    <screen>
       <![CDATA[
-k=1, [0.5,0.3333333,0.2,0.1428571]
-k=2, [0.25,0.6666667,0.4,0.2857143]
-k=3, [0.75,0.1111111,0.6,0.4285714]
-k=4, [0.125,0.4444444,0.8,0.5714286]
-k=5, [0.625,0.7777778,0.04,0.7142857]
-k=6, [0.375,0.2222222,0.24,0.8571429]
-k=7, [0.875,0.5555556,0.44,0.0204082]
-k=8, [0.0625,0.8888889,0.64,0.1632653]
-k=9, [0.5625,0.0370370,0.84,0.3061224]
-k=10, [0.3125,0.3703704,0.08,0.4489796]
+-->u=lowdisc_ldgen(9,4,"halton")
+ u  =
+    0.5       0.3333333    0.2     0.1428571  
+    0.25      0.6666667    0.4     0.2857143  
+    0.75      0.1111111    0.6     0.4285714  
+    0.125     0.4444444    0.8     0.5714286  
+    0.625     0.7777778    0.04    0.7142857  
+    0.375     0.2222222    0.24    0.8571429  
+    0.875     0.5555556    0.44    0.0204082  
+    0.0625    0.8888889    0.64    0.1632653  
+    0.5625    0.0370370    0.84    0.3061224  
    ]]>
-    </programlisting>
+    </screen>
 
   </refsection>
   
@@ -296,14 +281,12 @@ k=10, [0.3125,0.3703704,0.08,0.4489796]
     </para>
 
     <para>
-      where <latex>\sigma</latex> is a given permutation. 
+      where &#963; is a given permutation. 
     </para>
 	
     <para>
 	  The permutation does not change the values of the points in the sequence: 
 	  only the ordering of the points changes. 
-	  Hence, the low discrepancy properties of the one dimensionnal point set 
-	  is unchanged. 
     </para>
 
     <para>
@@ -415,11 +398,13 @@ etc...
 
     <programlisting role="example">
       <![CDATA[
-function sigma=RR2Scrambling(s,i,b)
+function sigma=RR2Scrambling(s, i, b)
     ns=ceil(log(b(s))/log(2))
     sigma=[];
+    u=lowdisc_ldgen(2^ns,1,"halton")
+    u=[0;u]
     for k=1:2^ns
-        sigmak=vandercorput(k-1,2)*2^ns
+        sigmak=u(k)*2^ns
         if (sigmak<b(i)) then
             sigma($+1)=sigmak;
         end
