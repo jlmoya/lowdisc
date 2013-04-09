@@ -1,4 +1,12 @@
-// Initialise ssobol_vinit;
+// Copyright (C) 2013 - Michael Baudin
+//
+// This file must be used under the terms of the 
+// GNU Lesser General Public License license
+// http://www.gnu.org/copyleft/lesser.html
+
+// This header is used by ssobol.c.
+
+// Initialize ssobol_vinit;
 ssobol_vinit[1][0]=1;
 ssobol_vinit[2][0]=1;
 ssobol_vinit[3][0]=1;
