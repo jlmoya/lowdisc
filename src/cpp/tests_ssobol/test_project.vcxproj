@@ -11,8 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ssobol-driver.c" />
-    <ClCompile Include="ssobol.c" />
+    <ClCompile Include="..\lowdisc_shared.cpp" />
+    <ClCompile Include="..\ssobol.cpp" />
+    <ClCompile Include="ssobol-driver.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ssobol.h" />
+    <ClInclude Include="..\ssobol_poly.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{33455873-1E74-4F12-AFDD-EB1014498484}</ProjectGuid>

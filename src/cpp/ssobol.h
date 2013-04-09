@@ -90,13 +90,13 @@ N = 2**K WHERE K .GE. (TAUS+S-1) FOR INTEGRATION
 AND K .GT. TAUS FOR GLOBAL OPTIMIZATION. 
 
 */
-int ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus, double *quasi);
+void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus, double *quasi);
 
 // Next element in the Scrambled Sobol Sequence
 //
 // Parameters
 // quasi : an array of doubles, quasi[0,1,...,dimen-1]
-int ssobol_next(double *quasi);
+void ssobol_next(double *quasi);
 
 __END_DECLS
 

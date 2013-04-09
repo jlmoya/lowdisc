@@ -14,16 +14,24 @@
 // THIS WORK PUBLISHED IN TRANSACTIONS ON MATHEMATICAL SOFTWARE,
 // VOL. 29,NO. 2,      June, 2003, P.   95--109.
 
+#include <cstdlib>
 #include <iostream>
 #include <sstream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+#include <cmath>
+#include <ctime>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+
+using namespace std;
+
 #include "ssobol.h"
 #include "lowdisc_shared.h"
 
-using namespace std;
 
 int ssobol_exor(int *iin, int *jin);
 int ssobol_genscrml(int maxd, int lsm[][31], int *shift);
@@ -74,7 +82,7 @@ static bool ssobol_isstartedup = false;
 /* Output Static variables : 			*/
 /* SV, S, MAXCOL, COUNT, LASTQ, RECIPD 	*/
 
-int ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus, double *quasi)
+void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus, double *quasi)
 {
 	/* Initialized data */
 
@@ -92,9 +100,6 @@ int ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus, double
 	int maxx, newv, temp1, temp2, temp3, temp4, shift[40];
 	int includ[8];
 	int ushift[31];
-
-	/* Parameter adjustments */
-	--quasi;
 
 	/* Function Body */
 
@@ -312,9 +317,9 @@ L30:
 	ssobol_count = 0;
 	for (i = 1; i <= ssobol_s; ++i) {
 		ssobol_lastq[i - 1] = shift[i - 1];
-		quasi[i] = ssobol_lastq[i - 1] * ssobol_recipd;
+		quasi[i-1] = ssobol_lastq[i - 1] * ssobol_recipd;
 	}
-	return 0;
+	return;
 }
 
 int ssobol_genscrml(int maxd, int lsm[][31], int *shift)
@@ -331,17 +336,14 @@ int ssobol_genscrml(int maxd, int lsm[][31], int *shift)
 	/*     OUTPUTS : */
 	/*       TO INSSOBL : LSM, SHIFT */
 
-	/* Parameter adjustments */
-	--shift;
-
 	/* Function Body */
 	for (p = 1; p <= ssobol_s; ++p) {
-		shift[p] = 0;
+		shift[p-1] = 0;
 		l = 1;
 		for (i = maxd; i >= 1; --i) {
 			lsm[p-1][i-1] = 0;
 			stemp = (int) (ssobol_unirnd() * 1e3f) % 2;
-			shift[p] += stemp * l;
+			shift[p-1] += stemp * l;
 			l <<= 1;
 			ll = 1;
 			for (j = ssobol_maxcol; j >= 1; --j) {
@@ -374,13 +376,10 @@ int ssobol_genscrmu(int usm[][31], int *ushift)
 	/*     OUTPUTS : */
 	/*       TO INSSOBL : USM, USHIFT */
 
-	/* Parameter adjustments */
-	--ushift;
-
 	/* Function Body */
 	for (i = 1; i <= ssobol_maxcol; ++i) {
 		stemp = (int) (ssobol_unirnd() * 1e3f) % 2;
-		ushift[i] = stemp;
+		ushift[i-1] = stemp;
 		for (j = 1; j <= ssobol_maxcol; ++j) {
 			if (j == i) {
 				temp = 1;
@@ -395,7 +394,8 @@ int ssobol_genscrmu(int usm[][31], int *ushift)
 	return 0;
 }
 
-double ssobol_unirnd(void)
+// TODO : use this generator instead of URAND.
+double ssobol_unirnd_bis(void)
 {
 	/* Initialized data */
 
@@ -426,7 +426,59 @@ double ssobol_unirnd(void)
 	j = 24 - (25 - j) % 24;
 	return ret_val;
 }
-int ssobol_next(double *quasi)
+
+/*
+*   PURPOSE
+*      Generates random numbers uniform in (0,2147483647)
+*      This is the URAND generator: 
+*          s <- (a*s + c) mod m
+*      with :
+*             m = 2^{31} 
+*             a = 843314861
+*             c = 453816693
+*      
+*      s must be in [0,m-1] when user changes seed with unifrng_urand_set_state
+*      period = m
+*/
+/* Reference
+*   URAND, A UNIVERSAL RANDOM NUMBER GENERATOR 
+*   BY, MICHAEL A. MALCOLM, CLEVE B. MOLER, 
+*   STAN-CS-73-334, JANUARY 1973, 
+*   COMPUTER SCIENCE  DEPARTMENT, 
+*   School of Humanities and Sciences, STANFORD UNIVERSITY, 
+*   ftp://reports.stanford.edu/pub/cstr/reports/cs/tr/73/334/CS-TR-73-334.pdf
+*/
+
+unsigned int myurand_raw()
+{
+	do
+	{
+		/* We get a result modulo 2^32 */
+		ssobol_unifseed = 843314861ul * ssobol_unifseed + 453816693ul;  
+
+		/* This is to get modulo 2^31 */
+		if (ssobol_unifseed >= 2147483648ul) 
+		{
+			ssobol_unifseed -= 2147483648ul;
+		}
+	} while(ssobol_unifseed==0);
+
+	return ( ssobol_unifseed );
+}
+
+// Returns a double randomly uniform in (0,1).
+// This random number is generated according to the current RNG.
+double ssobol_unirnd(void)
+{
+	double output;
+	int R;
+	// This is factor=1/2147483647
+	double factor=4.6566128730773926e-10;
+	R = myurand_raw();
+	output = (double) R * factor;
+	return output;
+}
+void ssobol_next(double *quasi)
 {
 	/* Local variables */
 	static int i, l;
@@ -461,9 +513,6 @@ int ssobol_next(double *quasi)
 
 
 	/*     FIND THE POSITION OF THE RIGHT-HAND ZERO IN COUNT */
-
-	/* Parameter adjustments */
-	--quasi;
 
 	/* Function Body */
 	l = 0;
@@ -503,12 +552,12 @@ L1:
 		/*     THEN REPLACE THE PRECEDING STATEMENT BY */
 		/*         LASTQ(I) = LASTQ(I) .XOR. SV(I,L) */
 		/*     TO GET A FASTER, EXTENDED FORTRAN PROGRAM */
-		quasi[i] = ssobol_lastq[i - 1] * ssobol_recipd;
+		quasi[i-1] = ssobol_lastq[i - 1] * ssobol_recipd;
 	}
 
 	++ssobol_count;
 
-	return 0;
+	return;
 }
 
 int ssobol_exor(int *iin, int *jin)
