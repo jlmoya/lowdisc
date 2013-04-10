@@ -25,6 +25,7 @@ function lowdiscBuildSrcCpp()
     "reversehalton.cpp"
     "sobol_i8.cpp"
     "lowdisc_math.cpp"
+    "ssobol.cpp"
     ];
     ldflags = "";
 

@@ -90,7 +90,7 @@ N = 2**K WHERE K .GE. (TAUS+S-1) FOR INTEGRATION
 AND K .GT. TAUS FOR GLOBAL OPTIMIZATION. 
 
 */
-void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus, double *quasi);
+void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus);
 
 // Next element in the Scrambled Sobol Sequence
 //
@@ -99,7 +99,7 @@ void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus, doubl
 void ssobol_next(double *quasi);
 
 // Stops the Scrambled Sobol sequence.
-void ssobol_stop ( );
+void ssobol_stop();
 
 // Reset the seed of the random number generator.
 // This is automatically done the first time the 
@@ -110,11 +110,23 @@ void ssobol_stop ( );
 // The suggested steps are:
 //
 // ssobol_seedreset(); // Optionnal
-// ssobol_startup();
+// ssobol_startup(...);
 // ssobol_next(...);
 // ssobol_stop();
 //
 void ssobol_seedreset();
+
+//  ssobol_isstart --
+//     Returns true if the sequence is already started up.
+//
+//  Parameters:
+//    startup, output : true if the sequence is already started up.
+bool ssobol_isstart ( );
+
+// halton_dim_num_get 
+// gets the spatial dimension for a leaped Halton subsequence.
+int ssobol_dim_num_get ( void );
+
 
 __END_DECLS
 

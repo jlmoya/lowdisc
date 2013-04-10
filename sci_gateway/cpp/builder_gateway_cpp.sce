@@ -36,6 +36,11 @@ function lowdiscBuildGwCpp()
     "_lowdisc_niedfstart"    "sci_lowdisc_niedfstart"
     "_lowdisc_niedfstop"     "sci_lowdisc_niedfstop"
     "_lowdisc_niedfisstart"  "sci_lowdisc_niedfisstart"
+    ..
+    "_lowdisc_ssobolfnext"    "sci_lowdisc_ssobolfnext"
+    "_lowdisc_ssobolfstart"   "sci_lowdisc_ssobolfstart"
+    "_lowdisc_ssobolfstop"    "sci_lowdisc_ssobolfstop"
+    "_lowdisc_ssobolfisstart" "sci_lowdisc_ssobolfisstart"
     ];
     files = [
     "gw_lowdisc_support.cpp"
@@ -66,6 +71,11 @@ function lowdiscBuildGwCpp()
     "sci_lowdisc_niedfstart.cpp"
     "sci_lowdisc_niedfstop.cpp"
     "sci_lowdisc_niedfisstart.cpp"
+    ..
+    "sci_lowdisc_ssobolfnext.cpp"
+    "sci_lowdisc_ssobolfstart.cpp"
+    "sci_lowdisc_ssobolfstop.cpp"
+    "sci_lowdisc_ssobolfisstart.cpp"
     ];
 
     ldflags = ""

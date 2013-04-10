@@ -92,7 +92,7 @@ static bool ssobol_isrngstartedup = false;
 /* Output Static variables : 			*/
 /* SV, S, MAXCOL, COUNT, LASTQ, RECIPD 	*/
 
-void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus, double *quasi)
+void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus)
 {
 	/* Initialized data */
 
@@ -328,10 +328,9 @@ L30:
 
 	/*     SET UP FIRST VECTOR AND VALUES FOR "GOSOBL" */
 
-	ssobol_count = 0;
+	ssobol_count = -1;
 	for (i = 1; i <= ssobol_s; ++i) {
 		ssobol_lastq[i - 1] = shift[i - 1];
-		quasi[i-1] = ssobol_lastq[i - 1] * ssobol_recipd;
 	}
 	return;
 }
@@ -487,6 +486,16 @@ void ssobol_next(double *quasi)
 	/*         RECIPD   (1/DENOMINATOR) FOR THESE NUMERATORS */
 
 
+	if (ssobol_count==-1)
+	{
+		// This is the first one
+		for (i = 1; i <= ssobol_s; ++i) {
+			quasi[i-1] = ssobol_lastq[i - 1] * ssobol_recipd;
+		}
+		ssobol_count=0;
+		return;
+	}
+
 	/*     FIND THE POSITION OF THE RIGHT-HAND ZERO IN COUNT */
 
 	/* Function Body */
@@ -594,4 +603,14 @@ void ssobol_stop ( )
 	}
 	ssobol_isstartedup = false;
 	return;
+}
+
+bool ssobol_isstart ( )
+{
+	return ssobol_isstartedup;
+}
+
+int ssobol_dim_num_get ( void )
+{
+	return ssobol_s;
 }

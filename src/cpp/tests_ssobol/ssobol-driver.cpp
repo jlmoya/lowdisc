@@ -32,8 +32,8 @@ void test_ssobol(const char * filename, int maxd, int dimen, int iflag, int atmo
 	fprintf(pFile,"atmost=%d\n",atmost);
 	fprintf(pFile,"dimen=%d\n",dimen);
 	fprintf(pFile,"maxd=%d\n",maxd);
-	ssobol_startup(dimen, atmost, iflag, maxd, &taus, quasi);
-	for (i = 2; i <= atmost; i++) {
+	ssobol_startup(dimen, atmost, iflag, maxd, &taus);
+	for (i = 1; i <= atmost; i++) {
 		ssobol_next(quasi);
 		fprintf(pFile,"quasi(%d)=",i);
 		for (j= 0; j < dimen; j++) {

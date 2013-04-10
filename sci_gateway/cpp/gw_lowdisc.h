@@ -1,8 +1,9 @@
-
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2009 - Digiteo - Michael Baudin
 //
-// This file must be used under the terms of the GNU Lesser General Public License license :
+// This file must be used under the terms of the 
+// GNU Lesser General Public License license :
 // http://www.gnu.org/copyleft/lesser.html
 
 //
@@ -49,5 +50,11 @@ extern "C" {
 	int sci_lowdisc_niedfstop (char *fname);
 	int sci_lowdisc_niedfnext (char *fname);
 	int sci_lowdisc_niedfisstart (char *fname);
+	//
+	// Fast Scrambled Sobol sequence
+	int sci_lowdisc_ssobolfnext (char *fname);
+	int sci_lowdisc_ssobolfstart (char *fname);
+	int sci_lowdisc_ssobolfstop (char *fname);
+	int sci_lowdisc_ssobolfisstart (char *fname);
 }
 #endif /* __SCI_GW_LOWDISC_H__ */
