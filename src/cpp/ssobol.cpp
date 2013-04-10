@@ -57,6 +57,17 @@ static int ssobol_tau[13] = { 0,0,1,3,5,8,11,15,19,23,27,31,35 };
 static unsigned int ssobol_unifseed = 0;
 static bool ssobol_isstartedup = false;
 
+// Variables for the random number generator.
+static int ssobol_seedi;
+static int ssobol_seedj;
+static double ssobol_seedcarry;
+static double ssobol_seedseeds[24];
+
+// This is used to setup the random number generator. 
+// This variable is set up once in the lifetime of the 
+// component. 
+static bool ssobol_isrngstartedup = false;
+
 /* THE ARRAY POLY GIVES SUCCESSIVE PRIMITIVE */
 /* POLYNOMIALS CODED IN BINARY, E.G. */
 /*      45 = 100101 */
@@ -100,8 +111,6 @@ void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus, doubl
 	int includ[8];
 	int ushift[31];
 
-	/* Function Body */
-
 	if ( ssobol_isstartedup )
 	{
 		ostringstream msg;
@@ -129,6 +138,12 @@ void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus, doubl
 	} else {
 		*taus = -1;
 		/*     RETURN A DUMMY VALUE TO THE CALLING PROGRAM */
+	}
+
+	// Setup the random number generator
+	if (!ssobol_isrngstartedup) 
+	{
+		ssobol_seedreset();
 	}
 
 	// Initialise ssobol_vinit;
@@ -394,94 +409,50 @@ int ssobol_genscrmu(int usm[][31], int *ushift)
 }
 
 // TODO : use this generator instead of URAND.
-double ssobol_unirnd_bis(void)
+double ssobol_unirnd(void)
 {
-	/* Initialized data */
-
-	static int i = 24;
-	static int j = 10;
-	static double carry = 0.;
-	static double seeds[24] = { .8804418,.2694365,.0367681,.4068699,
-		.4554052,.2880635,.1463408,.2390333,.6407298,.1755283,.713294,
-		.4913043,.2979918,.1396858,.3589528,.5254809,.9857749,.4612127,
-		.2196441,.7848351,.40961,.9807353,.2689915,.5140357 };
-
-	/* System generated locals */
 	double ret_val;
 
 	/*     Random number generator, adapted from F. James */
 	/*     "A Review of Random Number Generators" */
 	/*      Comp. Phys. Comm. 60(1990), pp. 329-344. */
 
-	ret_val = seeds[i-1] - seeds[j-1] - carry;
-	if (ret_val < 0.) {
-		ret_val += 1;
-		carry = 5.9604644775390625e-8;
-	} else {
-		carry = 0.;
-	}
-	seeds[i - 1] = ret_val;
-	i = 24 - (25 - i) % 24;
-	j = 24 - (25 - j) % 24;
-	return ret_val;
-}
-
-/*
-*   PURPOSE
-*      Generates random numbers uniform in (0,2147483647)
-*      This is the URAND generator: 
-*          s <- (a*s + c) mod m
-*      with :
-*             m = 2^{31} 
-*             a = 843314861
-*             c = 453816693
-*      
-*      s must be in [0,m-1] when user changes seed with unifrng_urand_set_state
-*      period = m
-*/
-/* Reference
-*   URAND, A UNIVERSAL RANDOM NUMBER GENERATOR 
-*   BY, MICHAEL A. MALCOLM, CLEVE B. MOLER, 
-*   STAN-CS-73-334, JANUARY 1973, 
-*   COMPUTER SCIENCE  DEPARTMENT, 
-*   School of Humanities and Sciences, STANFORD UNIVERSITY, 
-*   ftp://reports.stanford.edu/pub/cstr/reports/cs/tr/73/334/CS-TR-73-334.pdf
-*/
-
-unsigned int myurand_raw()
-{
-	do
+	ret_val = ssobol_seedseeds[ssobol_seedi-1] - ssobol_seedseeds[ssobol_seedj-1] - ssobol_seedcarry;
+	if (ret_val < 0.) 
 	{
-		/* We get a result modulo 2^32 */
-		ssobol_unifseed = 843314861ul * ssobol_unifseed + 453816693ul;  
-
-		/* This is to get modulo 2^31 */
-		if (ssobol_unifseed >= 2147483648ul) 
-		{
-			ssobol_unifseed -= 2147483648ul;
-		}
-	} while(ssobol_unifseed==0);
-
-	return ( ssobol_unifseed );
+		ret_val += 1;
+		ssobol_seedcarry = 5.9604644775390625e-8;
+	} 
+	else 
+	{
+		ssobol_seedcarry = 0.;
+	}
+	ssobol_seedseeds[ssobol_seedi - 1] = ret_val;
+	ssobol_seedi = 24 - (25 - ssobol_seedi) % 24;
+	ssobol_seedj = 24 - (25 - ssobol_seedj) % 24;
+	return ret_val;
 }
 
 void ssobol_seedreset()
 {
-	ssobol_unifseed=0;
+	int i;
+	static double seeds[24] = { .8804418,.2694365,.0367681,.4068699,
+		.4554052,.2880635,.1463408,.2390333,.6407298,.1755283,.713294,
+		.4913043,.2979918,.1396858,.3589528,.5254809,.9857749,.4612127,
+		.2196441,.7848351,.40961,.9807353,.2689915,.5140357 };
+
+	ssobol_seedi = 24;
+	ssobol_seedj = 10;
+	ssobol_seedcarry = 0.;
+
+	for (i = 0; i < 24; i++) 
+	{
+		ssobol_seedseeds[i]=seeds[i];
+	}
+	ssobol_isrngstartedup=true;
 }
 
-// Returns a double randomly uniform in (0,1).
-// This random number is generated according to the current RNG.
-double ssobol_unirnd(void)
-{
-	double output;
-	int R;
-	// This is factor=1/2147483647
-	double factor=4.6566128730773926e-10;
-	R = myurand_raw();
-	output = (double) R * factor;
-	return output;
-}
+
 void ssobol_next(double *quasi)
 {
 	/* Local variables */

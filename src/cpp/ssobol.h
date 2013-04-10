@@ -101,6 +101,19 @@ void ssobol_next(double *quasi);
 // Stops the Scrambled Sobol sequence.
 void ssobol_stop ( );
 
+// Reset the seed of the random number generator.
+// This is automatically done the first time the 
+// ssobol_startup function is called or the first time the 
+// function ssobol_seedreset is called. 
+// This can be done when required, for example, when 
+// generating a new sequence. 
+// The suggested steps are:
+//
+// ssobol_seedreset(); // Optionnal
+// ssobol_startup();
+// ssobol_next(...);
+// ssobol_stop();
+//
 void ssobol_seedreset();
 
 __END_DECLS
