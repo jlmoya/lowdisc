@@ -11,30 +11,69 @@
 
 #include "ssobol.h"
 
-int main(void)
-{
-	/* Local variables */
-	int i, j, maxd;
-	int taus, iflag, dimen;
-	double quasi[40];
-	int atmost;
+// warning C4996: 'localtime': This function or variable may be unsafe. 
+// Consider using localtime_s instead. 
+// To disable deprecation, use _CRT_SECURE_NO_WARNINGS.
+#ifdef _MSC_VER
+#pragma warning( disable : 4996 )
+#endif
 
-	maxd = 30;
-	dimen = 2;
-	iflag = 3;
-	atmost = 50;
-	printf("iflag=%d\n",iflag);
-	printf("atmost=%d\n",atmost);
-	printf("dimen=%d\n",dimen);
-	printf("maxd=%d\n",maxd);
+void test_ssobol(const char * filename, int maxd, int dimen, int iflag, int atmost)
+{
+	int i, j;
+	int taus;
+	double quasi[40];
+
+	FILE * pFile;
+	pFile = fopen (filename,"w");
+
+	ssobol_seedreset();
+	fprintf(pFile,"iflag=%d\n",iflag);
+	fprintf(pFile,"atmost=%d\n",atmost);
+	fprintf(pFile,"dimen=%d\n",dimen);
+	fprintf(pFile,"maxd=%d\n",maxd);
 	ssobol_startup(dimen, atmost, iflag, maxd, &taus, quasi);
 	for (i = 2; i <= atmost; i++) {
 		ssobol_next(quasi);
-		printf("quasi(%d)=",i);
+		fprintf(pFile,"quasi(%d)=",i);
 		for (j= 0; j < dimen; j++) {
-			printf(" %f",quasi[j]);
+			fprintf(pFile," %f",quasi[j]);
 		}
-		printf("\n");
+		fprintf(pFile,"\n");
 	}
+	ssobol_stop ( );
+	fclose (pFile);
+	return;
+}
+
+int main(void)
+{
+	int maxd;
+	int iflag;
+	int dimen;
+	int atmost;
+	char filename[50];
+
+	maxd = 30;
+	atmost = 50;
+
+	dimen = 2;
+	for (iflag = 0; iflag <= 3; iflag++) {
+		sprintf (filename, "ssobol-iflag%d-s%d-n%d.txt",iflag,dimen,atmost);
+		test_ssobol(filename, maxd, dimen, iflag, atmost);
+	}
+
+	dimen = 3;
+	for (iflag = 0; iflag <= 3; iflag++) {
+		sprintf (filename, "ssobol-iflag%d-s%d-n%d.txt",iflag,dimen,atmost);
+		test_ssobol(filename, maxd, dimen, iflag, atmost);
+	}
+
+	dimen = 5;
+	for (iflag = 0; iflag <= 3; iflag++) {
+		sprintf (filename, "ssobol-iflag%d-s%d-n%d.txt",iflag,dimen,atmost);
+		test_ssobol(filename, maxd, dimen, iflag, atmost);
+	}
+
 	return 0;
 }

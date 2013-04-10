@@ -38,7 +38,6 @@ int ssobol_genscrml(int maxd, int lsm[][31], int *shift);
 int ssobol_genscrmu(int usm[][31], int *ushift);
 double ssobol_unirnd(void);
 int ssobol_lbitbits(int a, int b, int len);
-double ssobol_unirnd(void);
 
 // Static variables
 static int ssobol_poly[39] = {
@@ -464,6 +463,11 @@ unsigned int myurand_raw()
 	} while(ssobol_unifseed==0);
 
 	return ( ssobol_unifseed );
+}
+
+void ssobol_seedreset()
+{
+	ssobol_unifseed=0;
 }
 
 // Returns a double randomly uniform in (0,1).

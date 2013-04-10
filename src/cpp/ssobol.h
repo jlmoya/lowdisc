@@ -98,6 +98,11 @@ void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus, doubl
 // quasi : an array of doubles, quasi[0,1,...,dimen-1]
 void ssobol_next(double *quasi);
 
+// Stops the Scrambled Sobol sequence.
+void ssobol_stop ( );
+
+void ssobol_seedreset();
+
 __END_DECLS
 
 #endif /* _LOWDISC_SSOBOL_H_ */
