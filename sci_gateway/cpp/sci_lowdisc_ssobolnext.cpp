@@ -18,9 +18,10 @@ extern "C" {
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
 #include "ssobol.h"
+#include "lowdisc_ssobol_map.hxx" 
 
 
-// quasi = _lowdisc_ssobolfnext ( imax , leap )
+// quasi = _lowdisc_ssobolnext ( token, imax , leap )
 //
 // Arguments
 // imax: a 1-by-1 matrix of doubles, integer value
@@ -40,7 +41,7 @@ extern "C" {
 // If leap = 1, then get the elements 
 //   seed, seed+2, seed+4, etc...
 //
-int sci_lowdisc_ssobolfnext (char *fname) {
+int sci_lowdisc_ssobolnext (char *fname) {
 	int dim;
 	// next : an array [0,1,...,dim-1]
 	double * next = NULL;
@@ -53,26 +54,40 @@ int sci_lowdisc_ssobolfnext (char *fname) {
 	int ierr;
 	int imax = 0;
 	int leap = 0;
+	int token;
+	Ssobol * seq;
+	int iflag;
 
-	CheckRhs(2,2) ;
+	CheckRhs(3,3) ;
 	CheckLhs(0,1) ;
-	// Arg #1: imax
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &imax );
+	// Arg #1: token
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
 	if ( ierr==0 ) {
 		return 0;
 	}
-	// Arg #2: leap
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &leap );
+	// Arg #2: imax
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &imax );
+	if ( ierr==0 ) {
+		return 0;
+	}
+	// Arg #3: leap
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &leap );
 	if ( ierr==0 ) {
 		return 0;
 	}
 	// Proceed...
-	dim = ssobol_dim_num_get ( );
+
+	iflag=lowdisc_token2Ssobol(fname, 1, token, &seq);
+	if (iflag==0)
+	{
+		return 0;
+	}
+	dim = seq->dim_num_get ( );
 	next = (double *)malloc(dim*sizeof(double));
 	lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi );
 	for ( k = 0; k < imax; k++ )
 	{
-		ssobol_next ( next );
+		seq->next ( next );
 		for(i=0; i<dim; i++) 
 		{
 			*(quasi + i * imax + k) = next[i];
@@ -81,7 +96,7 @@ int sci_lowdisc_ssobolfnext (char *fname) {
 		{
 			for(j=0; j<leap; j++) 
 			{
-				ssobol_next ( next );
+				seq->next ( next );
 			}
 		}
 	}

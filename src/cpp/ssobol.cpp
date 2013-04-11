@@ -33,41 +33,6 @@ using namespace std;
 #include "lowdisc_shared.h"
 
 
-int ssobol_exor(int *iin, int *jin);
-int ssobol_genscrml(int maxd, int lsm[][31], int *shift);
-int ssobol_genscrmu(int usm[][31], int *ushift);
-double ssobol_unirnd(void);
-int ssobol_lbitbits(int a, int b, int len);
-
-// Static variables
-static int ssobol_poly[39] = {
-	3, 7, 11, 13, 19, 25, 37, 59, 47, 61, 55, 41, 67, 97, 91, 
-	109, 103, 115, 131, 193, 137, 145, 143, 241, 157, 185, 167, 229, 
-	171, 213, 191, 253, 203, 211, 239, 247, 285, 369, 299
-};
-
-static int ssobol_vinit[40][8];
-static double ssobol_recipd;
-static int ssobol_lastq[40];
-static int ssobol_maxcol;
-static int ssobol_count;
-static int ssobol_s;
-static int ssobol_sv[40][31];
-static int ssobol_tau[13] = { 0,0,1,3,5,8,11,15,19,23,27,31,35 };
-static unsigned int ssobol_unifseed = 0;
-static bool ssobol_isstartedup = false;
-
-// Variables for the random number generator.
-static int ssobol_seedi;
-static int ssobol_seedj;
-static double ssobol_seedcarry;
-static double ssobol_seedseeds[24];
-
-// This is used to setup the random number generator. 
-// This variable is set up once in the lifetime of the 
-// component. 
-static bool ssobol_isrngstartedup = false;
-
 /* THE ARRAY POLY GIVES SUCCESSIVE PRIMITIVE */
 /* POLYNOMIALS CODED IN BINARY, E.G. */
 /*      45 = 100101 */
@@ -92,7 +57,7 @@ static bool ssobol_isrngstartedup = false;
 /* Output Static variables : 			*/
 /* SV, S, MAXCOL, COUNT, LASTQ, RECIPD 	*/
 
-void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus)
+Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, int *taus)
 {
 	/* Initialized data */
 
@@ -110,16 +75,25 @@ void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus)
 	int maxx, newv, temp1, temp2, temp3, temp4, shift[40];
 	int includ[8];
 	int ushift[31];
+	int poly[39] = {
+		3, 7, 11, 13, 19, 25, 37, 59, 47, 61, 55, 41, 67, 97, 91, 
+		109, 103, 115, 131, 193, 137, 145, 143, 241, 157, 185, 167, 229, 
+		171, 213, 191, 253, 203, 211, 239, 247, 285, 369, 299
+	};
+	int tau[13] = { 0,0,1,3,5,8,11,15,19,23,27,31,35 };
 
-	if ( ssobol_isstartedup )
+	// Initialize poly
+	for (j = 0; j < 39; j++)
 	{
-		ostringstream msg;
-		msg << "ssobol - ssobol_startup - Error!\n";
-		msg << "  startup is already done.\n";
-		lowdisc_error(msg.str());
-		return;
+		ssobol_poly[j]=poly[j];
 	}
-	ssobol_isstartedup = true;
+	// Initialize ssobol_tau 
+	for (j = 0; j < 13; j++)
+	{
+		ssobol_tau[j]=tau[j];
+	}
+	// Initialize ssobol_unifseed 
+	ssobol_unifseed = 0;
 
 	/*     CHECK PARAMETERS */
 	ssobol_s = dimen;
@@ -141,10 +115,7 @@ void ssobol_startup(int dimen, int atmost, int iflag, int maxd, int *taus)
 	}
 
 	// Setup the random number generator
-	if (!ssobol_isrngstartedup) 
-	{
-		ssobol_seedreset();
-	}
+	seedreset();
 
 	// Initialise ssobol_vinit;
 	for (j = 0; j < 8; j++)
@@ -216,7 +187,7 @@ L30:
 				l <<= 1;
 				if (includ[k - 1]) {
 					i4 = l * v[i-1][j-k-1];
-					newv = ssobol_exor(&newv, &i4);
+					newv = exor(&newv, &i4);
 				}
 				/*     IF A FULL-WORD EXCLUSIVE-OR, SAY .XOR., IS AVAILABLE, */
 				/*     THEN REPLACE THE PRECEDING STATEMENT BY */
@@ -249,7 +220,7 @@ L30:
 		ll = pow(2.0, ssobol_maxcol);
 	} else {
 		if (iflag == 1 || iflag == 3) {
-			ssobol_genscrml(maxd, lsm, shift);
+			genscrml(maxd, lsm, shift);
 			for (i = 1; i <= ssobol_s; ++i) {
 				for (j = 1; j <= ssobol_maxcol; ++j) {
 					l = 1;
@@ -257,7 +228,7 @@ L30:
 					for (p = maxd; p >= 1; --p) {
 						temp1 = 0;
 						for (k = 1; k <= ssobol_maxcol; ++k) {
-							temp1 += ssobol_lbitbits(lsm[i-1][p-1], k - 1, 1) * ssobol_lbitbits(v[i-1][j-1], k - 1, 1);
+							temp1 += lbitbits(lsm[i-1][p-1], k - 1, 1) * lbitbits(v[i-1][j-1], k - 1, 1);
 						}
 						temp1 %= 2;
 						temp2 += temp1 * l;
@@ -269,7 +240,7 @@ L30:
 			ll = pow(2.0, maxd);
 		}
 		if (iflag == 2 || iflag == 3) {
-			ssobol_genscrmu(usm, ushift);
+			genscrmu(usm, ushift);
 			if (iflag == 2) {
 				maxx = ssobol_maxcol;
 			} else {
@@ -280,9 +251,9 @@ L30:
 					p = maxx;
 					for (k = 1; k <= maxx; ++k) {
 						if (iflag == 2) {
-							tv[i-1][p-1][j-1] = ssobol_lbitbits(v[i-1][j-1], k - 1, 1);
+							tv[i-1][p-1][j-1] = lbitbits(v[i-1][j-1], k - 1, 1);
 						} else {
-							tv[i-1][p-1][j-1] = ssobol_lbitbits(ssobol_sv[i-1][j-1], k - 1, 1);
+							tv[i-1][p-1][j-1] = lbitbits(ssobol_sv[i-1][j-1], k - 1, 1);
 						}
 						--p;
 					}
@@ -311,7 +282,7 @@ L30:
 					ssobol_sv[i-1][(int) pp-1] = temp2;
 					if (pp == 1.f) {
 						if (iflag == 3) {
-							shift[i - 1] = ssobol_exor(&temp4, &shift[i - 1]);
+							shift[i - 1] = exor(&temp4, &shift[i - 1]);
 						} else {
 							shift[i - 1] = temp4;
 						}
@@ -335,7 +306,7 @@ L30:
 	return;
 }
 
-int ssobol_genscrml(int maxd, int lsm[][31], int *shift)
+int Ssobol::genscrml(int maxd, int lsm[][31], int *shift)
 {
 	/* Local variables */
 	int i, j, l, p, ll;
@@ -355,7 +326,7 @@ int ssobol_genscrml(int maxd, int lsm[][31], int *shift)
 		l = 1;
 		for (i = maxd; i >= 1; --i) {
 			lsm[p-1][i-1] = 0;
-			stemp = (int) (ssobol_unirnd() * 1e3f) % 2;
+			stemp = (int) (unirnd() * 1e3f) % 2;
 			shift[p-1] += stemp * l;
 			l <<= 1;
 			ll = 1;
@@ -363,7 +334,7 @@ int ssobol_genscrml(int maxd, int lsm[][31], int *shift)
 				if (j == i) {
 					temp = 1;
 				} else if (j < i) {
-					temp = (int) (ssobol_unirnd() * 1e3f) % 2;
+					temp = (int) (unirnd() * 1e3f) % 2;
 				} else {
 					temp = 0;
 				}
@@ -375,7 +346,7 @@ int ssobol_genscrml(int maxd, int lsm[][31], int *shift)
 	return 0;
 }
 
-int ssobol_genscrmu(int usm[][31], int *ushift)
+int Ssobol::genscrmu(int usm[][31], int *ushift)
 {
 	/* Local variables */
 	static int i, j;
@@ -391,13 +362,13 @@ int ssobol_genscrmu(int usm[][31], int *ushift)
 
 	/* Function Body */
 	for (i = 1; i <= ssobol_maxcol; ++i) {
-		stemp = (int) (ssobol_unirnd() * 1e3f) % 2;
+		stemp = (int) (unirnd() * 1e3f) % 2;
 		ushift[i-1] = stemp;
 		for (j = 1; j <= ssobol_maxcol; ++j) {
 			if (j == i) {
 				temp = 1;
 			} else if (j > i) {
-				temp = (int) (ssobol_unirnd() * 1e3f) % 2;
+				temp = (int) (unirnd() * 1e3f) % 2;
 			} else {
 				temp = 0;
 			}
@@ -408,7 +379,7 @@ int ssobol_genscrmu(int usm[][31], int *ushift)
 }
 
 // TODO : use this generator instead of URAND.
-double ssobol_unirnd(void)
+double Ssobol::unirnd(void)
 {
 	double ret_val;
 
@@ -432,7 +403,7 @@ double ssobol_unirnd(void)
 	return ret_val;
 }
 
-void ssobol_seedreset()
+void Ssobol::seedreset()
 {
 	int i;
 	static double seeds[24] = { .8804418,.2694365,.0367681,.4068699,
@@ -448,11 +419,10 @@ void ssobol_seedreset()
 	{
 		ssobol_seedseeds[i]=seeds[i];
 	}
-	ssobol_isrngstartedup=true;
 }
 
 
-void ssobol_next(double *quasi)
+void Ssobol::next(double *quasi)
 {
 	/* Local variables */
 	static int i, l;
@@ -510,14 +480,6 @@ L1:
 
 	/*     CHECK THAT THE USER IS NOT CHEATING ! */
 
-	if ( !ssobol_isstartedup )
-	{
-		ostringstream msg;
-		msg << "ssobol - ssobol_next - Error!\n";
-		msg << "  startup is not done.\n";
-		lowdisc_error(msg.str());
-		return;
-	}
 	if (l > ssobol_maxcol) {
 		ostringstream msg;
 		msg << "ssobol - ssobol_next - Too many calls!\n";
@@ -530,7 +492,7 @@ L1:
 
 	for (i = 1; i <= ssobol_s; ++i) 
 	{
-		ssobol_lastq[i - 1] = ssobol_exor(&ssobol_lastq[i - 1], &ssobol_sv[i-1][l-1]);
+		ssobol_lastq[i - 1] = exor(&ssobol_lastq[i - 1], &ssobol_sv[i-1][l-1]);
 
 		/*     IF A FULL-WORD EXCLUSIVE-OR, SAY .XOR., IS AVAILABLE */
 		/*     THEN REPLACE THE PRECEDING STATEMENT BY */
@@ -544,7 +506,7 @@ L1:
 	return;
 }
 
-int ssobol_exor(int *iin, int *jin)
+int Ssobol::exor(int *iin, int *jin)
 {
 	/* System generated locals */
 	int ret_val;
@@ -579,7 +541,7 @@ L1:
 	goto L1;
 }
 
-int ssobol_lbitbits(int a, int b, int len)
+int Ssobol::lbitbits(int a, int b, int len)
 {
 	/* Assume 2's complement arithmetic */
 
@@ -591,26 +553,14 @@ int ssobol_lbitbits(int a, int b, int len)
 	y <<= len;
 	return (int)(x & ~y);
 }
-void ssobol_stop ( )
+
+Ssobol::~Ssobol()
 {
-	if ( !ssobol_isstartedup )
-	{
-		ostringstream msg;
-		msg << "ssobol - ssobol_stop - Error!\n";
-		msg << "  startup is not done.\n";
-		lowdisc_error(msg.str());
-		return;
-	}
-	ssobol_isstartedup = false;
 	return;
 }
 
-bool ssobol_isstart ( )
-{
-	return ssobol_isstartedup;
-}
 
-int ssobol_dim_num_get ( void )
+int Ssobol::dim_num_get ( void )
 {
 	return ssobol_s;
 }

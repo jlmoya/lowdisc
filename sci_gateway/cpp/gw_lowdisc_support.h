@@ -12,6 +12,8 @@
 #ifndef __SCI_LOWDISC_GWSUPPORT_H__
 #define __SCI_LOWDISC_GWSUPPORT_H__
 
+
+
 int lowdisc_AssertNumberOfRows ( char * fname , int ivar , int expected_nrows , int actual_nrows );
 int lowdisc_AssertNumberOfColumns ( char * fname , int ivar , int expected_ncols , int actual_ncols );
 int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type );
@@ -22,7 +24,6 @@ int lowdisc_Double2IntegerArgument ( char * fname , int ivar , double dvalue , i
 void lowdisc_CreateLhsInteger ( int ivar , int value );
 void lowdisc_CreateLhsDouble ( int ivar , double value );
 void lowdisc_CreateLhsMatrix ( int ivar , int nRows , int nCols , double ** matrix );
-
 
 
 /* ==================================================================== */

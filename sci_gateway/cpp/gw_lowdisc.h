@@ -52,9 +52,11 @@ extern "C" {
 	int sci_lowdisc_niedfisstart (char *fname);
 	//
 	// Fast Scrambled Sobol sequence
-	int sci_lowdisc_ssobolfnext (char *fname);
-	int sci_lowdisc_ssobolfstart (char *fname);
-	int sci_lowdisc_ssobolfstop (char *fname);
-	int sci_lowdisc_ssobolfisstart (char *fname);
+	int sci_lowdisc_ssobolnext (char *fname);
+	int sci_lowdisc_ssobolnew (char *fname);
+	int sci_lowdisc_ssoboldestroy (char *fname);
+	//
+	int sci_lowdisc_ssoboltokens (char *fname);
+
 }
 #endif /* __SCI_GW_LOWDISC_H__ */

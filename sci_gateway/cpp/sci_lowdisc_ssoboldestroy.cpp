@@ -17,29 +17,34 @@ extern "C" {
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
 #include "ssobol.h"
+#include "lowdisc_ssobol_map.hxx" 
 
 
-// _lowdisc_ssobolfstart ( dim , iflag )
-//   Start the Scrambed Sobol sequence.
-int sci_lowdisc_ssobolfstart (char *fname) {
-	int dimen;
+// _lowdisc_ssoboldestroy (token)
+//   Stop the Scrambed Sobol sequence.
+int sci_lowdisc_ssoboldestroy(char *fname) 
+{
+
+	int token;
+	Ssobol * seq;
 	int ierr;
-	int maxd=30;
 	int iflag;
-	int atmost=1073741823; // The maximum available.
-	int taus; // We just ignore this value.
 
-	CheckRhs(2,2);
-	CheckLhs(0,1);
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dimen );
+	CheckRhs(1,1) ;
+	CheckLhs(0,1) ;
+
+	// Arg #1: token
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
 	if ( ierr==0 ) {
 		return 0;
 	}
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &iflag );
-	if ( ierr==0 ) {
+	iflag=lowdisc_token2Ssobol(fname, 1, token, &seq);
+	if (iflag==0)
+	{
 		return 0;
 	}
-	ssobol_startup(dimen, atmost, iflag, maxd, &taus);
-	lowdisc_CreateLhsInteger ( 1 , 0 );
+	delete seq;
+	lowdisc_ssobol_map_remove(token);
+	lowdisc_CreateLhsInteger ( 1 , token );
 	return 0;
 }
