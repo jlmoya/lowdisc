@@ -242,7 +242,6 @@ function this = ldniedf_new ()
 endfunction
 
 function this = ldbase_new ( speed )
-
     [lhs, rhs] = argn()
     apifun_checkrhs ( "ldbase_new" , rhs , 1:1 )
     apifun_checklhs ( "ldbase_new" , lhs , 1 )
