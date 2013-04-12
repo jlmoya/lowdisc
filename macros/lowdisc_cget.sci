@@ -78,6 +78,8 @@ function value = ldhaltonf_cget (this,key)
     select key
     case "-primeslist" then
         value = this.primeslist;
+    case "-scrambling" then
+        value = this.scrambling;
     else
         // Delegate to ldbase
         value = ldbase_cget ( this.baseobj , key )
@@ -105,8 +107,13 @@ function value = ldniedf_cget (this,key)
 endfunction
 
 function value = ldsobolf_cget (this,key)
-    // Delegate to ldbase
-    value = ldbase_cget ( this.baseobj , key )
+    select key
+    case "-scrambling" then
+        value = this.scrambling;
+    else
+        // Delegate to ldbase
+        value = ldbase_cget ( this.baseobj , key )
+    end
 endfunction
 
 function value = ldbase_cget (this,key)

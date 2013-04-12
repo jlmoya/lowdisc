@@ -118,6 +118,8 @@ function str = ldsobolf_string ( this )
     k = k + 1
     str(k) = msprintf("Maximum number of simulations = %s",string(this.nbsimmax))
     k = k + 1
+    str(k) = msprintf("Scrambling = ""%s""",this.scrambling)
+    k = k + 1
     //
     // Get the baseobj string
     objstr = ldbase_string(this.baseobj)
@@ -136,7 +138,7 @@ function str = ldhaltonf_string ( this )
     k = k + 1
     str(k) = msprintf("Maximum number of simulations = %s",string(this.nbsimmax))
     k = k + 1
-    str(k) = msprintf("Scrambling = %s",string(this.scrambling))
+    str(k) = msprintf("Scrambling = ""%s""",string(this.scrambling))
     k = k + 1
     //
     // Get the baseobj string

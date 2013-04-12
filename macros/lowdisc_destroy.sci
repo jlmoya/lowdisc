@@ -32,7 +32,7 @@ function this = lowdisc_destroy (this)
     apifun_checkrhs ( "lowdisc_destroy" , rhs , 1:1 )
     apifun_checklhs ( "lowdisc_destroy" , lhs , 0:1 )
     //
-    apifun_checktype ( "lowdisc_cget" , this , "this" , 1 , "LOWDISC" )
+    apifun_checktype ( "lowdisc_destroy" , this , "this" , 1 , "LOWDISC" )
     //
     select this.method
     case "reversehalton" then

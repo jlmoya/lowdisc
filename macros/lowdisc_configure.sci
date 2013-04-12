@@ -104,27 +104,34 @@ function this = lowdisc_configure (this,key,value)
     //  <listitem>
     //     <para>
     //     <literal>"-scrambling"</literal> : a 1-by-1 matrix of strings, the empty string "" (no scrambling), 
-    //     or "RR2" for the scrambling (digit permutation) of Kocis-Whiten [1].
+    //     or "RR2" for the scrambling (digit permutation) of Kocis-Whiten [1]. 
+    //     The default is "" (no scrambling). 
     //     The "RR2" scrambling can improve the correlation in high dimensions, 
     //     leading to better low-dimensionnal projects.
     //     </para>
     //  </listitem>
     //  </itemizedlist>
     //
-    //  Some expertise is required to configure the <literal>skip</literal> and <literal>leap</literal> options.
-    //  The <literal>skip</literal> option can improve the Faure, Sobol and Niederreiter sequences.
+    //  Some expertise is required to configure the <literal>skip</literal> 
+    //  and <literal>leap</literal> options.
+    //  The <literal>skip</literal> option can improve the Faure, Sobol and 
+    //  Niederreiter sequences.
     //  The <literal>leap</literal> option can improve the Halton sequence, although 
     //  Kocis and Whiten also tried to leap the Faure and Sobol sequences.
     //  This can lead to some trouble for non-experts.
     //  For that purpose, we designed the following functions.
     //  <itemizedlist>
-    //  <listitem><para> <literal>lowdisc_haltonsuggest</literal> : provides settings for the Halton sequence,</para></listitem>
-    //  <listitem><para> <literal>lowdisc_fauresuggest</literal> : provides settings for the Faure sequence,</para></listitem>
-    //  <listitem><para> <literal>lowdisc_sobolsuggest</literal> : provides settings for the Sobol sequence,</para></listitem>
-    //  <listitem><para> <literal>lowdisc_niedersuggest</literal> : provides settings for the Niederreiter sequence.</para></listitem>
+    //  <listitem><para> <literal>lowdisc_haltonsuggest</literal> : provides 
+    //    settings for the Halton sequence,</para></listitem>
+    //  <listitem><para> <literal>lowdisc_fauresuggest</literal> : provides 
+    //    settings for the Faure sequence,</para></listitem>
+    //  <listitem><para> <literal>lowdisc_sobolsuggest</literal> : provides 
+    //    settings for the Sobol sequence,</para></listitem>
+    //  <listitem><para> <literal>lowdisc_niedersuggest</literal> : provides 
+    //    settings for the Niederreiter sequence.</para></listitem>
     //  </itemizedlist>
-    //  These functions have been designed to include suggestions by various authors to improve 
-    //  the sequences.
+    //  These functions have been designed to include suggestions by various 
+    //  authors to improve the sequences.
     //  In the situation where we have no knowledge of the settings to use, these 
     //  functions may be used. Still, these have not been included as defaults, 
     //  which authorizes a more aware choice of the parameters.
@@ -260,8 +267,16 @@ function this = ldfauref_configure (this,key,value)
 endfunction
 
 function this = ldsobolf_configure (this,key,value)
-    // Delegate to ldbase
-    this.baseobj = ldbase_configure ( this.baseobj , key ,value )
+    select key
+    case "-scrambling" then
+        apifun_checktype ( "ldsobolf_configure" , value , "value" , 3 , "string" )
+        apifun_checkscalar ( "ldsobolf_configure" , value , "value" , 3 )
+        apifun_checkoption ( "ldsobolf_configure" , value , "value" , 3 , ["" "Owen" "Faure-Tezuka" "Owen-Faure-Tezuka"])
+        this.scrambling = value
+    else
+        // Delegate to ldbase
+        this.baseobj = ldbase_configure ( this.baseobj , key ,value )
+    end
 endfunction
 
 function this = ldbase_configure (this,key,value)

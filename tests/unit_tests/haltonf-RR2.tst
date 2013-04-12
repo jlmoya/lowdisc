@@ -1,6 +1,7 @@
 // Copyright (C) 2013 - Michael Baudin
 //
-// This file must be used under the terms of the GNU LGPL license.
+// This file must be used under the terms of the 
+// GNU LGPL license.
 // 
 
 // <-- JVM NOT MANDATORY -->
@@ -10,8 +11,12 @@
 // Check the Scrambled RR2 Halton sequence in dimension 1
 //
 lds = lowdisc_new("halton");
+scrambling = lowdisc_cget(lds,"-scrambling");
+assert_checkequal(scrambling,"");
 lds = lowdisc_configure(lds,"-dimension",1);
 lds = lowdisc_configure(lds,"-scrambling","RR2");
+scrambling = lowdisc_cget(lds,"-scrambling");
+assert_checkequal(scrambling,"RR2");
 lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
 expected= [
