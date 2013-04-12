@@ -151,6 +151,9 @@ with:
 
 lds = lowdisc_new("halton");
 
+ * Greatly reduced the number of macros. 
+   This avoids to create unnecessary public functions.
+
 lowdisc (v0.4)
  * Created lowdisc_combinesum.
  * Created lowdisc_plotbmbox.

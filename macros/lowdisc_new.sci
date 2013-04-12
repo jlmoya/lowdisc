@@ -141,3 +141,136 @@ function this = lowdisc_new ( varargin )
         error(errmsg);
     end
 endfunction
+
+function this = ldsobolf_new ()
+
+    this = tlist([
+    "LDSOBOLF"
+    "baseobj"
+    "dimmax"
+    "nbsimmax"
+    ])
+    this.baseobj = ldbase_new ( "fast" )
+    this.dimmax = 1111
+    this.nbsimmax = 2^30 - 1
+endfunction
+
+function this = ldhaltonf_new ()
+
+    this = tlist([
+    "LDHLTNF"
+    "baseobj"
+    "primeslist"
+    "primessize"
+    "nbsimmax"
+    "scrambling"
+    ])
+    this.baseobj = ldbase_new ( "fast" )
+    //
+    // Configurable options
+    // This makes the component available up to dimension 100
+    this.primeslist = number_primes100 ( )
+    // By default, there is no scrambling
+    this.scrambling=""
+    //
+    // Non Configurable options
+    this.primessize = size(this.primeslist,2)
+    this.nbsimmax = 2^31 - 1
+endfunction
+
+function this = ldfauref_new ()
+
+    this = tlist([
+    "LDFAUREF"
+    "baseobj"
+    "primeslist"
+    "primessize"
+    "nbsimmax"
+    ])
+    //
+    // Configurable options
+    this.baseobj = ldbase_new ( "fast" )
+    // This makes the component available up to dimension 100
+    this.primeslist = number_primes100 ( )
+    //
+    // Non Configurable options
+    this.primessize = size(this.primeslist,2)
+    this.nbsimmax = 2^31 - 1
+endfunction
+
+function this = ldrevhalf_new ()
+
+    this = tlist([
+    "LDRVHLF"
+    "baseobj"
+    "primeslist"
+    "primessize"
+    "nbsimmax"
+    ])
+    this.baseobj = ldbase_new ( "fast" )
+    //
+    // Configurable options
+    // This makes the component available up to dimension 100
+    this.primeslist = number_primes100 ( )
+    //
+    // Non Configurable options
+    this.primessize = size(this.primeslist,2)
+    this.nbsimmax = 2^31 - 1
+endfunction
+
+function this = ldniedf_new ()
+    // Create a new Fast Niederreiter Arbitrary Base object.
+    //
+
+    this = tlist([
+    "LDNIEDF"
+    "baseobj"
+    "base"
+    "gfaritfile"
+    "gfplysfile"
+    "dimmax"
+    "nbsimmax"
+    ])
+    this.baseobj = ldbase_new ( "fast" )
+    //
+    // Configurable options
+    this.base = 2
+    this.gfaritfile = fullfile(TMPDIR,"gfarit.txt")
+    this.gfplysfile = fullfile(TMPDIR,"gfplys.txt")
+    this.dimmax = 50
+    this.nbsimmax = 2^31 - 1
+endfunction
+
+function this = ldbase_new ( speed )
+
+    [lhs, rhs] = argn()
+    apifun_checkrhs ( "ldbase_new" , rhs , 1:1 )
+    apifun_checklhs ( "ldbase_new" , lhs , 1 )
+    //
+    apifun_checktype ( "ldbase_configure" , speed , "speed" , 1 , "string" )
+    apifun_checkscalar ( "ldbase_configure" , speed , "speed" , 1 )
+    apifun_checkoption ( "ldbase_configure" , speed , "speed" , 1 , ["fast" "slow"] )
+    //
+    this = tlist([
+    "LDBASE"
+    "verbose"
+    "dimension"
+    "index"
+    "startedup"
+    "skip"
+    "leap"
+    "speed"
+    ])
+    //
+    // Configurable options
+    this.verbose=%f
+    this.dimension=1
+    this.index=0
+    this.skip = 0
+    this.leap = 0
+    this.startedup = %f
+    this.speed = speed
+endfunction
+
+
+

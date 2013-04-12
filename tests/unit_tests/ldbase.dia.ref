@@ -1,14 +1,76 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 //
-// This file must be used under the terms of the GNU LGPL license.
+// This file must be used under the terms of the 
+// GNU LGPL license.
 // 
 // <-- JVM NOT MANDATORY -->
 // <-- ENGLISH IMPOSED -->
-ldb = ldbase_new("fast");
-ldb
- ldb  =
+for m=lowdisc_methods()'
+    ldb = lowdisc_new(m);
+    disp(ldb)
+    //
+    startedup = lowdisc_get ( ldb , "-startedup" );
+    assert_checkequal ( startedup , %f );
+    //
+    ldb = lowdisc_configure ( ldb , "-dimension" , 4 );
+    dimension = lowdisc_cget ( ldb , "-dimension" );
+    assert_checkequal ( dimension , 4 );
+    //
+    verbose = lowdisc_cget ( ldb , "-verbose" );
+    assert_checkequal ( verbose , %f );
+    //
+    ldb = lowdisc_configure ( ldb , "-verbose" , %t );
+    verbose = lowdisc_cget ( ldb , "-verbose" );
+    assert_checkequal ( verbose , %t );
+    //
+    skip = lowdisc_cget ( ldb , "-skip" );
+    assert_checkequal ( skip , 0 );
+    //
+    ldb = lowdisc_configure ( ldb , "-skip" , 10 );
+    skip = lowdisc_cget ( ldb , "-skip" );
+    assert_checkequal ( skip , 10 );
+    ldb = lowdisc_configure ( ldb , "-skip" , 0 );
+    //
+    leap = lowdisc_cget ( ldb , "-leap" );
+    assert_checkequal ( leap , 0 );
+    //
+    ldb = lowdisc_configure ( ldb , "-leap" , 10 );
+    leap = lowdisc_cget ( ldb , "-leap" );
+    assert_checkequal ( leap , 10 );
+    ldb = lowdisc_configure ( ldb , "-leap" , 0 );
+    //
+    ldb = lowdisc_startup ( ldb );
+    //
+    startedup = lowdisc_get ( ldb , "-startedup" );
+    assert_checkequal ( startedup , %t );
+    //
+    sequenceindex = lowdisc_get ( ldb , "-index" );
+    assert_checkequal ( sequenceindex , 0 );
+    //
+    [ldb,next] = lowdisc_next ( ldb );
+    sequenceindex = lowdisc_get ( ldb , "-index" );
+    assert_checkequal ( sequenceindex , 1 );
+    //
+    [ldb,next] = lowdisc_next ( ldb , 9 );
+    sequenceindex = lowdisc_get ( ldb , "-index" );
+    assert_checkequal ( sequenceindex , 10 );
+    //
+    ldb = lowdisc_destroy ( ldb );
+end
  
+Low Discrepancy Sequence:
+=========================
+method: halton
+sequence: <a Low Discrepancy Sequence>
+
+Low Discrepancy Sequence: Halton Fast
+=========================
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+Maximum number of simulations = 2.147D+09
+Scrambling = 
+
 Abstract Low Discrepancy Sequence:
 =========================
 Dimension of space: 1
@@ -18,49 +80,86 @@ Skip: 0
 Leap: 0
 Started Up: F
 Speed: fast
-//
-startedup = ldbase_get ( ldb , "-startedup" );
-assert_checkequal ( startedup , %f );
-//
-ldb = ldbase_configure ( ldb , "-dimension" , 4 );
-dimension = ldbase_cget ( ldb , "-dimension" );
-assert_checkequal ( dimension , 4 );
-//
-verbose = ldbase_cget ( ldb , "-verbose" );
-assert_checkequal ( verbose , %f );
-//
-ldb = ldbase_configure ( ldb , "-verbose" , %t );
-verbose = ldbase_cget ( ldb , "-verbose" );
-assert_checkequal ( verbose , %t );
-//
-skip = ldbase_cget ( ldb , "-skip" );
-assert_checkequal ( skip , 0 );
-//
-ldb = ldbase_configure ( ldb , "-skip" , 10 );
-skip = ldbase_cget ( ldb , "-skip" );
-assert_checkequal ( skip , 10 );
-//
-leap = ldbase_cget ( ldb , "-leap" );
-assert_checkequal ( leap , 0 );
-//
-ldb = ldbase_configure ( ldb , "-leap" , 10 );
-leap = ldbase_cget ( ldb , "-leap" );
-assert_checkequal ( leap , 10 );
-//
-ldb = ldbase_startup ( ldb );
-Starting up the sequence.//
-startedup = ldbase_get ( ldb , "-startedup" );
-assert_checkequal ( startedup , %t );
-//
-sequenceindex = ldbase_get ( ldb , "-index" );
-assert_checkequal ( sequenceindex , 0 );
-//
-ldb = ldbase_incr ( ldb );
-sequenceindex = ldbase_get ( ldb , "-index" );
-assert_checkequal ( sequenceindex , 1 );
-//
-ldb = ldbase_indexset ( ldb , 10 );
-sequenceindex = ldbase_get ( ldb , "-index" );
-assert_checkequal ( sequenceindex , 10 );
-//
-ldb = ldbase_destroy ( ldb );
+Starting up the sequence. 
+Low Discrepancy Sequence:
+=========================
+method: faure
+sequence: <a Low Discrepancy Sequence>
+
+Low Discrepancy Sequence: Faure Fast
+=========================
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+Maximum number of simulations = 2.147D+09
+
+Abstract Low Discrepancy Sequence:
+=========================
+Dimension of space: 1
+Index: 0
+Verbose logging: F
+Skip: 0
+Leap: 0
+Started Up: F
+Speed: fast
+Starting up the sequence. 
+Low Discrepancy Sequence:
+=========================
+method: reversehalton
+sequence: <a Low Discrepancy Sequence>
+
+Low Discrepancy Sequence: Fast Reverse Halton
+=========================
+Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+Maximum number of simulations = 2.147484e+009
+
+Abstract Low Discrepancy Sequence:
+=========================
+Dimension of space: 1
+Index: 0
+Verbose logging: F
+Skip: 0
+Leap: 0
+Started Up: F
+Speed: fast
+Starting up the sequence. 
+Low Discrepancy Sequence:
+=========================
+method: sobol
+sequence: <a Low Discrepancy Sequence>
+
+Low Discrepancy Sequence: Fast Sobol
+=========================
+Maximum dimension = 1111
+Maximum number of simulations = 1.074D+09
+
+Abstract Low Discrepancy Sequence:
+=========================
+Dimension of space: 1
+Index: 0
+Verbose logging: F
+Skip: 0
+Leap: 0
+Started Up: F
+Speed: fast
+Starting up the sequence. 
+Low Discrepancy Sequence:
+=========================
+method: niederreiter
+sequence: <a Low Discrepancy Sequence>
+
+Low Discrepancy Sequence: Fast Niederreiter
+=========================
+Base: 2
+Gfaritfile: TMPDIR\gfarit.txt
+Gfplysfile: TMPDIR\gfplys.txt
+Maximum dimension = 50
+Maximum number of simulations = 2.147D+09
+
+Abstract Low Discrepancy Sequence:
+=========================
+Dimension of space: 1
+Index: 0
+Verbose logging: F
+Skip: 0
+Leap: 0
+Started Up: F
+Speed: fast

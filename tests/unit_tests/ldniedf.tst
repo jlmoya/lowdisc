@@ -1,8 +1,10 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 
 //
-// This file must be used under the terms of the GNU LGPL license.
+// This file must be used under the terms of the 
+// GNU LGPL license.
 // 
 
 // <-- JVM NOT MANDATORY -->
@@ -12,15 +14,15 @@
 // Check the Fast Niederreiter sequence 
 // Use base 2 - this is the default.
 //
-lds = ldniedf_new();
-lds = ldniedf_configure(lds,"-dimension",4);
-lds = ldniedf_startup (lds);
+lds = lowdisc_new("niederreiter");
+lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_startup (lds);
 // Term #1
-[lds,computed] = ldniedf_next (lds);
+[lds,computed] = lowdisc_next (lds);
 expected = [0.500000      0.500000      0.750000      0.875000];
 assert_checkalmostequal ( computed, expected , 10 * %eps );
 // Terms #2 to #9
-[lds,computed]=ldniedf_next(lds,8);
+[lds,computed]=lowdisc_next(lds,8);
 expected= [...
   0.250000      0.750000      0.562500      0.765625
   0.750000      0.250000      0.312500      0.140625
@@ -32,6 +34,6 @@ expected= [...
   0.562500      0.437500      0.203125      0.859375
 ];
 assert_checkalmostequal ( computed, expected , 1.e-4 );
-lds = ldniedf_destroy(lds);
+lds = lowdisc_destroy(lds);
 
 

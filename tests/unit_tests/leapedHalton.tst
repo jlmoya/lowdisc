@@ -10,7 +10,7 @@
 // http://forge.scilab.org/index.php/p/lowdisc/issues/1112
 // wont happen again.
 for s=2:20
-    u=lowdisc_ldgen ( 1000 , s , "halton" , %f );
+    u=lowdisc_ldgen ( 1000 , s , "halton-leaped" );
     umin=min(u,"r");
     assert_checkalmostequal(umin,zeros(1,s),[],1.e-2);
     umax=max(u,"r");
