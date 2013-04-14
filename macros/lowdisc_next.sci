@@ -128,15 +128,15 @@ function [this,next] = lowdisc_next ( varargin )
     //
     select this.method
     case "reversehalton" then
-        [this.sequence,next]     = ldrevhalf_next ( this.sequence , imax )
+        [this,next]     = ldrevhalf_next ( this , imax )
     case "niederreiter" then
-        [this.sequence,next]     = ldniedf_next ( this.sequence , imax )
+        [this,next]     = ldniedf_next ( this , imax )
     case "sobol" then
-        [this.sequence,next]     = ldsobolf_next ( this.sequence , imax )
+        [this,next]     = ldsobolf_next ( this , imax )
     case "faure" then
-        [this.sequence,next]     = ldfauref_next ( this.sequence , imax )
+        [this,next]     = ldfauref_next ( this , imax )
     case "halton" then
-        [this.sequence,next]     = ldhaltonf_next ( this.sequence , imax )
+        [this,next]     = ldhaltonf_next ( this , imax )
     else
         errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_next" , this.method);
         error(errmsg);
@@ -159,21 +159,20 @@ function [this,next] = ldrevhalf_next ( varargin )
     end
     //
     // Check that the object is started up
-    if ( ~ldbase_get ( this.baseobj , "-startedup" ) ) then
+    if ( ~lowdisc_get(this , "-startedup" ) ) then
         errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldrevhalf_startup first."), "ldrevhalf_next");
         error(errmsg)
     end
     //
-    dimension = ldbase_cget ( this.baseobj , "-dimension" )
-    leap = ldbase_cget ( this.baseobj , "-leap" )
-    index = ldbase_get ( this.baseobj , "-index" )
+    dimension = lowdisc_cget(this , "-dimension" )
+    leap = lowdisc_cget(this , "-leap" )
+    index = lowdisc_get(this , "-index" )
     next = _lowdisc_revhaltfnext ( index + 1 , imax, leap )
     index = index + imax*(leap+1)
-    this.baseobj = ldbase_indexset ( this.baseobj , index )
+    this=ldbase_indexset(this,index)
 endfunction
 
 function [this,next] = ldfauref_next ( varargin )
-
     [lhs,rhs]=argn();
     if ( rhs > 2 ) then
         errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldfauref_next", rhs);
@@ -188,18 +187,18 @@ function [this,next] = ldfauref_next ( varargin )
     end
     //
     // Check that the object is started up
-    if ( ~ldbase_get ( this.baseobj , "-startedup" ) ) then
+    if ( ~lowdisc_get(this , "-startedup" ) ) then
         errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldfauref_startup first."), "ldfauref_next");
         error(errmsg)
     end
     //
-    dimension = ldbase_cget ( this.baseobj , "-dimension" )
-    leap = ldbase_cget ( this.baseobj , "-leap" )
+    dimension = lowdisc_cget(this , "-dimension" )
+    leap = lowdisc_cget(this , "-leap" )
     //
-    index = ldbase_get ( this.baseobj , "-index" )
+    index = lowdisc_get(this , "-index" )
     next = _lowdisc_faurefnext ( index + 1 , imax, leap);
     index = index + imax*(leap+1)
-    this.baseobj = ldbase_indexset ( this.baseobj , index )
+    this=ldbase_indexset(this,index)
 endfunction
 
 function [this,next] = ldhaltonf_next ( varargin )
@@ -218,25 +217,24 @@ function [this,next] = ldhaltonf_next ( varargin )
     end
     //
     // Check that the object is started up
-    if ( ~ldbase_get ( this.baseobj , "-startedup" ) ) then
+    if ( ~lowdisc_get(this , "-startedup" ) ) then
         errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldhaltonf_startup first."), "ldhaltonf_next");
         error(errmsg)
     end
     //
-    dimension = ldbase_cget ( this.baseobj , "-dimension" )
-    leap = ldbase_cget ( this.baseobj , "-leap" )
+    dimension = lowdisc_cget(this , "-dimension" )
+    leap = lowdisc_cget(this , "-leap" )
     //
     // Initialize the vector
-    index = ldbase_get ( this.baseobj , "-index" )
+    index = lowdisc_get(this , "-index" )
     next = _lowdisc_haltonfnext ( index + 1, imax , leap );
     // Leap over (i.e. ignore) as many elements as required
     // Directly set the index.
     index = index + imax*(leap+1)
-    this.baseobj = ldbase_indexset ( this.baseobj , index )
+    this=ldbase_indexset(this,index)
 endfunction
 
 function [this,next] = ldsobolf_next ( varargin )
-
     [lhs,rhs]=argn();
     if ( rhs > 2 ) then
         errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldsobolf_next", rhs);
@@ -251,19 +249,19 @@ function [this,next] = ldsobolf_next ( varargin )
     end
     //
     // Check that the object is started up
-    if ( ~ldbase_get ( this.baseobj , "-startedup" ) ) then
+    if ( ~lowdisc_get ( this , "-startedup" ) ) then
         errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldsobolf_startup first."), "ldsobolf_next");
         error(errmsg)
     end
     //
-    dimension = ldbase_cget ( this.baseobj , "-dimension" )
-    leap = ldbase_cget ( this.baseobj , "-leap" )
+    dimension = lowdisc_cget ( this , "-dimension" )
+    leap = lowdisc_cget ( this , "-leap" )
     //
     // Initialize the vector
-    index = ldbase_get ( this.baseobj , "-index" )
+    index = lowdisc_get ( this , "-index" )
     next = _lowdisc_sobolfnext ( index + 1 , imax , leap )
     index = index + imax*(leap+1)
-    this.baseobj = ldbase_indexset ( this.baseobj , index )
+    this=ldbase_indexset(this, index )
 endfunction
 
 function [this,next] = ldniedf_next ( varargin )
@@ -281,24 +279,24 @@ function [this,next] = ldniedf_next ( varargin )
     end
     //
     // Check that the object is started up
-    if ( ~ldbase_get ( this.baseobj , "-startedup" ) ) then
+    if ( ~lowdisc_get(this , "-startedup" ) ) then
         errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldniedf_startup first."), "ldniedf_next");
         error(errmsg)
     end
     //
-    dimension = ldbase_cget ( this.baseobj , "-dimension" )
-    leap = ldbase_cget ( this.baseobj , "-leap" )
+    dimension = lowdisc_cget(this , "-dimension" )
+    leap = lowdisc_cget(this , "-leap" )
     //
     // Initialize the vector
     next = _lowdisc_niedfnext ( imax , leap );
     // Leap over (i.e. ignore) as many elements as required
     // Directly set the index.
-    index = ldbase_get ( this.baseobj , "-index" )
+    index = lowdisc_get(this , "-index" )
     index = index + imax*(leap+1)
-    this.baseobj = ldbase_indexset ( this.baseobj , index )
+    this=ldbase_indexset(this,index)
 endfunction
 
 function this = ldbase_indexset ( this , index )
-  this.index = index
+  this.sequence.baseobj.index = index
 endfunction
 

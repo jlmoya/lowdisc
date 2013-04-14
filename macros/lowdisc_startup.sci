@@ -53,15 +53,15 @@ function this = lowdisc_startup (this)
 
     select this.method
     case "reversehalton" then
-        this.sequence     = ldrevhalf_startup ( this.sequence )
+        this= ldrevhalf_startup ( this )
     case "niederreiter" then
-        this.sequence     = ldniedf_startup ( this.sequence )
+        this= ldniedf_startup ( this )
     case "sobol" then
-        this.sequence     = ldsobolf_startup ( this.sequence )
+        this= ldsobolf_startup ( this )
     case "faure" then
-        this.sequence     = ldfauref_startup ( this.sequence )
+        this= ldfauref_startup ( this )
     case "halton" then
-        this.sequence     = ldhaltonf_startup ( this.sequence )
+        this= ldhaltonf_startup ( this )
     else
         errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_startup" , this.method);
         error(errmsg);
@@ -69,119 +69,125 @@ function this = lowdisc_startup (this)
 endfunction
 
 function this = ldniedf_startup (this)
-    // ldniedf_startup --
-    //  Startup Fast Niederreiter's sequence.
-    //
-    //  Licensing:
-    //    This code is distributed under the GNU LGPL license.
-    //
-    //  Author:
-    //       2010 - Digiteo - Michael Baudin
-    //
-
-    this.baseobj = ldbase_startup ( this.baseobj )
-    //
+    this.sequence.baseobj = ldbase_startup ( this.sequence.baseobj )
     // Compute the init flag.
     // If the two files already exist, there is no need to generate them again: set init to zero.
-    if ( fileinfo ( this.gfaritfile ) <> [] & fileinfo ( this.gfplysfile ) <> [] ) then
+    gfaritfile=this.sequence.gfaritfile
+    gfplysfile=this.sequence.gfplysfile
+    if ( fileinfo (gfaritfile) <> [] & fileinfo ( gfplysfile ) <> [] ) then
         init = 0
     else
         init = 1
     end
-    //
     // Create the sequence
-    // We ignore the first element in the sequence, which is [0 0] in dimension 2.
+    // We ignore the first element in the sequence, which is [0 0] in 
+    // dimension 2.
     // Our Niederreiter sequence starts with [0.5 0.5] in 2 dimensions.
     // This is why we add 1 to the skip.
-    skip = ldbase_cget ( this.baseobj , "-skip" )
-    dimension = ldbase_cget ( this.baseobj , "-dimension" )
-    _lowdisc_niedfstart ( dimension , this.base , skip + 1 , this.gfaritfile , this.gfplysfile , init );
+    skip = lowdisc_cget(this , "-skip" )
+    dimension = lowdisc_cget(this , "-dimension" )
+    base = lowdisc_cget(this , "-base" )
+    _lowdisc_niedfstart(dimension,base, skip + 1 , gfaritfile , gfplysfile , init );
     //
     // Initialize the sequence at the right place
-    this.baseobj = ldbase_indexset ( this.baseobj , skip )
+    if ( skip > 0 ) then
+        this=ldbase_indexset(this,skip)
+    end
 endfunction
 
 function this = ldhaltonf_startup (this)
-
-    this.baseobj = ldbase_startup ( this.baseobj )
+    this.sequence.baseobj = ldbase_startup ( this.sequence.baseobj )
     //
-    dimension = ldbase_cget ( this.baseobj , "-dimension" )
-    if ( dimension > this.primessize ) then
-        errmsg = msprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"), "ldhaltonf_startup" , "fast Halton",dimension,this.primessize);
+    dimension = lowdisc_cget(this , "-dimension" )
+    primeslist=lowdisc_cget(this,"-primeslist")
+    primessize=size(primeslist,"*")
+    if ( dimension > primessize ) then
+        errmsg = msprintf ( gettext ( "%s: The %s method is not available for %d dimension because the database contains only %d primes"), "ldhaltonf_startup" , "fast Halton",dimension,primessize);
         error(errmsg);
     end
     //
-    base = this.primeslist(1:dimension)
+    base = primeslist(1:dimension)
     seed = zeros(1,dimension)
     //
-    if (this.scrambling=="") then
+    scrambling=lowdisc_cget(this,"-scrambling")
+    if (scrambling=="") then
         _lowdisc_haltonfstart ( dimension , base , seed , 1 )
     else
         _lowdisc_haltonfstart ( dimension , base , seed , 2 )
     end
     //
-    skip = ldbase_cget ( this.baseobj , "-skip" )
+    skip = lowdisc_cget(this , "-skip" )
     if ( skip > 0 ) then
         // Skip (i.e. ignore) as many elements as required
         // Set the seed accordingly and skip directly the elements.
-        this.baseobj = ldbase_indexset ( this.baseobj , skip )
-    else
+        this=ldbase_indexset(this,skip)
     end
 endfunction
 
 function this = ldfauref_startup (this)
-
-    this.baseobj = ldbase_startup ( this.baseobj )
-    //
-    // Create the sequence
-    //
-    dimension = ldbase_cget ( this.baseobj , "-dimension" )
-    k = find(this.primeslist>=dimension,1)
+    this.sequence.baseobj = ldbase_startup ( this.sequence.baseobj )
+    dimension = lowdisc_cget ( this , "-dimension" )
+    primeslist=lowdisc_cget(this,"-primeslist")
+    k = find(primeslist>=dimension,1)
     if (k == []) then
         errmsg = msprintf( gettext ( "%s: Faure Fast sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , "ldfauref_startup" , dimension);
         error(errmsg);
     end
     //
-    qs = this.primeslist(k)
+    qs = primeslist(k)
     _lowdisc_faurefstart ( dimension , qs )
     //
-    skip = ldbase_cget ( this.baseobj , "-skip" )
+    skip = lowdisc_cget(this , "-skip" )
     if ( skip > 0 ) then
         // Skip (i.e. ignore) as many elements as required
         // Directly set the index.
-        this.baseobj = ldbase_indexset ( this.baseobj , skip )
+        this=ldbase_indexset(this,skip)
     end
-
 endfunction
 
 function this = ldsobolf_startup (this)
-
-    this.baseobj = ldbase_startup ( this.baseobj )
-    dimension = ldbase_cget ( this.baseobj , "-dimension" )
-    _lowdisc_sobolfstart ( dimension );
-    skip = ldbase_cget ( this.baseobj , "-skip" )
-    if ( skip > 0 ) then
-        // Skip (i.e. ignore) as many elements as required
-        // Directly set the index.
-        this.baseobj = ldbase_indexset ( this.baseobj , skip )
+    this.sequence.baseobj = ldbase_startup ( this.sequence.baseobj )
+    dimension = lowdisc_cget ( this , "-dimension" )
+    dimmax=lowdisc_get(this,"-dimmax")
+    if (dimension>dimmax) then
+        errmsg=msprintf(gettext("%s: Unable to set -scrambling option: current dimension is %d, but maximum dimension available for %s is %d\n"),"ldsobolf_startup",dim,value,dimmax)
+        error(errmsg)
+    end
+    scrambling = lowdisc_cget ( this , "-scrambling" )
+    select scrambling
+    case ""
+        _lowdisc_sobolfstart ( dimension );
+        skip = lowdisc_cget ( this , "-skip" )
+        if ( skip > 0 ) then
+            // Skip (i.e. ignore) as many elements as required
+            // Directly set the index.
+            this=ldbase_indexset(this,skip)
+        end
+    case "Owen"
+        this.sequence.token = _lowdisc_ssobolnew ( dimension , 1)
+    else
+        errmsg = msprintf( gettext ( "%s: Unknown scrambling %s." ) , "ldrevhalf_startup" , dimension);
+        error(errmsg);
     end
 endfunction
 
 function this = ldrevhalf_startup (this)
-    this.baseobj = ldbase_startup ( this.baseobj )
-    dimension = ldbase_cget ( this.baseobj , "-dimension" )
-    if (dimension>this.primessize) then
+    this.sequence.baseobj = ldbase_startup ( this.sequence.baseobj )
+    dimension = lowdisc_cget ( this , "-dimension" )
+    primeslist=lowdisc_cget ( this , "-primeslist" )
+    primesize=size(primeslist,"*")
+    if (dimension>primesize) then
         errmsg = msprintf( gettext ( "%s: Reverse Halton sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , "ldrevhalf_startup" , dimension);
         error(errmsg);
     end
     //
-    _lowdisc_revhaltfstart ( dimension , this.primeslist(1:dimension) )
+    _lowdisc_revhaltfstart ( dimension , primeslist(1:dimension) )
     //
-    skip = ldbase_cget ( this.baseobj , "-skip" )
+    skip = lowdisc_cget ( this , "-skip" )
     if ( skip > 0 ) then
         // Skip (i.e. ignore) as many elements as required
         // Directly set the index.
-        this.baseobj = ldbase_indexset ( this.baseobj , skip )
+        this= ldbase_indexset(this,skip)
     end
 endfunction
 
@@ -198,7 +204,7 @@ function this = ldbase_startup (this)
 endfunction
 
 function this = ldbase_indexset ( this , index )
-  this.index = index
+  this.sequence.baseobj.index = index
 endfunction
 
 

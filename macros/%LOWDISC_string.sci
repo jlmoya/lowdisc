@@ -120,6 +120,8 @@ function str = ldsobolf_string ( this )
     k = k + 1
     str(k) = msprintf("Scrambling = ""%s""",this.scrambling)
     k = k + 1
+    str(k) = msprintf("Token = ""%s""",this.token)
+    k = k + 1
     //
     // Get the baseobj string
     objstr = ldbase_string(this.baseobj)

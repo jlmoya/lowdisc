@@ -103,15 +103,15 @@ function value = lowdisc_get (this,key)
     //
     select this.method
     case "reversehalton" then
-        value     = ldrevhalf_get ( this.sequence , key )
+        value     = ldrevhalf_get ( this , key )
     case "niederreiter" then
-        value     = ldniedf_get ( this.sequence , key )
+        value     = ldniedf_get ( this , key )
     case "sobol" then
-        value     = ldsobolf_get ( this.sequence , key )
+        value     = ldsobolf_get ( this , key )
     case "faure" then
-        value     = ldfauref_get ( this.sequence , key )
+        value     = ldfauref_get ( this , key )
     case "halton" then
-        value     = ldhaltonf_get ( this.sequence , key )
+        value     = ldhaltonf_get ( this , key )
     else
         errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_get" , this.method);
         error(errmsg);
@@ -121,83 +121,85 @@ endfunction
 function value = ldhaltonf_get (this,key)
     select key
     case "-dimmax" then
-        value = this.primessize
+        value = this.sequence.primessize
     case "-nbsimmax" then
-        value = this.nbsimmax
+        value = this.sequence.nbsimmax
     case "-scrambling" then
-        value = this.scrambling
+        value = this.sequence.scrambling
     else
         // Delegate to ldbase
-        value = ldbase_get ( this.baseobj , key )
+        value = ldbase_get ( this , key )
     end
 endfunction
 
 function value = ldrevhalf_get (this,key)
     select key
     case "-dimmax" then
-        value = this.primessize
+        value = this.sequence.primessize
     case "-nbsimmax" then
-        value = this.nbsimmax
+        value = this.sequence.nbsimmax
     else
         // Delegate to ldbase
-        value = ldbase_get ( this.baseobj , key )
+        value = ldbase_get ( this , key )
     end
 endfunction
 
 function value = ldniedf_get (this,key)
     select key
     case "-dimmax" then
-        value = this.dimmax
+        value = this.sequence.dimmax
     case "-nbsimmax" then
-        value = this.nbsimmax
+        value = this.sequence.nbsimmax
     else
         // Delegate to ldbase
-        value = ldbase_get ( this.baseobj , key )
+        value = ldbase_get ( this , key )
     end
 endfunction
 
 function value = ldsobolf_get (this,key)
     select key
     case "-dimmax" then
-        value = this.dimmax
+        value = this.sequence.dimmax
     case "-nbsimmax" then
-        value = this.nbsimmax
+        value = this.sequence.nbsimmax
     else
         // Delegate to ldbase
-        value = ldbase_get ( this.baseobj , key )
+        value = ldbase_get ( this , key )
     end
 endfunction
 
 function value = ldfauref_get (this,key)
-
     select key
     case "-faureprime" then
-        dimension = ldbase_cget ( this.baseobj , "-dimension" )
-        k = find(this.primeslist>=dimension,1)
+        dimension = lowdisc_cget ( this , "-dimension" )
+        primeslist = lowdisc_cget ( this , "-primeslist" )
+        k = find(primeslist>=dimension,1)
         if (k == []) then
             errmsg = msprintf( gettext ( "%s: The dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , ...
             "ldfauref_get" , dimension);
             error(errmsg);
         end
-        value  = this.primeslist ( k )
+        value  = primeslist ( k )
     case "-dimmax" then
-        value = this.primeslist ( this.primessize )
+        primeslist = lowdisc_cget ( this , "-primeslist" )
+        primessize=size(primeslist,"*")
+        value = primeslist ( primessize )
     case "-nbsimmax" then
-        value = this.nbsimmax
+        value = this.sequence.nbsimmax
     else
         // Delegate to ldbase
-        value = ldbase_get ( this.baseobj , key )
+        value = ldbase_get ( this , key )
     end
 endfunction
 
 function value = ldbase_get ( this , key )
     select key
     case "-startedup" then
-        value = this.startedup
+        value = this.sequence.baseobj.startedup
     case "-index" then
-        value = this.index
+        value = this.sequence.baseobj.index
     case "-speed" then
-        value = this.speed;
+        value = this.sequence.baseobj.speed;
     else
         errmsg = msprintf(gettext("%s: Unknown key %s"),"ldbase_get",key);
         error(errmsg);

@@ -62,24 +62,26 @@ function this = lowdisc_configure (this,key,value)
     //  </itemizedlist>
     //
     // Some sequences can be configured in order to increase their maximum
-    // dimension. These sequences accept the following "-primeslist" option.
+    // dimension. 
+    // These sequences accept the following "-primeslist" option.
+    // The sequences which are sensitive to this option are : "halton", 
+    // "faure", "reversehalton".
     //  <itemizedlist>
     //    <listitem>
     //     <para>
-    //     <literal>"-primeslist"</literal> : a 1-by-n array of positive floating point integers, 
-    //     where n is greater than 2, 
+    //     <literal>"-primeslist"</literal> : a 1-by-n array of positive 
+    //     floating point integers, where n is greater than 2, 
     //     a matrix of prime numbers used in several low discrepancy sequences.
-    //     The default value is made of the 100 first prime numbers, from 2 to 541, which
-    //     enables the user to generate sequences up to 100 dimensions.
-    //     If a larger dimension problem is to manage, the -primeslist option enables users to
-    //     customize the list to meet the required dimension.
-    //     The user should be warned that the Halton sequence may produce poor convergence
-    //     rate if the dimension is larger than 15.
+    //     The default value is made of the 100 first prime numbers, from 2 
+    //     to 541, which enables the user to generate sequences up to 100 
+    //     dimensions.
+    //     If a larger dimension problem is to manage, the -primeslist option 
+    //     enables users to customize the list to meet the required dimension.
+    //     The user should be warned that the Halton sequence may produce 
+    //     poor convergence rate if the dimension is larger than 15.
     //     </para>
     //    </listitem>
     //  </itemizedlist>
-    //  The sequences which are sensitive to this option are : "halton", "faure", 
-    //  "reversehalton".
     //
     //  For the "niederreiter" sequence (Fast Niederreiter sequence in arbitrary base), 
     //  we can configure the base as following. 
@@ -272,6 +274,13 @@ function this = ldsobolf_configure (this,key,value)
         apifun_checktype ( "ldsobolf_configure" , value , "value" , 3 , "string" )
         apifun_checkscalar ( "ldsobolf_configure" , value , "value" , 3 )
         apifun_checkoption ( "ldsobolf_configure" , value , "value" , 3 , ["" "Owen" "Faure-Tezuka" "Owen-Faure-Tezuka"])
+        select value
+        case ""
+            dimmax = 1111
+        else
+            dimmax = 40
+        end
+        this.dimmax=dimmax
         this.scrambling = value
     else
         // Delegate to ldbase

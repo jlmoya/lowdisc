@@ -58,7 +58,7 @@ public:
 
 	INPUTS : 
 	dimen : the number of dimensions, DIMEN in {1,2,...,40}
-	atmost : the maximum number of elements in the sequence, ATMOST in {1,2,...,1073741824}
+	atmost : the maximum number of elements in the sequence, ATMOST in {1,2,...,2^30=1073741824}
 	maxd : Maximum Digits of Scrambling Of Owen type Scrambling (suggestion : maxd=30)
 	iflag: the scrambling type
 	iflag = 0 : No Scrambling
