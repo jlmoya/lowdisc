@@ -143,7 +143,6 @@ function this = lowdisc_new ( varargin )
 endfunction
 
 function this = ldsobolf_new ()
-
     this = tlist([
     "LDSOBOLF"
     "baseobj"
@@ -160,7 +159,6 @@ function this = ldsobolf_new ()
 endfunction
 
 function this = ldhaltonf_new ()
-
     this = tlist([
     "LDHLTNF"
     "baseobj"
@@ -183,7 +181,6 @@ function this = ldhaltonf_new ()
 endfunction
 
 function this = ldfauref_new ()
-
     this = tlist([
     "LDFAUREF"
     "baseobj"
@@ -203,7 +200,6 @@ function this = ldfauref_new ()
 endfunction
 
 function this = ldrevhalf_new ()
-
     this = tlist([
     "LDRVHLF"
     "baseobj"

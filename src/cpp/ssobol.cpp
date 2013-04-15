@@ -92,8 +92,6 @@ Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, int *taus)
 	{
 		ssobol_tau[j]=tau[j];
 	}
-	// Initialize ssobol_unifseed 
-	ssobol_unifseed = 0;
 
 	/*     CHECK PARAMETERS */
 	ssobol_s = dimen;
@@ -101,11 +99,13 @@ Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, int *taus)
 		ostringstream msg;
 		msg << "ssobol_next : wrong dimension : "<<ssobol_s<<" (must be in [1,40]).\n";
 		lowdisc_error(msg.str());
+		return;
 	}
 	if (atmost <= 0 || atmost >= 1073741824) {
 		ostringstream msg;
 		msg << "ssobol_next : wrong number of calls : "<<atmost<<" (must be in [1,1073741823])\n";
 		lowdisc_error(msg.str());
+		return;
 	}
 	if (ssobol_s <= 13) {
 		*taus = ssobol_tau[ssobol_s - 1];
@@ -352,7 +352,7 @@ int Ssobol::genscrmu(int usm[][31], int *ushift)
 	static int i, j;
 	static int temp, stemp;
 
-	/*     GENERATING UPPER TRIANGULAR SCRMABLING MATRICES AND */
+	/*     GENERATING UPPER TRIANGULAR SCRAMBLING MATRICES AND */
 	/*     SHIFT VECTORS. */
 	/*     INPUTS : */
 	/*       FROM BLOCK DATA "SOBOL" : S, MAXCOL, */
@@ -385,7 +385,7 @@ double Ssobol::unirnd(void)
 
 	/*     Random number generator, adapted from F. James */
 	/*     "A Review of Random Number Generators" */
-	/*      Comp. Phys. Comm. 60(1990), pp. 329-344. */
+	/*      Comp. Phys. Comm. 60 (1990), pp. 329-344. */
 
 	ret_val = ssobol_seedseeds[ssobol_seedi-1] - ssobol_seedseeds[ssobol_seedj-1] - ssobol_seedcarry;
 	if (ret_val < 0.) 
@@ -420,7 +420,14 @@ void Ssobol::seedreset()
 		ssobol_seedseeds[i]=seeds[i];
 	}
 }
-
+void Ssobol::seedset(double newseeds[24])
+{
+	int i;
+	for (i = 0; i < 24; i++) 
+	{
+		ssobol_seedseeds[i]=newseeds[i];
+	}
+}
 
 void Ssobol::next(double *quasi)
 {

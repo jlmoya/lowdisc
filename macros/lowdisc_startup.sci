@@ -147,13 +147,8 @@ endfunction
 
 function this = ldsobolf_startup (this)
     this.sequence.baseobj = ldbase_startup ( this.sequence.baseobj )
-    dimension = lowdisc_cget ( this , "-dimension" )
-    dimmax=lowdisc_get(this,"-dimmax")
-    if (dimension>dimmax) then
-        errmsg=msprintf(gettext("%s: Unable to set -scrambling option: current dimension is %d, but maximum dimension available for %s is %d\n"),"ldsobolf_startup",dim,value,dimmax)
-        error(errmsg)
-    end
     scrambling = lowdisc_cget ( this , "-scrambling" )
+    dimension = lowdisc_cget ( this , "-dimension" )
     select scrambling
     case ""
         _lowdisc_sobolfstart ( dimension );

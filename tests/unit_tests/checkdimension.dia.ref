@@ -189,3 +189,11 @@ Low Discrepancy Module Error !Error (code=999): Lowdisc: Error at the library le
 ==============================
 Sequence=niederreiter, Dimension=51/50
 Low Discrepancy Module Error !Error (code=999): Lowdisc: Error at the library level:niederreiter - INLO - Error!  Bad spatial dimension.
+// Must generate an error:
+lds=lowdisc_new("sobol");
+lds=lowdisc_configure(lds,"-dimension",50);
+lds=lowdisc_configure(lds,"-scrambling","Owen");
+instr="lds=lowdisc_startup(lds)";
+expectedmsg="ssobol_next : wrong dimension : 50 (must be in [1,40]).";
+assert_checkerror ( instr , expectedmsg );
+Low Discrepancy Module Error !lds=lowdisc_destroy(lds);

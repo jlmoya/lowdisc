@@ -36,60 +36,62 @@ function this = lowdisc_destroy (this)
     //
     select this.method
     case "reversehalton" then
-        this.sequence     = ldrevhalf_destroy ( this.sequence )
+        this     = ldrevhalf_destroy ( this )
     case "niederreiter" then
-        this.sequence     = ldniedf_destroy ( this.sequence )
+        this     = ldniedf_destroy ( this )
     case "sobol" then
-        this.sequence     = ldsobolf_destroy ( this.sequence )
+        this     = ldsobolf_destroy ( this )
     case "faure" then
-        this.sequence     = ldfauref_destroy ( this.sequence )
+        this     = ldfauref_destroy ( this )
     case "halton" then
-        this.sequence     = ldhaltonf_destroy ( this.sequence )
+        this     = ldhaltonf_destroy ( this )
     else
         errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_destroy" , this.method);
         error(errmsg);
     end
+    // Delegate to ldbase
+    this.sequence.baseobj = ldbase_destroy ( this.sequence.baseobj )
 endfunction
 
 function this = ldsobolf_destroy (this)
-    if ( _lowdisc_sobolfisstart() ) then
-        _lowdisc_sobolfstop ( );
+    scrambling = lowdisc_cget ( this , "-scrambling" )
+    select scrambling
+    case ""
+        if ( _lowdisc_sobolfisstart() ) then
+            _lowdisc_sobolfstop ( );
+        end
+    case "Owen"
+        if (this.sequence.token<>-1) then
+            _lowdisc_ssoboldestroy ( this.sequence.token )
+        end
+    else
+        errmsg = msprintf( gettext ( "%s: Unknown scrambling %s." ) , "ldsobolf_destroy" , dimension);
+        error(errmsg);
     end
-    // Delegate to ldbase
-    this.baseobj = ldbase_destroy ( this.baseobj )
 endfunction
 
 function this = ldfauref_destroy (this)
     if ( _lowdisc_faurefisstart() ) then
         _lowdisc_faurefstop ( )
     end
-    // Delegate to ldbase
-    this.baseobj = ldbase_destroy ( this.baseobj )  
 endfunction
 
 function this = ldrevhalf_destroy (this)
     if ( _lowdisc_revhaltfisstart() ) then
         _lowdisc_revhaltfstop ( );
     end
-    // Delegate to ldbase
-    this.baseobj = ldbase_destroy ( this.baseobj )
 endfunction
 
 function this = ldhaltonf_destroy (this)
     if ( _lowdisc_haltonfisstart() ) then
         _lowdisc_haltonfstop ( )
     end
-    // Delegate to ldbase
-    this.baseobj = ldbase_destroy ( this.baseobj )
 endfunction
 
 function this = ldniedf_destroy (this)
     if ( _lowdisc_niedfisstart() ) then
         _lowdisc_niedfstop ( )
     end
-    // Delegate to ldbase
-    this.baseobj = ldbase_destroy ( this.baseobj )
-
 endfunction
 
 function this = ldbase_destroy (this)

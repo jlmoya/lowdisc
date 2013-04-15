@@ -74,3 +74,13 @@ for k = 1 : 2
   lds = lowdisc_destroy(lds);
 end
 end
+
+// Must generate an error:
+lds=lowdisc_new("sobol");
+lds=lowdisc_configure(lds,"-dimension",50);
+lds=lowdisc_configure(lds,"-scrambling","Owen");
+instr="lds=lowdisc_startup(lds)";
+expectedmsg="ssobol_next : wrong dimension : 50 (must be in [1,40]).";
+assert_checkerror ( instr , expectedmsg );
+lds=lowdisc_destroy(lds);
+

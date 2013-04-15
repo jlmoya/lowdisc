@@ -71,6 +71,13 @@ function lowdisc_stopall ( )
   if ( start == 1 ) then
     _lowdisc_niedfstop ( );
   end
+  //
+  // Scrambled Sobol
+  //
+  seqmat=_lowdisc_ssoboltokens()
+  for seq=seqmat
+      _lowdisc_ssoboldestroy(seq)
+  end
 
 endfunction
 

@@ -133,10 +133,10 @@ public:
 	// generating a new sequence. 
 	// The suggested steps are:
 	//
-	// ssobol_seedreset(); // Optionnal
-	// ssobol_startup(...);
-	// ssobol_next(...);
-	// ssobol_stop();
+	// seedreset(); // Optionnal
+	// startup(...);
+	// next(...);
+	// delete seq;
 	//
 	void seedreset();
 
@@ -147,9 +147,13 @@ public:
 	//    startup, output : true if the sequence is already started up.
 	bool isstart ( );
 
-	// halton_dim_num_get 
+	// dim_num_get -- 
 	// gets the spatial dimension for a leaped Halton subsequence.
 	int dim_num_get ( void );
+	//
+	// seedset --
+	// Sets the seed of the random number generator
+	void seedset(double newseeds[24]);
 private:
 	int exor(int *iin, int *jin);
 	int genscrml(int maxd, int lsm[][31], int *shift);

@@ -63,16 +63,9 @@ end
 Low Discrepancy Sequence:
 =========================
 method: halton
-sequence: <a Low Discrepancy Sequence>
-
-Low Discrepancy Sequence: Halton Fast
-=========================
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
 Maximum number of simulations = 2.147D+09
-Scrambling = 
-
-Abstract Low Discrepancy Sequence:
-=========================
+Scrambling = ""
 Dimension of space: 1
 Index: 0
 Verbose logging: F
@@ -84,15 +77,8 @@ Starting up the sequence.
 Low Discrepancy Sequence:
 =========================
 method: faure
-sequence: <a Low Discrepancy Sequence>
-
-Low Discrepancy Sequence: Faure Fast
-=========================
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
 Maximum number of simulations = 2.147D+09
-
-Abstract Low Discrepancy Sequence:
-=========================
 Dimension of space: 1
 Index: 0
 Verbose logging: F
@@ -104,15 +90,8 @@ Starting up the sequence.
 Low Discrepancy Sequence:
 =========================
 method: reversehalton
-sequence: <a Low Discrepancy Sequence>
-
-Low Discrepancy Sequence: Fast Reverse Halton
-=========================
 Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
 Maximum number of simulations = 2.147484e+009
-
-Abstract Low Discrepancy Sequence:
-=========================
 Dimension of space: 1
 Index: 0
 Verbose logging: F
@@ -124,15 +103,10 @@ Starting up the sequence.
 Low Discrepancy Sequence:
 =========================
 method: sobol
-sequence: <a Low Discrepancy Sequence>
-
-Low Discrepancy Sequence: Fast Sobol
-=========================
 Maximum dimension = 1111
 Maximum number of simulations = 1.074D+09
-
-Abstract Low Discrepancy Sequence:
-=========================
+Scrambling = ""
+Token = -1
 Dimension of space: 1
 Index: 0
 Verbose logging: F
@@ -144,18 +118,11 @@ Starting up the sequence.
 Low Discrepancy Sequence:
 =========================
 method: niederreiter
-sequence: <a Low Discrepancy Sequence>
-
-Low Discrepancy Sequence: Fast Niederreiter
-=========================
 Base: 2
 Gfaritfile: TMPDIR\gfarit.txt
 Gfplysfile: TMPDIR\gfplys.txt
 Maximum dimension = 50
 Maximum number of simulations = 2.147D+09
-
-Abstract Low Discrepancy Sequence:
-=========================
 Dimension of space: 1
 Index: 0
 Verbose logging: F

@@ -3,12 +3,9 @@
 // This file must be used under the terms of the 
 // GNU LGPL license.
 // 
-
 // <-- JVM NOT MANDATORY -->
 // <-- ENGLISH IMPOSED -->
-
 // Scrambled Sobol sequence
-
 //
 // configure/cget
 lds=lowdisc_new("sobol");
@@ -22,7 +19,6 @@ lds=lowdisc_new("sobol");
 scrambling=lowdisc_cget(lds,"-scrambling");
 assert_checkequal(scrambling,"");
 lds=lowdisc_destroy(lds);
-
 //
 for dimension=[2 3 5];
     filename=msprintf("ssobol-iflag1-s%d-n50.csv",dimension);
@@ -38,9 +34,10 @@ for dimension=[2 3 5];
     lds=lowdisc_destroy(lds);
     assert_checkalmostequal(expected,computed,[],1.e-5);
 end
-
+Checking ssobol-iflag1-s2-n50.csv
+Checking ssobol-iflag1-s3-n50.csv
+Checking ssobol-iflag1-s5-n50.csv
 if (%f) then
-// TODO : "Faure-Tezuka" "Owen-Faure-Tezuka"
-// TODO : to get random scrambled sequences :
-_lowdisc_ssobolseedset(seq,seed)
+// TODO
+ _lowdisc_ssobolseedset(seq,seed)
 end

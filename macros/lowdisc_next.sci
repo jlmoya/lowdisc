@@ -126,6 +126,13 @@ function [this,next] = lowdisc_next ( varargin )
     apifun_checkflint ( "lowdisc_next" , imax , "imax" , 2 )
     apifun_checkgreq ( "lowdisc_next" , imax , "imax" , 2 , 1 )
     //
+    // Check that the object is started up
+    startedup=lowdisc_get(this , "-startedup" )
+    if ( ~startedup ) then
+        errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldfauref_startup first."), "ldfauref_next");
+        error(errmsg)
+    end
+    //
     select this.method
     case "reversehalton" then
         [this,next]     = ldrevhalf_next ( this , imax )
@@ -143,27 +150,7 @@ function [this,next] = lowdisc_next ( varargin )
     end
 endfunction
 
-function [this,next] = ldrevhalf_next ( varargin )
-
-    [lhs,rhs]=argn();
-    if ( rhs > 2 ) then
-        errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldrevhalf_next", rhs);
-        error(errmsg)
-    end
-    //
-    this = varargin(1)
-    if ( rhs < 2 ) then
-        imax = 1
-    else
-        imax = varargin(2)
-    end
-    //
-    // Check that the object is started up
-    if ( ~lowdisc_get(this , "-startedup" ) ) then
-        errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldrevhalf_startup first."), "ldrevhalf_next");
-        error(errmsg)
-    end
-    //
+function [this,next] = ldrevhalf_next ( this , imax )
     dimension = lowdisc_cget(this , "-dimension" )
     leap = lowdisc_cget(this , "-leap" )
     index = lowdisc_get(this , "-index" )
@@ -172,26 +159,7 @@ function [this,next] = ldrevhalf_next ( varargin )
     this=ldbase_indexset(this,index)
 endfunction
 
-function [this,next] = ldfauref_next ( varargin )
-    [lhs,rhs]=argn();
-    if ( rhs > 2 ) then
-        errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldfauref_next", rhs);
-        error(errmsg)
-    end
-    //
-    this = varargin(1)
-    if ( rhs < 2 ) then
-        imax = 1
-    else
-        imax = varargin(2)
-    end
-    //
-    // Check that the object is started up
-    if ( ~lowdisc_get(this , "-startedup" ) ) then
-        errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldfauref_startup first."), "ldfauref_next");
-        error(errmsg)
-    end
-    //
+function [this,next] = ldfauref_next ( this , imax )
     dimension = lowdisc_cget(this , "-dimension" )
     leap = lowdisc_cget(this , "-leap" )
     //
@@ -201,27 +169,7 @@ function [this,next] = ldfauref_next ( varargin )
     this=ldbase_indexset(this,index)
 endfunction
 
-function [this,next] = ldhaltonf_next ( varargin )
-
-    [lhs,rhs]=argn();
-    if ( rhs > 2 ) then
-        errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldhaltonf_next", rhs);
-        error(errmsg)
-    end
-    //
-    this = varargin(1)
-    if ( rhs < 2 ) then
-        imax = 1
-    else
-        imax = varargin(2)
-    end
-    //
-    // Check that the object is started up
-    if ( ~lowdisc_get(this , "-startedup" ) ) then
-        errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldhaltonf_startup first."), "ldhaltonf_next");
-        error(errmsg)
-    end
-    //
+function [this,next] = ldhaltonf_next ( this , imax )
     dimension = lowdisc_cget(this , "-dimension" )
     leap = lowdisc_cget(this , "-leap" )
     //
@@ -234,56 +182,27 @@ function [this,next] = ldhaltonf_next ( varargin )
     this=ldbase_indexset(this,index)
 endfunction
 
-function [this,next] = ldsobolf_next ( varargin )
-    [lhs,rhs]=argn();
-    if ( rhs > 2 ) then
-        errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldsobolf_next", rhs);
-        error(errmsg)
-    end
-    //
-    this = varargin(1)
-    if ( rhs < 2 ) then
-        imax = 1
-    else
-        imax = varargin(2)
-    end
-    //
-    // Check that the object is started up
-    if ( ~lowdisc_get ( this , "-startedup" ) ) then
-        errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldsobolf_startup first."), "ldsobolf_next");
-        error(errmsg)
-    end
-    //
+function [this,next] = ldsobolf_next ( this , imax )
     dimension = lowdisc_cget ( this , "-dimension" )
     leap = lowdisc_cget ( this , "-leap" )
-    //
-    // Initialize the vector
+    scrambling = lowdisc_cget ( this , "-scrambling" )
     index = lowdisc_get ( this , "-index" )
-    next = _lowdisc_sobolfnext ( index + 1 , imax , leap )
+    select scrambling
+    case ""
+        //
+        // Initialize the vector
+        next = _lowdisc_sobolfnext ( index + 1 , imax , leap )
+    case "Owen"
+        next = _lowdisc_ssobolnext ( this.sequence.token, imax , leap )
+    else
+        errmsg = msprintf( gettext ( "%s: Unknown scrambling %s." ) , "ldsobolf_next" , dimension);
+        error(errmsg);
+    end
     index = index + imax*(leap+1)
     this=ldbase_indexset(this, index )
 endfunction
 
-function [this,next] = ldniedf_next ( varargin )
-    [lhs,rhs]=argn();
-    if ( rhs > 2 ) then
-        errmsg = msprintf(gettext("%s: Unexpected number of input arguments : %d provided while from 1 or 2 are expected."), "ldniedf_next", rhs);
-        error(errmsg)
-    end
-    //
-    this = varargin(1)
-    if ( rhs < 2 ) then
-        imax = 1
-    else
-        imax = varargin(2)
-    end
-    //
-    // Check that the object is started up
-    if ( ~lowdisc_get(this , "-startedup" ) ) then
-        errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldniedf_startup first."), "ldniedf_next");
-        error(errmsg)
-    end
-    //
+function [this,next] = ldniedf_next ( this , imax )
     dimension = lowdisc_cget(this , "-dimension" )
     leap = lowdisc_cget(this , "-leap" )
     //
@@ -297,6 +216,6 @@ function [this,next] = ldniedf_next ( varargin )
 endfunction
 
 function this = ldbase_indexset ( this , index )
-  this.sequence.baseobj.index = index
+    this.sequence.baseobj.index = index
 endfunction
 

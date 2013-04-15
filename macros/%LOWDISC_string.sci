@@ -1,10 +1,7 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
-
-
-
-
 
 //
 // %LOWDISC_string --
@@ -120,7 +117,7 @@ function str = ldsobolf_string ( this )
     k = k + 1
     str(k) = msprintf("Scrambling = ""%s""",this.scrambling)
     k = k + 1
-    str(k) = msprintf("Token = ""%s""",this.token)
+    str(k) = msprintf("Token = %d",this.token)
     k = k + 1
     //
     // Get the baseobj string
