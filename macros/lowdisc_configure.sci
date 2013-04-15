@@ -109,7 +109,7 @@ function this = lowdisc_configure (this,key,value)
     //     or "RR2" for the scrambling (digit permutation) of Kocis-Whiten [1]. 
     //     The default is "" (no scrambling). 
     //     The "RR2" scrambling can improve the correlation in high dimensions, 
-    //     leading to better low-dimensionnal projects.
+    //     leading to better low-dimensionnal projections.
     //     </para>
     //  </listitem>
     //  </itemizedlist>
