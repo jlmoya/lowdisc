@@ -187,21 +187,19 @@ rng = lowdisc_destroy(rng);
     <programlisting role="example">
       <![CDATA[
 // Get all the available sequences.
-seqmat = lowdisc_methods ()
-
+seqmat = lowdisc_methods ();
 // Get the speed, maximum dimension and
 // maximum number of calls for all sequences
 seqmat = lowdisc_methods ();
-mprintf("%-20s %-10s %-10s %-10s\n", "Name" , ..
-"Speed" , "Max Dim" , "Max Call" );
+mprintf("%-20s %-10s %-10s\n", "Name" , ..
+"Max Dim" , "Max Call" );
 for seqname = seqmat'
-lds = lowdisc_new(seqname);
-speed = lowdisc_get(lds,"-speed");
-dimmax = lowdisc_get(lds,"-dimmax");
-nbsimmax = lowdisc_get(lds,"-nbsimmax");
-mprintf("%-20s %-10s  %-10d %-10d\n", seqname , ..
-speed , dimmax , nbsimmax );
-lds = lowdisc_destroy(lds);
+    lds = lowdisc_new(seqname);
+    dimmax = lowdisc_get(lds,"-dimmax");
+    nbsimmax = lowdisc_get(lds,"-nbsimmax");
+    mprintf("%-20s %-10d %-10d\n", seqname , ..
+    dimmax , nbsimmax );
+    lds = lowdisc_destroy(lds);
 end
    ]]>
     </programlisting>
@@ -214,12 +212,12 @@ end
     </para>
 
     <screen>
-      Name                Speed       Max Dim    Max Call
-      halton              fast        100        2147483647
-      faure               fast        541        2147483647
-      reversehalton       fast        100        2147483647
-      sobol               fast        1111       1073741823
-      niederreiter        fast        50         2147483647
+      Name                Max Dim    Max Call
+      halton              100        2147483647
+      faure               541        2147483647
+      reversehalton       100        2147483647
+      sobol               1111       1073741823
+      niederreiter        50         2147483647
     </screen>
 
   </refsection>

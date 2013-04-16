@@ -153,6 +153,9 @@ lds = lowdisc_new("halton");
 
  * Greatly reduced the number of macros. 
    This avoids to create unnecessary public functions.
+ * Added scrambled Sobol sequence.
+   This is available through the "-scrambling" option: 
+   "Owen","Faure-Tezuka","Owen-Faure-Tezuka".
 
 lowdisc (v0.4)
  * Created lowdisc_combinesum.

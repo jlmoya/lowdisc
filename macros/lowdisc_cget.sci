@@ -110,6 +110,8 @@ function value = ldsobolf_cget (this,key)
     select key
     case "-scrambling" then
         value = this.scrambling;
+    case "-seeds" then
+        value = this.seeds;
     else
         // Delegate to ldbase
         value = ldbase_cget ( this.baseobj , key )

@@ -7,7 +7,13 @@
 // <-- ENGLISH IMPOSED -->
 // Scrambled Sobol sequence
 //
-// configure/cget
+// configure/cget : no scrambling
+lds=lowdisc_new("sobol");
+scrambling=lowdisc_cget(lds,"-scrambling");
+assert_checkequal(scrambling,"");
+lds=lowdisc_destroy(lds);
+//
+// configure/cget : Owen scrambling
 lds=lowdisc_new("sobol");
 lds=lowdisc_configure(lds,"-scrambling","Owen");
 scrambling=lowdisc_cget(lds,"-scrambling");
@@ -16,9 +22,19 @@ lds=lowdisc_destroy(lds);
 //
 // configure/cget
 lds=lowdisc_new("sobol");
+lds=lowdisc_configure(lds,"-scrambling","Faure-Tezuka");
 scrambling=lowdisc_cget(lds,"-scrambling");
-assert_checkequal(scrambling,"");
+assert_checkequal(scrambling,"Faure-Tezuka");
 lds=lowdisc_destroy(lds);
+//
+// configure/cget
+lds=lowdisc_new("sobol");
+lds=lowdisc_configure(lds,"-scrambling","Owen-Faure-Tezuka");
+scrambling=lowdisc_cget(lds,"-scrambling");
+assert_checkequal(scrambling,"Owen-Faure-Tezuka");
+lds=lowdisc_destroy(lds);
+//
+// Owen scrambling
 //
 for dimension=[2 3 5];
     filename=msprintf("ssobol-iflag1-s%d-n50.csv",dimension);
@@ -37,7 +53,88 @@ end
 Checking ssobol-iflag1-s2-n50.csv
 Checking ssobol-iflag1-s3-n50.csv
 Checking ssobol-iflag1-s5-n50.csv
-if (%f) then
-// TODO
- _lowdisc_ssobolseedset(seq,seed)
+//
+// Faure-Tezuka scrambling
+//
+for dimension=[2 3 5];
+    filename=msprintf("ssobol-iflag2-s%d-n50.csv",dimension);
+    mprintf("Checking %s\n",filename)
+    path = lowdisc_getpath (  );
+    dataset=fullfile(path,"tests","unit_tests","ssobol-datasets",filename);
+    expected = csvRead(dataset," ",".",[],[],"/#(.*)/");
+    lds=lowdisc_new("sobol");
+    lds=lowdisc_configure(lds,"-dimension",dimension);
+    lds=lowdisc_configure(lds,"-scrambling","Faure-Tezuka");
+    lds = lowdisc_startup (lds);
+    [lds,computed] = lowdisc_next (lds,50);
+    lds=lowdisc_destroy(lds);
+    assert_checkalmostequal(expected,computed,[],1.e-5);
 end
+Checking ssobol-iflag2-s2-n50.csv
+Checking ssobol-iflag2-s3-n50.csv
+Checking ssobol-iflag2-s5-n50.csv
+//
+// "Owen-Faure-Tezuka" scrambling
+//
+for dimension=[2 3 5];
+    filename=msprintf("ssobol-iflag3-s%d-n50.csv",dimension);
+    mprintf("Checking %s\n",filename)
+    path = lowdisc_getpath (  );
+    dataset=fullfile(path,"tests","unit_tests","ssobol-datasets",filename);
+    expected = csvRead(dataset," ",".",[],[],"/#(.*)/");
+    lds=lowdisc_new("sobol");
+    lds=lowdisc_configure(lds,"-dimension",dimension);
+    lds=lowdisc_configure(lds,"-scrambling","Owen-Faure-Tezuka");
+    lds = lowdisc_startup (lds);
+    [lds,computed] = lowdisc_next (lds,50);
+    lds=lowdisc_destroy(lds);
+    assert_checkalmostequal(expected,computed,[],1.e-5);
+end
+Checking ssobol-iflag3-s2-n50.csv
+Checking ssobol-iflag3-s3-n50.csv
+Checking ssobol-iflag3-s5-n50.csv
+//
+// Configure the seeds.
+// seeds=distfun_unifrnd(0,1,1,24)
+// 1. Get the reference sequence
+lds=lowdisc_new("sobol");
+lds=lowdisc_configure(lds,"-scrambling","Owen");
+lds=lowdisc_configure(lds,"-dimension",3);
+lds=lowdisc_startup(lds);
+[lds,withoutseeds] = lowdisc_next (lds,50);
+lds=lowdisc_destroy(lds);
+// 2. Configure the seeds (row vector)
+seeds=[
+    0.9571669    0.8002805    0.4217613    0.7922073    0.6557407    0.8491293  
+    0.1098618    0.2970294    0.1124645    0.8784306    0.7979286    0.2119243  
+    0.4853756    0.1418863    0.9157355    0.9594924    0.0357117    0.9339932  
+    0.7981059    0.0047835    0.6397634    0.5036627    0.361294     0.6813595  
+];
+seeds=seeds(:)';
+lds=lowdisc_new("sobol");
+lds=lowdisc_configure(lds,"-scrambling","Owen");
+lds=lowdisc_configure(lds,"-dimension",3);
+lds=lowdisc_configure(lds,"-seeds",seeds);
+lds=lowdisc_startup(lds);
+[lds,computed] = lowdisc_next (lds,50);
+lds=lowdisc_destroy(lds);
+// Check the sequence
+assert_checktrue(computed>=0);
+assert_checktrue(computed<=1);
+assert_checkequal(size(computed),[50,3]);
+assert_checkfalse(and(computed==withoutseeds));
+//
+// 3. Configure the seeds (column vector)
+seeds=seeds';
+lds=lowdisc_new("sobol");
+lds=lowdisc_configure(lds,"-scrambling","Owen");
+lds=lowdisc_configure(lds,"-dimension",3);
+lds=lowdisc_configure(lds,"-seeds",seeds);
+lds=lowdisc_startup(lds);
+[lds,computed] = lowdisc_next (lds,50);
+lds=lowdisc_destroy(lds);
+// Check the sequence
+assert_checktrue(computed>=0);
+assert_checktrue(computed<=1);
+assert_checkequal(size(computed),[50,3]);
+assert_checkfalse(and(computed==withoutseeds));

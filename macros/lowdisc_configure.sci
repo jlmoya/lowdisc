@@ -20,7 +20,13 @@ function this = lowdisc_configure (this,key,value)
     //   It requires to take the current object both as an input
     //   and output argument.
     //
-    //  The following keys are available: <literal>"-dimension"</literal>, <literal>"-index"</literal>, 
+    //   To get a global overview of the supported options, 
+    //   please use 
+    //   <screen>
+    //   help lowdisc_options
+    //   </screen>
+    //
+    //  The following keys are available: <literal>"-dimension"</literal>, 
     // <literal>"-skip"</literal>, <literal>"-leap"</literal>, <literal>"-verbose"</literal>.
     //  <itemizedlist>
     //   <listitem>
@@ -63,7 +69,7 @@ function this = lowdisc_configure (this,key,value)
     //
     // Some sequences can be configured in order to increase their maximum
     // dimension. 
-    // These sequences accept the following "-primeslist" option.
+    // These sequences accept the <literal>"-primeslist"</literal> option.
     // The sequences which are sensitive to this option are : "halton", 
     // "faure", "reversehalton".
     //  <itemizedlist>
@@ -105,11 +111,49 @@ function this = lowdisc_configure (this,key,value)
     //  <itemizedlist>
     //  <listitem>
     //     <para>
-    //     <literal>"-scrambling"</literal> : a 1-by-1 matrix of strings, the empty string "" (no scrambling), 
+    //     <literal>"-scrambling"</literal> : a 1-by-1 matrix of strings, the 
+    //     empty string "" (no scrambling), 
     //     or "RR2" for the scrambling (digit permutation) of Kocis-Whiten [1]. 
     //     The default is "" (no scrambling). 
-    //     The "RR2" scrambling can improve the correlation in high dimensions, 
+    //     The scrambling can improve the correlation in high dimensions, 
     //     leading to better low-dimensionnal projections.
+    //     </para>
+    //  </listitem>
+    //  </itemizedlist>
+    //
+    //  For the "sobol" sequence, 
+    //  we can configure the scrambling as following. 
+    //  <itemizedlist>
+    //  <listitem>
+    //     <para>
+    //     <literal>"-scrambling"</literal> : a 1-by-1 matrix of strings, 
+    //     the empty string "" (no scrambling), 
+    //     <literal>"Owen"</literal> for the scrambling (digit permutation) of Owen, 
+    //     <literal>"Faure-Tezuka"</literal> or 
+    //     <literal>"Owen-Faure-Tezuka"</literal>. 
+    //     The default is "" (no scrambling). 
+    //     The scrambling can improve the correlation in high dimensions, 
+    //     leading to better low-dimensionnal projections.
+    //     </para>
+    //  </listitem>
+    //  <listitem>
+    //     <para>
+    //     <literal>"-seeds"</literal> : a 1-by-24 or 24-by-1 matrix of doubles, 
+    //     the seeds used in the random number generator used in the 
+    //     scrambling (if scrambling is enabled). 
+    //     The default is 
+    //     <screen>
+    //     seeds= [.8804418,.2694365,.0367681,.4068699,..
+    //     .4554052,.2880635,.1463408,.2390333,.6407298,.1755283,.713294,..
+    //     .4913043,.2979918,.1396858,.3589528,.5254809,.9857749,.4612127,..
+    //     .2196441,.7848351,.40961,.9807353,.2689915,.5140357]
+    //     </screen>
+    //     This option can be used in order to generate 
+    //     a scrambled Sobol sequences different from the default.
+    //     In order to generate a seeds matrix, we can use the statement:
+    //     <screen>
+    //     seeds=distfun_unifrnd(0,1,1,24)
+    //     </screen>
     //     </para>
     //  </listitem>
     //  </itemizedlist>
@@ -124,14 +168,15 @@ function this = lowdisc_configure (this,key,value)
     //  For that purpose, we designed the following functions.
     //  <itemizedlist>
     //  <listitem><para> <literal>lowdisc_haltonsuggest</literal> : provides 
-    //    settings for the Halton sequence,</para></listitem>
+    //    settings for the (unscrambled) Halton sequence,</para></listitem>
     //  <listitem><para> <literal>lowdisc_fauresuggest</literal> : provides 
     //    settings for the Faure sequence,</para></listitem>
     //  <listitem><para> <literal>lowdisc_sobolsuggest</literal> : provides 
-    //    settings for the Sobol sequence,</para></listitem>
+    //    settings for the (unscrambled) Sobol sequence,</para></listitem>
     //  <listitem><para> <literal>lowdisc_niedersuggest</literal> : provides 
     //    settings for the Niederreiter sequence.</para></listitem>
     //  </itemizedlist>
+    //
     //  These functions have been designed to include suggestions by various 
     //  authors to improve the sequences.
     //  In the situation where we have no knowledge of the settings to use, these 
@@ -169,8 +214,9 @@ function this = lowdisc_configure (this,key,value)
     // plot(u(:,43),u(:,44),"b.");
     //
     // Authors
-    //   Michael Baudin - 2008 - 2009 - INRIA
-    //   Michael Baudin - 2010 - 2011 - DIGITEO
+    //   Copyright (C) 2013 - Michael Baudin
+    //   Copyright (C) 2008 - 2009 - INRIA - Michael Baudin
+    //   Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
     //
     // Bibliography
     // [1] Kocis, L., and W. J. Whiten. "Computational Investigations of Low-Discrepancy Sequences." ACM Transactions on Mathematical Software. Vol. 23, No. 2, 1997, pp. 266–294.
@@ -282,6 +328,11 @@ function this = ldsobolf_configure (this,key,value)
         end
         this.dimmax=dimmax
         this.scrambling = value
+    case "-seeds" then
+        apifun_checktype ( "ldsobolf_configure" , value , "value" , 3 , "constant" )
+        apifun_checkvector ( "ldsobolf_configure" , value , "value" , 3 ,24)
+        apifun_checkrange ( "ldsobolf_configure" , value , "value" , 3,0,1)
+        this.seeds = value
     else
         // Delegate to ldbase
         this.baseobj = ldbase_configure ( this.baseobj , key ,value )

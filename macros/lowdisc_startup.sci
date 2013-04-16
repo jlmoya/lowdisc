@@ -149,8 +149,7 @@ function this = ldsobolf_startup (this)
     this.sequence.baseobj = ldbase_startup ( this.sequence.baseobj )
     scrambling = lowdisc_cget ( this , "-scrambling" )
     dimension = lowdisc_cget ( this , "-dimension" )
-    select scrambling
-    case ""
+    if (scrambling=="") then
         _lowdisc_sobolfstart ( dimension );
         skip = lowdisc_cget ( this , "-skip" )
         if ( skip > 0 ) then
@@ -158,11 +157,21 @@ function this = ldsobolf_startup (this)
             // Directly set the index.
             this=ldbase_indexset(this,skip)
         end
-    case "Owen"
-        this.sequence.token = _lowdisc_ssobolnew ( dimension , 1)
     else
-        errmsg = msprintf( gettext ( "%s: Unknown scrambling %s." ) , "ldrevhalf_startup" , dimension);
-        error(errmsg);
+        if (scrambling=="Owen") then
+            iflag=1
+        elseif (scrambling=="Faure-Tezuka") then
+            iflag=2
+        else
+            // "Owen-Faure-Tezuka"
+            iflag=3
+        end
+        seeds=lowdisc_cget(this,"-seeds")
+        if (seeds==[]) then
+            this.sequence.token = _lowdisc_ssobolnew(dimension,iflag)
+        else
+            this.sequence.token = _lowdisc_ssobolnew(dimension,iflag,seeds)
+        end
     end
 endfunction
 

@@ -55,18 +55,14 @@ endfunction
 
 function this = ldsobolf_destroy (this)
     scrambling = lowdisc_cget ( this , "-scrambling" )
-    select scrambling
-    case ""
+    if (scrambling=="") then
         if ( _lowdisc_sobolfisstart() ) then
             _lowdisc_sobolfstop ( );
         end
-    case "Owen"
+    else
         if (this.sequence.token<>-1) then
             _lowdisc_ssoboldestroy ( this.sequence.token )
         end
-    else
-        errmsg = msprintf( gettext ( "%s: Unknown scrambling %s." ) , "ldsobolf_destroy" , dimension);
-        error(errmsg);
     end
 endfunction
 

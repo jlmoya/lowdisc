@@ -187,16 +187,12 @@ function [this,next] = ldsobolf_next ( this , imax )
     leap = lowdisc_cget ( this , "-leap" )
     scrambling = lowdisc_cget ( this , "-scrambling" )
     index = lowdisc_get ( this , "-index" )
-    select scrambling
-    case ""
+    if (scrambling=="") then
         //
         // Initialize the vector
         next = _lowdisc_sobolfnext ( index + 1 , imax , leap )
-    case "Owen"
-        next = _lowdisc_ssobolnext ( this.sequence.token, imax , leap )
     else
-        errmsg = msprintf( gettext ( "%s: Unknown scrambling %s." ) , "ldsobolf_next" , dimension);
-        error(errmsg);
+        next = _lowdisc_ssobolnext ( this.sequence.token, imax , leap )
     end
     index = index + imax*(leap+1)
     this=ldbase_indexset(this, index )

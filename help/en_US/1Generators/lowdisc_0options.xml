@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ * Copyright (C) 2013 - Michael Baudin
+ * This file is released under the terms of the GNU LGPL license.
+-->
+<refentry version="5.0-subset Scilab" xml:id="lowdisc_options" xml:lang="fr"
+          xmlns="http://docbook.org/ns/docbook"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          xmlns:ns4="http://www.w3.org/1999/xhtml"
+          xmlns:mml="http://www.w3.org/1998/Math/MathML"
+          xmlns:db="http://docbook.org/ns/docbook">
+
+  <refnamediv>
+    <refname>Supported Options</refname>
+
+    <refpurpose>An overview of configurable options of the generators.</refpurpose>
+  </refnamediv>
+
+  <refsection>
+    <title>Supported options</title>
+    <para>
+      In this section, we present the options supported by the various
+      sequences.
+      These are the keys of the <literal>lowdisc_configure</literal> function. 
+      We set a "O" in the table when the low discrepancy sequence is sensitive to the 
+      corresponding option. 
+    </para>
+    <para>
+      <informaltable border="1">
+        <tr>
+          <td>Option</td>
+          <td>Halton</td>
+          <td>Sobol</td>
+          <td>Faure</td>
+          <td>Niederreiter</td>
+          <td>Reverse Halton</td>
+        </tr>
+        <tr>
+          <td>"-dimension"</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+        </tr>
+        <tr>
+          <td>"-skip"</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+        </tr>
+        <tr>
+          <td>"-leap"</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+        </tr>
+        <tr>
+          <td>"-verbose"</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+          <td>O</td>
+        </tr>
+        <tr>
+          <td>"-primeslist"</td>
+          <td>O</td>
+          <td></td>
+          <td>O</td>
+          <td></td>
+          <td>O</td>
+        </tr>
+        <tr>
+          <td>"-base"</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>O</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>"-scrambling"</td>
+          <td>O</td>
+          <td>O</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>"-seeds"</td>
+          <td></td>
+          <td>O</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </informaltable>
+    </para>
+  </refsection>
+
+  <refsection>
+    <title>Implementation notes : Halton</title>
+    <para>
+      For the Halton sequence, the <literal>skip</literal> and
+      <literal>leap</literal> option are fast, that is, large
+      values of the <literal>skip</literal> or <literal>leap</literal>
+      parameter do not reduce the performance.
+    </para>
+    <para>
+      This fast algorithm is based on a compiled C source code.
+      The implementation is a modification of the C source code by John
+      Burkardt.
+    </para>
+    <para>
+      Reference : http://people.sc.fsu.edu/~jburkardt/cpp_src/halton/halton.html,
+      The Halton Quasirandom Sequence, John Burkardt
+    </para>
+  </refsection>
+  
+  <refsection>
+    <title>Implementation notes : Faure sequence</title>
+    <para>
+      For the Faure sequence, the <literal>skip</literal> and
+      <literal>leap</literal> option is fast, that is, large
+      values of the <literal>skip</literal> or <literal>leap</literal>
+      parameter do not reduce the performance.
+    </para>
+    <para>
+      This fast algorithm is based on a compiled C source code.
+      The implementation is a modification of the C source code by John Burkardt.
+    </para>
+    <para>
+      Reference : http://www.netlib.org/toms/647, 
+      "Algorithm 647: Implementation and Relative Efficiency of Quasirandom Sequence Generators",
+      Bennett Fox, ACM Transactions on Mathematical Software (TOMS),
+      Volume 12 Issue 4, Dec. 1986, Pages 362-376
+    </para>
+    <para>
+      Reference : http://people.sc.fsu.edu/~jburkardt/cpp_src/faure/faure.html,
+      The Faure Quasirandom Sequence, John Burkardt
+    </para>
+  </refsection>
+  
+  <refsection>
+    <title>Implementation notes : Reverse Halton sequence</title>
+    <para>
+      For the Reverse Halton sequence, the <literal>skip</literal> and
+      <literal>leap</literal> option are fast, that is, large
+      values of the <literal>skip</literal> or <literal>leap</literal>
+      parameter do not reduce the performance.
+    </para>
+    <para>
+      This fast algorithm is based on a compiled C source code.
+    </para>
+    <para>
+      Reference : "Good permutations for deterministic scrambled
+      Halton sequences in terms of L2-discrepancy", B. Vandewoestyne and R. Cools,
+      Journal of Computational and Applied Mathematics, 
+      Volume 189 Issue 1-2, May, 2006, 
+      Pages 341-361
+    </para>
+  </refsection>
+  
+  <refsection>
+    <title>Implementation notes : Sobol sequence</title>
+    <para>
+      The unscrambled routine adapts the ideas of Antonov and Saleev,
+      which make use of a Gray code representation to construct the
+      elements of the sequence recursively.
+      For the Sobol sequence, the <literal>skip</literal> and
+      <literal>leap</literal> options are slow, that is, large
+      values of the <literal>skip</literal> or <literal>leap</literal>
+      parameter lead to increased CPU time.
+      This is because generating the new vector implies to update iteratively
+      the lastq vector.
+    </para>
+    <para>
+      This fast algorithm is based on a compiled C source code.
+      The unscrambled implementation is a modification of the C source
+      code by John Burkardt.
+      The scrambled implementation is a C++ port of the original Fortran
+      source code.
+    </para>
+    <para>
+      Reference for Unscrambled Sobol : http://www.netlib.org/toms/647
+      "Algorithm 647:
+      Implementation and Relative Efficiency of Quasirandom Sequence Generators",
+      Bennett Fox, ACM Transactions on Mathematical Software,
+      Volume 12 Issue 4, Dec. 1986, Pages 362-376
+    </para>
+    <para>
+      Reference for Scrambled Sobol : http://www.netlib.org/toms/823
+      "Algorithm 823: Implementing scrambled digital sequences",
+      Hee Sun Hong, Fred J. Hickernell, ACM, Transactions on mathematical software,
+      Volume 29, NO. 2, June, 2003, P. 95--109.
+    </para>
+  </refsection>
+  
+  <refsection>
+    <title>Implementation notes : Niederreiter sequence</title>
+    <para>
+      For the Niederreiter sequence, the <literal>skip</literal> and
+      <literal>leap</literal> option is slow, that is, large
+      values of the <literal>skip</literal> or <literal>leap</literal> parameter leads to increased CPU time.
+      This is because generating the new vector implies to update iteratively
+      the nextq vector.
+    </para>
+    <para>
+      The library generates two temporary files gfarit and gfplys when the sequence is started up.
+    </para>
+    <para>
+      This fast algorithm is based on a compiled C source code.
+      The C port has been done by John Burkardt in 2005-2009. The library has
+      been updated to present a uniform API.
+    </para>
+    <para>
+      Reference: http://www.netlib.org/toms/738, 
+      "Algorithm 738: Programs to generate Niederreiter's low-discrepancy
+      sequences" (1994), Paul Bratley, Bennett Fox, Harald Niederreiter.
+    </para>
+    <para>
+      Reference : http://people.sc.fsu.edu/~jburkardt/cpp_src/niederreiter/niederreiter.html,
+      The Niederreiter Quasirandom Sequence, John Burkardt
+    </para>
+  </refsection>
+
+</refentry>
+

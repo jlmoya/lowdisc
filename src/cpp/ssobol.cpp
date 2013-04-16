@@ -11,8 +11,8 @@
 // Reference:
 // http://www.netlib.org/toms/823
 // ALGORITHM 823, COLLECTED ALGORITHMS FROM ACM.
-// THIS WORK PUBLISHED IN TRANSACTIONS ON MATHEMATICAL SOFTWARE,
-// VOL. 29,NO. 2,      June, 2003, P.   95--109.
+// TRANSACTIONS ON MATHEMATICAL SOFTWARE,
+// VOL. 29, NO. 2, June, 2003, P. 95--109.
 
 #include <cstdlib>
 #include <iostream>
@@ -33,35 +33,48 @@ using namespace std;
 #include "lowdisc_shared.h"
 
 
-/* THE ARRAY POLY GIVES SUCCESSIVE PRIMITIVE */
-/* POLYNOMIALS CODED IN BINARY, E.G. */
-/*      45 = 100101 */
-/* HAS BITS 5, 2, AND 0 SET (COUNTING FROM THE */
-/* RIGHT) AND THEREFORE REPRESENTS */
-/*      X**5 + X**2 + X**0 */
-
-/* THESE  POLYNOMIALS ARE IN THE ORDER USED BY */
-/* SOBOL IN USSR COMPUT. MATHS. MATH. PHYS. 16 (1977), */
-/* 236-242. A MORE COMPLETE TABLE IS GIVEN IN SOBOL AND */
-/* LEVITAN, THE PRODUCTION OF POINTS UNIFORMLY */
-/* DISTRIBUTED IN A MULTIDIMENSIONAL CUBE (IN RUSSIAN), */
-/* PREPRINT IPM AKAD. NAUK SSSR, NO. 40, MOSCOW 1976. */
-
-/*     THE INITIALIZATION OF THE ARRAY VINIT IS FROM THE */
-/* LATTER PAPER. FOR A POLYNOMIAL OF DEGREE M, M INITIAL */
-/* VALUES ARE NEEDED :  THESE ARE THE VALUES GIVEN HERE. */
-/* SUBSEQUENT VALUES ARE CALCULATED IN "INSOBL". */
-
-/* Input Static variables : POLY, VINIT */
-/* 										*/
-/* Output Static variables : 			*/
-/* SV, S, MAXCOL, COUNT, LASTQ, RECIPD 	*/
-
-Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, int *taus)
+Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, int *isok)
 {
-	/* Initialized data */
+	// Setup the random number generator
+	seedreset();
+	// Fill the object
+	init(dimen, atmost, iflag, maxd, isok);
+}
 
-	/* System generated locals */
+Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, double seeds[24], int *isok)
+{
+	// Set the seed
+	seedset(seeds);
+	// Fill the object
+	init(dimen, atmost, iflag, maxd, isok);
+}
+
+void Ssobol::init(int dimen, int atmost, int iflag, int maxd, int *isok)
+{
+	/* THE ARRAY POLY GIVES SUCCESSIVE PRIMITIVE */
+	/* POLYNOMIALS CODED IN BINARY, E.G. */
+	/*      45 = 100101 */
+	/* HAS BITS 5, 2, AND 0 SET (COUNTING FROM THE */
+	/* RIGHT) AND THEREFORE REPRESENTS */
+	/*      X**5 + X**2 + X**0 */
+
+	/* THESE  POLYNOMIALS ARE IN THE ORDER USED BY */
+	/* SOBOL IN USSR COMPUT. MATHS. MATH. PHYS. 16 (1977), */
+	/* 236-242. A MORE COMPLETE TABLE IS GIVEN IN SOBOL AND */
+	/* LEVITAN, THE PRODUCTION OF POINTS UNIFORMLY */
+	/* DISTRIBUTED IN A MULTIDIMENSIONAL CUBE (IN RUSSIAN), */
+	/* PREPRINT IPM AKAD. NAUK SSSR, NO. 40, MOSCOW 1976. */
+
+	/*     THE INITIALIZATION OF THE ARRAY VINIT IS FROM THE */
+	/* LATTER PAPER. FOR A POLYNOMIAL OF DEGREE M, M INITIAL */
+	/* VALUES ARE NEEDED :  THESE ARE THE VALUES GIVEN HERE. */
+	/* SUBSEQUENT VALUES ARE CALCULATED IN "INSOBL". */
+
+	/* Input Static variables : POLY, VINIT */
+	/* 										*/
+	/* Output Static variables : 			*/
+	/* SV, S, MAXCOL, COUNT, LASTQ, RECIPD 	*/
+
 	int i4;
 
 	/* Local variables */
@@ -82,6 +95,7 @@ Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, int *taus)
 	};
 	int tau[13] = { 0,0,1,3,5,8,11,15,19,23,27,31,35 };
 
+	*isok=0;
 	// Initialize poly
 	for (j = 0; j < 39; j++)
 	{
@@ -95,27 +109,20 @@ Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, int *taus)
 
 	/*     CHECK PARAMETERS */
 	ssobol_s = dimen;
-	if (ssobol_s < 1 || ssobol_s > 40) {
+	if (ssobol_s < 1 || ssobol_s > 40) 
+	{
 		ostringstream msg;
 		msg << "ssobol_next : wrong dimension : "<<ssobol_s<<" (must be in [1,40]).\n";
 		lowdisc_error(msg.str());
 		return;
 	}
-	if (atmost <= 0 || atmost >= 1073741824) {
+	if (atmost <= 0 || atmost >= 1073741824) 
+	{
 		ostringstream msg;
 		msg << "ssobol_next : wrong number of calls : "<<atmost<<" (must be in [1,1073741823])\n";
 		lowdisc_error(msg.str());
 		return;
 	}
-	if (ssobol_s <= 13) {
-		*taus = ssobol_tau[ssobol_s - 1];
-	} else {
-		*taus = -1;
-		/*     RETURN A DUMMY VALUE TO THE CALLING PROGRAM */
-	}
-
-	// Setup the random number generator
-	seedreset();
 
 	// Initialise ssobol_vinit;
 	for (j = 0; j < 8; j++)
@@ -303,8 +310,27 @@ L30:
 	for (i = 1; i <= ssobol_s; ++i) {
 		ssobol_lastq[i - 1] = shift[i - 1];
 	}
+
+	// Everything is OK.
+	*isok=1;
 	return;
 }
+
+int Ssobol::gettaus()
+{
+	int taus;
+	if (ssobol_s <= 13) 
+	{
+		taus = ssobol_tau[ssobol_s - 1];
+	} 
+	else 
+	{
+		/*     RETURN A DUMMY VALUE TO THE CALLING PROGRAM */
+		taus = -1;
+	}
+	return taus;
+}
+
 
 int Ssobol::genscrml(int maxd, int lsm[][31], int *shift)
 {
@@ -312,15 +338,6 @@ int Ssobol::genscrml(int maxd, int lsm[][31], int *shift)
 	int i, j, l, p, ll;
 	int temp, stemp;
 
-	/*     GENERATING LOWER TRIANULAR SCRMABLING MATRICES AND SHIFT VECTORS. */
-	/*     INPUTS : */
-	/*       FROM INSSOBL : MAX */
-	/*       FROM BLOCK DATA "SOBOL" : S, MAXCOL, */
-
-	/*     OUTPUTS : */
-	/*       TO INSSOBL : LSM, SHIFT */
-
-	/* Function Body */
 	for (p = 1; p <= ssobol_s; ++p) {
 		shift[p-1] = 0;
 		l = 1;
@@ -352,15 +369,6 @@ int Ssobol::genscrmu(int usm[][31], int *ushift)
 	static int i, j;
 	static int temp, stemp;
 
-	/*     GENERATING UPPER TRIANGULAR SCRAMBLING MATRICES AND */
-	/*     SHIFT VECTORS. */
-	/*     INPUTS : */
-	/*       FROM BLOCK DATA "SOBOL" : S, MAXCOL, */
-
-	/*     OUTPUTS : */
-	/*       TO INSSOBL : USM, USHIFT */
-
-	/* Function Body */
 	for (i = 1; i <= ssobol_maxcol; ++i) {
 		stemp = (int) (unirnd() * 1e3f) % 2;
 		ushift[i-1] = stemp;
@@ -378,14 +386,9 @@ int Ssobol::genscrmu(int usm[][31], int *ushift)
 	return 0;
 }
 
-// TODO : use this generator instead of URAND.
 double Ssobol::unirnd(void)
 {
 	double ret_val;
-
-	/*     Random number generator, adapted from F. James */
-	/*     "A Review of Random Number Generators" */
-	/*      Comp. Phys. Comm. 60 (1990), pp. 329-344. */
 
 	ret_val = ssobol_seedseeds[ssobol_seedi-1] - ssobol_seedseeds[ssobol_seedj-1] - ssobol_seedcarry;
 	if (ret_val < 0.) 
@@ -411,6 +414,11 @@ void Ssobol::seedreset()
 		.4913043,.2979918,.1396858,.3589528,.5254809,.9857749,.4612127,
 		.2196441,.7848351,.40961,.9807353,.2689915,.5140357 };
 
+	seedset(seeds);
+}
+void Ssobol::seedset(double seeds[24])
+{
+	int i;
 	ssobol_seedi = 24;
 	ssobol_seedj = 10;
 	ssobol_seedcarry = 0.;
@@ -418,14 +426,6 @@ void Ssobol::seedreset()
 	for (i = 0; i < 24; i++) 
 	{
 		ssobol_seedseeds[i]=seeds[i];
-	}
-}
-void Ssobol::seedset(double newseeds[24])
-{
-	int i;
-	for (i = 0; i < 24; i++) 
-	{
-		ssobol_seedseeds[i]=newseeds[i];
 	}
 }
 

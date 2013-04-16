@@ -66,9 +66,8 @@ public:
 	iflag = 2 : Faure-Tezuka type Scrambling
 	iflag = 3 : Owen + Faure-Tezuka type Scrambling
 
-	OUTPUTS : 
-	quasi : the first element in the sequence
-	taus : to determine favorable number of calls (see below)
+	OUTPUTS:
+	isok = 1 if the parameters are OK.
 
 	Description
 	THIS IS MODIFIED ROUTINE OF "INSOBL". 
@@ -106,15 +105,18 @@ public:
 	PROGRAM. SUBSEQUENT VECTORS COME FROM "GOSSOBL". 
 	"LASTQ" HOLDS NUMERATORS OF THE LAST VECTOR GENERATED. 
 
-	"TAUS" IS FOR DETERMINING "FAVORABLE" VALUES. AS 
-	DISCUSSED IN BRATLEY/FOX, THESE HAVE THE FORM 
-	N = 2**K WHERE K .GE. (TAUS+S-1) FOR INTEGRATION 
-	AND K .GT. TAUS FOR GLOBAL OPTIMIZATION. 
-
 	*/
+	// This constructor calls seedreset.
+	Ssobol(int dimen, int atmost, int iflag, int maxd, int *isok);
 
-	//! Constructor from a set of stochastic variables, where ny is the number of output
-	Ssobol(int dimen, int atmost, int iflag, int maxd, int *taus);
+	//
+	// Sets the seed of the random number generator. 
+	// By default, the object always returns the same sequence of 
+	// numbers, because the seed is reset at object creation.
+	// This method allows to get different scramblings. 
+	// newseed : an array of doubles (input), in the interval [0,1].
+	// This constructor calls seedset.
+	Ssobol(int dimen, int atmost, int iflag, int maxd, double seeds[24], int *isok);
 
 	// Destructor (free the allocated memory)
 	~Ssobol();
@@ -122,44 +124,60 @@ public:
 	// Next element in the Scrambled Sobol Sequence
 	//
 	// Parameters
-	// quasi : an array of doubles, quasi[0,1,...,dimen-1]
+	// quasi : an array of doubles (output), quasi[0,1,...,dimen-1]
 	void next(double *quasi);
-
-	// Reset the seed of the random number generator.
-	// This is automatically done the first time the 
-	// ssobol_startup function is called or the first time the 
-	// function ssobol_seedreset is called. 
-	// This can be done when required, for example, when 
-	// generating a new sequence. 
-	// The suggested steps are:
-	//
-	// seedreset(); // Optionnal
-	// startup(...);
-	// next(...);
-	// delete seq;
-	//
-	void seedreset();
-
-	//  ssobol_isstart --
-	//     Returns true if the sequence is already started up.
-	//
-	//  Parameters:
-	//    startup, output : true if the sequence is already started up.
-	bool isstart ( );
 
 	// dim_num_get -- 
 	// gets the spatial dimension for a leaped Halton subsequence.
-	int dim_num_get ( void );
-	//
-	// seedset --
-	// Sets the seed of the random number generator
-	void seedset(double newseeds[24]);
+	int dim_num_get ();
+
+	// gettaus --
+	// taus : to determine favorable number of calls
+	/* "TAUS" IS FOR DETERMINING "FAVORABLE" VALUES. AS 
+	DISCUSSED IN BRATLEY/FOX, THESE HAVE THE FORM 
+	N = 2**K WHERE K .GE. (TAUS+S-1) FOR INTEGRATION 
+	AND K .GT. TAUS FOR GLOBAL OPTIMIZATION. */
+	int gettaus();
 private:
+	// Exclusive XOR
 	int exor(int *iin, int *jin);
+
+	// genscrml --
+	/* GENERATING LOWER TRIANULAR SCRAMBLING MATRICES AND SHIFT VECTORS. */
+	/* INPUTS : ssobol_s, ssobol_maxcol, maxd */
+	/* OUTPUTS : LSM, SHIFT */
 	int genscrml(int maxd, int lsm[][31], int *shift);
+	
+	// genscrmu --
+	/* GENERATING UPPER TRIANGULAR SCRAMBLING MATRICES AND */
+	/* SHIFT VECTORS. */
+	/* INPUTS : ssobol_s, ssobol_maxcol,  */
+	/* OUTPUTS : USM, USHIFT */
 	int genscrmu(int usm[][31], int *ushift);
+
+	// unirnd --
+	// Generates a uniform random number in [0,1]
+	/*     Random number generator, adapted from F. James */
+	/*     "A Review of Random Number Generators" */
+	/*      Comp. Phys. Comm. 60 (1990), pp. 329-344. */
 	double unirnd(void);
+
+	// lbitbits --
+	// From f2c
 	int lbitbits(int a, int b, int len);
+
+	// init --
+	// Initialize the current object. 
+	// This method is used in the constructor.
+	void init(int dimen, int atmost, int iflag, int maxd, int *isok);
+
+	// seedset --
+	// Set the seed of the random number generator.
+	void seedset(double seeds[24]);
+
+	// setreset --
+	// Set the seed of the random number generator to the default seed.
+	void seedreset();
 };
 
 __END_DECLS
