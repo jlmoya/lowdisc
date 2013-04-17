@@ -49,6 +49,18 @@ Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, double seeds[24], int
 	init(dimen, atmost, iflag, maxd, isok);
 }
 
+// Note 1 :
+// This code is a port from Fortran to C++, 
+// based on an intermediate f2c translation with manual tuning. 
+// Hence, the formal indice i in the array are from 1 to imax, 
+// instead of the usual 0 to imax-1.
+// But the indice used is t[i-1], so that the actual indice is, 
+// indeed, from 0 to imax-1.
+
+// Note 2 :
+// We could set the maxcol variable as a constant, given that 
+// the maximum value of atmost is 2^30-1=1073741823. 
+// Hence, the maximum possible value of maxcol is 30.
 void Ssobol::init(int dimen, int atmost, int iflag, int maxd, int *isok)
 {
 	/* THE ARRAY POLY GIVES SUCCESSIVE PRIMITIVE */
@@ -216,8 +228,9 @@ L30:
 	}
 
 	/* COMPUTING GENERATOR MATRICES OF USER CHOICE */
-
+	// Compute ssobol_sv, shift, ll
 	if (iflag == 0) {
+	// No scrambling
 		for (i = 1; i <= ssobol_s; ++i) {
 			for (j = 1; j <= ssobol_maxcol; ++j) {
 				ssobol_sv[i-1][j-1] = v[i-1][j-1];
@@ -227,6 +240,7 @@ L30:
 		ll = pow(2.0, ssobol_maxcol);
 	} else {
 		if (iflag == 1 || iflag == 3) {
+		// Owen or Owen-Faure-Tezuka scrambling
 			genscrml(maxd, lsm, shift);
 			for (i = 1; i <= ssobol_s; ++i) {
 				for (j = 1; j <= ssobol_maxcol; ++j) {
@@ -247,6 +261,7 @@ L30:
 			ll = pow(2.0, maxd);
 		}
 		if (iflag == 2 || iflag == 3) {
+		// Faure-Tezuka or Owen-Faure-Tezuka scrambling
 			genscrmu(usm, ushift);
 			if (iflag == 2) {
 				maxx = ssobol_maxcol;
@@ -334,7 +349,6 @@ int Ssobol::gettaus()
 
 int Ssobol::genscrml(int maxd, int lsm[][31], int *shift)
 {
-	/* Local variables */
 	int i, j, l, p, ll;
 	int temp, stemp;
 
@@ -365,9 +379,8 @@ int Ssobol::genscrml(int maxd, int lsm[][31], int *shift)
 
 int Ssobol::genscrmu(int usm[][31], int *ushift)
 {
-	/* Local variables */
-	static int i, j;
-	static int temp, stemp;
+	int i, j;
+	int temp, stemp;
 
 	for (i = 1; i <= ssobol_maxcol; ++i) {
 		stemp = (int) (unirnd() * 1e3f) % 2;
@@ -431,8 +444,7 @@ void Ssobol::seedset(double seeds[24])
 
 void Ssobol::next(double *quasi)
 {
-	/* Local variables */
-	static int i, l;
+	int i, l;
 
 
 	/*     THIS SUBROUTINE GENERATES A NEW */
@@ -474,8 +486,6 @@ void Ssobol::next(double *quasi)
 	}
 
 	/*     FIND THE POSITION OF THE RIGHT-HAND ZERO IN COUNT */
-
-	/* Function Body */
 	l = 0;
 	i = ssobol_count;
 L1:
@@ -500,11 +510,6 @@ L1:
 	for (i = 1; i <= ssobol_s; ++i) 
 	{
 		ssobol_lastq[i - 1] = exor(&ssobol_lastq[i - 1], &ssobol_sv[i-1][l-1]);
-
-		/*     IF A FULL-WORD EXCLUSIVE-OR, SAY .XOR., IS AVAILABLE */
-		/*     THEN REPLACE THE PRECEDING STATEMENT BY */
-		/*         LASTQ(I) = LASTQ(I) .XOR. SV(I,L) */
-		/*     TO GET A FASTER, EXTENDED FORTRAN PROGRAM */
 		quasi[i-1] = ssobol_lastq[i - 1] * ssobol_recipd;
 	}
 
@@ -515,12 +520,8 @@ L1:
 
 int Ssobol::exor(int *iin, int *jin)
 {
-	/* System generated locals */
 	int ret_val;
-
-	/* Local variables */
-	static int i, j, k, l;
-
+	int i, j, k, l;
 
 	/*     THIS FUNCTION CALCULATES THE EXCLUSIVE-OR OF ITS */
 	/*     TWO INPUT PARAMETERS */

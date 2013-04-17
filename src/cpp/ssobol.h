@@ -58,7 +58,7 @@ public:
 
 	INPUTS : 
 	dimen : the number of dimensions, DIMEN in {1,2,...,40}
-	atmost : the maximum number of elements in the sequence, ATMOST in {1,2,...,2^30=1073741824}
+	atmost : the maximum number of elements in the sequence, ATMOST in {1,2,...,2^30-1=1073741823}
 	maxd : Maximum Digits of Scrambling Of Owen type Scrambling (suggestion : maxd=30)
 	iflag: the scrambling type
 	iflag = 0 : No Scrambling
@@ -139,7 +139,8 @@ public:
 	AND K .GT. TAUS FOR GLOBAL OPTIMIZATION. */
 	int gettaus();
 private:
-	// Exclusive XOR
+	/*     THIS FUNCTION CALCULATES THE EXCLUSIVE-OR OF ITS */
+	/*     TWO INPUT PARAMETERS */
 	int exor(int *iin, int *jin);
 
 	// genscrml --
