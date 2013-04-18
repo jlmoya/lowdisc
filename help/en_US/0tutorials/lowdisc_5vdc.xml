@@ -49,7 +49,7 @@
     </para>
 
     <para>
-      where r is the number of digits required in the decomposition. 
+      where r is the number of digits required in the decomposition.
     </para>
 
     <para>
@@ -59,6 +59,17 @@
     <para>
       <latex>
         k=\sum_{i=0}^r a_i b^i.
+      </latex>
+    </para>
+
+    <para>
+      In order to write the decomposition of an 
+	  integer in base b, some authors write:
+    </para>
+
+    <para>
+      <latex>
+        k=(a_r...a_2 a_1 a_0)_b
       </latex>
     </para>
 
@@ -79,6 +90,16 @@
     <para>
       <latex>
         \psi_b(k)=\frac{a_0}{b} + \frac{a_1}{b^2} + .. + \frac{a_r}{b^{r+1}}.
+      </latex>
+    </para>
+
+    <para>
+      This can also be written:
+    </para>
+
+    <para>
+      <latex>
+        k=(0.a_0 a_1 a_2 ... a_r)_b
       </latex>
     </para>
 
@@ -111,10 +132,10 @@
   </refsection>
 
   <refsection>
-    <title>Examples</title>
+    <title>Van Der Corput sequence in base 2</title>
     <para>
-      The Van Der Corput sequence in base 2 is just the first component 
-	  of the Halton sequence.
+      The Van Der Corput sequence in base 2 is just the first component
+      of the Halton sequence.
       The following script considers the numbers k from
       zero to 9, decompose them in base 2 and compute the
       k-th element of the Van Der Corput sequence in base 2.
@@ -122,13 +143,15 @@
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen(9,1,"halton");
-b=2;
-for k=1:9
-    d=number_tobary(k,b);
-    dstr=strcat(string(d),",");
-    mprintf("%d [%s] %f\n",k,dstr,u(k))
-end
+    b=2;
+    n=b^4;
+    u=lowdisc_ldgen(n,1,"halton");
+    for k=1:n
+        d=number_tobary(k,b);
+        dstr=strcat(string(d),"");
+        mprintf("k=%d=(%s)_%d, r=(0.%s)_%d=%f\n",..
+        k,dstr,b,dstr($:-1:1),b,u(k,1))
+    end
    ]]>
     </programlisting>
 
@@ -138,59 +161,127 @@ end
 
     <screen>
       <![CDATA[
-1 [1] 0.500000
-2 [1,0] 0.250000
-3 [1,1] 0.750000
-4 [1,0,0] 0.125000
-5 [1,0,1] 0.625000
-6 [1,1,0] 0.375000
-7 [1,1,1] 0.875000
-8 [1,0,0,0] 0.062500
-9 [1,0,0,1] 0.562500
+k=1=(1)_2, r=(0.1)_2=0.500000
+k=2=(10)_2, r=(0.01)_2=0.250000
+k=3=(11)_2, r=(0.11)_2=0.750000
+k=4=(100)_2, r=(0.001)_2=0.125000
+k=5=(101)_2, r=(0.101)_2=0.625000
+k=6=(110)_2, r=(0.011)_2=0.375000
+k=7=(111)_2, r=(0.111)_2=0.875000
+k=8=(1000)_2, r=(0.0001)_2=0.062500
+k=9=(1001)_2, r=(0.1001)_2=0.562500
+k=10=(1010)_2, r=(0.0101)_2=0.312500
+k=11=(1011)_2, r=(0.1101)_2=0.812500
+k=12=(1100)_2, r=(0.0011)_2=0.187500
+k=13=(1101)_2, r=(0.1011)_2=0.687500
+k=14=(1110)_2, r=(0.0111)_2=0.437500
+k=15=(1111)_2, r=(0.1111)_2=0.937500
+k=16=(10000)_2, r=(0.00001)_2=0.031250
    ]]>
     </screen>
 
     <para>
-      For example, the integer k=6 decomposes as 110 in base 2, because 
-	  2^2+2^1=4+2=6.
+      For example, the integer k=6 decomposes as 110 in base 2, because
+      2^2+2^1=4+2=6.
       Its radical inverse is 0.011 in base 2, which is associated to
       the radical inverse value 0/2+1/4+1/8=0.375.
     </para>
 
     <para>
-      In base 2, the lowest order digits are alternatively 0, 1, 0, etc...
-      This is why the radical inverse in base 2 is alternatively lower
-      and greater than 1/2.
+      The following figure plots the points of the Van Der Corput 
+	  sequence in base 2.
     </para>
 
     <para>
-      To get the Van Der Corput sequence in base 3, we just use 
-	  the second dimension of the Halton sequence in two dimensions.
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="vandercorput-base2.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+	
+    <para>
+      In base 2, the lowest order digits are alternatively 0, 1, 0, etc... 
+	  The most significant digit of the radical inverse function is alternatively 
+	  0, 1, 0, etc...
+      Hence, the radical inverse in base 2 is alternatively lower 
+      and greater than 1/2. 
+	  This can be seen in the plot, where the even points are on the 
+	  left of the figure, while the odd points are on the right of the 
+	  figure.
+    </para>
+
+    <para>
+      Another property which is made clear from the figure is that the 
+	  interval [0,1] is progressively filled block-by-block, where 
+	  each block of points has an increasing size which is a power of 2. 
+	  Indeed, the first block has size 1 (the point 1), the second block has 
+	  size 2 (the points 2 and 3), the third block has size 4 (the points 
+	  4 to 7), and so on. 
+      Therefore, when we use a point set which is a power of two, 
+	  we have a regular discretization of the [0,1] interval. 
+    </para>
+  </refsection>
+
+  <refsection>
+    <title>Van Der Corput sequence in base 3</title>
+    <para>
+      To get the Van Der Corput sequence in base 3, we just use
+      the second dimension of the Halton sequence in two dimensions.
     </para>
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen(9,2,"halton");
-b=3;
-for k=1:9
-    d=number_tobary(k,b);
-    dstr=strcat(string(d),",");
-    mprintf("%d [%s] %f\n",k,dstr,u(k,2))
-end
+    b=3;
+    n=b^3;
+    u=lowdisc_ldgen(n,2,"halton");
+    for k=1:n
+        d=number_tobary(k,b);
+        dstr=strcat(string(d),"");
+        drev=strcat(string(d($:-1:1)),"");
+        mprintf("k=%d=(%s)_%d, r=(0.%s)_%d=%f\n",..
+        k,dstr,b,drev,b,u(k,2))
+    end
    ]]>
     </programlisting>
 
+    <para>
+      The previous script produces the following output.
+    </para>
+
     <screen>
       <![CDATA[
-1 [1] 0.333333
-2 [2] 0.666667
-3 [1,0] 0.111111
-4 [1,1] 0.444444
-5 [1,2] 0.777778
-6 [2,0] 0.222222
-7 [2,1] 0.555556
-8 [2,2] 0.888889
-9 [1,0,0] 0.037037
+k=1=(1)_3, r=(0.1)_3=0.333333
+k=2=(2)_3, r=(0.2)_3=0.666667
+k=3=(10)_3, r=(0.01)_3=0.111111
+k=4=(11)_3, r=(0.11)_3=0.444444
+k=5=(12)_3, r=(0.21)_3=0.777778
+k=6=(20)_3, r=(0.02)_3=0.222222
+k=7=(21)_3, r=(0.12)_3=0.555556
+k=8=(22)_3, r=(0.22)_3=0.888889
+k=9=(100)_3, r=(0.001)_3=0.037037
+k=10=(101)_3, r=(0.101)_3=0.370370
+k=11=(102)_3, r=(0.201)_3=0.703704
+k=12=(110)_3, r=(0.011)_3=0.148148
+k=13=(111)_3, r=(0.111)_3=0.481481
+k=14=(112)_3, r=(0.211)_3=0.814815
+k=15=(120)_3, r=(0.021)_3=0.259259
+k=16=(121)_3, r=(0.121)_3=0.592593
+k=17=(122)_3, r=(0.221)_3=0.925926
+k=18=(200)_3, r=(0.002)_3=0.074074
+k=19=(201)_3, r=(0.102)_3=0.407407
+k=20=(202)_3, r=(0.202)_3=0.740741
+k=21=(210)_3, r=(0.012)_3=0.185185
+k=22=(211)_3, r=(0.112)_3=0.518519
+k=23=(212)_3, r=(0.212)_3=0.851852
+k=24=(220)_3, r=(0.022)_3=0.296296
+k=25=(221)_3, r=(0.122)_3=0.629630
+k=26=(222)_3, r=(0.222)_3=0.962963
+k=27=(1000)_3, r=(0.0001)_3=0.012346
    ]]>
     </screen>
 
@@ -200,31 +291,88 @@ end
       the radical inverse value 2/9=0.2222...
     </para>
 
+    <para>
+      The following figure plots the points of the Van Der Corput 
+	  sequence in base 3.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="vandercorput-base3.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      We see that the [0,1] interval is regularily discretized when 
+	  we consider a number of points which is either 3-1=2, 9-1=8 
+	  or 27-1=26 points. 
+	  In other words, when the number of points is a power of the 
+	  base (which is here equal to 3), then the interval is filled 
+	  more regularly.
+    </para>
+	
+    <para>
+      The following figure plots the points of the Van Der Corput 
+	  sequence in base 5.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="vandercorput-base5.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      When the base increases, the number of points before the
+      [0,1] interval is regularly filled increases rapidly (as a power of b). 
+    </para>
+    <para>
+      Moreover, consider the points 5 to 9, then 10 to 14 : they
+      progressively go from left to right, taking b=5 iterations
+      to make a partial circle.
+      More generally, the subsequences take more iterations to go from lower values (near 0)
+      to larger values (near 1).
+      This is because it takes b iterations for the the least significant digits
+      to go from 0 to b-1.
+    </para>
+
   </refsection>
 
   <refsection>
     <title>Halton Sequence</title>
 
     <para>
-	  The Hammersley sequence (1960) uses the Van Der Corput sequence 
-	  in order to create a low discrepancy point set. 
-	  However, the number of points in the Hammersley sequence must be know 
-	  in advance, which is sometimes an issue. 
-	  The Halton sequence (1964) uses the Van Der Corput sequence without 
-	  this limitation, and this is why it is used more often. 
+      The Hammersley sequence (1960) uses the Van Der Corput sequence
+      in order to create a low discrepancy point set.
+      However, the number of points in the Hammersley sequence must be know
+      in advance, which is sometimes an issue.
+      The Halton sequence (1964) uses the Van Der Corput sequence without
+      this limitation, and this is why it is used more often.
     </para>
 
     <para>
-      The Halton sequence in s dimensions uses s  
-      different bases which must be relatively primes. 
-      We usually use the s first prime numbers: 2, 3, 5, 7, 11, etc... 
+      The Halton sequence in s dimensions uses s
+      different bases which must be relatively primes.
+      We usually use the s first prime numbers: 2, 3, 5, 7, 11, etc...
     </para>
 
     <para>
-      Denote by p(i) the i-th prime number. 
-      The dimension i of the Halton sequence is 
-      the Van Der Corput in base p(i). 
-	  Hence, the k-th element of the Halton sequence is 
+      Denote by p(i) the i-th prime number.
+      The dimension i of the Halton sequence is
+      the Van Der Corput in base p(i).
+      Hence, the k-th element of the Halton sequence is
     </para>
 
     <para>
@@ -260,15 +408,15 @@ end
     </screen>
 
   </refsection>
-  
+
   <refsection>
     <title>Scrambled Halton Sequence</title>
 
     <para>
-      In high dimensions, the Halton sequence poorly 
-	  fills the space, as can be seen in low dimensionnal projections. 
-	  In order to improve this, Braaten and Weller (1979) suggest to scramble 
-	  the digits in the Halton sequence, in order to break correlations. 
+      In high dimensions, the Halton sequence poorly
+      fills the space, as can be seen in low dimensionnal projections.
+      In order to improve this, Braaten and Weller (1979) suggest to scramble
+      the digits in the Halton sequence, in order to break correlations.
     </para>
 
     <para>
@@ -282,17 +430,21 @@ end
     </para>
 
     <para>
-      where &#963; is a given permutation. 
-    </para>
-	
-    <para>
-	  The permutation does not change the values of the points in the sequence: 
-	  only the ordering of the points changes. 
+      where &#963; is a given permutation.
     </para>
 
     <para>
-	  The following function computes the scrambled Van Der Corput 
-	  radical inverse function. 
+      For a given base b, the permutation does not change the values
+      of the points in the sequence:
+      only the ordering of the points changes.
+      However, since each dimension has a specific base b, the
+      multidimensionnal point set of a scrambled sequence is, in general,
+      different from the unscrambled point set.
+    </para>
+
+    <para>
+      The following function computes the scrambled Van Der Corput
+      radical inverse function.
     </para>
 
     <programlisting role="example">
@@ -313,10 +465,10 @@ endfunction
     </programlisting>
 
     <para>
-	  For example, the base-3 Van Der Corput sequence can be associated 
-	  with the permutation [0,2,1]. 
-	  The following script computes the first ten points of 
-	  this scrambled sequence.
+      For example, the base-3 Van Der Corput sequence can be associated
+      with the permutation [0,2,1].
+      The following script computes the first ten points of
+      this scrambled sequence.
     </para>
 
     <programlisting role="example">
@@ -329,9 +481,9 @@ for index=1:10
 end
    ]]>
     </programlisting>
-	
+
     <para>
-	  The previous script produces the following output.
+      The previous script produces the following output.
     </para>
 
     <screen>
@@ -348,10 +500,10 @@ index=9, r=0.074074
 index=10, r=0.740741
    ]]>
     </screen>
-	
+
     <para>
-      In their paper, Braaten and Weller provide the permutations 
-	  for dimensions up to 16. 
+      In their paper, Braaten and Weller provide the permutations
+      for dimensions up to 16.
     </para>
 
     <screen>
@@ -365,36 +517,36 @@ index=10, r=0.740741
 etc...
    ]]>
     </screen>
-	
+
     <para>
-      The issue here is that the limited size of the 
-	  table provided by Braaten and Weller limit the practical use of the 
-	  algorithm. 
-	  Tuffin (1996) provides improved algorithms to expand this tables 
-	  (and to improve the permutations as well), but this works has 
-	  two issues. 
-	  First, the permutations are computed by taking all dimensions 
-	  into account, and not dimension-by-dimension as in 
-	  Braaten and Weller. 
-	  This has the advantage of improving the permutations, but has 
-	  the drawback of making the tables larger. 
-	  Secondly, Tuffin published the algorithm, but not the permutations. 
+      The issue here is that the limited size of the
+      table provided by Braaten and Weller limit the practical use of the
+      algorithm.
+      Tuffin (1996) provides improved algorithms to expand this tables
+      (and to improve the permutations as well), but this works has
+      two issues.
+      First, the permutations are computed by taking all dimensions
+      into account, and not dimension-by-dimension as in
+      Braaten and Weller.
+      This has the advantage of improving the permutations, but has
+      the drawback of making the tables larger.
+      Secondly, Tuffin published the algorithm, but not the permutations.
     </para>
 
     <para>
-      Kocis and Whiten (1979) provide a simple algorithm to generate 
-	  permutations for the Halton sequence. 
-	  Their RR2 algorithm uses the Van Der Corput sequence in base 2 and 
-	  reverses the digits, removing the integers that are too large.
-	  A more detailed description is presented in Lemieux (2009). 
-	  This algorithm has no strong theoretical basis, but works 
-	  efficiently. 
+      Kocis and Whiten (1979) provide a simple algorithm to generate
+      permutations for the Halton sequence.
+      Their RR2 algorithm uses the Van Der Corput sequence in base 2 and
+      reverses the digits, removing the integers that are too large.
+      A more detailed description is presented in Lemieux (2009).
+      This algorithm has no strong theoretical basis, but works
+      efficiently.
     </para>
 
     <para>
-      The following function computes the RR2 scrambling 
-	  for the i-th dimension of a point set with <literal>s</literal> dimensions, 
-	  using the bases in the matrix <literal>b</literal>.
+      The following function computes the RR2 scrambling
+      for the i-th dimension of a point set with <literal>s</literal> dimensions,
+      using the bases in the matrix <literal>b</literal>.
     </para>
 
     <programlisting role="example">
@@ -413,10 +565,10 @@ function sigma=RR2Scrambling(s, i, b)
 endfunction
    ]]>
     </programlisting>
-	
+
     <para>
-      The following script prints the RR2 scrambling 
-	  used for a point set in 3 dimensions.
+      The following script prints the RR2 scrambling
+      used for a point set in 3 dimensions.
     </para>
 
     <programlisting role="example">
@@ -431,7 +583,7 @@ for i=1:s
 end
    ]]>
     </programlisting>
-	
+
     <para>
       The previous script produces the following output.
     </para>
@@ -443,14 +595,14 @@ i=2, [0,2,1]
 i=3, [0,4,2,1,3]
    ]]>
     </screen>
-	
+
     <para>
-      This feature is provided by the "-scrambling" option of the 
-	  <literal>lowdisc_configure</literal> function.
+      This feature is provided by the "-scrambling" option of the
+      <literal>lowdisc_configure</literal> function.
     </para>
 
   </refsection>
-  
+
   <refsection>
     <title>Bibliography</title>
 
@@ -471,24 +623,24 @@ i=3, [0,4,2,1,3]
     </para>
 
     <para>
-      "Monte Carlo methods for solving multivariate problems", 
-	  Annals of the New York Academy of Sciences, 86:844-874, 
-	  J.M. Hammersley (1960).
-    </para>
-	
-    <para>
-      J. G. van der Corput, Verteilungsfunktionen. 
-	  Proc. Ned. Akad. v. Wet., 38:813-821, 1935
+      "Monte Carlo methods for solving multivariate problems",
+      Annals of the New York Academy of Sciences, 86:844-874,
+      J.M. Hammersley (1960).
     </para>
 
     <para>
-      Braaten, E., and G. Weller. An Improved Low-Discrepancy Sequence for Multidimensional 
-      Quasi-Monte Carlo Integration. Journal of Computational Physics, Vol. 33, 1979, 
-	  pp. 249-258.
+      J. G. van der Corput, Verteilungsfunktionen.
+      Proc. Ned. Akad. v. Wet., 38:813-821, 1935
     </para>
-	 
+
     <para>
-      Monte Carlo and Quasi-Monte Carlo Sampling (Springer Series in Statistics), 
+      Braaten, E., and G. Weller. An Improved Low-Discrepancy Sequence for Multidimensional
+      Quasi-Monte Carlo Integration. Journal of Computational Physics, Vol. 33, 1979,
+      pp. 249-258.
+    </para>
+
+    <para>
+      Monte Carlo and Quasi-Monte Carlo Sampling (Springer Series in Statistics),
       Christiane Lemieux, 2009
     </para>
 
