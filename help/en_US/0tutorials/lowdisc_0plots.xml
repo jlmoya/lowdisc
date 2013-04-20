@@ -437,6 +437,83 @@ xtitle("Niederreiter: 1000 points","X1","X2")
   </refsection>
 
   <refsection>
+    <title>Scrambled Sobol Sequence</title>
+
+    <programlisting role="example">
+      <![CDATA[
+//
+// No Scrambling
+//
+lds=lowdisc_new("sobol");
+lds=lowdisc_configure(lds,"-dimension",2);
+lds = lowdisc_startup (lds);
+[lds,u] = lowdisc_next (lds,100);
+lds=lowdisc_destroy(lds);
+//
+// Owen Scrambling
+//
+lds=lowdisc_new("sobol");
+lds=lowdisc_configure(lds,"-dimension",2);
+lds=lowdisc_configure(lds,"-scrambling","Owen");
+lds = lowdisc_startup (lds);
+[lds,uO] = lowdisc_next (lds,100);
+lds=lowdisc_destroy(lds);
+//
+// Faure-Tezuka Scrambling
+//
+lds=lowdisc_new("sobol");
+lds=lowdisc_configure(lds,"-dimension",2);
+lds=lowdisc_configure(lds,"-scrambling","Faure-Tezuka");
+lds = lowdisc_startup (lds);
+[lds,uFT] = lowdisc_next (lds,100);
+lds=lowdisc_destroy(lds);
+//
+// Owen-Faure-Tezuka Scrambling
+//
+lds=lowdisc_new("sobol");
+lds=lowdisc_configure(lds,"-dimension",2);
+lds=lowdisc_configure(lds,"-scrambling","Owen-Faure-Tezuka");
+lds = lowdisc_startup (lds);
+[lds,uOFT] = lowdisc_next (lds,100);
+lds=lowdisc_destroy(lds);
+//
+// Make a plot
+//
+scf();
+subplot(2,2,1);
+plot(u(:,1),u(:,2),"b.");
+xtitle("Sobol","X1","X2");
+subplot(2,2,2);
+plot(uO(:,1),uO(:,2),"b.");
+xtitle("Owen Scrambled Sobol","X1","X2");
+subplot(2,2,3);
+plot(uFT(:,1),uFT(:,2),"b.");
+xtitle("Faure-Tezuka Scrambled Sobol","X1","X2");
+subplot(2,2,4);
+plot(uOFT(:,1),uOFT(:,2),"b.");
+xtitle("Owen-Faure-Tezuka Scrambled Sobol","X1","X2");
+   ]]>
+    </programlisting>
+
+    <para>
+      The previous script produces the following output.
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="sobol-scrambled-s2-n100.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+  </refsection>
+
+  <refsection>
     <title>Note on 2D plots</title>
 	<para>
 	  As we have seen, in 2D the Sobol, Niederreiter (base 2) and 

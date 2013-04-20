@@ -76,6 +76,11 @@
         </listitem>
 
         <listitem>
+          <para>The scrambled Sobol sequence : Owen, Faure-Tezuka or 
+		  Owen-Faure-Tezuka scramblings. </para>
+        </listitem>
+
+        <listitem>
           <para>The Niederreiter base 2 and arbitrary base sequence. </para>
         </listitem>
 

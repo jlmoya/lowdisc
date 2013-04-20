@@ -162,7 +162,9 @@ we can configure the scrambling as following.
 <para>
 <literal>"-scrambling"</literal> : a 1-by-1 matrix of strings,
 the empty string "" (no scrambling),
-or "Owen" for the scrambling (digit permutation) of Owen.
+<literal>"Owen"</literal> for the scrambling (digit permutation) of Owen,
+<literal>"Faure-Tezuka"</literal> or
+<literal>"Owen-Faure-Tezuka"</literal>.
 The default is "" (no scrambling).
 The scrambling can improve the correlation in high dimensions,
 leading to better low-dimensionnal projections.
@@ -260,8 +262,9 @@ plot(u(:,43),u(:,44),"b.");
 <refsection>
    <title>Authors</title>
    <simplelist type="vert">
-   <member>Michael Baudin - 2008 - 2009 - INRIA</member>
-   <member>Michael Baudin - 2010 - 2011 - DIGITEO</member>
+   <member>Copyright (C) 2013 - Michael Baudin</member>
+   <member>Copyright (C) 2008 - 2009 - INRIA - Michael Baudin</member>
+   <member>Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin</member>
    </simplelist>
 </refsection>
 
