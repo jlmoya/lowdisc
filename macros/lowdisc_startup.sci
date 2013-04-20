@@ -111,10 +111,12 @@ function this = ldhaltonf_startup (this)
     //
     scrambling=lowdisc_cget(this,"-scrambling")
     if (scrambling=="") then
-        _lowdisc_haltonfstart ( dimension , base , seed , 1 )
+        scrambling= 1
     else
-        _lowdisc_haltonfstart ( dimension , base , seed , 2 )
+        scrambling= 2
     end
+    this.sequence.token = _lowdisc_haltonfnew(dimension , ..
+    base , seed , scrambling)
     //
     skip = lowdisc_cget(this , "-skip" )
     if ( skip > 0 ) then

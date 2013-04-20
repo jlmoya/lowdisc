@@ -18,9 +18,10 @@ extern "C" {
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
 #include "halton.h" 
+#include "lowdisc_halton_map.hxx" 
 
 
-// _lowdisc_haltonfstart ( dim , base , seed , scrambling )
+// token=_lowdisc_haltonfnew ( dim , base , seed , scrambling )
 //   Start the Halton sequence.
 // Parameters
 //   dim : the number of dimensions (e.g. 1)
@@ -35,7 +36,7 @@ extern "C" {
 // Description
 // Internally uses leap = (1,1, ..., 1) for the halton C library.
 
-int sci_lowdisc_haltonfstart (char *fname) {
+int sci_lowdisc_haltonfnew (char *fname) {
 	int dim;
 	double * quasi = NULL;
 	int nRows;
@@ -47,6 +48,8 @@ int sci_lowdisc_haltonfstart (char *fname) {
 	int * seed = NULL;
 	int * leap = NULL;
 	int scrambling = NULL;
+	Halton * seq;
+	int token;
 	
 	CheckRhs(4,4) ;
 	CheckLhs(0,1) ;
@@ -115,13 +118,14 @@ int sci_lowdisc_haltonfstart (char *fname) {
 	}
 	//
 	// Start the Halton sequence
-	halton_start ( dim , base , seed, leap , scrambling);
+	seq = new Halton ( dim , base , seed, leap , scrambling);
+	token = lowdisc_halton_map_add(seq);
 	//
 	// Free the vectors
 	free_ivector ( base );
 	free_ivector ( seed );
 	free_ivector ( leap );
 	//
-	lowdisc_CreateLhsInteger ( 1 , 0 );
+	lowdisc_CreateLhsInteger ( 1 , token );
 	return 0;
 }

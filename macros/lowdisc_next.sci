@@ -175,7 +175,7 @@ function [this,next] = ldhaltonf_next ( this , imax )
     //
     // Initialize the vector
     index = lowdisc_get(this , "-index" )
-    next = _lowdisc_haltonfnext ( index + 1, imax , leap );
+    next = _lowdisc_haltonfnext ( this.sequence.token, index + 1,imax , leap )
     // Leap over (i.e. ignore) as many elements as required
     // Directly set the index.
     index = index + imax*(leap+1)
@@ -197,6 +197,7 @@ function [this,next] = ldsobolf_next ( this , imax )
     index = index + imax*(leap+1)
     this=ldbase_indexset(this, index )
 endfunction
+
 
 function [this,next] = ldniedf_next ( this , imax )
     dimension = lowdisc_cget(this , "-dimension" )

@@ -60,9 +60,9 @@ function lowdisc_stopall ( )
   //
   // Fast Halton
   //
-  start = _lowdisc_haltonfisstart ( );
-  if ( start == 1 ) then
-    _lowdisc_haltonfstop ( );
+  seqmat=_lowdisc_haltonftokens()
+  for seq=seqmat
+      _lowdisc_haltonfdestroy(seq)
   end
   //
   // Fast Niederreiter

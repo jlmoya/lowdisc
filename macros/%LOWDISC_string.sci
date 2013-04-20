@@ -50,9 +50,11 @@ function s = _tostring ( x )
         else
             nmax=5
             if (n>nmax) then
-                s=msprintf("[%s,...] (%d entries)",strcat(string(x(1:nmax))),n)
+                xstr=strcat(string(x(1:nmax)),",")
+                s=msprintf("[%s,...] (%d entries)",xstr,n)
             else
-                s=msprintf("[%s] (%d entries)",strcat(string(x)),n)
+                xstr=strcat(string(x),",")
+                s=msprintf("[%s] (%d entries)",xstr,n)
             end
         end
     end
@@ -61,7 +63,7 @@ endfunction
 function str = ldrevhalf_string ( this )
     str = []
     k = 1
-    str(k) = msprintf("Primeslist : %s\n", nbp , _tostring(this.primeslist))
+    str(k) = msprintf("Primeslist : %s\n", _tostring(this.primeslist))
     k = k + 1
     str(k) = msprintf("Maximum number of simulations = %e",this.nbsimmax)
     k = k + 1
@@ -93,7 +95,7 @@ endfunction
 function str = ldfauref_string ( this )
     str = []
     k = 1
-    str(k) = msprintf("Primeslist : %s\n", nbp , _tostring(this.primeslist))
+    str(k) = msprintf("Primeslist : %s\n", _tostring(this.primeslist))
     k = k + 1
     str(k) = msprintf("Maximum number of simulations = %s",string(this.nbsimmax))
     k = k + 1
@@ -125,11 +127,13 @@ endfunction
 function str = ldhaltonf_string ( this )
     str = []
     k = 1
-    str(k) = msprintf("Primeslist : %s\n", nbp , _tostring(this.primeslist))
+    str(k) = msprintf("Primeslist : %s\n", _tostring(this.primeslist))
     k = k + 1
     str(k) = msprintf("Maximum number of simulations = %s",string(this.nbsimmax))
     k = k + 1
     str(k) = msprintf("Scrambling = ""%s""",string(this.scrambling))
+    k = k + 1
+    str(k) = msprintf("Token = %d",this.token)
     k = k + 1
     //
     // Get the baseobj string

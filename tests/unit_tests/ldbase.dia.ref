@@ -63,9 +63,10 @@ end
 Low Discrepancy Sequence:
 =========================
 method: halton
-Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+Primeslist : [2,3,5,7,11,...] (100 entries)
 Maximum number of simulations = 2.147D+09
 Scrambling = ""
+Token = -1
 Dimension of space: 1
 Index: 0
 Verbose logging: F
@@ -77,7 +78,7 @@ Starting up the sequence.
 Low Discrepancy Sequence:
 =========================
 method: faure
-Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+Primeslist : [2,3,5,7,11,...] (100 entries)
 Maximum number of simulations = 2.147D+09
 Dimension of space: 1
 Index: 0
@@ -90,7 +91,7 @@ Starting up the sequence.
 Low Discrepancy Sequence:
 =========================
 method: reversehalton
-Primes List (100 primes): [2 3 5 7 11 13 17 19 23 29] ...
+Primeslist : [2,3,5,7,11,...] (100 entries)
 Maximum number of simulations = 2.147484e+009
 Dimension of space: 1
 Index: 0
@@ -107,6 +108,7 @@ Maximum dimension = 1111
 Maximum number of simulations = 1.074D+09
 Scrambling = ""
 Token = -1
+Seeds = []
 Dimension of space: 1
 Index: 0
 Verbose logging: F

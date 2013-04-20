@@ -19,11 +19,6 @@ using namespace std;
 #include "halton.h"
 #include "lowdisc_shared.h"
 
-//
-// Private functions
-double vandercorput(int index, int base);
-void halton_RR2Scrambling();
-double scrambledVDC(int index, int base, int * sigma);
 
 //
 //  Reference:
@@ -45,44 +40,13 @@ double scrambledVDC(int index, int base, int * sigma);
 //    Volume 23, Number 2, 1997, pages 266-294.
 //
 
-//
-//  These variables are accessible to the user via calls to set/get routines.
-//
-// The number of dimensions
-int  halton_dim_num = -1;
-// The bases, an array[0,1,...,dim_num-1]
-// halton_base[i] is a prime number, for i=0,1,...,dim_num
-int *halton_base = NULL;
-// The leap, an array[0,1,...,dim_num-1]
-// halton_leap[i]>=1, for i=0,1,...,dim_num
-int *halton_leap = NULL;
-// The seed, an array[0,1,...,dim_num-1]
-// halton_seed[i]>=0, for i=0,1,...,dim_num
-int *halton_seed = NULL;
-// Set to true when the component is started up
-bool halton_startup = false;
 
-// The scrambling method
-int halton_scrambling = halton_scramblingZero;
-
-// The permutation used in the scrambling
-int ** halton_sigma = NULL;
-
-void halton_next ( int index , double r[] )
+void Halton::next ( int index , double r[] )
 {
 	int i;
 	int seed2;
 
-	if ( !halton_startup )
-	{
-		ostringstream msg;
-		msg << "halton - halton_next - Error!\n";
-		msg << "  Startup is not done.\n";
-		lowdisc_error(msg.str());
-		return;
-	}
-
-	if ( halton_scrambling==halton_scramblingZero )
+	if ( halton_scrambling==HALTON_SCRAMBLINGZERO )
 	{
 		for ( i = 0; i < halton_dim_num; i++ )
 		{
@@ -90,7 +54,7 @@ void halton_next ( int index , double r[] )
 			r[i] = vandercorput(seed2, halton_base[i]);
 		}
 	} 
-	else if ( halton_scrambling==halton_scramblingRR2 )
+	else if ( halton_scrambling==HALTON_SCRAMBLINGRR2 )
 	{
 		for ( i = 0; i < halton_dim_num; i++ )
 		{
@@ -109,29 +73,7 @@ void halton_next ( int index , double r[] )
 	return;
 }
 
-// vandercorput --
-// Returns the index-th element of the Van Der Corput 
-// sequence in base b
-//
-// Parameters
-//   index, input : the index in the sequence, index>=0
-//   base, input : the base of the sequence, base>=2 (base must be a prime number)
-//   result, output : the index-th element in the sequence, in [0,1].
-//
-// Example:
-// base=2;
-// index=0, r=0.  
-// index=1, r=0.5  
-// index=2, r=0.25  
-// index=3, r=0.75  
-// index=4, r=0.125  
-// index=5, r=0.625  
-// index=6, r=0.375  
-// index=7, r=0.875  
-// index=8, r=0.0625  
-// index=9, r=0.5625  
-// 
-double vandercorput(int index, int base)
+double Halton::vandercorput(int index, int base)
 {
 	double base_inv;
 	double dblbase;
@@ -150,22 +92,12 @@ double vandercorput(int index, int base)
 	return result;
 };
 
-// halton_dim_num_get --
-// gets the spatial dimension for a leaped Halton subsequence.
-//
-//  Parameters:
-//    Output, int HALTON_DIM_NUM_GET, the spatial dimension.
-int halton_dim_num_get ( void )
+int Halton::dim_num_get ( void )
 {
 	return halton_dim_num;
 }
 
-// halton_base_get -- 
-// gets the base vector for a leaped Halton subsequence.
-//
-//  Parameters:
-//    Output, int base[], the bases
-void halton_base_get ( int base[] )
+void Halton::base_get ( int base[] )
 {
 	int i;
 	for ( i = 0; i < halton_dim_num; i++ )
@@ -174,12 +106,7 @@ void halton_base_get ( int base[] )
 	}
 	return;
 }
-// halton_leap_get --
-// gets the leap vector for a leaped Halton subsequence.
-//
-//  Parameters:
-//    Output, int leap[], the successive jumps in the Halton sequence.
-void halton_leap_get ( int leap[] )
+void Halton::leap_get ( int leap[] )
 {
 	int i;
 	for ( i = 0; i < halton_dim_num; i++ )
@@ -189,12 +116,7 @@ void halton_leap_get ( int leap[] )
 	return;
 }
 
-// halton_seed_get -- 
-// gets the seed vector for a leaped Halton subsequence.
-//
-//  Parameters:
-//    Output, int seed[], the sequence index corresponding to STEP = 0.
-void halton_seed_get ( int seed[] )
+void Halton::seed_get ( int seed[] )
 {
 	int i;
 	for ( i = 0; i < halton_dim_num; i++ )
@@ -204,20 +126,30 @@ void halton_seed_get ( int seed[] )
 	return;
 }
 
-void halton_start ( int dim_num , int base[] , int seed[] , int leap[] , int scrambling)
+Halton::Halton ( int dim_num , int base[] , int seed[] , int leap[] , int scrambling)
 {
 	int i;
 	int j;
 
-	if ( halton_startup )
-	{
-		ostringstream msg;
-		msg << "halton - halton_start - Error!\n";
-		msg << "  Startup is already done.\n";
-		lowdisc_error(msg.str());
-		return;
-	}
-	halton_startup = true;
+	//
+	// Initialize
+	//
+	// The number of dimensions
+	halton_dim_num = -1;
+	// The bases, an array[0,1,...,dim_num-1]
+	// halton_base[i] is a prime number, for i=0,1,...,dim_num
+	halton_base = NULL;
+	// The leap, an array[0,1,...,dim_num-1]
+	// halton_leap[i]>=1, for i=0,1,...,dim_num
+	halton_leap = NULL;
+	// The seed, an array[0,1,...,dim_num-1]
+	// halton_seed[i]>=0, for i=0,1,...,dim_num
+	halton_seed = NULL;
+	// The scrambling method
+	halton_scrambling = HALTON_SCRAMBLINGZERO;
+	// The permutation used in the scrambling
+	halton_sigma = NULL;
+
 	//
 	// Store the dimension
 	//
@@ -289,11 +221,11 @@ void halton_start ( int dim_num , int base[] , int seed[] , int leap[] , int scr
 			halton_base[i] = base[i];
 		}
 	}
-	if ( scrambling==halton_scramblingZero )
+	if ( scrambling==HALTON_SCRAMBLINGZERO )
 	{
 		halton_scrambling=scrambling;
 	} 
-	else if ( scrambling==halton_scramblingRR2 )
+	else if ( scrambling==HALTON_SCRAMBLINGRR2 )
 	{
 		halton_scrambling=scrambling;
 	}
@@ -305,7 +237,7 @@ void halton_start ( int dim_num , int base[] , int seed[] , int leap[] , int scr
 		lowdisc_error(msg.str());
 		return;
 	}
-	if ( scrambling==halton_scramblingRR2 )
+	if ( scrambling==HALTON_SCRAMBLINGRR2 )
 	{
 		// Allocate sigma for scrambling
 		halton_sigma=(int **)malloc(base[dim_num-1]*sizeof(int*));
@@ -318,29 +250,18 @@ void halton_start ( int dim_num , int base[] , int seed[] , int leap[] , int scr
 			}
 		}
 		// Compute permutations
-		halton_RR2Scrambling();
+		RR2Scrambling();
 	}
 	return;
 }
 
-void halton_stop ( )
-
+Halton::~Halton ( )
 {
 	int i;
-	if ( !halton_startup )
-	{
-		ostringstream msg;
-		msg << "halton - halton_stop - Error!\n";
-		msg << "  Startup is not done.\n";
-		lowdisc_error(msg.str());
-		return;
-	}
-	halton_startup = false;
-
 	delete [] halton_base;
 	delete [] halton_leap;
 	delete [] halton_seed;
-	if ( halton_scrambling==halton_scramblingRR2 )
+	if ( halton_scrambling==HALTON_SCRAMBLINGRR2 )
 	{
 		// Free sigma
 		for ( i = 0; i < halton_dim_num; i++ )
@@ -352,47 +273,7 @@ void halton_stop ( )
 	return;
 }
 
-bool halton_isstart ( )
-{
-	return halton_startup;
-}
-
-// halton_RR2Scrambling --
-// Compute RR2 scrambling.
-//
-// Parameters
-// dim_num : the number of dimensions, dim_num>=1
-// i : the dimension to scramble, 1<=i<=dim_num
-// base : an array[0,1,...,dim_num-1], the base for direction i
-// sigma : an array, the permutations for all directions
-// sigma[0] : an array0[0,1,...,base[0]], the permutation for direction 1
-// sigma[1] : an array0[0,1,...,base[1]], the permutation for direction 1
-// ...
-// sigma[dim_num-1] : an array0[0,1,...,base[dim_num-1]], the permutation for direction dim_num
-//
-// Reference
-// L. Kocis and W. Whiten. Computational investigations of 
-// low discrepancy sequences.
-// ACM Trans. Mathematical Software, 23:266–294, 1997.
-//
-// Example
-// // Reference
-// Generalized Halton Sequences in 2008: 
-// A Comparative Study
-// HENRI FAURE
-// CHRISTIANE LEMIEUX
-// Section 3. OVERVIEW OF PROPOSED GENERALIZED HALTON SEQUENCES
-// Item (1) KW [Kocis and Whiten 1997]:
-// For instance, take s = 3. 
-// Then n3 = ceil(log 5/log 2) = 3
-// and so σ corresponds to the permutation [0,4,2,6,1,5,3,7]. 
-// Hence σ1 corresponds to [0,1], σ2 to [0,2,1] 
-// and σ3 to [0,4,2,1,3].
-// [Note From MB : fixed error in the permutation - switched 
-// 5 and 3].
-
-
-void halton_RR2Scrambling()
+void Halton::RR2Scrambling()
 {
 	int ns;
 	int twopowns;
@@ -403,7 +284,7 @@ void halton_RR2Scrambling()
 	int vdck;
 
 	doublebase=(double) halton_base[halton_dim_num-1];
-    ns=(int)ceil(log(doublebase)/log(2.));
+	ns=(int)ceil(log(doublebase)/log(2.));
 	// Caution : what when ns is large ?
 	twopowns=(int)pow(2.,ns); 
 	// Extract the permutations for base i.
@@ -428,30 +309,7 @@ void halton_RR2Scrambling()
 	}
 }
 
-// scrambledVDC --
-// Returns the index-th element of a scrambled Van Der Corput 
-// sequence in base b
-//
-// Parameters
-//   index, input : the index in the sequence, index>=0
-//   base, input : the base of the sequence, base>=2 (base must be a prime number)
-//   sigma, input : an array[0,1,...,base-1], the permutation of the digits, 0<=sigma[i]<=base-1.
-//   result, output : the index-th element in the sequence, in [0,1].
-//
-// Example:
-// sigma=[0,2,1]
-// base=3
-// index=1, r=0.6666667
-// index=2, r=0.3333333
-// index=3, r=0.2222222
-// index=4, r=0.8888889
-// index=5, r=0.5555556
-// index=6, r=0.1111111
-// index=7, r=0.7777778
-// index=8, r=0.4444444
-// index=9, r=0.0740741
-// 
-double scrambledVDC(int index, int base, int * sigma)
+double Halton::scrambledVDC(int index, int base, int * sigma)
 {
 	double base_inv;
 	double dblbase;
@@ -474,7 +332,7 @@ double scrambledVDC(int index, int base, int * sigma)
 };
 
 
-int halton_scrambling_get (  )
+int Halton::scrambling_get (  )
 {
 	return halton_scrambling;
 }

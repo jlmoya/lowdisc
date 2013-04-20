@@ -16,8 +16,9 @@ extern "C" {
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
 #include "halton.h" 
+#include "lowdisc_halton_map.hxx" 
 
-// quasi = _lowdisc_haltonfnext ( index , imax , leap )
+// quasi = _lowdisc_haltonfnext ( token, index , imax , leap )
 // Arguments
 // index: a 1-by-1 matrix of doubles, integer value
 //       The index of the first element in the sequence
@@ -47,28 +48,42 @@ int sci_lowdisc_haltonfnext (char *fname) {
 	int k, i;
 	double * next = NULL;
 	int leap = 0;
+	int token;
+	Halton * seq;
+	int iflag;
 
-	CheckRhs(3,3);
+	CheckRhs(4,4);
 	CheckLhs(0,1);
 	//
-	// Get Arg #1: index
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &index );
+	// Get Arg #1: token
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
 	if ( ierr==0 ) {
 		return 0;
 	}
 	//
-	// Get Arg #2: imax
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &imax );
+	// Get Arg #2: index
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &index );
 	if ( ierr==0 ) {
 		return 0;
 	}
-	// Arg #3: leap
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &leap );
+	//
+	// Get Arg #3: imax
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &imax );
+	if ( ierr==0 ) {
+		return 0;
+	}
+	// Arg #4: leap
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 4 , &leap );
 	if ( ierr==0 ) {
 		return 0;
 	}
 	// Proceed...
-	dim = halton_dim_num_get();
+	iflag=lowdisc_token2halton(fname, 1, token, &seq);
+	if (iflag==0)
+	{
+		return 0;
+	}
+	dim = seq->dim_num_get();
 	next = (double *)malloc(dim*sizeof(double));
 	if (next==NULL)
 	{
@@ -79,7 +94,7 @@ int sci_lowdisc_haltonfnext (char *fname) {
 	lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi );
 	for ( k = 0; k < imax; k++ )
 	{
-		halton_next ( index , next );
+		seq->next ( index , next );
 		for(i=0; i<dim; i++) 
 		{
 			*(quasi + i * imax + k) = next[i];

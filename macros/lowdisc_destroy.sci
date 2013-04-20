@@ -79,8 +79,8 @@ function this = ldrevhalf_destroy (this)
 endfunction
 
 function this = ldhaltonf_destroy (this)
-    if ( _lowdisc_haltonfisstart() ) then
-        _lowdisc_haltonfstop ( )
+    if (this.sequence.token<>-1) then
+        _lowdisc_haltonfdestroy ( this.sequence.token )
     end
 endfunction
 

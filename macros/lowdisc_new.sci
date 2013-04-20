@@ -142,6 +142,7 @@ function this = ldhaltonf_new ()
     "primessize"
     "nbsimmax"
     "scrambling"
+    "token"
     ])
     this.baseobj = ldbase_new ( "fast" )
     //
@@ -154,6 +155,7 @@ function this = ldhaltonf_new ()
     // Non Configurable options
     this.primessize = size(this.primeslist,2)
     this.nbsimmax = 2^31 - 1
+    this.token = -1
 endfunction
 
 function this = ldfauref_new ()

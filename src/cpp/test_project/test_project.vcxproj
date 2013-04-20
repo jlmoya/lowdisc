@@ -19,7 +19,6 @@
     <ClCompile Include="..\lowdisc_shared.cpp" />
     <ClCompile Include="..\niederreiter.cpp" />
     <ClCompile Include="..\reversehalton.cpp" />
-    <ClCompile Include="..\sobol_i4.cpp" />
     <ClCompile Include="..\sobol_i8.cpp" />
     <ClCompile Include="test_driver.cpp" />
   </ItemGroup>

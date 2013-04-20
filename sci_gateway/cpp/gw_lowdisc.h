@@ -29,9 +29,9 @@ extern "C" {
 	//
 	// Fast Halton Sequence
 	int sci_lowdisc_haltonfnext (char *fname);
-	int sci_lowdisc_haltonfstart (char *fname);
-	int sci_lowdisc_haltonfstop (char *fname);
-	int sci_lowdisc_haltonfisstart (char *fname);
+	int sci_lowdisc_haltonfnew (char *fname);
+	int sci_lowdisc_haltonfdestroy (char *fname);
+	int sci_lowdisc_haltonftokens (char *fname);
 	//
 	// Fast Faure sequence
 	int sci_lowdisc_faurefstart (char *fname);
@@ -55,7 +55,6 @@ extern "C" {
 	int sci_lowdisc_ssobolnext (char *fname);
 	int sci_lowdisc_ssobolnew (char *fname);
 	int sci_lowdisc_ssoboldestroy (char *fname);
-	//
 	int sci_lowdisc_ssoboltokens (char *fname);
 
 }

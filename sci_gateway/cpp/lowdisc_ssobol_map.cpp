@@ -73,11 +73,6 @@ void lowdisc_ssobol_map_tokens (int * tokens)
 	}
 }
 
-// 
-// lowdisc_token2Ssobol --
-//   Sets into seq the Ssobol object which corresponds to the token.
-//   Returns 0 in case of error, returns 1 in case of regular run.
-//
 int lowdisc_token2Ssobol( char * fname, int ivar , int token, Ssobol ** seq)
 {
 	*seq = lowdisc_ssobol_map_getobject ( token );

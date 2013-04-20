@@ -18,17 +18,33 @@ extern "C" {
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
 #include "halton.h" 
+#include "lowdisc_halton_map.hxx" 
 
 
-// _lowdisc_haltonfstop ( )
+// _lowdisc_haltonfdestroy (token)
 //   Stop the Halton sequence.
-int sci_lowdisc_haltonfstop (char *fname) {
+int sci_lowdisc_haltonfdestroy (char *fname) 
+{
+	Halton * seq;
+	int token;
+	int ierr;
+	int iflag;
 	
-	CheckRhs(0,0) ;
+	CheckRhs(1,1) ;
 	CheckLhs(0,1) ;
 	//
-	halton_stop ( );
-	//
-	lowdisc_CreateLhsInteger ( 1 , 0 );
+	// Arg #1: token
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
+	if ( ierr==0 ) {
+		return 0;
+	}
+	iflag=lowdisc_token2halton(fname, 1, token, &seq);
+	if (iflag==0)
+	{
+		return 0;
+	}
+	delete seq;
+	lowdisc_halton_map_remove(token);
+	lowdisc_CreateLhsInteger ( 1 , token );
 	return 0;
 }
