@@ -34,11 +34,9 @@
           <td>Sobol</td>
           <td>Faure</td>
           <td>Niederreiter</td>
-          <td>Reverse Halton</td>
         </tr>
         <tr>
           <td>"-dimension"</td>
-          <td>O</td>
           <td>O</td>
           <td>O</td>
           <td>O</td>
@@ -50,11 +48,9 @@
           <td>O</td>
           <td>O</td>
           <td>O</td>
-          <td>O</td>
         </tr>
         <tr>
           <td>"-leap"</td>
-          <td>O</td>
           <td>O</td>
           <td>O</td>
           <td>O</td>
@@ -66,7 +62,6 @@
           <td>O</td>
           <td>O</td>
           <td>O</td>
-          <td>O</td>
         </tr>
         <tr>
           <td>"-primeslist"</td>
@@ -74,7 +69,6 @@
           <td></td>
           <td>O</td>
           <td></td>
-          <td>O</td>
         </tr>
         <tr>
           <td>"-base"</td>
@@ -82,7 +76,6 @@
           <td></td>
           <td></td>
           <td>O</td>
-          <td></td>
         </tr>
         <tr>
           <td>"-scrambling"</td>
@@ -90,13 +83,11 @@
           <td>O</td>
           <td></td>
           <td></td>
-          <td></td>
         </tr>
         <tr>
           <td>"-seeds"</td>
           <td></td>
           <td>O</td>
-          <td></td>
           <td></td>
           <td></td>
         </tr>
@@ -150,13 +141,33 @@
   <refsection>
     <title>Implementation notes : Reverse Halton sequence</title>
     <para>
-      For the Reverse Halton sequence, the <literal>skip</literal> and
-      <literal>leap</literal> option are fast, that is, large
-      values of the <literal>skip</literal> or <literal>leap</literal>
-      parameter do not reduce the performance.
+      The Reverse Halton sequence is just a specialized scrambling of the 
+	  Halton sequence. 
     </para>
     <para>
-      This fast algorithm is based on a compiled C source code.
+	  Each dimension is associated with a given permutation, 
+	  which changes the order of the points in the sequence. 
+	  The scrambling is based on the permutation:
+    </para>
+	<screen>
+	sigma(digit)=0, if digit==0,
+	sigma(digit)=base-digit, otherwise,
+	</screen>
+    <para>
+	  where base is the base (a prime number) associated 
+	  with the dimension. 
+	  This produces the following permutations:
+    </para>
+	<screen>
+0 1
+0 2 1
+0 5 4 3 2 1
+0 7 6 5 4 3 2 1
+etc...
+	</screen>
+    <para>
+      This fast algorithm is based on the same C++ source code as the 
+	  Halton sequence.
     </para>
     <para>
       Reference : "Good permutations for deterministic scrambled
