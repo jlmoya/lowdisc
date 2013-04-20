@@ -220,7 +220,6 @@ end
       Name                Max Dim    Max Call
       halton              100        2147483647
       faure               541        2147483647
-      reversehalton       100        2147483647
       sobol               1111       1073741823
       niederreiter        50         2147483647
     </screen>

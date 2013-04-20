@@ -72,24 +72,6 @@ Sequence=faure, Dimension=420/541
 Sequence=faure, Dimension=534/541
 Sequence=faure, Dimension=541/541
 ==============================
-Sequence=reversehalton, Maximum Dimension=100
-Sequence=reversehalton, Dimension=1/100
-Sequence=reversehalton, Dimension=2/100
-Sequence=reversehalton, Dimension=3/100
-Sequence=reversehalton, Dimension=4/100
-Sequence=reversehalton, Dimension=5/100
-Sequence=reversehalton, Dimension=6/100
-Sequence=reversehalton, Dimension=7/100
-Sequence=reversehalton, Dimension=8/100
-Sequence=reversehalton, Dimension=9/100
-Sequence=reversehalton, Dimension=10/100
-Sequence=reversehalton, Dimension=20/100
-Sequence=reversehalton, Dimension=56/100
-Sequence=reversehalton, Dimension=64/100
-Sequence=reversehalton, Dimension=65/100
-Sequence=reversehalton, Dimension=90/100
-Sequence=reversehalton, Dimension=100/100
-==============================
 Sequence=sobol, Maximum Dimension=1111
 Sequence=sobol, Dimension=1/1111
 Sequence=sobol, Dimension=2/1111
@@ -101,11 +83,11 @@ Sequence=sobol, Dimension=7/1111
 Sequence=sobol, Dimension=8/1111
 Sequence=sobol, Dimension=9/1111
 Sequence=sobol, Dimension=10/1111
-Sequence=sobol, Dimension=117/1111
-Sequence=sobol, Dimension=508/1111
-Sequence=sobol, Dimension=530/1111
-Sequence=sobol, Dimension=731/1111
-Sequence=sobol, Dimension=1015/1111
+Sequence=sobol, Dimension=46/1111
+Sequence=sobol, Dimension=437/1111
+Sequence=sobol, Dimension=476/1111
+Sequence=sobol, Dimension=550/1111
+Sequence=sobol, Dimension=751/1111
 Sequence=sobol, Dimension=1111/1111
 ==============================
 Sequence=niederreiter, Maximum Dimension=50
@@ -119,11 +101,11 @@ Sequence=niederreiter, Dimension=7/50
 Sequence=niederreiter, Dimension=8/50
 Sequence=niederreiter, Dimension=9/50
 Sequence=niederreiter, Dimension=10/50
-Sequence=niederreiter, Dimension=13/50
-Sequence=niederreiter, Dimension=32/50
-Sequence=niederreiter, Dimension=33/50
+Sequence=niederreiter, Dimension=12/50
+Sequence=niederreiter, Dimension=14/50
+Sequence=niederreiter, Dimension=21/50
+Sequence=niederreiter, Dimension=35/50
 Sequence=niederreiter, Dimension=36/50
-Sequence=niederreiter, Dimension=40/50
 Sequence=niederreiter, Dimension=50/50
 //
 // Check the error messages when the sequences go beyond their available range of dimensions.
@@ -132,7 +114,6 @@ Sequence=niederreiter, Dimension=50/50
 name2error = [
 "halton"               "ldhaltonf_startup: The fast Halton method is not available for 101 dimension because the database contains only 100 primes"
 "faure"                "ldfauref_startup: Faure Fast sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
-"reversehalton"        "ldrevhalf_startup: Reverse Halton sequence : the dimension 101 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
 "sobol"                "Lowdisc: Error at the library level:sobol - i8_sobol - Error  The spatial dimension DIM_NUM should satisfy    1 <= DIM_NUM <= 1111  But this input value is DIM_NUM = 1112"
 "niederreiter"         "Lowdisc: Error at the library level:niederreiter - INLO - Error!  Bad spatial dimension."
 ];        
@@ -171,12 +152,6 @@ Error (code=10000): ldfauref_startup: Faure Fast sequence : the dimension 542 is
 ==============================
 Sequence=faure, Dimension=542/541
 Error (code=10000): ldfauref_startup: Faure Fast sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table.
-==============================
-Sequence=reversehalton, Dimension=101/100
-Error (code=10000): ldrevhalf_startup: Reverse Halton sequence : the dimension 101 is larger than any prime in the table. Configure the -primeslist option to increase the prime table.
-==============================
-Sequence=reversehalton, Dimension=101/100
-Error (code=10000): ldrevhalf_startup: Reverse Halton sequence : the dimension 101 is larger than any prime in the table. Configure the -primeslist option to increase the prime table.
 ==============================
 Sequence=sobol, Dimension=1112/1111
 Low Discrepancy Module Error !Error (code=999): Lowdisc: Error at the library level:sobol - i8_sobol - Error  The spatial dimension DIM_NUM should satisfy    1 <= DIM_NUM <= 1111  But this input value is DIM_NUM = 1112

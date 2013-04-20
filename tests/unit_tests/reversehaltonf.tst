@@ -11,8 +11,9 @@
 //
 // Check the Fast Reverse Halton sequence
 //
-lds = lowdisc_new("reversehalton");
+lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",2);
+lds = lowdisc_configure(lds,"-scrambling","Reverse");
 lds = lowdisc_startup (lds);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
@@ -31,8 +32,9 @@ assert_checkalmostequal ( computed, expected , 10 * %eps );
 lds = lowdisc_destroy(lds);
 
 // test in dimension 2
-lds = lowdisc_new("reversehalton");
+lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",2);
+lds = lowdisc_configure(lds,"-scrambling","Reverse");
 lds = lowdisc_startup (lds);
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
@@ -49,8 +51,9 @@ lds = lowdisc_destroy(lds);
 
 
 // test in dimension 3 */
-lds = lowdisc_new("reversehalton");
+lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",3);
+lds = lowdisc_configure(lds,"-scrambling","Reverse");
 lds = lowdisc_startup (lds);
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
@@ -61,8 +64,9 @@ assert_checkalmostequal ( computed, [0.125 8.0/9.0 0.2], 1e-3 );
 lds = lowdisc_destroy(lds);
 
 // test skip
-lds = lowdisc_new("reversehalton");
+lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",3);
+lds = lowdisc_configure(lds,"-scrambling","Reverse");
 lds = lowdisc_configure(lds,"-skip",10);
 lds = lowdisc_startup (lds);
 index = lowdisc_get ( lds , "-index" );
@@ -86,8 +90,9 @@ assert_checkequal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 // test leap
-lds = lowdisc_new("reversehalton");
+lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",3);
+lds = lowdisc_configure(lds,"-scrambling","Reverse");
 lds = lowdisc_configure(lds,"-leap",1);
 lds = lowdisc_startup (lds);
 index = lowdisc_get ( lds , "-index" );
@@ -112,8 +117,9 @@ lds = lowdisc_destroy(lds);
 
 // Check performance for large values of skip
 t1 = timer();
-lds = lowdisc_new("reversehalton");
+lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-scrambling","Reverse");
 lds = lowdisc_configure(lds,"-skip", 1.e7);
 lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
@@ -123,8 +129,9 @@ assert_checkequal ( (t2-t1)<1. , %t );
 
 // Check performance for large values of leap
 t1 = timer();
-lds = lowdisc_new("reversehalton");
+lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
+lds = lowdisc_configure(lds,"-scrambling","Reverse");
 lds = lowdisc_configure(lds,"-leap", 1.e7);
 lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);

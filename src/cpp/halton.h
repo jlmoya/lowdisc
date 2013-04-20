@@ -36,6 +36,8 @@ __BEGIN_DECLS
 #define HALTON_SCRAMBLINGZERO 1
 	// Kocis - Whiten scrambling
 #define HALTON_SCRAMBLINGRR2 2
+	// Vandewoestyne and Cools "Reverse Halton" scrambling
+#define HALTON_SCRAMBLINGREVERSE 3
 
 
 	//! Class of Scrambled Halton Sequence
@@ -259,6 +261,18 @@ private:
 	// [Note From MB : fixed error in the permutation - switched 
 	// 5 and 3].
 	void Halton::RR2Scrambling();
+
+	// ReverseScrambling --
+	// Compute the Reverse Scrambling of Vandewoestyne and Cools
+	// If digit==0, then sigma[digit]=0, 
+	// else sigma[digit]=base-digit.
+	//
+	// This is :
+	// 0 1
+	// 0 2 1
+	// 0 5 4 3 2 1
+	// 0 7 6 5 4 3 2 1
+	void Halton::ReverseScrambling();
 
 	// scrambledVDC --
 	// Returns the index-th element of a scrambled Van Der Corput 

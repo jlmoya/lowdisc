@@ -71,7 +71,7 @@ function this = lowdisc_configure (this,key,value)
     // dimension. 
     // These sequences accept the <literal>"-primeslist"</literal> option.
     // The sequences which are sensitive to this option are : "halton", 
-    // "faure", "reversehalton".
+    // "faure".
     //  <itemizedlist>
     //    <listitem>
     //     <para>
@@ -113,7 +113,8 @@ function this = lowdisc_configure (this,key,value)
     //     <para>
     //     <literal>"-scrambling"</literal> : a 1-by-1 matrix of strings, the 
     //     empty string "" (no scrambling), 
-    //     or "RR2" for the scrambling (digit permutation) of Kocis-Whiten [1]. 
+    //     "RR2" for the scrambling of Kocis-Whiten [1] 
+    //     or "Reverse" for the scrambling of Vandewoestyne and Cools [2]. 
     //     The default is "" (no scrambling). 
     //     The scrambling can improve the correlation in high dimensions, 
     //     leading to better low-dimensionnal projections.
@@ -220,6 +221,7 @@ function this = lowdisc_configure (this,key,value)
     //
     // Bibliography
     // [1] Kocis, L., and W. J. Whiten. "Computational Investigations of Low-Discrepancy Sequences." ACM Transactions on Mathematical Software. Vol. 23, No. 2, 1997, pp. 266–294.
+    // [2] B. Vandewoestyne and R. Cools, "Good permutations for deterministic scrambled Halton sequences in terms of L2-discrepancy", Computational and Applied Mathematics 189, 2006.
 
     [lhs, rhs] = argn()
     apifun_checkrhs ( "lowdisc_configure" , rhs , 3:3 )
@@ -230,8 +232,6 @@ function this = lowdisc_configure (this,key,value)
     apifun_checkscalar ( "lowdisc_configure" , key , "key" , 2 )
     //
     select this.method
-    case "reversehalton" then
-        this.sequence     = ldrevhalf_configure ( this.sequence , key , value )
     case "niederreiter" then
         this.sequence     = ldniedf_configure ( this.sequence , key , value )
     case "sobol" then
@@ -243,22 +243,6 @@ function this = lowdisc_configure (this,key,value)
     else
         errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_configure" , this.method);
         error(errmsg);
-    end
-endfunction
-
-
-function this = ldrevhalf_configure (this,key,value)
-    select key
-    case "-primeslist" then
-        apifun_checktype ( "ldrevhalf_configure" , value , "value" , 3 , "constant" )
-        apifun_checkvector ( "ldrevhalf_configure" , value , "value" , 3 )
-        apifun_checkflint ( "ldrevhalf_configure" , value , "value" , 3 )
-        apifun_checkgreq ( "ldrevhalf_configure" , value , "value" , 3 , 1 )
-        this.primeslist = value(:)';
-        this.primessize = size(value,"*");
-    else
-        // Delegate to ldbase
-        this.baseobj = ldbase_configure ( this.baseobj , key ,value )
     end
 endfunction
 
@@ -275,7 +259,7 @@ function this = ldhaltonf_configure (this,key,value)
     case "-scrambling" then
         apifun_checktype ( "ldhaltonf_configure" , value , "value" , 3 , "string" )
         apifun_checkscalar ( "ldhaltonf_configure" , value , "value" , 3 )
-        apifun_checkoption ( "ldhaltonf_configure" , value , "value" , 3 , ["" "RR2"])
+        apifun_checkoption ( "ldhaltonf_configure" , value , "value" , 3 , ["" "RR2" "Reverse"])
         this.scrambling = value
     else
         // Delegate to ldbase

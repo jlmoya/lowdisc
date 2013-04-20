@@ -38,7 +38,7 @@
    <varlistentry><term>n:</term>
       <listitem><para> a 1-by-1 matrix of floating point integers, the spatial dimension.</para></listitem></varlistentry>
    <varlistentry><term>ldseq :</term>
-      <listitem><para> a 1-by-1 matrix of strings, the name of the sequence (default <literal>ldseq = "sobol"</literal>). The name can be equal to : <literal>"halton"</literal>, <literal>"faure"</literal>, <literal>"reversehalton"</literal>, <literal>"sobol"</literal>, <literal>"niederreiter"</literal>, <literal>"halton-leaped"</literal>, <literal>"halton-scrambled"</literal>. See below for details.</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of strings, the name of the sequence (default <literal>ldseq = "sobol"</literal>). The name can be equal to : <literal>"halton"</literal>, <literal>"halton-reverse"</literal>, <literal>"faure"</literal>, <literal>"sobol"</literal>, <literal>"niederreiter"</literal>, <literal>"halton-leaped"</literal>, <literal>"halton-scrambled"</literal>. See below for details.</para></listitem></varlistentry>
    <varlistentry><term>strict :</term>
       <listitem><para> a 1-by-1 matrix of boolean, set to %f to use potentially favorable parameters (default = %t).</para></listitem></varlistentry>
    <varlistentry><term>u :</term>
@@ -83,7 +83,7 @@ with the permutation used in Kocis and Whiten (RR2).
 </listitem>
 <listitem>
 <para>
-"reversehalton": the Reverse Halton sequence
+"halton-reverse": the Reverse Halton sequence
 of Vandewoestyne and Cools.
 </para>
 </listitem>

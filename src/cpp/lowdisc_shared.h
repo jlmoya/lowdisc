@@ -23,23 +23,6 @@ LOWDISC_IMPORTEXPORT void lowdisc_error ( char * message );
 LOWDISC_IMPORTEXPORT void lowdisc_error ( const string & str );
 
 //
-//  35 bit integer routines.
-//
-LOWDISC_IMPORTEXPORT int i4_max ( int i1, int i2 );
-LOWDISC_IMPORTEXPORT int i4_min ( int i1, int i2 );
-LOWDISC_IMPORTEXPORT int i4_power ( int i, int j );
-LOWDISC_IMPORTEXPORT int prime ( int n );
-LOWDISC_IMPORTEXPORT int i4_bit_hi1 ( int n );
-LOWDISC_IMPORTEXPORT int i4_bit_lo0 ( int n );
-LOWDISC_IMPORTEXPORT int i4_uniform ( int b, int c, int *seed );
-LOWDISC_IMPORTEXPORT unsigned int i4_xor ( unsigned int i, unsigned int j );
-//
-//  32 bit real routines.
-//
-LOWDISC_IMPORTEXPORT float r4_abs ( float x );
-LOWDISC_IMPORTEXPORT int r4_nint ( float x );
-LOWDISC_IMPORTEXPORT float r4_uniform_01 ( int *seed );
-//
 //  64 bit real routines.
 //
 LOWDISC_IMPORTEXPORT int r8_nint ( double x );

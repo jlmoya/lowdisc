@@ -102,8 +102,6 @@ function value = lowdisc_get (this,key)
     apifun_checkscalar ( "lowdisc_get" , key , "key" , 2 )
     //
     select this.method
-    case "reversehalton" then
-        value     = ldrevhalf_get ( this , key )
     case "niederreiter" then
         value     = ldniedf_get ( this , key )
     case "sobol" then
@@ -126,18 +124,6 @@ function value = ldhaltonf_get (this,key)
         value = this.sequence.nbsimmax
     case "-scrambling" then
         value = this.sequence.scrambling
-    else
-        // Delegate to ldbase
-        value = ldbase_get ( this , key )
-    end
-endfunction
-
-function value = ldrevhalf_get (this,key)
-    select key
-    case "-dimmax" then
-        value = this.sequence.primessize
-    case "-nbsimmax" then
-        value = this.sequence.nbsimmax
     else
         // Delegate to ldbase
         value = ldbase_get ( this , key )

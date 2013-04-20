@@ -36,7 +36,7 @@
    <varlistentry><term>this:</term>
       <listitem><para> the current object</para></listitem></varlistentry>
    <varlistentry><term>method:</term>
-      <listitem><para> a 1-by-1 matrix of strings, the low discrepancy sequence (default = "sobolf"). The method can be equal to : "halton", "faure", "reversehalton", "sobol", "niederreiter". See below for details.</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of strings, the low discrepancy sequence (default = "sobolf"). The method can be equal to : "halton", "faure", "sobol", "niederreiter". See below for details.</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
@@ -52,7 +52,8 @@ The following is the list of possible values for method.
 This sequence is sensitive to the <literal>"-primeslist"</literal> option.
 By default, it is able to generate experiments in dimension at most 100.
 This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
-To extend the number of dimensions, please configure the <literal>"-primeslist"</literal> option.
+To extend the number of dimensions, please configure the
+<literal>"-primeslist"</literal> option.
 To enable scrambling, please configure the <literal>"-scrambling"</literal>
 option.
 The maximum dimension which can be obtained is equal to the number of
@@ -62,17 +63,10 @@ different primes in the prime table.
 This sequence is sensitive to the <literal>"-primeslist"</literal> option.
 By default, it is able to generate experiments in dimension at most 541.
 This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
-To extend the number of dimensions, please configure the <literal>"-primeslist"</literal> option.
+To extend the number of dimensions, please configure the
+<literal>"-primeslist"</literal> option.
 The maximum dimension which can be obtained is equal to the maximum
 prime number in the prime table.
-</listitem>
-<listitem>"reversehalton" : the fast Reverse Halton sequence of Vandewoestyne and Cools.
-This sequence is sensitive to the <literal>"-primeslist"</literal> option.
-By default, it is able to generate experiments in dimension at most 100.
-This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
-To extend the number of dimensions, please configure the <literal>"-primeslist"</literal> option.
-The maximum dimension which can be obtained is equal to the number of
-different primes in the prime table.
 </listitem>
 <listitem>"sobol" : the fast Sobol sequence.
 Without scrambling, it is able to generate experiments in dimension

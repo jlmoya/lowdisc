@@ -13,7 +13,7 @@ function this = lowdisc_new ( varargin )
     //
     // Parameters
     //   this: the current object
-    //   method: a 1-by-1 matrix of strings, the low discrepancy sequence (default = "sobolf"). The method can be equal to : "halton", "faure", "reversehalton", "sobol", "niederreiter". See below for details. 
+    //   method: a 1-by-1 matrix of strings, the low discrepancy sequence (default = "sobolf"). The method can be equal to : "halton", "faure", "sobol", "niederreiter". See below for details. 
     //
     // Description
     //   This function creates a new low discrepancy object.
@@ -24,7 +24,8 @@ function this = lowdisc_new ( varargin )
     //    This sequence is sensitive to the <literal>"-primeslist"</literal> option.
     //    By default, it is able to generate experiments in dimension at most 100.
     //    This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
-    //    To extend the number of dimensions, please configure the <literal>"-primeslist"</literal> option.
+    //    To extend the number of dimensions, please configure the 
+    //    <literal>"-primeslist"</literal> option.
     //    To enable scrambling, please configure the <literal>"-scrambling"</literal> 
     //    option.
     //    The maximum dimension which can be obtained is equal to the number of 
@@ -34,17 +35,10 @@ function this = lowdisc_new ( varargin )
     //    This sequence is sensitive to the <literal>"-primeslist"</literal> option.
     //    By default, it is able to generate experiments in dimension at most 541.
     //    This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
-    //    To extend the number of dimensions, please configure the <literal>"-primeslist"</literal> option.
+    //    To extend the number of dimensions, please configure the 
+    //    <literal>"-primeslist"</literal> option.
     //    The maximum dimension which can be obtained is equal to the maximum 
     //    prime number in the prime table. 
-    //    </listitem>
-    //  <listitem>"reversehalton" : the fast Reverse Halton sequence of Vandewoestyne and Cools.
-    //    This sequence is sensitive to the <literal>"-primeslist"</literal> option.
-    //    By default, it is able to generate experiments in dimension at most 100.
-    //    This sequence is able to generate at most 2^31 - 1  = 2 147 483 647 experiments.
-    //    To extend the number of dimensions, please configure the <literal>"-primeslist"</literal> option.
-    //    The maximum dimension which can be obtained is equal to the number of 
-    //    different primes in the prime table. 
     //    </listitem>
     //  <listitem>"sobol" : the fast Sobol sequence. 
     //    Without scrambling, it is able to generate experiments in dimension 
@@ -100,8 +94,6 @@ function this = lowdisc_new ( varargin )
     ])
     this.method = method
     select this.method
-    case "reversehalton" then
-        this.sequence     = ldrevhalf_new ()
     case "niederreiter" then
         this.sequence     = ldniedf_new ()
     case "sobol" then
@@ -169,25 +161,6 @@ function this = ldfauref_new ()
     //
     // Configurable options
     this.baseobj = ldbase_new ( "fast" )
-    // This makes the component available up to dimension 100
-    this.primeslist = number_primes100 ( )
-    //
-    // Non Configurable options
-    this.primessize = size(this.primeslist,2)
-    this.nbsimmax = 2^31 - 1
-endfunction
-
-function this = ldrevhalf_new ()
-    this = tlist([
-    "LDRVHLF"
-    "baseobj"
-    "primeslist"
-    "primessize"
-    "nbsimmax"
-    ])
-    this.baseobj = ldbase_new ( "fast" )
-    //
-    // Configurable options
     // This makes the component available up to dimension 100
     this.primeslist = number_primes100 ( )
     //

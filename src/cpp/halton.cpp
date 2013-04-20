@@ -62,6 +62,14 @@ void Halton::next ( int index , double r[] )
 			r[i] = scrambledVDC(index, halton_base[i], halton_sigma[i]);
 		}
 	}
+	else if ( halton_scrambling==HALTON_SCRAMBLINGREVERSE )
+	{
+		for ( i = 0; i < halton_dim_num; i++ )
+		{
+			seed2 = halton_seed[i] + index * halton_leap[i];
+			r[i] = scrambledVDC(index, halton_base[i], halton_sigma[i]);
+		}
+	}
 	else
 	{
 		ostringstream msg;
@@ -221,14 +229,12 @@ Halton::Halton ( int dim_num , int base[] , int seed[] , int leap[] , int scramb
 			halton_base[i] = base[i];
 		}
 	}
-	if ( scrambling==HALTON_SCRAMBLINGZERO )
+	if ( scrambling==HALTON_SCRAMBLINGZERO || \
+		scrambling==HALTON_SCRAMBLINGRR2 || \
+		scrambling==HALTON_SCRAMBLINGREVERSE )
 	{
 		halton_scrambling=scrambling;
 	} 
-	else if ( scrambling==HALTON_SCRAMBLINGRR2 )
-	{
-		halton_scrambling=scrambling;
-	}
 	else
 	{
 		ostringstream msg;
@@ -237,20 +243,29 @@ Halton::Halton ( int dim_num , int base[] , int seed[] , int leap[] , int scramb
 		lowdisc_error(msg.str());
 		return;
 	}
-	if ( scrambling==HALTON_SCRAMBLINGRR2 )
+	if ( scrambling==HALTON_SCRAMBLINGRR2 || \
+		scrambling==HALTON_SCRAMBLINGREVERSE )
 	{
 		// Allocate sigma for scrambling
 		halton_sigma=(int **)malloc(base[dim_num-1]*sizeof(int*));
 		for ( i = 0; i < dim_num; i++ )
 		{
 			halton_sigma[i]=(int *)malloc(base[i]*sizeof(int));
+			// Initialize
 			for ( j = 0; j < base[i]; j++ )
 			{
 				halton_sigma[i][j]=-1;
 			}
 		}
 		// Compute permutations
-		RR2Scrambling();
+		if (scrambling==HALTON_SCRAMBLINGRR2)
+		{
+			RR2Scrambling();
+		}
+		else if (scrambling==HALTON_SCRAMBLINGREVERSE)
+		{
+			ReverseScrambling();
+		}
 	}
 	return;
 }
@@ -304,6 +319,31 @@ void Halton::RR2Scrambling()
 					// we are done for this i.
 					break;
 				}
+			}
+		}
+	}
+}
+
+void Halton::ReverseScrambling()
+{
+	int j;
+	int i;
+	int base;
+
+
+	// Extract the permutations for base i.
+	for ( i = 0; i < halton_dim_num; i++ )
+	{
+		base=halton_base[i];
+		for ( j = 0; j < base; j++ )
+		{
+			if (j==0)
+			{
+				halton_sigma[i][j]=0;
+			}
+			else
+			{
+				halton_sigma[i][j]=base-j;
 			}
 		}
 	}

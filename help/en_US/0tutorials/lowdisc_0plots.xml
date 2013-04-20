@@ -321,7 +321,7 @@ xtitle("Leaped Halton: 1000 points","X1","X2")
 
     <programlisting role="example">
       <![CDATA[
-u=lowdisc_ldgen ( 1000 , 2 , "reversehalton" );
+u=lowdisc_ldgen ( 1000 , 2 , "halton-reverse" );
 scf(); 
 plot(u(:,1),u(:,2),"bo")
 xtitle("Reverse-Halton: 1000 points","X1","X2")

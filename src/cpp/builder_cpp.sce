@@ -22,7 +22,6 @@ function lowdiscBuildSrcCpp()
     "faure.cpp"
     "halton.cpp"
     "niederreiter.cpp"
-    "reversehalton.cpp"
     "sobol_i8.cpp"
     "lowdisc_math.cpp"
     "ssobol.cpp"

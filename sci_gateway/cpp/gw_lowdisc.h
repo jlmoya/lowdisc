@@ -39,12 +39,6 @@ extern "C" {
 	int sci_lowdisc_faurefnext (char *fname);
 	int sci_lowdisc_faurefisstart (char *fname);
 	//
-	// Fast Reverse Halton
-	int sci_lowdisc_revhaltfstart (char *fname);
-	int sci_lowdisc_revhaltfstop (char *fname);
-	int sci_lowdisc_revhaltfnext (char *fname);
-	int sci_lowdisc_revhaltfisstart (char *fname);
-	//
 	// Fast Niederreiter
 	int sci_lowdisc_niedfstart (char *fname);
 	int sci_lowdisc_niedfstop (char *fname);

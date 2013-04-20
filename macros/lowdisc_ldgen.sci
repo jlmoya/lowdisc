@@ -13,7 +13,7 @@ function u=lowdisc_ldgen( varargin )
     // Parameters
     //   callf : a 1-by-1 matrix of floating point integers, the number of calls to the function.
     //   n: a 1-by-1 matrix of floating point integers, the spatial dimension.
-    //   ldseq : a 1-by-1 matrix of strings, the name of the sequence (default <literal>ldseq = "sobol"</literal>). The name can be equal to : <literal>"halton"</literal>, <literal>"faure"</literal>, <literal>"reversehalton"</literal>, <literal>"sobol"</literal>, <literal>"niederreiter"</literal>, <literal>"halton-leaped"</literal>, <literal>"halton-scrambled"</literal>. See below for details.
+    //   ldseq : a 1-by-1 matrix of strings, the name of the sequence (default <literal>ldseq = "sobol"</literal>). The name can be equal to : <literal>"halton"</literal>, <literal>"halton-leaped"</literal>, <literal>"halton-scrambled"</literal>, <literal>"halton-reverse"</literal>, <literal>"faure"</literal>, <literal>"sobol"</literal>, <literal>"niederreiter"</literal>. See below for details.
     //   strict : a 1-by-1 matrix of boolean, set to %f to use potentially favorable parameters (default = %t).
     //   u : a callf-by-n matrix of doubles, the uniform random numbers in <literal>[0,1]^n</literal>.
     //
@@ -50,7 +50,7 @@ function u=lowdisc_ldgen( varargin )
     //   </listitem>
     //   <listitem>
     //     <para>
-    //        "reversehalton": the Reverse Halton sequence 
+    //        "halton-reverse": the Reverse Halton sequence 
     //        of Vandewoestyne and Cools.
     //     </para>
     //   </listitem>
@@ -113,12 +113,12 @@ function u=lowdisc_ldgen( varargin )
     apifun_checkflint ( "lowdisc_ldgen" , n , "n" , 2 )
     availablemethods = [
     "halton" 
-    "faure" 
-    "reversehalton" 
-    "sobol"
-    "niederreiter" 
+    "halton-reverse" 
     "halton-leaped" 
     "halton-scrambled" 
+    "faure" 
+    "sobol"
+    "niederreiter" 
     ]
     apifun_checkoption ( "lowdisc_ldgen" , ldseq , "ldseq" , 3 , availablemethods )
     //
@@ -139,8 +139,9 @@ function u=lowdisc_ldgen( varargin )
         lds = lowdisc_new("niederreiter");
         base = lowdisc_niederbase ( n )
         lds = lowdisc_configure(lds,"-base",base);
-    case "reversehalton"
-        lds = lowdisc_new("reversehalton");
+    case "halton-reverse"
+        lds = lowdisc_new("halton");
+        lds = lowdisc_configure(lds,"-scrambling","Reverse");
     case "sobol"
         lds = lowdisc_new("sobol");
     else

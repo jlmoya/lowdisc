@@ -8,7 +8,7 @@
 
 #include "halton.h"
 
-void testHalton ( )
+void testHalton (int scrambling)
 {
 	Halton *seq;
 	int dim_num;
@@ -30,7 +30,7 @@ void testHalton ( )
 	{
 		leap[i]=1;
 	}
-	seq = new Halton( dim_num, base, seed, leap , 1 );
+	seq = new Halton( dim_num, base, seed, leap , scrambling );
 	for ( index = 0; index < 10; index++ )
 	{
 		seq->next ( index , r);
@@ -46,6 +46,6 @@ void testHalton ( )
 
 int main ( void )
 {
-	testHalton ( );
+	testHalton(HALTON_SCRAMBLINGREVERSE);
 	return 0;
 }

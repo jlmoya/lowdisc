@@ -112,8 +112,10 @@ function this = ldhaltonf_startup (this)
     scrambling=lowdisc_cget(this,"-scrambling")
     if (scrambling=="") then
         scrambling= 1
-    else
+    elseif (scrambling=="RR2") then
         scrambling= 2
+    elseif (scrambling=="Reverse") then
+        scrambling= 3
     end
     this.sequence.token = _lowdisc_haltonfnew(dimension , ..
     base , seed , scrambling)

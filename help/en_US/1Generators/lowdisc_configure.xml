@@ -102,7 +102,7 @@ Some sequences can be configured in order to increase their maximum
 dimension.
 These sequences accept the <literal>"-primeslist"</literal> option.
 The sequences which are sensitive to this option are : "halton",
-"faure", "reversehalton".
+"faure".
 <itemizedlist>
 <listitem>
 <para>
@@ -146,7 +146,8 @@ we can configure the scrambling as following.
 <para>
 <literal>"-scrambling"</literal> : a 1-by-1 matrix of strings, the
 empty string "" (no scrambling),
-or "RR2" for the scrambling (digit permutation) of Kocis-Whiten [1].
+"RR2" for the scrambling of Kocis-Whiten [1]
+or "Reverse" for the scrambling of Vandewoestyne and Cools [2].
 The default is "" (no scrambling).
 The scrambling can improve the correlation in high dimensions,
 leading to better low-dimensionnal projections.
@@ -271,5 +272,6 @@ plot(u(:,43),u(:,44),"b.");
 <refsection>
    <title>Bibliography</title>
    <para>[1] Kocis, L., and W. J. Whiten. "Computational Investigations of Low-Discrepancy Sequences." ACM Transactions on Mathematical Software. Vol. 23, No. 2, 1997, pp. 266–294.</para>
+   <para>[2] B. Vandewoestyne and R. Cools, "Good permutations for deterministic scrambled Halton sequences in terms of L2-discrepancy", Computational and Applied Mathematics 189, 2006.</para>
 </refsection>
 </refentry>

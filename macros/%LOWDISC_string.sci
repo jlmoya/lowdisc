@@ -19,8 +19,6 @@ function str = %LOWDISC_string ( this )
     //
     // Get the sequence string
     select this.method
-    case "reversehalton" then
-        seqstr     = ldrevhalf_string (this.sequence)
     case "niederreiter" then
         seqstr     = ldniedf_string (this.sequence)
     case "sobol" then
@@ -58,19 +56,6 @@ function s = _tostring ( x )
             end
         end
     end
-endfunction
-
-function str = ldrevhalf_string ( this )
-    str = []
-    k = 1
-    str(k) = msprintf("Primeslist : %s\n", _tostring(this.primeslist))
-    k = k + 1
-    str(k) = msprintf("Maximum number of simulations = %e",this.nbsimmax)
-    k = k + 1
-    //
-    // Get the baseobj string
-    objstr = ldbase_string(this.baseobj)
-    str(k : k + size(objstr,"r") - 1 ) = objstr
 endfunction
 
 function str = ldniedf_string ( this )

@@ -27,11 +27,6 @@ function lowdiscBuildGwCpp()
     "_lowdisc_faurefstop"    "sci_lowdisc_faurefstop"
     "_lowdisc_faurefisstart" "sci_lowdisc_faurefisstart"
     ..
-    "_lowdisc_revhaltfnext"    "sci_lowdisc_revhaltfnext"
-    "_lowdisc_revhaltfstart"   "sci_lowdisc_revhaltfstart"
-    "_lowdisc_revhaltfstop"    "sci_lowdisc_revhaltfstop"
-    "_lowdisc_revhaltfisstart" "sci_lowdisc_revhaltfisstart"
-    ..
     "_lowdisc_niedfnext"     "sci_lowdisc_niedfnext"
     "_lowdisc_niedfstart"    "sci_lowdisc_niedfstart"
     "_lowdisc_niedfstop"     "sci_lowdisc_niedfstop"
@@ -61,11 +56,6 @@ function lowdiscBuildGwCpp()
     "sci_lowdisc_faurefstart.cpp"
     "sci_lowdisc_faurefstop.cpp"
     "sci_lowdisc_faurefisstart.cpp"
-    ..
-    "sci_lowdisc_revhaltfnext.cpp"
-    "sci_lowdisc_revhaltfstart.cpp"
-    "sci_lowdisc_revhaltfstop.cpp"
-    "sci_lowdisc_revhaltfisstart.cpp"
     ..
     "sci_lowdisc_niedfnext.cpp"
     "sci_lowdisc_niedfstart.cpp"

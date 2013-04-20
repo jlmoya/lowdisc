@@ -44,7 +44,6 @@ function seqmat = lowdisc_methods ()
     seqmat = [
     "halton" 
     "faure" 
-    "reversehalton" 
     "sobol"
     "niederreiter" 
     ];

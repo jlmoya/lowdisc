@@ -134,8 +134,6 @@ function [this,next] = lowdisc_next ( varargin )
     end
     //
     select this.method
-    case "reversehalton" then
-        [this,next]     = ldrevhalf_next ( this , imax )
     case "niederreiter" then
         [this,next]     = ldniedf_next ( this , imax )
     case "sobol" then
@@ -148,15 +146,6 @@ function [this,next] = lowdisc_next ( varargin )
         errmsg = msprintf ( gettext ( "%s: Unknown method %s" ) , "lowdisc_next" , this.method);
         error(errmsg);
     end
-endfunction
-
-function [this,next] = ldrevhalf_next ( this , imax )
-    dimension = lowdisc_cget(this , "-dimension" )
-    leap = lowdisc_cget(this , "-leap" )
-    index = lowdisc_get(this , "-index" )
-    next = _lowdisc_revhaltfnext ( index + 1 , imax, leap )
-    index = index + imax*(leap+1)
-    this=ldbase_indexset(this,index)
 endfunction
 
 function [this,next] = ldfauref_next ( this , imax )

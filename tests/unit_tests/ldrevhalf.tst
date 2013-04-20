@@ -13,8 +13,9 @@
 //
 // Check the Fast Reverse Halton sequence
 //
-lds = lowdisc_new("reversehalton");
+lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",2);
+lds = lowdisc_configure(lds,"-scrambling","Reverse");
 lds = lowdisc_startup (lds);
 // Term #1
 [lds,computed] = lowdisc_next (lds);

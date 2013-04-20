@@ -35,8 +35,6 @@ function this = lowdisc_destroy (this)
     apifun_checktype ( "lowdisc_destroy" , this , "this" , 1 , "LOWDISC" )
     //
     select this.method
-    case "reversehalton" then
-        this     = ldrevhalf_destroy ( this )
     case "niederreiter" then
         this     = ldniedf_destroy ( this )
     case "sobol" then
@@ -69,12 +67,6 @@ endfunction
 function this = ldfauref_destroy (this)
     if ( _lowdisc_faurefisstart() ) then
         _lowdisc_faurefstop ( )
-    end
-endfunction
-
-function this = ldrevhalf_destroy (this)
-    if ( _lowdisc_revhaltfisstart() ) then
-        _lowdisc_revhaltfstop ( );
     end
 endfunction
 

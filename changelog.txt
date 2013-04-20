@@ -133,8 +133,8 @@ y=asciimat(dec2bin(x))-48
     "fauref"     "faure"
     "niederreiter-base-2"   "niederreiter"
     "niederreiterf"         "niederreiter"
-    "reversehalton"         "reversehalton"
-    "reversehaltonf"        "reversehalton"
+    "reversehalton"         "halton"
+    "reversehaltonf"        "halton"
   So, for example, replace the statement :
   
 u=lowdisc_ldgen(20,4,"haltonf")
@@ -156,7 +156,40 @@ lds = lowdisc_new("halton");
  * Added scrambled Sobol sequence.
    This is available through the "-scrambling" option: 
    "Owen","Faure-Tezuka","Owen-Faure-Tezuka".
+ * Removed the "reversehalton". 
+   The sequence is now available with the "-scrambling"
+   option of the "halton" sequence.
+   The goal is to reduce the source code and automatically 
+   provide OO for Reverse Halton.
+   To update your code, please replace:
+ 
+lds = lowdisc_new("reversehalton");
+lds = lowdisc_configure(lds,"-dimension",2);
+lds = lowdisc_startup (lds);
+[lds,u]=lowdisc_next(lds,10);
+lds = lowdisc_destroy (lds);
 
+with:
+
+lds = lowdisc_new("halton");
+lds = lowdisc_configure(lds,"-dimension",2);
+lds = lowdisc_configure(lds,"-scrambling","Reverse");
+lds = lowdisc_startup (lds);
+[lds,u]=lowdisc_next(lds,10);
+lds = lowdisc_destroy (lds);
+
+  Also, please replace:
+  
+u=lowdisc_ldgen ( 1000 , 2 , "reversehalton" );
+
+with:
+  
+u=lowdisc_ldgen ( 1000 , 2 , "halton-reverse" );
+
+ * Made the Halton Object Oriented, based on an updated C++ source code.
+   Now, two Halton sequences can be managed at the same time, 
+   without conflict.
+ 
 lowdisc (v0.4)
  * Created lowdisc_combinesum.
  * Created lowdisc_plotbmbox.

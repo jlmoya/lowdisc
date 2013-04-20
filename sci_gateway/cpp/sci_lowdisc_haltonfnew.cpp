@@ -27,7 +27,7 @@ extern "C" {
 //   dim : the number of dimensions (e.g. 1)
 //   base : a 1 x dim matrix of doubles, a list of successive prime numbers (e.g. (0,0,0,0) for automatic setup or (2,3,5,7) for user-defined setup)
 //   seed : a 1 x dim matrix of doubles, the Halton sequence element corresponding to index = 0 (e.g. (0,0,0,0) for default setup)
-//   scrambling : a 1x1 matrix of doubles, the scrambling. scrambling=1 for no scrambling, scrambling=2 for RR2 (Kocis-Whiten) scrambling
+//   scrambling : a 1x1 matrix of doubles, the scrambling. scrambling=1 for no scrambling, scrambling=2 for RR2 (Kocis-Whiten) scrambling, scrambling=3 for Reverse (Vandewoestyne and Cools) scrambling
 //
 //      If base(i) = 0 then the prime number #i is automatically set.
 //	    If base(i) > 1 then the base is directly used.
