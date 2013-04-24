@@ -23,9 +23,9 @@ extern "C" {
 	//
 	// Fast Sobol sequence
 	int sci_lowdisc_sobolfnext (char *fname);
-	int sci_lowdisc_sobolfstart (char *fname);
-	int sci_lowdisc_sobolfstop (char *fname);
-	int sci_lowdisc_sobolfisstart (char *fname);
+	int sci_lowdisc_sobolfnew (char *fname);
+	int sci_lowdisc_sobolfdestroy (char *fname);
+	int sci_lowdisc_sobolftokens (char *fname);
 	//
 	// Fast Halton Sequence
 	int sci_lowdisc_haltonfnext (char *fname);

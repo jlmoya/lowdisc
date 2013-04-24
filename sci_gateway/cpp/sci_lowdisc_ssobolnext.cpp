@@ -24,6 +24,8 @@ extern "C" {
 // quasi = _lowdisc_ssobolnext ( token, imax , leap )
 //
 // Arguments
+// token : a 1-by-1 matrix of doubles, integer value, 
+//         token>=0, the current object.
 // imax: a 1-by-1 matrix of doubles, integer value
 //       The number of elements to generate
 // leap: a 1-by-1 matrix of doubles, integer value

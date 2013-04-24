@@ -54,8 +54,8 @@ endfunction
 function this = ldsobolf_destroy (this)
     scrambling = lowdisc_cget ( this , "-scrambling" )
     if (scrambling=="") then
-        if ( _lowdisc_sobolfisstart() ) then
-            _lowdisc_sobolfstop ( );
+        if (this.sequence.token<>-1) then
+            _lowdisc_sobolfdestroy ( this.sequence.token )
         end
     else
         if (this.sequence.token<>-1) then

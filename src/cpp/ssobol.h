@@ -32,24 +32,6 @@ __BEGIN_DECLS
 
 //! Class of Scrambled Sobol Sequence
 class LOWDISC_IMPORTEXPORT Ssobol {
-public :
-	int ssobol_poly[39];
-	int ssobol_vinit[40][8];
-	double ssobol_recipd;
-	int ssobol_lastq[40];
-	int ssobol_maxcol;
-	int ssobol_count;
-	int ssobol_s;
-	int ssobol_sv[40][31];
-	int ssobol_tau[13];
-	unsigned int ssobol_unifseed;
-
-	// Variables for the random number generator.
-	int ssobol_seedi;
-	int ssobol_seedj;
-	double ssobol_seedcarry;
-	double ssobol_seedseeds[24];
-
 public:
 	/*
 	Startup the Scrambled Sobol sequence.
@@ -139,6 +121,26 @@ public:
 	AND K .GT. TAUS FOR GLOBAL OPTIMIZATION. */
 	int gettaus();
 private:
+	//
+	// Fields
+	//
+	int ssobol_poly[39];
+	int ssobol_vinit[40][8];
+	double ssobol_recipd;
+	int ssobol_lastq[40];
+	int ssobol_maxcol;
+	int ssobol_count;
+	int ssobol_s;
+	int ssobol_sv[40][31];
+	int ssobol_tau[13];
+	unsigned int ssobol_unifseed;
+
+	// Variables for the random number generator.
+	int ssobol_seedi;
+	int ssobol_seedj;
+	double ssobol_seedcarry;
+	double ssobol_seedseeds[24];
+
 	/*     THIS FUNCTION CALCULATES THE EXCLUSIVE-OR OF ITS */
 	/*     TWO INPUT PARAMETERS */
 	int exor(int *iin, int *jin);

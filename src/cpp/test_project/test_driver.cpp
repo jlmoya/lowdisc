@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #include "halton.h"
+#include "sobol_i8.h"
 
 void testHalton (int scrambling)
 {
@@ -15,7 +16,7 @@ void testHalton (int scrambling)
 	int base[3];
 	int seed[3];
 	int leap[3];
-	double r[3];
+	double quasi[3];
 	int index;
 	int i;
 	base[0]=2;
@@ -33,11 +34,34 @@ void testHalton (int scrambling)
 	seq = new Halton( dim_num, base, seed, leap , scrambling );
 	for ( index = 0; index < 10; index++ )
 	{
-		seq->next ( index , r);
+		seq->next ( index , quasi);
 		printf("x[%d]=",index);
 		for ( i = 0; i < dim_num; i++ )
 		{
-			printf("%f ",r[i]);
+			printf("%f ",quasi[i]);
+		}
+		printf("\n");
+	}
+	delete seq;
+}
+void testSobol ()
+{
+	Sobol *seq;
+	int dim_num;
+	long long int index;
+	double quasi[3];
+	int i;
+	int j;
+	dim_num=3;
+	seq = new Sobol( dim_num);
+	index = 0;
+	for ( j = 0; j < 10; j++ )
+	{
+		seq->next ( &index , quasi);
+		printf("x[%d]=",index);
+		for ( i = 0; i < dim_num; i++ )
+		{
+			printf("%f ",quasi[i]);
 		}
 		printf("\n");
 	}
@@ -46,6 +70,7 @@ void testHalton (int scrambling)
 
 int main ( void )
 {
-	testHalton(HALTON_SCRAMBLINGREVERSE);
+	// testHalton(HALTON_SCRAMBLINGREVERSE);
+	testSobol();
 	return 0;
 }

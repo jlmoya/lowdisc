@@ -1,4 +1,6 @@
 // Copyright (C) 2013 - Michael Baudin
+// Copyright (C) 2009-2010 - Digiteo - Michael Baudin
+// Copyright (C) 2008 - INRIA - Michael Baudin
 //
 // This file must be used under the terms of the 
 // GNU Lesser General Public License license :
@@ -14,17 +16,16 @@ extern "C" {
 
 /* ==================================================================== */
 
+
 #include "gw_lowdisc_support.h" 
-#include "ssobol.h"
-#include "lowdisc_ssobol_map.hxx" 
+#include "lowdisc_math.h" 
+#include "sobol_i8.h"
+#include "lowdisc_sobol_map.hxx" 
 
 
-/* ==================================================================== */
-// 
-// tokens = sci_lowdisc_ssoboltokens () 
-//   returns the list of objects currently in use
-//
-int sci_lowdisc_ssoboltokens (char *fname)
+// tokens = _lowdisc_sobolftokens ( )
+//   Returns the sobol tokens.
+int sci_lowdisc_sobolftokens (char *fname)
 {
 	int size;
 	int * tokens = NULL;
@@ -32,12 +33,12 @@ int sci_lowdisc_ssoboltokens (char *fname)
 
 	CheckRhs(0,0) ;
 	CheckLhs(0,1) ;
-	size = lowdisc_ssobol_map_size ();
+	size = lowdisc_sobol_map_size ();
 	if (size > 0) {
 		tokens = (int *) malloc (size * sizeof (int));
 		doubletokens = (double *) malloc (size * sizeof (double));
 	}
-	lowdisc_ssobol_map_tokens (tokens);
+	lowdisc_sobol_map_tokens (tokens);
 	// Returns the matrix of tokens as the result
 	lowdisc_CreateLhsMatrix ( 1 , 1 , size , &doubletokens );
 	for(int i = 0; i < size; i++) {

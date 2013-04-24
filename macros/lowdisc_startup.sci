@@ -154,7 +154,9 @@ function this = ldsobolf_startup (this)
     scrambling = lowdisc_cget ( this , "-scrambling" )
     dimension = lowdisc_cget ( this , "-dimension" )
     if (scrambling=="") then
-        _lowdisc_sobolfstart ( dimension );
+        this.sequence.token = _lowdisc_sobolfnew(dimension)
+        // Initialize the sequence:
+        ignored = _lowdisc_sobolfnext ( this.sequence.token, 0 , 1 , 0 )
         skip = lowdisc_cget ( this , "-skip" )
         if ( skip > 0 ) then
             // Skip (i.e. ignore) as many elements as required

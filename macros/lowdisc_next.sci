@@ -149,7 +149,6 @@ function [this,next] = lowdisc_next ( varargin )
 endfunction
 
 function [this,next] = ldfauref_next ( this , imax )
-    dimension = lowdisc_cget(this , "-dimension" )
     leap = lowdisc_cget(this , "-leap" )
     //
     index = lowdisc_get(this , "-index" )
@@ -159,7 +158,6 @@ function [this,next] = ldfauref_next ( this , imax )
 endfunction
 
 function [this,next] = ldhaltonf_next ( this , imax )
-    dimension = lowdisc_cget(this , "-dimension" )
     leap = lowdisc_cget(this , "-leap" )
     //
     // Initialize the vector
@@ -172,14 +170,11 @@ function [this,next] = ldhaltonf_next ( this , imax )
 endfunction
 
 function [this,next] = ldsobolf_next ( this , imax )
-    dimension = lowdisc_cget ( this , "-dimension" )
     leap = lowdisc_cget ( this , "-leap" )
     scrambling = lowdisc_cget ( this , "-scrambling" )
     index = lowdisc_get ( this , "-index" )
     if (scrambling=="") then
-        //
-        // Initialize the vector
-        next = _lowdisc_sobolfnext ( index + 1 , imax , leap )
+        next = _lowdisc_sobolfnext ( this.sequence.token, index + 1 , imax , leap )
     else
         next = _lowdisc_ssobolnext ( this.sequence.token, imax , leap )
     end
@@ -187,9 +182,7 @@ function [this,next] = ldsobolf_next ( this , imax )
     this=ldbase_indexset(this, index )
 endfunction
 
-
 function [this,next] = ldniedf_next ( this , imax )
-    dimension = lowdisc_cget(this , "-dimension" )
     leap = lowdisc_cget(this , "-leap" )
     //
     // Initialize the vector
@@ -204,4 +197,3 @@ endfunction
 function this = ldbase_indexset ( this , index )
     this.sequence.baseobj.index = index
 endfunction
-
