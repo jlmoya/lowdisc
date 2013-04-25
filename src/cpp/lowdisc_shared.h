@@ -603,6 +603,7 @@ LOWDISC_IMPORTEXPORT int i4_power ( int i, int j );
 //    is returned as -1.
 LOWDISC_IMPORTEXPORT int prime ( int n );
 
+
 //  Purpose:
 //
 //    R4_ABS returns the absolute value of an R4.

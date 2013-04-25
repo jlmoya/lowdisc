@@ -6,7 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "lowdisc.h"
 #include "halton.h"
+#include "faure.h"
 #include "sobol_i8.h"
 
 void testHalton (int scrambling)
@@ -76,7 +78,6 @@ void testSobolAtOne ()
 	long long int index;
 	double quasi[3];
 	int i;
-	int j;
 	dim_num=3;
 	seq = new Sobol( dim_num);
 	index = 2;
@@ -89,11 +90,50 @@ void testSobolAtOne ()
 	printf("\n");
 	delete seq;
 }
+void testFaure ()
+{
+	Faure *seq;
+	int dim_num;
+	int index;
+	double quasi[3];
+	int i;
+	int j;
+	int basis;
+	dim_num=3;
+	basis=lowdisc_prime_ge(dim_num);
+	seq = new Faure(dim_num,basis);
+	index = 0;
+	for ( j = 0; j < 10; j++ )
+	{
+		seq->next ( &index , quasi);
+		printf("x[%d]=",index);
+		for ( i = 0; i < dim_num; i++ )
+		{
+			printf("%f ",quasi[i]);
+		}
+		printf("\n");
+	}
+	delete seq;
+}
 
 int main ( void )
 {
-	// testHalton(HALTON_SCRAMBLINGREVERSE);
-	// testSobol();
-	testSobolAtOne();
+	int choice = 4;
+	if (choice==1)
+	{
+		testHalton(HALTON_SCRAMBLINGREVERSE);
+	} 
+	else if (choice==2)
+	{
+		testSobol();
+	} 
+	else if (choice==3)
+	{
+		testSobolAtOne();
+	}
+	else if (choice==4)
+	{
+		testFaure ();
+	}
 	return 0;
 }

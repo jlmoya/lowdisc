@@ -19,10 +19,12 @@ extern "C" {
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
 #include "faure.h" 
+#include "lowdisc_faure_map.hxx" 
 
 
-// quasi = _lowdisc_faurefnext ( seed , imax , leap )
+// quasi = _lowdisc_faurefnext ( token,seed , imax , leap )
 // Arguments
+// token : a 1-by-1 matrix of doubles, integer value, the token
 // seed: a 1-by-1 matrix of doubles, integer value
 //       The index of the first element in the sequence
 // imax: a 1-by-1 matrix of doubles, integer value
@@ -51,26 +53,38 @@ int sci_lowdisc_faurefnext (char *fname) {
 	int leap = 0;
 	int i, k;
 	double * next = NULL;
+	int token;
+	Faure * seq;
 	//
-	CheckRhs(3,3) ;
+	CheckRhs(4,4) ;
 	CheckLhs(0,1) ;
-	// Arg #1: seed
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &seed );
+	// Arg #1: token
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
 	if ( ierr==0 ) {
 		return 0;
 	}
-	// Arg #2: imax
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &imax );
+	// Arg #2: seed
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &seed );
 	if ( ierr==0 ) {
 		return 0;
 	}
-	// Arg #3: leap
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &leap );
+	// Arg #3: imax
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &imax );
+	if ( ierr==0 ) {
+		return 0;
+	}
+	// Arg #4: leap
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 4 , &leap );
 	if ( ierr==0 ) {
 		return 0;
 	}
 	// Proceed...
-	dim = faure_dimget ( );
+	ierr=lowdisc_token2Faure(fname, 1, token, &seq);
+	if (ierr==0)
+	{
+		return 0;
+	}
+	dim = seq->dimget ( );
 	next = (double *)malloc(dim*sizeof(double));
 	if (next==NULL)
 	{
@@ -81,7 +95,7 @@ int sci_lowdisc_faurefnext (char *fname) {
 	// Call the Faure sequence
 	for ( k = 0; k < imax; k++ )
 	{
-		faure ( &seed, next );
+		seq->next ( &seed, next );
 		for(i=0; i<dim; i++) 
 		{
 			*(quasi + i * imax + k) = next[i];

@@ -157,6 +157,7 @@ function this = ldfauref_new ()
     "primeslist"
     "primessize"
     "nbsimmax"
+    "token"
     ])
     //
     // Configurable options
@@ -167,6 +168,7 @@ function this = ldfauref_new ()
     // Non Configurable options
     this.primessize = size(this.primeslist,2)
     this.nbsimmax = 2^31 - 1
+    this.token = -1
 endfunction
 
 function this = ldniedf_new ()

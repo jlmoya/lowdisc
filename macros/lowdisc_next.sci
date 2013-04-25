@@ -150,17 +150,16 @@ endfunction
 
 function [this,next] = ldfauref_next ( this , imax )
     leap = lowdisc_cget(this , "-leap" )
-    //
     index = lowdisc_get(this , "-index" )
-    next = _lowdisc_faurefnext ( index + 1 , imax, leap);
+    next = _lowdisc_faurefnext ( this.sequence.token, index + 1 , imax, leap);
+    // Leap over (i.e. ignore) as many elements as required
+    // Directly set the index.
     index = index + imax*(leap+1)
     this=ldbase_indexset(this,index)
 endfunction
 
 function [this,next] = ldhaltonf_next ( this , imax )
     leap = lowdisc_cget(this , "-leap" )
-    //
-    // Initialize the vector
     index = lowdisc_get(this , "-index" )
     next = _lowdisc_haltonfnext ( this.sequence.token, index + 1,imax , leap )
     // Leap over (i.e. ignore) as many elements as required
@@ -178,6 +177,8 @@ function [this,next] = ldsobolf_next ( this , imax )
     else
         next = _lowdisc_ssobolnext ( this.sequence.token, imax , leap )
     end
+    // Leap over (i.e. ignore) as many elements as required
+    // Directly set the index.
     index = index + imax*(leap+1)
     this=ldbase_indexset(this, index )
 endfunction

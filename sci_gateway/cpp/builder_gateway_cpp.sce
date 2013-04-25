@@ -23,9 +23,9 @@ function lowdiscBuildGwCpp()
     "_lowdisc_haltonftokens" "sci_lowdisc_haltonftokens"
     ..
     "_lowdisc_faurefnext"    "sci_lowdisc_faurefnext"
-    "_lowdisc_faurefstart"   "sci_lowdisc_faurefstart"
-    "_lowdisc_faurefstop"    "sci_lowdisc_faurefstop"
-    "_lowdisc_faurefisstart" "sci_lowdisc_faurefisstart"
+    "_lowdisc_faurefnew"   "sci_lowdisc_faurefnew"
+    "_lowdisc_faurefdestroy"    "sci_lowdisc_faurefdestroy"
+    "_lowdisc_faureftokens" "sci_lowdisc_faureftokens"
     ..
     "_lowdisc_niedfnext"     "sci_lowdisc_niedfnext"
     "_lowdisc_niedfstart"    "sci_lowdisc_niedfstart"
@@ -53,9 +53,9 @@ function lowdiscBuildGwCpp()
     "sci_lowdisc_haltonftokens.cpp"
     ..
     "sci_lowdisc_faurefnext.cpp"
-    "sci_lowdisc_faurefstart.cpp"
-    "sci_lowdisc_faurefstop.cpp"
-    "sci_lowdisc_faurefisstart.cpp"
+    "sci_lowdisc_faurefnew.cpp"
+    "sci_lowdisc_faurefdestroy.cpp"
+    "sci_lowdisc_faureftokens.cpp"
     ..
     "sci_lowdisc_niedfnext.cpp"
     "sci_lowdisc_niedfstart.cpp"
@@ -70,6 +70,7 @@ function lowdiscBuildGwCpp()
     "lowdisc_sobol_map.cpp"
     "lowdisc_ssobol_map.cpp"
     "lowdisc_halton_map.cpp"
+    "lowdisc_faure_map.cpp"
     ];
 
     ldflags = ""

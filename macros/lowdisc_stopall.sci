@@ -39,28 +39,28 @@ function lowdisc_stopall ( )
     // Copyright (C) 2010 - DIGITEO - Michael Baudin
 
     //
-    // Fast Faure
+    // Faure
     //
-    start = _lowdisc_faurefisstart ( );
-    if ( start == 1 ) then
-        _lowdisc_faurefstop ( );
+    start = _lowdisc_faureftokens();
+    for seq=seqmat
+        _lowdisc_faurefdestroy(seq)
     end
     //
-    // Fast Sobol
+    // Sobol
     //
     seqmat = _lowdisc_sobolftokens ( )
     for seq=seqmat
         _lowdisc_sobolfdestroy(seq)
     end
     //
-    // Fast Halton
+    // Halton
     //
     seqmat=_lowdisc_haltonftokens()
     for seq=seqmat
         _lowdisc_haltonfdestroy(seq)
     end
     //
-    // Fast Niederreiter
+    // Niederreiter
     //
     start = _lowdisc_niedfisstart ( );
     if ( start == 1 ) then

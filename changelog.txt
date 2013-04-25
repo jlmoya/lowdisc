@@ -189,6 +189,8 @@ u=lowdisc_ldgen ( 1000 , 2 , "halton-reverse" );
  * Made the Halton Object Oriented, based on an updated C++ source code.
    Now, two Halton sequences can be managed at the same time, 
    without conflict.
+   Made the Sobol sequence OO.
+   Made the Faure sequence OO.
  
 lowdisc (v0.4)
  * Created lowdisc_combinesum.

@@ -36,6 +36,41 @@ LOWDISC_IMPORTEXPORT void lowdisc_errorsetfunction ( void (* f)(char * message) 
 //   Configure the message function
 LOWDISC_IMPORTEXPORT void lowdisc_msgsetfunction ( void (* f)(char * message));
 
+//    PRIME_GE returns the smallest prime greater than or equal to N.
+//
+//  Examples:
+//
+//    N     PRIME_GE
+//
+//    -10    2
+//      1    2
+//      2    2
+//      3    3
+//      4    5
+//      5    5
+//      6    7
+//      7    7
+//      8   11
+//      9   11
+//     10   11
+//
+//  Modified:
+//
+//    09 March 2003
+//
+//  Author:
+//
+//    John Burkardt
+//
+//  Parameters:
+//
+//    Input, int N, the number to be bounded.
+//
+//    Output, int PRIME_GE, the smallest prime number that is greater
+//    than or equal to N.  However, if N is larger than the
+//    largest prime stored, then PRIME_GE is returned as -1.
+//
+LOWDISC_IMPORTEXPORT int lowdisc_prime_ge ( int n );
 
 __END_DECLS
 

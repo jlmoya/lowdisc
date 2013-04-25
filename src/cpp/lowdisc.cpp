@@ -29,4 +29,58 @@ void lowdisc_msgsetfunction ( void (* f)(char * message) ) {
 	lowdisc_messagefunction = f;
 }
 
+int lowdisc_prime_ge ( int n )
+{
+	int i_hi;
+	int i_lo;
+	int i_mid;
+	int p;
+	int p_hi;
+	int p_lo;
+	int p_mid;
+
+	if ( n <= 2 )
+	{
+		p = 2;
+	}
+	else
+	{
+		i_lo = 1;
+		p_lo = prime(i_lo);
+		i_hi = prime(-1);
+		p_hi = prime(i_hi);
+
+		if ( p_hi < n )
+		{
+			p = - p_hi;
+		}
+		else
+		{
+			for ( ; ; )
+			{
+				if ( i_lo + 1 == i_hi )
+				{
+					p = p_hi;
+					break;
+				}
+
+				i_mid = ( i_lo + i_hi ) / 2;
+				p_mid = prime(i_mid);
+
+				if ( p_mid < n )
+				{
+					i_lo = i_mid;
+					p_lo = p_mid;
+				}
+				else if ( n <= p_mid )
+				{
+					i_hi = i_mid;
+					p_hi = p_mid;
+				}
+			}
+		}
+	}
+
+	return p;
+}
 

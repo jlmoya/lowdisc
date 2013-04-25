@@ -65,8 +65,8 @@ function this = ldsobolf_destroy (this)
 endfunction
 
 function this = ldfauref_destroy (this)
-    if ( _lowdisc_faurefisstart() ) then
-        _lowdisc_faurefstop ( )
+    if (this.sequence.token<>-1) then
+        _lowdisc_faurefdestroy ( this.sequence.token )
     end
 endfunction
 

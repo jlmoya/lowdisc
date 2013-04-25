@@ -16,126 +16,54 @@ using namespace std;
 #include "faure.h"
 #include "lowdisc_shared.h"
 
-int *binomial_table ( int qs, int m, int n );
-int i4_log_i4 ( int i4, int j4 );
-void timestamp ( void );
-int prime_ge ( int n );
-
-
-int faure_dim_num = 0;
-bool faure_startup = false;
-int *coef = NULL;
-int hisum_save = -1;
-int qs = -1;
-int *ytemp = NULL;
-
-//****************************************************************************80
-
-int *binomial_table ( int qs, int m, int n )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    BINOMIAL_TABLE computes a table of bionomial coefficients MOD QS.
-//
-//  Discussion:
-//
-//    For "technical reasons", COEF(0,0) is set to 0 instead of 1.
-//
-//  Modified:
-//
-//    08 June 2007
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Input, int QS, the base for the MOD operation.
-//
-//    Input, int M, N, the limits of the binomial table.
-//
-//    Output, int BINOMIAL_TABLE[(M+1)*(N+1)], the table of binomial 
-//    coefficients modulo QS.
-//
+int *Faure::binomial_table ( int faure_qs, int m, int n )
 {
-	int *coef;
+	int *faure_coef;
 	int i;
 	int j;
 
-	coef = new int[(m+1)*(n+1)];
+	faure_coef = new int[(m+1)*(n+1)];
 
 	for ( j = 0; j <= n; j++ )
 	{
 		for ( i = 0; i <= m; i++ )
 		{
-			coef[i+j*(m+1)] = 0;
+			faure_coef[i+j*(m+1)] = 0;
 		}
 	}
 
-	coef[0] = 1;
+	faure_coef[0] = 1;
 
 	j = 0;
 	for ( i = 1; i <= m; i++ )
 	{
-		coef[i+j*(m+1)] = 1;
+		faure_coef[i+j*(m+1)] = 1;
 	}
 
 	for ( i = 1; i <= i4_min ( m, n ); i++ )
 	{
 		j = i;
-		coef[i+j*(m+1)] = 1;
+		faure_coef[i+j*(m+1)] = 1;
 	}
 
 	for( j = 1; j <= n; j++ )
 	{
 		for ( i = j + 1; i <= m; i++ )
 		{
-			coef[i+j*(m+1)] = ( coef[i-1+j*(m+1)] + coef[i-1+(j-1)*(m+1)] ) % qs;
+			faure_coef[i+j*(m+1)] = ( faure_coef[i-1+j*(m+1)] + faure_coef[i-1+(j-1)*(m+1)] ) % faure_qs;
 		}
 	}
 
-	return coef;
+	return faure_coef;
 }
-//****************************************************************************80
 
-void faure_start ( int dim_num , int basis )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    faure_startup startup the sequence.
-//    Setup the following parameters : 
-//	  faure_startup = true;
-//    hisum_save = -1
-//    qs the smallest prime greater than faure_dim_num
-//	
-//  Parameters:
-//
-//    Input, int faure_dim_num, the spatial dimension, which should be
-//    at least 2.
-//
-//    Input, int basis, the basis of the Faure sequence.
-//	  If basis=0, then a basis is computed automatically from
-//	  an internal table of primes. If basis is nonzero and positive,
-//	  then it is used as a basis. This feature allows to extend 
-//	  the sequence to dimensions where the internal table is not 
-//	  large enough.
-//    The basis must be the smallest prime greater than faure_dim_num.
-//
+Faure::Faure ( int dim_num , int basis )
 {
-	if ( faure_startup )
-	{
-		ostringstream msg;
-		msg << "faure - faure_startup - Error!\n";
-		msg << "  Startup is already done.\n";
-		lowdisc_error(msg.str());
-		return;
-	}
-	faure_startup = true;
+	//
+	// Initialize private fields
+	//
+	init();
+
 	//
 	// Store the dimension
 	//
@@ -150,25 +78,22 @@ void faure_start ( int dim_num , int basis )
 	}
 	faure_dim_num = dim_num;
 	//
-	// Compute qs
+	// Compute faure_qs
 	//
-	if ( basis == 0 )
-	{
-		qs = prime_ge ( faure_dim_num );
-	} 
-	else if ( basis < 0 ) 
+	if ( basis < 0 ) 
 	{
 		ostringstream msg;
 		msg << "faure - faure_baseset - Error!\n";
 		msg << "  New base " << basis << " is negative.\n";
 		lowdisc_error(msg.str());
 		return;
-	} else
+	} 
+	else
 	{
-		qs = basis;
+		faure_qs = basis;
 	}
 
-	if ( qs < 1 )
+	if ( faure_qs < 1 )
 	{
 		ostringstream msg;
 		msg << "faure - FAURE - Error!\n";
@@ -176,112 +101,45 @@ void faure_start ( int dim_num , int basis )
 		lowdisc_error(msg.str());
 		return;
 	}
-	hisum_save = -1;
+	faure_hisum_save = -1;
 	return;
 }
-//****************************************************************************80
 
-int faure_baseget ( )
-
-//****************************************************************************80
-// Returns the base used by the Faure sequence.
-// Must be executed only after the sequence has been started up.
+void Faure::init ( )
 {
-	return qs;
+	//
+	// Initialize private fields
+	//
+	faure_dim_num = 0;
+	faure_coef = NULL;
+	faure_hisum_save = -1;
+	faure_qs = -1;
+	faure_ytemp = NULL;
 }
-//****************************************************************************80
-
-void faure_stop ( )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    faure_stop shutdown the sequence.
-//	  Deletes the unnecessary memory.
-//	
-//  Parameters:
-//
+int Faure::baseget ( )
 {
-	if ( !faure_startup )
+	return faure_qs;
+}
+
+Faure::~Faure ( )
+{
+	faure_qs = -1;
+	faure_hisum_save = -1;
+	if ( faure_coef != NULL )
 	{
-		ostringstream msg;
-		msg << "faure - faure_stop - Error!\n";
-		msg << "  Shutdown is already done.\n";
-		lowdisc_error(msg.str());
-		return;
-	}
-	faure_startup = false;
-	qs = -1;
-	hisum_save = -1;
-	if ( coef != NULL )
-	{
-		delete [] coef;
-		coef = NULL;
+		delete [] faure_coef;
+		faure_coef = NULL;
 	}
 
-	if ( ytemp != NULL )
+	if ( faure_ytemp != NULL )
 	{
-		delete [] ytemp;
-		ytemp = NULL;
+		delete [] faure_ytemp;
+		faure_ytemp = NULL;
 	}
 	return;
 }
-//****************************************************************************80
 
-void faure ( int *seed, double quasi[] )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    FAURE generates a new quasirandom Faure vector with each call.
-//
-//  Discussion:
-//
-//    This routine implements the Faure method for computing
-//    quasirandom numbers.  It is a merging and adaptation of
-//    Bennett Fox's routines INFAUR and GOFAUR from ACM TOMS Algorithm 647.
-//
-//  Modified:
-//
-//    09 June 2007
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Reference:
-//
-//    Henri Faure,
-//    Discrepance de suites associees a un systeme de numeration
-//    (en dimension s),
-//    Acta Arithmetica,
-//    Volume 41, 1982, pages 337-351.
-//
-//    Bennett Fox,
-//    Algorithm 647:
-//    Implementation and Relative Efficiency of Quasirandom 
-//    Sequence Generators,
-//    ACM Transactions on Mathematical Software,
-//    Volume 12, Number 4, December 1986, pages 362-376.
-//
-//  Parameters:
-//
-//    Input, int DIM_NUM, the spatial dimension, which should be
-//    at least 2.
-//
-//    Input/output, int *SEED, the seed, which can be used to index
-//    the values.  On first call, set the input value of SEED to be 0
-//    or negative.  The routine will automatically initialize data,
-//    and set SEED to a new value.  Thereafter, to compute successive
-//    entries of the sequence, simply call again without changing
-//    SEED.  On the first call, if SEED is negative, it will be set
-//    to a positive value that "skips over" an early part of the sequence
-//    (This is recommended for better results).
-//
-//    Output, double QUASI[DIM_NUM], the next quasirandom vector.
-//
+void Faure::next ( int *seed, double quasi[] )
 {
 	int hisum;
 	int i;
@@ -293,23 +151,12 @@ void faure ( int *seed, double quasi[] )
 	double r;
 	int ztemp;
 	//
-	//  Initialization already done ?
-	//
-	if ( !faure_startup )
-	{
-		ostringstream msg;
-		msg << "faure - FAURE - Error!\n";
-		msg << "  Startup is not done.\n";
-		lowdisc_error(msg.str());
-		return;
-	}
-	//
 	//  If SEED < 0, reset for recommended initial skip.
 	//
 	if ( *seed < 0 )
 	{
 		hisum = 3;
-		*seed = i4_power ( qs, hisum + 1 ) - 1;
+		*seed = i4_power ( faure_qs, hisum + 1 ) - 1;
 	}
 	else if ( *seed == 0 )
 	{
@@ -317,28 +164,28 @@ void faure ( int *seed, double quasi[] )
 	}
 	else
 	{
-		hisum = i4_log_i4 ( *seed, qs );
+		hisum = i4_log_i4 ( *seed, faure_qs );
 	}
 	//
-	//  Is it necessary to recompute the coefficient table?
+	//  Is it necessary to recompute the faure_coefficient table?
 	//
-	if ( hisum_save != hisum )
+	if ( faure_hisum_save != hisum )
 	{
-		if ( coef != NULL )
+		if ( faure_coef != NULL )
 		{
-			delete [] coef;
+			delete [] faure_coef;
 		}
 
-		if ( ytemp != NULL )
+		if ( faure_ytemp != NULL )
 		{
-			delete [] ytemp;
+			delete [] faure_ytemp;
 		}
 
-		hisum_save = hisum;
+		faure_hisum_save = hisum;
 
-		coef = binomial_table ( qs, hisum, hisum );
+		faure_coef = binomial_table ( faure_qs, hisum, hisum );
 
-		ytemp = new int[hisum+1];
+		faure_ytemp = new int[hisum+1];
 	}
 
 	//
@@ -350,14 +197,14 @@ void faure ( int *seed, double quasi[] )
 	//
 	//  We now compute the YTEMP(J)'s.
 	//
-	ktemp = i4_power ( qs, hisum + 1 );
+	ktemp = i4_power ( faure_qs, hisum + 1 );
 	ltemp = *seed;
 
 	for ( i = hisum; 0 <= i; i-- )
 	{
-		ktemp = ktemp / qs;
+		ktemp = ktemp / faure_qs;
 		mtemp = ltemp % ktemp;
-		ytemp[i] = ( ltemp - mtemp ) / ktemp;
+		faure_ytemp[i] = ( ltemp - mtemp ) / ktemp;
 		ltemp = mtemp;
 	}
 	//
@@ -367,36 +214,36 @@ void faure ( int *seed, double quasi[] )
 	//
 	//  Compute QUASI(1) using nested multiplication.
 	//
-	r = ( ( double ) ytemp[hisum] );
+	r = ( ( double ) faure_ytemp[hisum] );
 	for ( i = hisum-1; 0 <= i; i-- )
 	{
-		r = ( ( double ) ytemp[i] ) + r / ( ( double ) qs );
+		r = ( ( double ) faure_ytemp[i] ) + r / ( ( double ) faure_qs );
 	}
 
-	quasi[0] = r / ( ( double ) qs );
+	quasi[0] = r / ( ( double ) faure_qs );
 	//
 	//  Find components QUASI(2:DIM_NUM) using the Faure method.
 	//
 	for ( k = 1; k < faure_dim_num; k++ )
 	{
 		quasi[k] = 0.0;
-		r = 1.0 / ( ( double ) qs );
+		r = 1.0 / ( ( double ) faure_qs );
 
 		for ( j = 0; j <= hisum; j++ )
 		{
 			ztemp = 0;
 			for ( i = j; i <= hisum; i++ )
 			{
-				ztemp = ztemp + ytemp[i] * coef[i+j*(hisum+1)];
+				ztemp = ztemp + faure_ytemp[i] * faure_coef[i+j*(hisum+1)];
 			}
 			//
 			//  New YTEMP(J) is:
 			//
-			//    Sum ( J <= I <= HISUM ) ( old ytemp(i) * binom(i,j) ) mod QS.
+			//    Sum ( J <= I <= HISUM ) ( old faure_ytemp(i) * binom(i,j) ) mod QS.
 			//
-			ytemp[j] = ztemp % qs;
-			quasi[k] = quasi[k] + ( ( double ) ytemp[j] ) * r;
-			r = r / ( ( double ) qs );
+			faure_ytemp[j] = ztemp % faure_qs;
+			quasi[k] = quasi[k] + ( ( double ) faure_ytemp[j] ) * r;
+			r = r / ( ( double ) faure_qs );
 		}
 	}
 	//
@@ -406,68 +253,8 @@ void faure ( int *seed, double quasi[] )
 
 	return;
 }
-//****************************************************************************80
 
-int i4_log_i4 ( int i4, int j4 )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    I4_LOG_I4 returns the logarithm of an I4 to an I4 base.
-//
-//  Discussion:
-//
-//    Only the integer part of the logarithm is returned.
-//
-//    If 
-//
-//      K4 = I4_LOG_J4 ( I4, J4 ),
-//
-//    then we ordinarily have
-//
-//      J4^(K4-1) < I4 <= J4^K4.
-//
-//    The base J4 should be positive, and at least 2.  If J4 is negative,
-//    a computation is made using the absolute value of J4.  If J4 is
-//    -1, 0, or 1, the logarithm is returned as 0.
-//
-//    The number I4 should be positive and at least 2.  If I4 is negative,
-//    a computation is made using the absolute value of I4.  If I4 is
-//    -1, 0, or 1, then the logarithm is returned as 0.
-//
-//    An I4 is an integer ( kind = 4 ) value.
-//
-//  Example:
-//
-//    I4  J4  K4
-//
-//     0   3   0
-//     1   3   0
-//     2   3   0
-//     3   3   1
-//     4   3   1
-//     8   3   1
-//     9   3   2
-//    10   3   2
-//
-//  Modified:
-//
-//    09 June 2007
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Input, int I4, the number whose logarithm is desired.
-//
-//    Input, int J4, the base of the logarithms.
-//
-//    Output, int I4_LOG_I4, the integer part of the logarithm
-//    base abs(J4) of abs(I4).
-//
+int Faure::i4_log_i4 ( int i4, int j4 )
 {
 	int i4_abs;
 	int j4_abs;
@@ -492,120 +279,8 @@ int i4_log_i4 ( int i4, int j4 )
 	}
 	return value;
 }
-//****************************************************************************80
 
-int prime_ge ( int n )
-
-//****************************************************************************80
-//
-//  Purpose:
-//
-//    PRIME_GE returns the smallest prime greater than or equal to N.
-//
-//  Examples:
-//
-//    N     PRIME_GE
-//
-//    -10    2
-//      1    2
-//      2    2
-//      3    3
-//      4    5
-//      5    5
-//      6    7
-//      7    7
-//      8   11
-//      9   11
-//     10   11
-//
-//  Modified:
-//
-//    09 March 2003
-//
-//  Author:
-//
-//    John Burkardt
-//
-//  Parameters:
-//
-//    Input, int N, the number to be bounded.
-//
-//    Output, int PRIME_GE, the smallest prime number that is greater
-//    than or equal to N.  However, if N is larger than the
-//    largest prime stored, then PRIME_GE is returned as -1.
-//
-{
-	int i_hi;
-	int i_lo;
-	int i_mid;
-	int p;
-	int p_hi;
-	int p_lo;
-	int p_mid;
-
-	if ( n <= 2 )
-	{
-		p = 2;
-	}
-	else
-	{
-		i_lo = 1;
-		p_lo = prime(i_lo);
-		i_hi = prime(-1);
-		p_hi = prime(i_hi);
-
-		if ( p_hi < n )
-		{
-			p = - p_hi;
-		}
-		else
-		{
-			for ( ; ; )
-			{
-				if ( i_lo + 1 == i_hi )
-				{
-					p = p_hi;
-					break;
-				}
-
-				i_mid = ( i_lo + i_hi ) / 2;
-				p_mid = prime(i_mid);
-
-				if ( p_mid < n )
-				{
-					i_lo = i_mid;
-					p_lo = p_mid;
-				}
-				else if ( n <= p_mid )
-				{
-					i_hi = i_mid;
-					p_hi = p_mid;
-				}
-			}
-		}
-	}
-
-	return p;
-}
-//***************************************************************************
-//  faure_isstart --
-//     Returns true if the sequence is already started up.
-//
-//  Parameters:
-//    startup, output : true if the sequence is already started up.
-//
-bool faure_isstart ( )
-{
-	return faure_startup;
-}
-//***************************************************************************
-//  faure_dimget --
-//     gets the spatial dimension for a Faure sequence.
-//
-//  Parameters:
-//    dim, output : an integer, the dimension of the sequence
-//
-int faure_dimget ( )
+int Faure::dimget ( )
 {
 	return faure_dim_num;
 }

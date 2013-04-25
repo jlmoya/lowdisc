@@ -137,7 +137,7 @@ function this = ldfauref_startup (this)
     end
     //
     qs = primeslist(k)
-    _lowdisc_faurefstart ( dimension , qs )
+    this.sequence.token = _lowdisc_faurefnew(dimension,qs)
     //
     skip = lowdisc_cget(this , "-skip" )
     if ( skip > 0 ) then

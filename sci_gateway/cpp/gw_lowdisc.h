@@ -34,10 +34,10 @@ extern "C" {
 	int sci_lowdisc_haltonftokens (char *fname);
 	//
 	// Fast Faure sequence
-	int sci_lowdisc_faurefstart (char *fname);
-	int sci_lowdisc_faurefstop (char *fname);
+	int sci_lowdisc_faurefnew (char *fname);
+	int sci_lowdisc_faurefdestroy (char *fname);
 	int sci_lowdisc_faurefnext (char *fname);
-	int sci_lowdisc_faurefisstart (char *fname);
+	int sci_lowdisc_faureftokens (char *fname);
 	//
 	// Fast Niederreiter
 	int sci_lowdisc_niedfstart (char *fname);

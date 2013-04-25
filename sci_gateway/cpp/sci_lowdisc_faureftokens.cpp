@@ -19,15 +19,15 @@ extern "C" {
 
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
-#include "halton.h" 
-#include "lowdisc_halton_map.hxx" 
+#include "faure.h" 
+#include "lowdisc_faure_map.hxx" 
 
 /* ==================================================================== */
 // 
-// tokens = sci_lowdisc_haltonftokens () 
+// tokens = sci_lowdisc_faureftokens () 
 //   returns the list of objects currently in use
 //
-int sci_lowdisc_haltonftokens (char *fname)
+int sci_lowdisc_faureftokens (char *fname)
 {
 	int size;
 	int * tokens = NULL;
@@ -35,12 +35,12 @@ int sci_lowdisc_haltonftokens (char *fname)
 
 	CheckRhs(0,0) ;
 	CheckLhs(0,1) ;
-	size = lowdisc_halton_map_size ();
+	size = lowdisc_faure_map_size ();
 	if (size > 0) {
 		tokens = (int *) malloc (size * sizeof (int));
 		doubletokens = (double *) malloc (size * sizeof (double));
 	}
-	lowdisc_halton_map_tokens (tokens);
+	lowdisc_faure_map_tokens (tokens);
 	// Returns the matrix of tokens as the result
 	lowdisc_CreateLhsMatrix ( 1 , 1 , size , &doubletokens );
 	for(int i = 0; i < size; i++) {
