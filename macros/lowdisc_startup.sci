@@ -52,8 +52,6 @@ function this = lowdisc_startup (this)
     //
 
     select this.method
-    case "reversehalton" then
-        this= ldrevhalf_startup ( this )
     case "niederreiter" then
         this= ldniedf_startup ( this )
     case "sobol" then
@@ -155,8 +153,6 @@ function this = ldsobolf_startup (this)
     dimension = lowdisc_cget ( this , "-dimension" )
     if (scrambling=="") then
         this.sequence.token = _lowdisc_sobolfnew(dimension)
-        // Initialize the sequence:
-        ignored = _lowdisc_sobolfnext ( this.sequence.token, 0 , 1 , 0 )
         skip = lowdisc_cget ( this , "-skip" )
         if ( skip > 0 ) then
             // Skip (i.e. ignore) as many elements as required
@@ -178,26 +174,6 @@ function this = ldsobolf_startup (this)
         else
             this.sequence.token = _lowdisc_ssobolnew(dimension,iflag,seeds)
         end
-    end
-endfunction
-
-function this = ldrevhalf_startup (this)
-    this.sequence.baseobj = ldbase_startup ( this.sequence.baseobj )
-    dimension = lowdisc_cget ( this , "-dimension" )
-    primeslist=lowdisc_cget ( this , "-primeslist" )
-    primesize=size(primeslist,"*")
-    if (dimension>primesize) then
-        errmsg = msprintf( gettext ( "%s: Reverse Halton sequence : the dimension %d is larger than any prime in the table. Configure the -primeslist option to increase the prime table." ) , "ldrevhalf_startup" , dimension);
-        error(errmsg);
-    end
-    //
-    _lowdisc_revhaltfstart ( dimension , primeslist(1:dimension) )
-    //
-    skip = lowdisc_cget ( this , "-skip" )
-    if ( skip > 0 ) then
-        // Skip (i.e. ignore) as many elements as required
-        // Directly set the index.
-        this= ldbase_indexset(this,skip)
     end
 endfunction
 

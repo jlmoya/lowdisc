@@ -287,6 +287,12 @@ Sobol::Sobol ( int dim_num )
 	//  RECIPD is 1/(common denominator of the elements in V).
 	//
 	i8sobol_recipd = 1.0E+00 / ( ( double ) ( 2 * l ) );
+	// Initialize i8sobol_lastq
+	l = 1;
+	for ( i = 0; i < i8sobol_dim_num; i++ )
+	{
+		i8sobol_lastq[i] = 0;
+	}
 	return;
 }
 //****************************************************************************80
