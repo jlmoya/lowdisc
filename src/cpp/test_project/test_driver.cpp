@@ -67,10 +67,33 @@ void testSobol ()
 	}
 	delete seq;
 }
+void testSobolAtOne ()
+{
+	// This tests a Sobol sequence, where 
+	// the first required element is at index 1.
+	Sobol *seq;
+	int dim_num;
+	long long int index;
+	double quasi[3];
+	int i;
+	int j;
+	dim_num=3;
+	seq = new Sobol( dim_num);
+	index = 2;
+	seq->next ( &index , quasi);
+	printf("x[%d]=",index);
+	for ( i = 0; i < dim_num; i++ )
+	{
+		printf("%f ",quasi[i]);
+	}
+	printf("\n");
+	delete seq;
+}
 
 int main ( void )
 {
 	// testHalton(HALTON_SCRAMBLINGREVERSE);
-	testSobol();
+	// testSobol();
+	testSobolAtOne();
 	return 0;
 }
