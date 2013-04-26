@@ -25,6 +25,11 @@
 #include <fstream>
 #include <sstream>
 
+// warning C4996: 'fopen': This function or variable may be unsafe.
+#ifdef _MSC_VER
+#pragma warning( disable : 4996 )
+#endif
+
 // Some notes by John Burkardt
 // Modified:   06-11-12 September 2007
 //
@@ -138,8 +143,32 @@ const int nieder_NPOLS = nieder_DIM_MAX;
 const int nieder_MAXE = 8;
 
 
+// niederreiter_init --
+//   Create the Niederreiter data files.
+//
+//  Parameters:
+//
+//    gfaritfile : the gfarit.txt file to use
+//
+//    gfplysfile : the gfplys.txt file to use
+//
+void niederreiter_init ( char * gfaritfile , char * gfplysfile )
+{
+	int ierr;
+	ierr = GFARIT ( gfaritfile );
+	if ( ierr==0 ) {
+		return;
+	}
+	//
+	ierr = GFPLYS ( gfaritfile , gfplysfile );
+	if ( ierr==0 ) {
+		return;
+	}
+	return;
+}
+
 //****************************************************************************80
-void niederreiter_start ( int dim_num, int base, int skip , char * gfaritfile , char * gfplysfile , bool init )
+void niederreiter_start ( int dim_num, int base, int skip , char * gfaritfile , char * gfplysfile )
 // niederreiter_start
 //   Startup the Niederreiter sequence.
 //   TODO : allocate the memory instead of static arrays
@@ -157,13 +186,12 @@ void niederreiter_start ( int dim_num, int base, int skip , char * gfaritfile , 
 //
 //    gfplysfile : the gfplys.txt file to use
 //
-//    init : if true, then the two strings are stored and the gfarit.txt and gfplys.txt are created.
-//           If false, the two strings are stored, but the files are expected to already exist on disk.
-//
 //    ierr: 0 in case of error, 1 if OK.
 //
 {
 	int ierr;
+	FILE * pFile;
+
 
 	if ( nieder_startup )
 	{
@@ -175,16 +203,11 @@ void niederreiter_start ( int dim_num, int base, int skip , char * gfaritfile , 
 	}
 	nieder_startup = true;
 	//
-	if ( init ) {
-		ierr = GFARIT ( gfaritfile );
-		if ( ierr==0 ) {
-			return;
-		}
-		//
-		ierr = GFPLYS ( gfaritfile , gfplysfile );
-		if ( ierr==0 ) {
-			return;
-		}
+	// If the first file do not exist, create both of them
+	pFile = fopen (gfaritfile,"r");
+	if (pFile==NULL)
+	{
+		niederreiter_init ( gfaritfile , gfplysfile );
 	}
 	//
 	nieder_BASE = base;
@@ -195,6 +218,7 @@ void niederreiter_start ( int dim_num, int base, int skip , char * gfaritfile , 
 	}
 	return;
 }
+
 //****************************************************************************80
 void niederreiter_stop ( )
 // niederreiter_stop

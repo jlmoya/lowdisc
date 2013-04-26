@@ -10,6 +10,7 @@
 #include "halton.h"
 #include "faure.h"
 #include "sobol_i8.h"
+#include "niederreiter.h"
 
 void testHalton (int scrambling)
 {
@@ -116,9 +117,39 @@ void testFaure ()
 	delete seq;
 }
 
+void testNiederreiter ()
+{
+	
+	int dim_num;
+	int index;
+	double quasi[3];
+	int i;
+	int j;
+	int base;
+	int skip;
+	char gfaritfile[50]="gfarit.txt";
+	char gfplysfile[50]="gfplsys.txt";
+	dim_num=3;
+	base=2;
+	skip=0;
+	niederreiter_start (dim_num, base, skip , gfaritfile , gfplysfile );
+	index = 0;
+	for ( j = 0; j < 10; j++ )
+	{
+		niederreiter(quasi);
+		printf("x[%d]=",index);
+		for ( i = 0; i < dim_num; i++ )
+		{
+			printf("%f ",quasi[i]);
+		}
+		printf("\n");
+	}
+	niederreiter_stop ( );
+}
+
 int main ( void )
 {
-	int choice = 4;
+	int choice = 5;
 	if (choice==1)
 	{
 		testHalton(HALTON_SCRAMBLINGREVERSE);
@@ -134,6 +165,10 @@ int main ( void )
 	else if (choice==4)
 	{
 		testFaure ();
+	}
+	else if (choice=5)
+	{
+		testNiederreiter();
 	}
 	return 0;
 }

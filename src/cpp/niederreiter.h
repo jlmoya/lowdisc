@@ -8,13 +8,13 @@
 #define _LOWDISC_NIEDER_D_H_
 
 #ifdef _MSC_VER
-	#if LIBLOWDISC_EXPORTS 
-		#define LOWDISC_IMPORTEXPORT __declspec (dllexport)
-	#else
-		#define LOWDISC_IMPORTEXPORT __declspec (dllimport)
-	#endif
+#if LIBLOWDISC_EXPORTS 
+#define LOWDISC_IMPORTEXPORT __declspec (dllexport)
 #else
-	#define LOWDISC_IMPORTEXPORT
+#define LOWDISC_IMPORTEXPORT __declspec (dllimport)
+#endif
+#else
+#define LOWDISC_IMPORTEXPORT
 #endif
 
 #undef __BEGIN_DECLS
@@ -30,7 +30,7 @@
 __BEGIN_DECLS
 
 // Starts the sequence
-void niederreiter_start ( int dim_num, int base, int skip , char * gfaritfile , char * gfplysfile , bool init );
+void niederreiter_start ( int dim_num, int base, int skip , char * gfaritfile , char * gfplysfile );
 
 // Stop the sequence
 void niederreiter_stop ( );

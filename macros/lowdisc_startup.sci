@@ -72,11 +72,6 @@ function this = ldniedf_startup (this)
     // If the two files already exist, there is no need to generate them again: set init to zero.
     gfaritfile=this.sequence.gfaritfile
     gfplysfile=this.sequence.gfplysfile
-    if ( fileinfo (gfaritfile) <> [] & fileinfo ( gfplysfile ) <> [] ) then
-        init = 0
-    else
-        init = 1
-    end
     // Create the sequence
     // We ignore the first element in the sequence, which is [0 0] in 
     // dimension 2.
@@ -85,7 +80,7 @@ function this = ldniedf_startup (this)
     skip = lowdisc_cget(this , "-skip" )
     dimension = lowdisc_cget(this , "-dimension" )
     base = lowdisc_cget(this , "-base" )
-    _lowdisc_niedfstart(dimension,base, skip + 1 , gfaritfile , gfplysfile , init );
+    _lowdisc_niedfstart(dimension,base, skip + 1 , gfaritfile , gfplysfile );
     //
     // Initialize the sequence at the right place
     if ( skip > 0 ) then
