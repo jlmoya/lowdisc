@@ -80,7 +80,7 @@ function this = ldniedf_startup (this)
     skip = lowdisc_cget(this , "-skip" )
     dimension = lowdisc_cget(this , "-dimension" )
     base = lowdisc_cget(this , "-base" )
-    _lowdisc_niedfstart(dimension,base, skip + 1 , gfaritfile , gfplysfile );
+    this.sequence.token = _lowdisc_niedfnew(dimension,base, skip + 1 , gfaritfile , gfplysfile );
     //
     // Initialize the sequence at the right place
     if ( skip > 0 ) then

@@ -62,9 +62,9 @@ function lowdisc_stopall ( )
     //
     // Niederreiter
     //
-    start = _lowdisc_niedfisstart ( );
-    if ( start == 1 ) then
-        _lowdisc_niedfstop ( );
+    seqmat = _lowdisc_niedftokens ( );
+    for seq=seqmat
+        _lowdisc_niedfdestroy(seq)
     end
     //
     // Scrambled Sobol

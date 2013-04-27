@@ -1,4 +1,4 @@
-
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2008 - INRIA - Michael Baudin
 // Copyright (C) 2009 - Digiteo - Michael Baudin
 //
@@ -19,9 +19,10 @@ extern "C" {
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
 #include "niederreiter.h" 
+#include "lowdisc_nied_map.hxx" 
 
 
-// quasi = _lowdisc_niedfnext ( imax , leap )
+// quasi = _lowdisc_niedfnext ( token , imax , leap )
 //
 // Arguments
 // step: a 1-by-1 matrix of doubles, integer value
@@ -51,23 +52,37 @@ int sci_lowdisc_niedfnext (char *fname) {
 	int leap = 0;
 	int i, k;
 	double * next = NULL;
+	int token;
+	int iflag;
+	Niederreiter * seq;
 	//
-	CheckRhs(2,2) ;
+	CheckRhs(3,3) ;
 	CheckLhs(0,1) ;
 	//
 	//
-	// Get Arg #1: imax
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &imax );
+	// Get Arg #1: token
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
 	if ( ierr==0 ) {
 		return 0;
 	}
-	// Arg #2: leap
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &leap );
+	//
+	// Get Arg #2: imax
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &imax );
+	if ( ierr==0 ) {
+		return 0;
+	}
+	// Arg #3: leap
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &leap );
 	if ( ierr==0 ) {
 		return 0;
 	}
 	// Returns quasi
-	dim = niederreiter_dim_num_get();
+	iflag=lowdisc_token2Niederreiter(fname, 1, token, &seq);
+	if (iflag==0)
+	{
+		return 0;
+	}
+	dim = seq->dim_num_get();
 	next = (double *)malloc(dim*sizeof(double));
 	if (next==NULL)
 	{
@@ -78,7 +93,7 @@ int sci_lowdisc_niedfnext (char *fname) {
 
 	for ( k = 0; k < imax; k++ )
 	{
-		niederreiter ( next );
+		seq->next( next );
 		for(i=0; i<dim; i++) 
 		{
 			*(quasi + i * imax + k) = next[i];
@@ -88,7 +103,7 @@ int sci_lowdisc_niedfnext (char *fname) {
 			// Leap over (i.e. ignore) as many elements as required
 			for(i=0; i<leap; i++) 
 			{
-				niederreiter ( next );
+				seq->next ( next );
 			}
 		}
 	}

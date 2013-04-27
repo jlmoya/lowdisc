@@ -18,9 +18,9 @@ extern "C" {
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
 #include "niederreiter.h" 
+#include "lowdisc_nied_map.hxx" 
 
-
-// _lowdisc_niedfstart ( dim , base , skip , gfaritfile , gfplysfile )
+// token=_lowdisc_niedfnew ( dim , base , skip , gfaritfile , gfplysfile )
 //   Start the Niederreiter sequence.
 // Parameters
 //   dim : 1 x 1 matrix of doubles, the number of dimensions (e.g. 1)
@@ -32,7 +32,7 @@ extern "C" {
 //   If the two files already exist on disk (maybe from a previous sequence),
 //   there is no need to generate them again. In this case, init should be set to 0.
 //
-int sci_lowdisc_niedfstart (char *fname) {
+int sci_lowdisc_niedfnew (char *fname) {
 	int dim;
 	int base;
 	int skip;
@@ -43,6 +43,8 @@ int sci_lowdisc_niedfstart (char *fname) {
 	char * gfplysfile;
 	int nCols;
 	int nRows;
+	Niederreiter * seq;
+	int token;
 	
 	CheckRhs(5,5) ;
 	CheckLhs(0,1) ;
@@ -98,8 +100,9 @@ int sci_lowdisc_niedfstart (char *fname) {
 	gfplysfile = gfplysdata[0];
 	//
 	// Start the sequence
-	niederreiter_start ( dim, base, skip , gfaritfile , gfplysfile );
+	seq = new Niederreiter ( dim, base, skip , gfaritfile , gfplysfile );
+	token = lowdisc_nied_map_add(seq);
 	//
-	lowdisc_CreateLhsInteger ( 1 , 0 );
+	lowdisc_CreateLhsInteger ( 1 , token );
 	return 0;
 }

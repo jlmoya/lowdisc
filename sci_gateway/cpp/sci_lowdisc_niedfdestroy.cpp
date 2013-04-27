@@ -18,17 +18,33 @@ extern "C" {
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
 #include "niederreiter.h" 
+#include "lowdisc_nied_map.hxx" 
 
-
-// _lowdisc_niedfstop ( )
+// _lowdisc_niedfdestroy (token)
 //   Stop the Niederreiter sequence.
-int sci_lowdisc_niedfstop (char *fname) {
+int sci_lowdisc_niedfdestroy (char *fname) 
+{
+	Niederreiter * seq;
+	int token;
+	int ierr;
+	int iflag;
 	
-	CheckRhs(0,0) ;
+	//
+	CheckRhs(1,1) ;
 	CheckLhs(0,1) ;
 	//
-	niederreiter_stop ( );
-	//
-	lowdisc_CreateLhsInteger ( 1 , 0 );
+	// Arg #1: token
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
+	if ( ierr==0 ) {
+		return 0;
+	}
+	iflag=lowdisc_token2Niederreiter(fname, 1, token, &seq);
+	if (iflag==0)
+	{
+		return 0;
+	}
+	delete seq;
+	lowdisc_nied_map_remove(token);
+	lowdisc_CreateLhsInteger ( 1 , token );
 	return 0;
 }

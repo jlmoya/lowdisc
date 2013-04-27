@@ -77,8 +77,8 @@ function this = ldhaltonf_destroy (this)
 endfunction
 
 function this = ldniedf_destroy (this)
-    if ( _lowdisc_niedfisstart() ) then
-        _lowdisc_niedfstop ( )
+    if (this.sequence.token<>-1) then
+        _lowdisc_niedfdestroy(this.sequence.token)
     end
 endfunction
 

@@ -40,10 +40,10 @@ extern "C" {
 	int sci_lowdisc_faureftokens (char *fname);
 	//
 	// Fast Niederreiter
-	int sci_lowdisc_niedfstart (char *fname);
-	int sci_lowdisc_niedfstop (char *fname);
+	int sci_lowdisc_niedfnew (char *fname);
+	int sci_lowdisc_niedfdestroy (char *fname);
 	int sci_lowdisc_niedfnext (char *fname);
-	int sci_lowdisc_niedfisstart (char *fname);
+	int sci_lowdisc_niedftokens (char *fname);
 	//
 	// Fast Scrambled Sobol sequence
 	int sci_lowdisc_ssobolnext (char *fname);

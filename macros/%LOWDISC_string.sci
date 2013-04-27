@@ -71,6 +71,8 @@ function str = ldniedf_string ( this )
     k = k + 1
     str(k) = msprintf("Maximum number of simulations = %s",string(this.nbsimmax))
     k = k + 1
+    str(k) = msprintf("Token = %d",this.token)
+    k = k + 1
     //
     // Get the baseobj string
     objstr = ldbase_string(this.baseobj)

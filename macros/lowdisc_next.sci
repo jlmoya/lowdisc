@@ -187,7 +187,7 @@ function [this,next] = ldniedf_next ( this , imax )
     leap = lowdisc_cget(this , "-leap" )
     //
     // Initialize the vector
-    next = _lowdisc_niedfnext ( imax , leap );
+    next = _lowdisc_niedfnext ( this.sequence.token, imax , leap );
     // Leap over (i.e. ignore) as many elements as required
     // Directly set the index.
     index = lowdisc_get(this , "-index" )

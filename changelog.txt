@@ -50,14 +50,27 @@ lowdisc (Not released yet)
    internal _lowdisc_*get functions are unnecessary
    http://forge.scilab.org/index.php/p/lowdisc/issues/1132/
  * Removed lowdisc_soboltau.
-   This function did not serve a straightforward purpose. 
+   This function did not serve a straightforward purpose for the 
+   user. 
+   Moreover, it was provided only for a limited number of 
+   dimensions. 
+   Finally, this function could be provided for other 
+   sequences, but the quality factor of other sequences is 
+   not allways known.
+ * Made the Halton Object Oriented, based on an updated 
+   C++ source code.
+   Now, two Halton sequences can be managed at the same time, 
+   without conflict.
+   Made the Sobol sequence OO.
+   Made the Faure sequence OO.
+   Made the Niederreiter sequence OO.
  * Removed the slow (macros) sequences, in order to
    * simplify the design of the toolbox
    * reduce the number of functions
    * reduce the number of unit tests
    * prevent the users from using slow sequences
    * reduce the maintenance work
-   These functions were provided only for educational purposes, 
+   These functions were provided only for educational/research purposes, 
    but the feature can be provided at much simpler cost in simple 
    scripts:
    * demos/ld-macros/macros-vandercorput.sce : Van Der Corput sequence
@@ -79,7 +92,9 @@ lowdisc (Not released yet)
    * lowdisc_dec2bin — Convert a decimal floating point integer into binary.
    * lowdisc_combinesum — Search 2D combinations with given sum.
    * lowdisc_subplotdecompose — Compute the rows and columns of a matrix of subplots
-   To update your code, please use the following steps:
+   To update your code, please use the following suggestions:
+   * In general, do not use the "slow" sequences, since the "fast" sequences 
+     provide the same point sets.
    * lowdisc_haltonnext : see demos/ld-macros/macros-halton.sce
    * lowdisc_sobolnext : see demos/ld-macros/macros-sobol.sce
    * lowdisc_sobolskip : see demos/ld-macros/macros-sobol.sce
@@ -95,7 +110,7 @@ lowdisc (Not released yet)
    
 y=lowdisc_dec2bin(x)
 
-  with
+with
 
 y=dec2bin(x)
 
@@ -151,8 +166,6 @@ with:
 
 lds = lowdisc_new("halton");
 
- * Greatly reduced the number of macros. 
-   This avoids to create unnecessary public functions.
  * Added scrambled Sobol sequence.
    This is available through the "-scrambling" option: 
    "Owen","Faure-Tezuka","Owen-Faure-Tezuka".
@@ -186,11 +199,6 @@ with:
   
 u=lowdisc_ldgen ( 1000 , 2 , "halton-reverse" );
 
- * Made the Halton Object Oriented, based on an updated C++ source code.
-   Now, two Halton sequences can be managed at the same time, 
-   without conflict.
-   Made the Sobol sequence OO.
-   Made the Faure sequence OO.
  
 lowdisc (v0.4)
  * Created lowdisc_combinesum.

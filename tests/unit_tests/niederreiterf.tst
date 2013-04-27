@@ -8,6 +8,20 @@
 // <-- JVM NOT MANDATORY -->
 // <-- ENGLISH IMPOSED -->
 
+// A word of caution !
+// In dimension 4, the programs GENIN and GENIN2 do produce the 
+// same results but in different orders:
+// GENIN GENIN2
+// #1    #1    
+// #2    #2    
+// #3    #4    
+// #4    #3    
+// #5    #8
+// #6    #7
+// #7    #5
+// #8    #6
+// etc...
+
 //
 // Check the Fast Niederreiter sequence 
 // Use base 2 - this is the default.

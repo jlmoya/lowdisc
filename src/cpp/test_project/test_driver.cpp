@@ -119,7 +119,7 @@ void testFaure ()
 
 void testNiederreiter ()
 {
-	
+	Niederreiter *seq;
 	int dim_num;
 	int index;
 	double quasi[3];
@@ -132,11 +132,11 @@ void testNiederreiter ()
 	dim_num=3;
 	base=2;
 	skip=0;
-	niederreiter_start (dim_num, base, skip , gfaritfile , gfplysfile );
+	seq = new Niederreiter(dim_num, base, skip , gfaritfile , gfplysfile );
 	index = 0;
 	for ( j = 0; j < 10; j++ )
 	{
-		niederreiter(quasi);
+		seq->next(quasi);
 		printf("x[%d]=",index);
 		for ( i = 0; i < dim_num; i++ )
 		{
@@ -144,7 +144,7 @@ void testNiederreiter ()
 		}
 		printf("\n");
 	}
-	niederreiter_stop ( );
+	delete seq;
 }
 
 int main ( void )

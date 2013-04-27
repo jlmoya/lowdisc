@@ -80,6 +80,7 @@ Low Discrepancy Sequence:
 method: faure
 Primeslist : [2,3,5,7,11,...] (100 entries)
 Maximum number of simulations = 2.147D+09
+Token = -1
 Dimension of space: 1
 Index: 0
 Verbose logging: F
@@ -112,6 +113,7 @@ Gfaritfile: TMPDIR\gfarit.txt
 Gfplysfile: TMPDIR\gfplys.txt
 Maximum dimension = 50
 Maximum number of simulations = 2.147D+09
+Token = -1
 Dimension of space: 1
 Index: 0
 Verbose logging: F
