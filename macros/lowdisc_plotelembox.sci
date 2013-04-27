@@ -17,7 +17,7 @@ function lowdisc_plotelembox(varargin)
     // u : a npoints-by-2 matrix of doubles, the point set to plot. Default is to plot no point set.
     // 
     // Description
-    // Plot the elementary interval with volume prod(b.^d). 
+    // Plot the elementary interval with volume 1/prod(b.^d). 
     // This interval has b(1)^d(1) divisions in direction 1 and 
     // b(2)^d(2) divisions in direction 2.
     //
@@ -29,7 +29,7 @@ function lowdisc_plotelembox(varargin)
     // If the point set u is provided, we plot it.
     //
     // Examples
-    // // Plot an elementary interval with volume 2^3
+    // // Plot an elementary interval with volume 1/2^3
     // lowdisc_plotelembox(2,[2 1])
     //
     // // Use a different basis for each direction.
@@ -37,7 +37,7 @@ function lowdisc_plotelembox(varargin)
     // scf();
     // lowdisc_plotelembox([2 3],[2 1])
     //
-    // // Plot all elementary intervals with volume b^m=2^3
+    // // Plot all elementary intervals with volume 1/b^m=1/2^3
     // b = 2;
     // m = 3;
     // C = [

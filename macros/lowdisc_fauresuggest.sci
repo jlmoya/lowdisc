@@ -1,3 +1,4 @@
+// Copyright (C) 2013 - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 1986 - Bennett Fox
@@ -48,7 +49,9 @@ function [nsim,skip,leap] = lowdisc_fauresuggest ( varargin )
   //
   //    We return skip = b^4 - 2.
   //    We compute k = max( 3 , ceil(log(nsimmin)/log(b)) ) so that the 
-  //    number of simulations is greater than nsimmin.
+  //    number of simulations is greater than nsimmin. 
+  //    This ensures good equidistribution of at least the three dimensionnal projections 
+  //    of the sequence. 
   //    We compute nsim = b^k.
   //    We return leap = 0.
   //

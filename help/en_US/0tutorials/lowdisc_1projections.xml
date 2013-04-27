@@ -280,12 +280,26 @@ lowdisc_proj2d ( u , k );
     </para>
 
     <para>
-      In the following example, we consider 300 points of the Faure 
-	  sequence in dimension 40,
-      and consider the projection (39,40)
+      This is consistent with the fact that, in s=40 dimensions,
+      the Faure sequence uses the prime number b=41 as the base.
+      Moreover, the Faure sequence in dimension s=40 is
+      a (0,40)-sequence in base b=41.
+      Consider now the projection (i,j), for i different from j. 
+      Consider elementary intervals from 41 subdivisions
+      in dimension i, 41 subdivisions in dimension j, and 
+      1 subdivision in the other dimensions.
+      There are 41*41=1681 intervals, each with volume 1/1681. 
+      Hence, if we consider a set of 1681 points, each such constructed 
+      elementary interval has one point. 
+      Since the previous figure has 2000>1681 points, all 2D projections 
+      of the Faure sequence in dimension s=40 are quite well distributed.
+    </para>
+
+    <para>
+      In the following example, we consider 300 points of the Faure
+      sequence in dimension 40, and consider the projection (39,40)
       as in "Computational Investigations of Low-Discrepancy Sequences",
-      Kocis, Whiten,
-      ACM Transactions on Mathematical Software,
+      Kocis, Whiten, ACM Transactions on Mathematical Software,
       Vol. 23, No. 2, June 1997, Pages 266-294.
     </para>
 
@@ -307,6 +321,11 @@ lowdisc_proj2d ( u , [39 40] );
 			/>
         </imageobject>
       </inlinemediaobject>
+    </para>
+
+    <para>
+      Since the number of points is 300 which is much smaller than 41*41=1681, 
+      the Faure sequence cannot evenly distribute the points in the space. 
     </para>
 
     <para>
@@ -333,7 +352,7 @@ lowdisc_proj2d ( u , [39 40] );
 
     <para>
       We see that the number of experiments has increased from 300
-      to 68921, which is significantly more.
+      to 68921, which is significantly more. 
     </para>
 
     <screen>
@@ -360,6 +379,10 @@ lowdisc_proj2d ( u , [39 40] );
 			/>
         </imageobject>
       </inlinemediaobject>
+    </para>
+
+    <para>
+      The number of points 68921=41*41*41, which guarantees good 3D projections. 
     </para>
 
     <para>
