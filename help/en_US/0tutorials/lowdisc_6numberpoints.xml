@@ -45,22 +45,22 @@
       Anyway, the Halton sequence has equidistribution properties which 
       can be used to select a proper number of points, depending on the 
       dimension of the problem and the properties of the low 
-      dimensionnal projections. 
+      dimensional projections. 
     </para>
     <para>
       Consider the Halton sequence in s dimensions and consider 
-      its one dimensionnal projections. 
-      The one dimensionnal projection which is the hardest to fill is the 
+      its one dimensional projections. 
+      The one dimensional projection which is the hardest to fill is the 
       one associated with the largest prime number, i.e. the s-th 
       prime number p(s). 
       Therefore let us focus on this projection. 
       We consider elementary intervals of length 1/p(s). 
       If the number of points N is equal to p(s), then each elementary 
-      interval of the s-th dimensionnal projection has one point. 
-      Since the first s-1 one dimensionnal projections are associated 
+      interval of the s-th dimensional projection has one point. 
+      Since the first s-1 one dimensional projections are associated 
       with smaller primes, they must contain more that one point. 
       In other words, in order to get good equidistribution of the 
-      one dimensionnal projections of the Halton sequence, we 
+      one dimensional projections of the Halton sequence, we 
       consider a number of points N equal to the prime number of the 
       largest dimension, i.e. p(s). 
     </para>
@@ -130,7 +130,7 @@ ylabel(msprintf("X(%d)",s));
 
     <para>
       The previous script produces the following output. 
-      We see that the elementary intervals of the one dimensionnal projection 
+      We see that the elementary intervals of the one dimensional projection 
       X(5) have one point, although the elementary intervals of X(4) have 1 to 2 points. 
     </para>
 
@@ -148,7 +148,7 @@ ylabel(msprintf("X(%d)",s));
 
     <para>
       Consider the Halton sequence in s dimensions and consider
-      its two dimensionnal projections.
+      its two dimensional projections.
       If we consider N=p(s-1)*p(s) points, i.e. the product 
       of the two largest primes used in the sequence, then the 
       elementary intervals of area A=1/N have one point. 
@@ -157,7 +157,7 @@ ylabel(msprintf("X(%d)",s));
     <para>
       The following script prints the number of points necessary 
       to have more than one point in the elementary intervals 
-      of the two dimensionnal projections of the Halton sequence. 
+      of the two dimensional projections of the Halton sequence. 
     </para>
     
     <programlisting role="example">
@@ -262,10 +262,10 @@ end
     <para>
       This produces the following output.
       For example, for N=1000 Halton points in s=8 dimensions,
-      the elementary intervals of the two dimensionnal projections 
+      the elementary intervals of the two dimensional projections 
       have one point.  
       For a number of dimensions larger than s=11, only the 
-      one dimensionnal projections are well equidistributed. 
+      one dimensional projections are well equidistributed. 
     </para>
     <screen>
       <![CDATA[
@@ -293,12 +293,12 @@ s=12, d=1
       b is the smallest prime number larger than s.
       This implies that the number of points in a Faure sequence
       should be chosen depending on b, so that the sequence has
-      good low dimensionnal projections.
+      good low dimensional projections.
       In order to assess the quality of these projections, we
       consider here the volume of the elementary intervals in base b.
     </para>
     <para>
-      The one dimensionnal projections of the Faure sequence are
+      The one dimensional projections of the Faure sequence are
       well distributed provided that the number of points is a multiple of b.
       Consider elementary intervals in one dimension, with length 1/b.
       If the number of points is N=b, therefore there is one point in
@@ -367,17 +367,17 @@ b=113, N=113, L=8.85e-003
       elementary intervals is reduced down to L=1/(b*b).
     </para>
     <para>
-      Let us now consider the two dimensionnal projections of the Faure
+      Let us now consider the two dimensional projections of the Faure
       sequence.
-      We must consider at least N=b*b points such that all two dimensionnal
+      We must consider at least N=b*b points such that all two dimensional
       elementary intervals of area A=1/(b*b) have at least one point.
       More points fill smaller elementary intervals, but less 
-      points do not allow to let the sequence fill all the two dimensionnal
+      points do not allow to let the sequence fill all the two dimensional
       intervals with one point.
     </para>
     <para>
       The following script prints the number of points N so that
-      all two dimensionnal elementary intervals with volume 1/(b*b) contain
+      all two dimensional elementary intervals with volume 1/(b*b) contain
       at least one point.
     </para>
     <programlisting role="example">
@@ -433,7 +433,7 @@ b=113, N=12769, A=7.83e-005
     <para>
       The following script shows how the N=121 first points of the
       Faure sequence in dimension s=10 are distributed on the two
-      dimensionnal projection (X(9),X(10)).
+      dimensional projection (X(9),X(10)).
       Since the base is b=11, we plot the elementary intervals of
       area 1/(11*11)=1/121.
       Each elementary interval has exactly one point.
@@ -469,7 +469,7 @@ ylabel(msprintf("X(%d)",s));
 
     <para>
       The following script prints the number of points N so that
-      all three dimensionnal elementary intervals with volume 1/(b*b*b) contain
+      all three dimensional elementary intervals with volume 1/(b*b*b) contain
       at least one point.
     </para>
 
@@ -525,7 +525,7 @@ b=113, N=1442897, V=6.93e-007
     </screen>
     <para>
       We can reverse the reasoning: with a given number of dimensions s and 
-      a given number of points N, what is the maximum number d of low dimensionnal 
+      a given number of points N, what is the maximum number d of low dimensional 
       projections that can be well distributed with a Faure sequence ?
       We have 
     </para>
@@ -557,10 +557,10 @@ end
     <para>
       The previous script prints the following output.
       For example, if s=15, the chosen base
-      is b=17, so that N=1000 points can have good up to d=2, i.e. two dimensionnal 
+      is b=17, so that N=1000 points can have good up to d=2, i.e. two dimensional 
       equidistribution properties, but not more.
       Actually, with N=1000 points, we cannot have good equidistribution of 
-      two dimensionnal projections for s greater than 31. 
+      two dimensional projections for s greater than 31. 
     </para>
     <screen>
       <![CDATA[
