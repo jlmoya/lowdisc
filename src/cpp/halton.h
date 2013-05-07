@@ -225,7 +225,7 @@ private:
 	// index=8, r=0.0625  
 	// index=9, r=0.5625  
 	// 
-	double Halton::vandercorput(int index, int base);
+	double vandercorput(int index, int base);
 
 	// halton_RR2Scrambling --
 	// Compute RR2 scrambling.
@@ -260,7 +260,7 @@ private:
 	// and σ3 to [0,4,2,1,3].
 	// [Note From MB : fixed error in the permutation - switched 
 	// 5 and 3].
-	void Halton::RR2Scrambling();
+	void RR2Scrambling();
 
 	// ReverseScrambling --
 	// Compute the Reverse Scrambling of Vandewoestyne and Cools
@@ -272,7 +272,7 @@ private:
 	// 0 2 1
 	// 0 5 4 3 2 1
 	// 0 7 6 5 4 3 2 1
-	void Halton::ReverseScrambling();
+	void ReverseScrambling();
 
 	// scrambledVDC --
 	// Returns the index-th element of a scrambled Van Der Corput 
@@ -297,7 +297,7 @@ private:
 	// index=8, r=0.4444444
 	// index=9, r=0.0740741
 	// 
-	double Halton::scrambledVDC(int index, int base, int * sigma);
+	double scrambledVDC(int index, int base, int * sigma);
 
 };
 

@@ -57,7 +57,8 @@ void lowdisc_message ( const string & str ) {
 }
 
 void lowdisc_error ( char * message ) {
-	lowdisc_message ( "Low Discrepancy Module Error !" );
+	char msg[]="Low Discrepancy Module Error !";
+	lowdisc_message(msg);
 	if (lowdisc_errorfunction==NULL) {
 		lowdisc_message ( message );
 		exit(1);

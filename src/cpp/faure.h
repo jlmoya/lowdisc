@@ -146,7 +146,7 @@ private:
 	//    Output, int BINOMIAL_TABLE[(M+1)*(N+1)], the table of binomial 
 	//    coefficients modulo QS.
 	//
-	int * Faure::binomial_table ( int qs, int m, int n );
+	int * binomial_table ( int qs, int m, int n );
 
 	//    I4_LOG_I4 returns the logarithm of an I4 to an I4 base.
 	//
@@ -202,10 +202,10 @@ private:
 	//    Output, int I4_LOG_I4, the integer part of the logarithm
 	//    base abs(J4) of abs(I4).
 	//
-	int Faure::i4_log_i4 ( int i4, int j4 );
+	int i4_log_i4 ( int i4, int j4 );
 
 	// Initialize private fields
-	void Faure::init ();
+	void init ();
 
 	// Private fields
 	int faure_dim_num;

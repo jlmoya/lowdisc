@@ -69,19 +69,19 @@ public:
 	//
 	//    Output, double quasi[DIM_NUM], the element of the sequence.
 	//
-	void Niederreiter::next ( double r[] );
+	void next ( double r[] );
 
 	// Returns the number of dimensions in the sequence
-	int Niederreiter::dim_num_get ( );
+	int dim_num_get ( );
 
 	// Returns the base of the sequence
-	int Niederreiter::base_get ( );
+	int base_get ( );
 
 	// Returns the skip of the sequence
-	int Niederreiter::skip_get ( );
+	int skip_get ( );
 
 	// Returns true if the sequence is started up
-	bool Niederreiter::isstart ( );
+	bool isstart ( );
 private:
 
 	//
@@ -236,7 +236,7 @@ private:
 	//    entry in TAB that is equal to N, or else -1 if no such value
 	//    was found.
 	//
-	int Niederreiter::find ( int n, int tab[], int i, int tab_max );
+	int find ( int n, int tab[], int i, int tab_max );
 	//
 	//  Purpose:
 	//
