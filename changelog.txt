@@ -1,6 +1,6 @@
 changelog of the Low Discrepancy Toolbox
 
-lowdisc (Not released yet)
+lowdisc (v0.5 - May 2013)
  * Fixed bug #1112:
    The Halton leaped sequence in dimension 2 had a huge flaw.
    http://forge.scilab.org/index.php/p/lowdisc/issues/1112/
