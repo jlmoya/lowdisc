@@ -19,10 +19,9 @@ The current prototype has the following features :
  * object oriented programming.
 
 Overview of sequences
- * The Halton sequence (classic, leaped or scrambled),
- * The Sobol sequence,
+ * The Halton sequence (classic, leaped, reverse or scrambled),
+ * The Sobol sequence (classic or scrambled),
  * The Faure sequence,
- * The Reverse Halton sequence of Vandewoestyne and Cools,
  * The Niederreiter arbitrary base sequence.
  
 See the overview in the help provided with this toolbox.
@@ -127,6 +126,7 @@ Thanks to Alan Cornet, Pierre Marechal for the technical help
 for this project.
 Thanks to Jean-Philippe Chancelier for finding bugs in the 
 source code of the gateway.
+Thanks to Jeanne Demgne for her feedback on this module.
 
 Internal Design
 ---------------
