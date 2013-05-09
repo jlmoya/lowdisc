@@ -91,7 +91,7 @@ lowdisc_plotbmbox(2,3)
     <para>
       Definition: (t,m,s)-net in base b.
       Let b&#8805;2, s&#8805;1 and 0&#8804;t&#8804;m be integers.
-      Then a point set with b^m points in <latex>[0,1]^s</latex> is a (t,m,s)-net
+      Then a point set with <latex>b^m</latex> points in <latex>[0,1]^s</latex> is a (t,m,s)-net
       in base b if every elementary interval in base b
       with volume <latex>1/b^{m-t}</latex> contains exactly <latex>b^t</latex> points.
     </para>
@@ -152,7 +152,7 @@ lowdisc_plotbmbox(2,3)
       </listitem>
       <listitem>
         <para>
-          Sobol sequence is a (t,s)-sequence in base 2 with t=O(slogs).
+          Sobol sequence is a (t,s)-sequence in base 2 with t=O(slog(s)).
           Sobol sequence use the same base b=2 for all dimensions.
         </para>
       </listitem>

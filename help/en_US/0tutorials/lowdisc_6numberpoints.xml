@@ -50,7 +50,7 @@
     <para>
       Consider the Halton sequence in s dimensions and consider 
       its one dimensional projections. 
-      The one dimensional projection which is the hardest to fill is the 
+      The one dimensional projection which has the largest cycle length is the 
       one associated with the largest prime number, i.e. the s-th 
       prime number p(s). 
       Therefore let us focus on this projection. 
@@ -118,7 +118,8 @@ p=number_primes100();
 s=5;
 p=number_primes100();
 N=p(s);
-u=lowdisc_ldgen(N,s,"halton");
+u=lowdisc_ldgen(N-1,s,"halton");
+u=[zeros(1,s);u];
 //
 scf();
 plot(u(:,s-1),u(:,s),"bo")
@@ -131,7 +132,9 @@ ylabel(msprintf("X(%d)",s));
     <para>
       The previous script produces the following output. 
       We see that the elementary intervals of the one dimensional projection 
-      X(5) have one point, although the elementary intervals of X(4) have 1 to 2 points. 
+      X(5) have one single point, although the elementary intervals of X(4) have 
+	  1 to 2 points because one full cycle has been performed for this prime number, 
+	  plus one partial cycle. 
     </para>
 
     <para>
@@ -205,7 +208,8 @@ s=20, N=4757, A=2.10e-004
 s=5;
 p=number_primes100();
 N=prod(p(s-1)*p(s));
-u=lowdisc_ldgen(N,s,"halton");
+u=lowdisc_ldgen(N-1,s,"halton");
+u=[zeros(1,s);u];
 //
 scf();
 plot(u(:,s-1),u(:,s),"bo")
@@ -217,7 +221,7 @@ ylabel(msprintf("X(%d)",s));
 
     <para>
       The previous script produces the following output.
-      Since N=p(s-1)*p(s), each elementary interval of the projection
+      Since the number of points is N=p(s-1)*p(s), each elementary interval of the projection
       (X(4),X(5)) contain more than one point, although other the elementary intervals
       of other projections may contain more than one point.
     </para>
@@ -289,8 +293,9 @@ s=12, d=1
     <title>Good number of points for the Faure sequence</title>
     <para>
       Consider the Faure sequence in s dimensions.
-      It is a (0,s)-net in base b, where
+      This is a (0,s)-net in base b, where
       b is the smallest prime number larger than s.
+      This implies that this is a (0,m,s) net in base b for any <latex>m\geq 0</latex>. 
       This implies that the number of points in a Faure sequence
       should be chosen depending on b, so that the sequence has
       good low dimensional projections.
@@ -300,9 +305,10 @@ s=12, d=1
     <para>
       The one dimensional projections of the Faure sequence are
       well distributed provided that the number of points is a multiple of b.
-      Consider elementary intervals in one dimension, with length 1/b.
-      If the number of points is N=b, therefore there is one point in
-      each elementary interval.
+	  Indeed, consider elementary intervals in one dimension, with length 1/b.
+	  We know that this is a (0,m,s) net in base b for m=1. 
+      Therefore, if the number of points is N=b, then there is one point in
+      each elementary interval. 
       The following script prints the number of points N=b such
       that each elementary of length L=1/b has one point.
     </para>
@@ -362,22 +368,26 @@ b=113, N=113, L=8.85e-003
       More points can be added to the sequence, keeping the
       good distribution of the points already generated.
       Moreover, the length of the elementary intervals can be made
-      smaller, provided that the number of points N is increased.
-      For example, if N=b*b-b extra points are computed, then the length of the
-      elementary intervals is reduced down to L=1/(b*b).
+      smaller, provided that the number of points N is increased. 
+      For example, if <latex>N=b^2-b</latex> extra points are computed, then the total 
+	  number of points is <latex>b^2</latex>. 
+	  However, we know that this is a (0,m,s) net in base b for m=2. 
+	  Then, the length of the 1D elementary intervals are reduced down 
+	  to <latex>L=1/b^2</latex>.
     </para>
     <para>
       Let us now consider the two dimensional projections of the Faure
       sequence.
-      We must consider at least N=b*b points such that all two dimensional
-      elementary intervals of area A=1/(b*b) have at least one point.
+      We must consider at least <latex>N=b^2</latex> points such that all two dimensional
+      elementary intervals of area <latex>A=1/b^2</latex> have at least one point.
+	  This is because we know that the Faure sequence is a (0,m,s) net in base b for m=2. 
       More points fill smaller elementary intervals, but less 
       points do not allow to let the sequence fill all the two dimensional
       intervals with one point.
     </para>
     <para>
       The following script prints the number of points N so that
-      all two dimensional elementary intervals with volume 1/(b*b) contain
+      all two dimensional elementary intervals with area <latex>A=1/b^2</latex> contain
       at least one point.
     </para>
     <programlisting role="example">

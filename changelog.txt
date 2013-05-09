@@ -1,5 +1,8 @@
 changelog of the Low Discrepancy Toolbox
 
+lowdisc (not released yet)
+ * Fixed details in the Tutorial "Choosing the number of points".
+
 lowdisc (v0.5 - May 2013)
  * Fixed bug #1112:
    The Halton leaped sequence in dimension 2 had a huge flaw.
