@@ -98,8 +98,9 @@ lowdisc_plotbmbox(2,3)
 
     <para>
       Comment: Smaller t provides a greater uniformity.
-      At best, we have t=0, for which the smallest volume <latex>1/b^m</latex>
-      is achieved, with 1 point by elementary interval.
+      At best, we have t=0, for which a point set of <latex>b^m</latex> points is 
+	  associated with elementary intervals with volume <latex>1/b^m</latex>, 
+      with 1 point by elementary interval.
     </para>
 
     <para>
