@@ -280,47 +280,33 @@ end
   </refsection>
 
   <refsection>
-    <title>Limitations</title>
+    <title>The zero</title>
 
     <para>
-      Two different sequences, fast (i.e. based on C compiled source codes),
-      of the same type (e.g. "sobolf" or "fauref"), cannot
-      be managed at the same time within this toolbox.
-      For example, before creating a new fast Sobol sequence,
-      we must destroy the current one.
-      In this section, we explain why this limitation occurs.
+      The zero vector is never produced by the low discrepancy 
+	  generators in this toolbox. 
+	  This allows to avoid problem when inverting a cumulated 
+	  distribution function, because the zero probability may 
+	  be associated with an infinite outcome (e.g. for the 
+	  multivariate normale distribution). 
     </para>
 
     <para>
-      Much work was devoted to the update of the library so that
-      the parameters of each sequence are clearly identified.
-      In the original Fortran 77 implementations, common blocks were
-      used to manage the state of the sequence throughout the calls.
-      In the original C source code, static variables, some of them
-      being local to some functions, were used.
-      In the original Matlab implementations, global variables were used.
-      In the current implementation, the parameters are clearly
-      identified.
+      However, in order to graphically show the low discrepancy properties 
+	  of some sequences, it may be useful to include the zero. 
+	  For example, the following code compute the first 100 points of the 
+	  Halton sequence in s=5 dimensions. 
+	  Then we use the <literal>zeros</literal> function in order 
+	  to insert the zero row vector at the start of the sequence.
     </para>
 
-    <para>
-      In the C-based sequences, each sequence has an associated
-      collection of variables declared as static variables at the
-      begining of each source code.
-      These variables are used consistently : there are no local static
-      variables anymore, but the global static variables are still
-      used.
-    </para>
-
-    <para>
-      This implementation of the fast sequences has one limitation:
-      it is not possible to
-      manage two sequences of the same type concurently (i.e. at the
-      same time).
-      In a future implementation, an update of the source code
-      will be necessary to use C++ classes.
-    </para>
-
+    <programlisting role="example">
+      <![CDATA[
+s=5;
+u=lowdisc_ldgen(10,s, "halton" );
+u = [zeros(1,s);u]
+   ]]>
+    </programlisting>
   </refsection>
 
   <refsection>
