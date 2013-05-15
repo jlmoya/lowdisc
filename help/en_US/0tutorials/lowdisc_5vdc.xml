@@ -44,7 +44,7 @@
 
     <para>
       <latex>
-        k=a_r b^r + ...+ a_2 b^2 + a_1 b + a_0
+        k=a_{r-1} b^{r-1} + ...+ a_2 b^2 + a_1 b + a_0
       </latex>
     </para>
 
@@ -58,7 +58,7 @@
 
     <para>
       <latex>
-        k=\sum_{i=0}^r a_i b^i.
+        k=\sum_{i=0}^{r-1} a_i b^i.
       </latex>
     </para>
 
@@ -69,7 +69,7 @@
 
     <para>
       <latex>
-        k=(a_r...a_2 a_1 a_0)_b
+        k=(a_{r-1}...a_2 a_1 a_0)_b
       </latex>
     </para>
 
@@ -79,7 +79,7 @@
 
     <para>
       <latex>
-        \psi_b(k)=\sum_{i=0}^r \frac{a_{i}}{b^{i+1}}.
+        \psi_b(k)=\sum_{i=0}^{r-1} \frac{a_{i}}{b^{i+1}}.
       </latex>
     </para>
 
@@ -89,7 +89,7 @@
 
     <para>
       <latex>
-        \psi_b(k)=\frac{a_0}{b} + \frac{a_1}{b^2} + .. + \frac{a_r}{b^{r+1}}.
+        \psi_b(k)=\frac{a_0}{b} + \frac{a_1}{b^2} + .. + \frac{a_{r-1}}{b^{r+1}}.
       </latex>
     </para>
 
@@ -99,14 +99,14 @@
 
     <para>
       <latex>
-        k=(0.a_0 a_1 a_2 ... a_r)_b
+        k=(0.a_0 a_1 a_2 ... a_{r-1})_b
       </latex>
     </para>
 
     <para>
-      In this function, the low order digits of k (with low values of i)
-      are in the high order digits of the radical inverse
-      (with large values of powers of 1/b).
+      In this function, the least significant digits of k (with small values of i)
+      are in the most significant digits of the radical inverse
+      (with small values of powers of 1/b).
     </para>
 
     <para>
@@ -143,15 +143,16 @@
 
     <programlisting role="example">
       <![CDATA[
-    b=2;
-    n=b^4;
-    u=lowdisc_ldgen(n,1,"halton");
-    for k=1:n
-        d=number_tobary(k,b);
-        dstr=strcat(string(d),"");
-        mprintf("k=%d=(%s)_%d, r=(0.%s)_%d=%f\n",..
-        k,dstr,b,dstr($:-1:1),b,u(k,1))
-    end
+b=2;
+n=b^4;
+u=lowdisc_ldgen(n,1,"halton");
+for k=1:n
+    d=number_tobary(k,b);
+    dstr=strcat(string(d),"");
+    drev=strcat(string(d($:-1:1)),"");
+    mprintf("k=%d=(%s)_%d, r=(0.%s)_%d=%f\n",..
+    k,dstr,b,drev,b,u(k,1))
+end
    ]]>
     </programlisting>
 
@@ -425,7 +426,7 @@ k=27=(1000)_3, r=(0.0001)_3=0.012346
 
     <para>
       <latex>
-        \psi_b(k)=\sum_{i=0}^r \frac{\sigma(a_{i})}{b^{i+1}}.
+        \psi_b(k)=\sum_{i=0}^{r-1} \frac{\sigma(a_{i})}{b^{i+1}}.
       </latex>
     </para>
 
