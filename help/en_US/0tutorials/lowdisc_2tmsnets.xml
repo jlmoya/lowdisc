@@ -195,22 +195,19 @@ lowdisc_plotbmbox(2,3)
     <screen>
       s                   14 15 16 17 18 19 20
       Niederreiter (b=2)  38 43 48 53 58 63 68
-	  Sobol               40 45 50 55 60 65 71
+      Sobol               40 45 50 55 60 65 71
     </screen>
     <screen>
       s                  21 22 23 24  25  26  27  28  29  30
       Niederreiter (b=2) 73 78 83 89  95 101 107 113 119 125
-	  Sobol              77 83 89 95 101 107 113 119 125 131
+      Sobol              77 83 89 95 101 107 113 119 125 131
     </screen>
     <screen>
       s                  31  32  33  34  35  36  37  38  39  40
-	  Sobol             137 143 149 155 161 167 173 180 187 194
+      Sobol             137 143 149 155 161 167 173 180 187 194
     </screen>
 
   </refsection>
-
-    
-    
     
   <refsection>
     <title>Discrepancy</title>
