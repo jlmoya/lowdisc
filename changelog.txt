@@ -2,6 +2,10 @@ changelog of the Low Discrepancy Toolbox
 
 lowdisc (not released yet)
  * Fixed details in the Tutorial "Choosing the number of points".
+ * Added a demo of a Gray Code.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1176/
+ * Added demo to compute t parameter of Sobol sequence.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1177/
 
 lowdisc (v0.5 - May 2013)
  * Fixed bug #1112:

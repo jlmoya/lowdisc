@@ -8,6 +8,8 @@ demopath = get_absolute_file_path("lowdisc.dem.gateway.sce");
 subdemolist = [
 "Macros Generators", fullfile("ld-macros","ld-macros.dem.gateway.sce"); ..
 "Van Der Corput", "demo_vandercorput.sce"; ..
+"Gray Code", "gray-code.sce"; ..
+"Sobol t", "sobol-t.sce"; ..
 "bench_ldgen", "bench_ldgen.sce"; ..
 "Faure dim. 3", "test_faure.dim3.sce"; ..
 "Faure dim. 4", "test_fauref.dim4.sce"; ..
