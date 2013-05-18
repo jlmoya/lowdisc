@@ -105,7 +105,7 @@ xtitle("Convergence rate","Number of Simulations",..
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="mcVsQmc-convergence.png"
+          fileref ="../figures/mcVsQmc-convergence.png"
           align ="center"
           valign ="middle"
 			/>
@@ -215,7 +215,7 @@ xtitle("Quasi Monte-Carlo versus Monte-Carlo",..
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="qmc-ishigami.png"
+          fileref ="../figures/qmc-ishigami.png"
           align ="center"
           valign ="middle"
 			/>

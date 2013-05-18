@@ -505,7 +505,7 @@ lowdisc_proj2d(u,[25 26])
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="niederreiter-s26-n1000.png"
+          fileref ="../figures/niederreiter-s26-n1000.png"
           align ="center"
           valign ="middle"
 			/>
@@ -596,7 +596,7 @@ xtitle("1000 Points","Number of dimensions",..
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="badcorr1.png"
+          fileref ="../figures/badcorr1.png"
           align ="center"
           valign ="middle"
 			/>
@@ -649,7 +649,7 @@ xtitle("1000 Points","Number of dimensions",..
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="badcorr2.png"
+          fileref ="../figures/badcorr2.png"
           align ="center"
           valign ="middle"
 			/>

@@ -200,7 +200,7 @@ xtitle("Van Der Corput Sequence (base 2)",..
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="vandercorput-base2.png"
+          fileref ="../figures/vandercorput-base2.png"
           align ="center"
           valign ="middle"
 			/>
@@ -236,7 +236,7 @@ xtitle("Halton: 1000 points","X1","X2")
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="halton-s2-n1000.png"
+          fileref ="../figures/halton-s2-n1000.png"
           align ="center"
           valign ="middle"
 			/>
@@ -271,7 +271,7 @@ xtitle("Scrambled Halton: 1000 points","X1","X2")
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="halton-RR2-s2-n1000.png"
+          fileref ="../figures/halton-RR2-s2-n1000.png"
           align ="center"
           valign ="middle"
 			/>
@@ -306,7 +306,7 @@ xtitle("Leaped Halton: 1000 points","X1","X2")
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="halton-leaped-s2-n1000.png"
+          fileref ="../figures/halton-leaped-s2-n1000.png"
           align ="center"
           valign ="middle"
 			/>
@@ -336,7 +336,7 @@ xtitle("Reverse-Halton: 1000 points","X1","X2")
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="reversehalton-s2-n1000.png"
+          fileref ="../figures/reversehalton-s2-n1000.png"
           align ="center"
           valign ="middle"
 			/>
@@ -366,7 +366,7 @@ xtitle("Sobol: 1000 points","X1","X2")
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="sobol-s2-n1000.png"
+          fileref ="../figures/sobol-s2-n1000.png"
           align ="center"
           valign ="middle"
 			/>
@@ -396,7 +396,7 @@ xtitle("Faure: 1000 points","X1","X2")
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="faure-s2-n1000.png"
+          fileref ="../figures/faure-s2-n1000.png"
           align ="center"
           valign ="middle"
 			/>
@@ -426,7 +426,7 @@ xtitle("Niederreiter: 1000 points","X1","X2")
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="niederreiter-s2-n1000.png"
+          fileref ="../figures/niederreiter-s2-n1000.png"
           align ="center"
           valign ="middle"
 			/>
@@ -503,7 +503,7 @@ xtitle("Owen-Faure-Tezuka Scrambled Sobol","X1","X2");
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="sobol-scrambled-s2-n100.png"
+          fileref ="../figures/sobol-scrambled-s2-n100.png"
           align ="center"
           valign ="middle"
 			/>
@@ -601,7 +601,7 @@ xstring(0.5,0.5,"Faure: 1000 points")
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="niederreiter-s3-n1000.png"
+          fileref ="../figures/niederreiter-s3-n1000.png"
           align ="center"
           valign ="middle"
 			/>
@@ -613,7 +613,7 @@ xstring(0.5,0.5,"Faure: 1000 points")
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="sobol-s3-n1000.png"
+          fileref ="../figures/sobol-s3-n1000.png"
           align ="center"
           valign ="middle"
 			/>
@@ -625,7 +625,7 @@ xstring(0.5,0.5,"Faure: 1000 points")
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="faure-s3-n1000.png"
+          fileref ="../figures/faure-s3-n1000.png"
           align ="center"
           valign ="middle"
 			/>

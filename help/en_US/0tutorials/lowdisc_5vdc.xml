@@ -197,7 +197,7 @@ k=16=(10000)_2, r=(0.00001)_2=0.031250
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="vandercorput-base2.png"
+          fileref ="../figures/vandercorput-base2.png"
           align ="center"
           valign ="middle"
 			/>
@@ -301,7 +301,7 @@ k=27=(1000)_3, r=(0.0001)_3=0.012346
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="vandercorput-base3.png"
+          fileref ="../figures/vandercorput-base3.png"
           align ="center"
           valign ="middle"
 			/>
@@ -327,7 +327,7 @@ k=27=(1000)_3, r=(0.0001)_3=0.012346
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="vandercorput-base5.png"
+          fileref ="../figures/vandercorput-base5.png"
           align ="center"
           valign ="middle"
 			/>

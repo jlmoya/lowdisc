@@ -141,7 +141,7 @@ ylabel(msprintf("X(%d)",s));
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="halton-s5-n11.png"
+          fileref ="../figures/halton-s5-n11.png"
           align ="center"
           valign ="middle"
 			/>
@@ -230,7 +230,7 @@ ylabel(msprintf("X(%d)",s));
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="halton-s5-n77.png"
+          fileref ="../figures/halton-s5-n77.png"
           align ="center"
           valign ="middle"
 			/>
@@ -469,7 +469,7 @@ ylabel(msprintf("X(%d)",s));
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="faure-2D-s10-n121.png"
+          fileref ="../figures/faure-2D-s10-n121.png"
           align ="center"
           valign ="middle"
 			/>
