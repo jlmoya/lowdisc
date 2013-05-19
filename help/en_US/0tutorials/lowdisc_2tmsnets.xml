@@ -103,12 +103,12 @@ lowdisc_plotbmbox(2,3)
     </para>
 
     <para>
-      A smaller base b is preferable because it requires <latex>b^m</latex> points 
+      A smaller base b should be favored because it requires <latex>b^m</latex> points 
 	  for the property to show up. 
 	  Also, when t decreases, the volume of the associated elementary intervals 
 	  decreases, i.e. even small elementary intervals contain the right number of 
 	  points. 
-	  In other words, smaller t provides a greater uniformity.
+	  In other words, a smaller t parameter provides a greater uniformity.
     </para>
 	
     <para>

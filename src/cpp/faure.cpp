@@ -191,9 +191,12 @@ void Faure::next ( int *seed, double quasi[] )
 	//
 	//  Find QUASI(1) using the method of Faure.
 	//
+	//  Decompose SEED into base QS.
 	//  SEED has a representation in base QS of the form: 
 	//
 	//    Sum ( 0 <= J <= HISUM ) YTEMP(J) * QS**J
+	//
+	// i.e. YTEMP[0] is the less significant digit.
 	//
 	//  We now compute the YTEMP(J)'s.
 	//

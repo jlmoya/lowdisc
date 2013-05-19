@@ -482,6 +482,66 @@ xtitle("Sobol : 1000 points","X11","X36")
       </inlinemediaobject>
     </para>
 
+    <para>
+      In the following example, we plot the projection 
+	  (5,22) of <latex>N=2^{12}</latex> and <latex>N=2^{13}</latex> 
+	  points of the Sobol sequence in s=22 dimensions. 
+	  This example is presented in : Joe, S., Kuo, F.Y. (2008). 
+      Constructing Sobol' sequences with better two-dimensional 
+      projections. SIAM Journal on Scientific Computing, 
+      30(5), 2635-2654. 
+	  We consider <latex>2^{m-t}=2^4*2^2=2^6</latex> elementary intervals, 
+	  with <latex>2^4</latex> divisions in the dimension X5 
+	  and <latex>2^2</latex> divisions in the dimension X22. 
+	  For this projection, the quality parameter t is 7. 
+	  Hence, we need <latex>2^m=2^{6+7}=2^{13}</latex> points 
+	  to make so that each elementary interval contain 
+	  <latex>2^t=2^7</latex> points.
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+h=scf();
+subplot(2,1,1);
+//
+s=22;
+m=12;
+r = [4 2];
+N=b^m;
+u=lowdisc_ldgen(N-1,s,"sobol");
+u=[zeros(1,s);u];
+plot(u(:,5),u(:,22),"b.")
+lowdisc_plotelembox([b b],r)
+xtitle(msprintf("Volume=1/2^%d, %d Points",m,N),"X5","X22")
+//
+subplot(2,1,2);
+m=13;
+N=b^m;
+u=lowdisc_ldgen(N-1,s,"sobol");
+u=[zeros(1,s);u];
+plot(u(:,5),u(:,22),"b.")
+lowdisc_plotelembox([b b],r)
+xtitle(msprintf("Volume=1/2^%d, %d Points",m,N),"X5","X22")
+//
+h.children(1).isoview="off";
+h.children(2).isoview="off";
+h.children(1).children($).children.mark_size=2;
+h.children(2).children($).children.mark_size=2;
+   ]]>
+    </programlisting>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/sobol-s22-proj5-22.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
   </refsection>
   
   <refsection>

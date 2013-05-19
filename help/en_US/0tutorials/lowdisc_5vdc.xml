@@ -44,7 +44,7 @@
 
     <para>
       <latex>
-        k=a_{r-1} b^{r-1} + ...+ a_2 b^2 + a_1 b + a_0
+        k=a_{r-1}(k) b^{r-1} + ...+ a_2(k) b^2 + a_1(k) b + a_0(k)
       </latex>
     </para>
 
@@ -58,7 +58,7 @@
 
     <para>
       <latex>
-        k=\sum_{i=0}^{r-1} a_i b^i.
+        k=\sum_{i=0}^{r-1} a_i(k) b^i.
       </latex>
     </para>
 
@@ -79,7 +79,7 @@
 
     <para>
       <latex>
-        \psi_b(k)=\sum_{i=0}^{r-1} \frac{a_{i}}{b^{i+1}}.
+        \psi_b(k)=\sum_{i=0}^{r-1} a_{i}(k)b^{-i-1}.
       </latex>
     </para>
 
@@ -89,7 +89,7 @@
 
     <para>
       <latex>
-        \psi_b(k)=\frac{a_0}{b} + \frac{a_1}{b^2} + .. + \frac{a_{r-1}}{b^{r+1}}.
+        \psi_b(k)=a_0(k)b^{-1} + a_1(k)b^{-2} + .. + a_{r-1}(k)b^{-r-1}.
       </latex>
     </para>
 
@@ -110,12 +110,12 @@
     </para>
 
     <para>
-      The base-b Van Der Corput sequence is
+      The base-b Van Der Corput sequence is 
     </para>
 
     <para>
       <latex>
-        \psi_b(0), \psi_b(1), \psi_b(2), ...
+        x_i=\psi_b(i), \qquad i \geq 0.
       </latex>
     </para>
 
@@ -426,7 +426,7 @@ k=27=(1000)_3, r=(0.0001)_3=0.012346
 
     <para>
       <latex>
-        \psi_b(k)=\sum_{i=0}^{r-1} \frac{\sigma(a_{i})}{b^{i+1}}.
+        \psi_b(k)=\sum_{i=0}^{r-1} \frac{\sigma(a_{i}(k))}{b^{i+1}}.
       </latex>
     </para>
 
