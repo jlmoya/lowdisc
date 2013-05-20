@@ -226,6 +226,7 @@ k=16=(10000)_2, r=(0.00001)_2=0.031250
       Therefore, when we use a point set which is a power of two, 
 	  we have a regular discretization of the [0,1] interval. 
     </para>
+	
   </refsection>
 
   <refsection>
@@ -347,6 +348,87 @@ k=27=(1000)_3, r=(0.0001)_3=0.012346
       to larger values (near 1).
       This is because it takes b iterations for the the least significant digits
       to go from 0 to b-1.
+    </para>
+
+  </refsection>
+  <refsection>
+    <title>Sub-sequences</title>
+    <para>
+	  The subsequence of points with indices <latex>ib^r,...,(i+1)b^r-1</latex>, 
+	  for i=0,1,...,b-1 also have particular properties, as shown in the following 
+	  figures. 
+    </para>
+	
+    <programlisting role="example">
+      <![CDATA[
+s=3;
+b=5;
+npoints=b^2;
+u=lowdisc_ldgen(npoints,s,"halton");
+u=[zeros(1,s);u];
+u=u(:,s);
+scf();
+for i=0:b-1
+    indices=i*npoints/b+1:(i+1)*npoints/b;
+    plot(u(indices)',i,"bo")
+    xstring(u(indices)',i,string(indices))
+end
+a = gca();
+a.data_bounds=[
+0 -1
+1 b
+];
+st=msprintf("Van Der Corput Sequence, Base %d, %d Points",b,npoints);
+xtitle(st,"X","Block Index")
+   ]]>
+    </programlisting>
+	
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/vandercorput-b2-n4.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/vandercorput-b2-n8.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/vandercorput-b2-n16.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/vandercorput-b5-n25.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
     </para>
 
   </refsection>

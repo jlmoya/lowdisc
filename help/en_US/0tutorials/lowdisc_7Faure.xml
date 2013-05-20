@@ -385,6 +385,7 @@ end
 
     <programlisting role="example">
       <![CDATA[
+b=3;
 s=3;
 u=lowdisc_ldgen(3^3,3,"faure");
 u=[zeros(1,s);u];
