@@ -1,4 +1,4 @@
-// Copyright (C) 2012 - Michael Baudin
+// Copyright (C) 2012-2013 - Michael Baudin
 //
 // This file must be used under the terms of the GNU LGPL license.
 //
@@ -52,11 +52,16 @@ function lowdisc_plotelembox(varargin)
     //     lowdisc_plotelembox(b,C(i,:));
     // end
     //
+    // // Plot the Halton sequence in 2 dimensions
+    // scf();
+    // u=lowdisc_ldgen(2*3^2,2,"halton");
+    // lowdisc_plotelembox([2 3],[1 2],u)
+    //
     // Bibliography
     // "Random number generation and quasi-Monte Carlo methods", H. Niederreiter, CBMS-NSF Series in Applied Mathematics, No. 63, SIAM, Philadelphia, 1992.
     //
     // Authors
-    // Copyright (C) 2012 - Michael Baudin
+    // Copyright (C) 2012-2013 - Michael Baudin
 
     [lhs,rhs]=argn()
     apifun_checkrhs ( "lowdisc_plotelembox" , rhs , 2:3 )

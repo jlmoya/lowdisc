@@ -89,7 +89,7 @@
 
     <para>
       <latex>
-        \psi_b(k)=a_0(k)b^{-1} + a_1(k)b^{-2} + .. + a_{r-1}(k)b^{-r-1}.
+        \psi_b(k)=a_0(k)b^{-1} + a_1(k)b^{-2} + .. + a_{r-1}(k)b^{-r}.
       </latex>
     </para>
 
@@ -352,36 +352,84 @@ k=27=(1000)_3, r=(0.0001)_3=0.012346
 
   </refsection>
   <refsection>
-    <title>Sub-sequences</title>
+    <title>Properties</title>
     <para>
-	  The subsequence of points with indices <latex>ib^r,...,(i+1)b^r-1</latex>, 
-	  for i=0,1,...,b-1 also have particular properties, as shown in the following 
-	  figures. 
+	  The Van Der Corput sequence is a (0,1)-sequence. 
+    
+	</para>
+	
+    <para>
+	  Hence, for any m &#8805; 0, consider the point set with 
+	  indices <latex>kb^m,...,(k+1)b^m-1</latex>, 
+	  for k=0,1,...,b-1. 
+      Then, any elementary interval of length <latex>1/b^m</latex> contains 
+	  exactly one point. 
+	  For m=0, this just implies that the points are in the [0,1] interval. 
+    </para>
+	
+    <para>
+	  In the following script, we consider the Van Der Corput point sets for the 
+	  base b=5. 
+	  This is just the third dimension of the Halton sequence. 
+	  For m=1, we consider the previously defined point sets and plot the 
+	  limits of the intervals of length <latex>1/b^m</latex>. 
+	  Then we plot the point sets, for k=0,1,...,b-1. 
     </para>
 	
     <programlisting role="example">
       <![CDATA[
 s=3;
 b=5;
-npoints=b^2;
-u=lowdisc_ldgen(npoints,s,"halton");
+m=1;
+u=lowdisc_ldgen(b^(m+1),s,"halton");
 u=[zeros(1,s);u];
 u=u(:,s);
 scf();
-for i=0:b-1
-    indices=i*npoints/b+1:(i+1)*npoints/b;
-    plot(u(indices)',i,"bo")
-    xstring(u(indices)',i,string(indices))
+// Plot the limits
+for i=1:b^m
+    x=i/b^m;
+    plot([x x],[0 b-1],"r-")
+end
+// Plot the point sets
+for k=0:b-1
+    indices=k*b^m+1:(k+1)*b^m;
+    plot(u(indices)',k,"bo")
+    xstring(u(indices)',k,string(indices))
 end
 a = gca();
 a.data_bounds=[
-0 -1
-1 b
+0 -0.5
+1 b-0.5
 ];
-st=msprintf("Van Der Corput Sequence, Base %d, %d Points",b,npoints);
+a.isoview="off";
+st=msprintf("Van Der Corput Sequence, Base %d, %d Points",b,b^(m+1));
 xtitle(st,"X","Block Index")
    ]]>
     </programlisting>
+	
+    <para>
+	  The previous script produces the following output. 
+	  We check that each point set has exactly one point in each 
+	  elementary interval, with the convention that the intervals 
+	  are closed on the left and open on the right.
+    </para>
+	
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/vandercorput-b5-n25.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+	  When we set <literal>s=1</literal> and <literal>b=2</literal>, 
+	  we get the Van Der Corput sequence in base b=2. 
+    </para>
 	
     <para>
       <inlinemediaobject>
@@ -417,271 +465,6 @@ xtitle(st,"X","Block Index")
 			/>
         </imageobject>
       </inlinemediaobject>
-    </para>
-
-    <para>
-      <inlinemediaobject>
-        <imageobject>
-          <imagedata
-          fileref ="../figures/vandercorput-b5-n25.png"
-          align ="center"
-          valign ="middle"
-			/>
-        </imageobject>
-      </inlinemediaobject>
-    </para>
-
-  </refsection>
-
-  <refsection>
-    <title>Halton Sequence</title>
-
-    <para>
-      The Hammersley sequence (1960) uses the Van Der Corput sequence
-      in order to create a low discrepancy point set.
-      However, the number of points in the Hammersley sequence must be know
-      in advance, which is sometimes an issue.
-      The Halton sequence (1964) uses the Van Der Corput sequence without
-      this limitation, and this is why it is used more often.
-    </para>
-
-    <para>
-      The Halton sequence in s dimensions uses s
-      different bases which must be relatively primes.
-      We usually use the s first prime numbers: 2, 3, 5, 7, 11, etc...
-    </para>
-
-    <para>
-      Denote by p(i) the i-th prime number.
-      The dimension i of the Halton sequence is
-      the Van Der Corput in base p(i).
-      Hence, the k-th element of the Halton sequence is
-    </para>
-
-    <para>
-      <latex>
-        x_k=(\psi_{p_1}(k),\psi_{p_2}(k),...,\psi_{p_s}(k))
-      </latex>
-    </para>
-
-    <para>
-      for k&#8805;0.
-    </para>
-
-    <para>
-      The following script produces 10 points of the Halton sequence
-      in 4 dimensions.
-      The prime number used here are: 2, 3, 5, 7.
-    </para>
-
-    <screen>
-      <![CDATA[
--->u=lowdisc_ldgen(9,4,"halton")
- u  =
-    0.5       0.3333333    0.2     0.1428571  
-    0.25      0.6666667    0.4     0.2857143  
-    0.75      0.1111111    0.6     0.4285714  
-    0.125     0.4444444    0.8     0.5714286  
-    0.625     0.7777778    0.04    0.7142857  
-    0.375     0.2222222    0.24    0.8571429  
-    0.875     0.5555556    0.44    0.0204082  
-    0.0625    0.8888889    0.64    0.1632653  
-    0.5625    0.0370370    0.84    0.3061224  
-   ]]>
-    </screen>
-
-  </refsection>
-
-  <refsection>
-    <title>Scrambled Halton Sequence</title>
-
-    <para>
-      In high dimensions, the Halton sequence poorly
-      fills the space, as can be seen in low dimensionnal projections.
-      In order to improve this, Braaten and Weller (1979) suggest to scramble
-      the digits in the Halton sequence, in order to break correlations.
-    </para>
-
-    <para>
-      The permuted radical inverse function is
-    </para>
-
-    <para>
-      <latex>
-        \psi_b(k)=\sum_{i=0}^{r-1} \frac{\sigma(a_{i}(k))}{b^{i+1}}.
-      </latex>
-    </para>
-
-    <para>
-      where &#963; is a given permutation.
-    </para>
-
-    <para>
-      For a given base b, the permutation does not change the values
-      of the points in the sequence:
-      only the ordering of the points changes.
-      However, since each dimension has a specific base b, the
-      multidimensionnal point set of a scrambled sequence is, in general,
-      different from the unscrambled point set.
-    </para>
-
-    <para>
-      The following function computes the scrambled Van Der Corput
-      radical inverse function.
-    </para>
-
-    <programlisting role="example">
-      <![CDATA[
-function r = scrambleVDC(index,b,sigma)
-    current = index
-    ib = 1.0 / b
-    r = 0.0
-    while (current>0)
-        digit = modulo ( current , b )
-        digit=sigma(digit+1)
-        current = int ( current / b )
-        r = r + digit * ib
-        ib = ib / b
-    end
-endfunction
-   ]]>
-    </programlisting>
-
-    <para>
-      For example, the base-3 Van Der Corput sequence can be associated
-      with the permutation [0,2,1].
-      The following script computes the first ten points of
-      this scrambled sequence.
-    </para>
-
-    <programlisting role="example">
-      <![CDATA[
-sigma=[0,2,1];
-b=3;
-for index=1:10
-    r = scrambleVDC(index,b,sigma);
-    mprintf("index=%d, r=%f\n",index,r)
-end
-   ]]>
-    </programlisting>
-
-    <para>
-      The previous script produces the following output.
-    </para>
-
-    <screen>
-      <![CDATA[
-index=1, r=0.666667
-index=2, r=0.333333
-index=3, r=0.222222
-index=4, r=0.888889
-index=5, r=0.555556
-index=6, r=0.111111
-index=7, r=0.777778
-index=8, r=0.444444
-index=9, r=0.074074
-index=10, r=0.740741
-   ]]>
-    </screen>
-
-    <para>
-      In their paper, Braaten and Weller provide the permutations
-      for dimensions up to 16.
-    </para>
-
-    <screen>
-      <![CDATA[
-2 (0 1)
-3 (0 2 1)
-5 (0 3 1 4 2)
-7 (0 4 2 6 1 5 3)
-11 (0 5 8 2 10 3 6 1 9 7 4)
-13 (0 6 10 2 8 4 12 1 9 5 11 3 7)
-etc...
-   ]]>
-    </screen>
-
-    <para>
-      The issue here is that the limited size of the
-      table provided by Braaten and Weller limit the practical use of the
-      algorithm.
-      Tuffin (1996) provides improved algorithms to expand this tables
-      (and to improve the permutations as well), but this works has
-      two issues.
-      First, the permutations are computed by taking all dimensions
-      into account, and not dimension-by-dimension as in
-      Braaten and Weller.
-      This has the advantage of improving the permutations, but has
-      the drawback of making the tables larger.
-      Secondly, Tuffin published the algorithm, but not the permutations.
-    </para>
-
-    <para>
-      Kocis and Whiten (1979) provide a simple algorithm to generate
-      permutations for the Halton sequence.
-      Their RR2 algorithm uses the Van Der Corput sequence in base 2 and
-      reverses the digits, removing the integers that are too large.
-      A more detailed description is presented in Lemieux (2009).
-      This algorithm has no strong theoretical basis, but works
-      efficiently.
-    </para>
-
-    <para>
-      The following function computes the RR2 scrambling
-      for the i-th dimension of a point set with <literal>s</literal> dimensions,
-      using the bases in the matrix <literal>b</literal>.
-    </para>
-
-    <programlisting role="example">
-      <![CDATA[
-function sigma=RR2Scrambling(s, i, b)
-    ns=ceil(log(b(s))/log(2))
-    sigma=[];
-    u=lowdisc_ldgen(2^ns,1,"halton")
-    u=[0;u]
-    for k=1:2^ns
-        sigmak=u(k)*2^ns
-        if (sigmak<b(i)) then
-            sigma($+1)=sigmak;
-        end
-    end
-endfunction
-   ]]>
-    </programlisting>
-
-    <para>
-      The following script prints the RR2 scrambling
-      used for a point set in 3 dimensions.
-    </para>
-
-    <programlisting role="example">
-      <![CDATA[
-s=3;
-primemat=number_primes100();
-b=primemat(1:s);
-for i=1:s
-    sigma=RR2Scrambling(s,i,b);
-    sigmastr=strcat(string(sigma),",");
-    mprintf("i=%d, [%s]\n",i,sigmastr);
-end
-   ]]>
-    </programlisting>
-
-    <para>
-      The previous script produces the following output.
-    </para>
-
-    <screen>
-      <![CDATA[
-i=1, [0,1]
-i=2, [0,2,1]
-i=3, [0,4,2,1,3]
-   ]]>
-    </screen>
-
-    <para>
-      This feature is provided by the "-scrambling" option of the
-      <literal>lowdisc_configure</literal> function.
     </para>
 
   </refsection>
@@ -727,6 +510,10 @@ i=3, [0,4,2,1,3]
       Christiane Lemieux, 2009
     </para>
 
+    <para>
+      Distribution Properties of Generalized Van Der Corput Sequences, 
+      Andrea Wohlfarter, September 10, 2009
+    </para>
   </refsection>
 </refentry>
 

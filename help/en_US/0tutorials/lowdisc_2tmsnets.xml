@@ -41,15 +41,20 @@
     <para>
       Definition: Elementary interval in one dimension.
       Let b be the base, with b&#8805;2.
-      An elementary interval in base b is an interval <latex>[a/b^d,(a+1)/b^d]</latex>
+      An elementary interval in base b is an interval <latex>[a/b^d,(a+1)/b^d)</latex>
       with integers a and d such that d&#8805;0 and 0&#8804; a &lt; b^d.
+    </para>
+
+    <para>
+      Notice that the elementary interval are closed on the left and 
+	  open on the right.
     </para>
 
     <para>
       Definition: Elementary interval in base b in s dimensions.
       Let b be the base, with b&#8805;2.
       An elementary interval in base b of the hypercube <latex>[0,1]^s</latex> is an interval
-      <latex>[a_i/b^d_i,(a_i+1)/b^d_i]</latex>
+      <latex>[a_i/b^d_i,(a_i+1)/b^d_i)</latex>
       with integers a_i and d such that d&#8805;0 and 0&#8804; a_i &lt; b^d_i,
       for i=1,2,...,s.
     </para>

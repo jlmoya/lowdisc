@@ -311,6 +311,10 @@ u(:,2)
     0.3703704  
    ]]>
     </screen>
+  </refsection>
+
+  <refsection>
+    <title>Properties of 1D projections</title>
 
     <para>
       The following script computes the elements of the first 27 
@@ -410,6 +414,7 @@ for j=1:s
 end
    ]]>
     </programlisting>
+	
     <para>
       <inlinemediaobject>
         <imageobject>
@@ -421,6 +426,85 @@ end
         </imageobject>
       </inlinemediaobject>
     </para>
+  </refsection>
+
+  <refsection>
+    <title>Value of the prime base</title>
+
+    <para>
+      One potential advantage of the Faure sequence over the Halton 
+	  sequence is that the prime base is much smaller than the 
+	  largest prime used in the Halton sequence. 
+	  This is the prime number used by the s-th component of the 
+	  sequence. 
+	  This is because, in s dimensions, the Halton sequence uses 
+	  the prime numbers p(1),p(2),...,p(s), while the Faure 
+	  sequence only uses the smallest prime larger or equal to n.
+    </para>
+
+    <para>
+      The following script compares the base used by the Faure 
+	  sequence for s=1,2,...,100 and compare it to the largest 
+	  base used by the Halton sequence. 
+    </para>
+
+    <programlisting role="example">
+      <![CDATA[
+p=number_primes100();
+scf();
+plot(1:100,p,"r-")
+b=[];
+for n=1:100
+    k=find(p>n,1);
+    b(n)=p(k);
+end
+plot(1:100,b,"b-")
+legend(["Halton Largest Base" "Faure Base"]);
+xtitle("","Number of Dimensions","Prime Base")
+   ]]>
+    </programlisting>
+	
+    <para>
+      We can see that the Halton sequence can make use of 
+	  much larger bases, which potentially leads to much 
+	  larger number cycles. 
+    </para>
+
+    <para>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata
+          fileref ="../figures/faure-base.png"
+          align ="center"
+          valign ="middle"
+			/>
+        </imageobject>
+      </inlinemediaobject>
+    </para>
+
+    <para>
+      However, the lowest components of the Halton sequence 
+	  may make use of potentially much smaller bases than the 
+	  equivalent Faure sequence. 
+	  Indeed, if the user of a Halton sequence orders the 
+	  variables so that the most important variables come 
+	  first, then the Halton sequence can potentially lead 
+	  to better results. 
+	  On the other hand, the Faure sequence does not favor 
+	  any component, which may be safer in the general situation where 
+	  we do not know in advance which variable may be important. 
+    </para>
+
+  </refsection>
+
+  <refsection>
+    <title>Bibliography</title>
+
+    <para>
+      "Monte-Carlo methods in Financial Engineering", Paul Glasserman,
+      Springer, 2003
+    </para>
+
   </refsection>
 </refentry>
 
