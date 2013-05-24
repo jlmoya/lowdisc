@@ -1,0 +1,182 @@
+% Copyright (C) 2013 - Michael Baudin
+%
+% This file must be used under the terms of the 
+% Creative Commons Attribution-ShareAlike 3.0 Unported License :
+% http://creativecommons.org/licenses/by-sa/3.0/
+
+    \chapter{The Van Der Corput sequence}
+
+\section{Example}
+
+In this section, we present an exemple which shows how particular 
+segments of the Van Der Corput behave. 
+These segments are chosen so that they match the properties 
+of $(t,s)$-sequences. 
+
+Let $m,k\geq 0$ be two integers, let $b$ be 
+a prime number and consider the 
+elements on the Van Der Corput sequence in base $b$ 
+with indices $i=kb^m,...,(k+1)b^m-1$. 
+The following script presents the Van Der Corput 
+sequence in base $b=2$ and considers $m=5$ and $k=13$. 
+We first decompose the integer $i$ into base $b=2$. 
+
+\lstset{language=scilabscript}
+\begin{lstlisting}
+b=2;
+m=5;
+u=lowdisc_ldgen(1000,1,"halton");
+k=13;
+for i=k*b^m:(k+1)*b^m-1
+    d=number_tobary(i,b)';
+    mprintf("i=%d=(%s)\n",i,strcat(string(d),","))
+end
+\end{lstlisting}
+
+The previous script produces the following output. 
+\lstset{language=scilabscript}
+\begin{lstlisting}
+i=416=(1,1,0,1,0,0,0,0,0)
+i=417=(1,1,0,1,0,0,0,0,1)
+i=418=(1,1,0,1,0,0,0,1,0)
+i=419=(1,1,0,1,0,0,0,1,1)
+i=420=(1,1,0,1,0,0,1,0,0)
+[...]
+i=443=(1,1,0,1,1,1,0,1,1)
+i=444=(1,1,0,1,1,1,1,0,0)
+i=445=(1,1,0,1,1,1,1,0,1)
+i=446=(1,1,0,1,1,1,1,1,0)
+i=447=(1,1,0,1,1,1,1,1,1)
+\end{lstlisting}
+
+We see that the 9 bits are required to decompose these 
+integers into base 2. 
+The four first bits are $(1,1,0,1)$, which 
+is explained by the fact that $k=13=2^3+2^2+2^0$. 
+The bits from 5 to 9 are all the possible bits in the set $\{0,1\}$. 
+
+Then we decompose the i-th element of the Van Der Corput sequence 
+\scivar{u(i)} into base $b=2$, printing the first 10 digits 
+(the remaining low order digits are all zero).
+
+\lstset{language=scilabscript}
+\begin{lstlisting}
+for i=k*b^m:(k+1)*b^m-1
+    d=flps_tobary(u(i),b,10)';
+    mprintf("u(i)=%f=(%s)\n",u(i),strcat(string(d),","))
+end
+\end{lstlisting}
+
+The previous script produces the following output. 
+
+\lstset{language=scilabscript}
+\begin{lstlisting}
+u(416)=0.021484375=(0,0,0,0,0,0,1,0,1,1)
+u(417)=0.521484375=(0,1,0,0,0,0,1,0,1,1)
+u(418)=0.271484375=(0,0,1,0,0,0,1,0,1,1)
+u(419)=0.771484375=(0,1,1,0,0,0,1,0,1,1)
+[...]
+u(444)=0.240234375=(0,0,0,1,1,1,1,0,1,1)
+u(445)=0.740234375=(0,1,0,1,1,1,1,0,1,1)
+u(446)=0.490234375=(0,0,1,1,1,1,1,0,1,1)
+u(447)=0.990234375=(0,1,1,1,1,1,1,0,1,1)
+\end{lstlisting}
+
+For example, the decomposition of 0.521484375 is 
+$1/2+1/2^6+1/2^8+1/2^9$.
+
+We see that the 4 low order bits are $(1,0,1,1)$, 
+which are the reverse bits of the decomposition of $k$. 
+The bits from 2 to 6 are all the possible bits in the set $\{0,1\}$. 
+
+\section{Property}
+
+\begin{proposition}
+\label{vdc-01net}
+The Van Der Corput sequence is a $(0,1)$-sequence.
+\end{proposition}
+
+\begin{proof}
+Let a be an integer in the set $\{0,1,...,b^m-1\}$.
+Let $I=[a/b^m,(a+1)/b^m)$ be an elementary interval. 
+Its length is $1/b^m$. 
+Let $k \geq 0$ be an integer. 
+Let us prove that there is a unique $i$ in the set $\{kb^m,...,(k+1)b^m-1\}$  
+such that $\phi(i) \in I$, where $\phi(i)$ is the i-th element 
+of the Van Der Corput sequence in base $b$.
+Let $a(0),a(1),...,a(m-1) \in \{0,1,...,b-1\}$ be the $m$ digits 
+of the base-b decomposition of a:
+\begin{eqnarray}
+a=a(0) b^{m-1}+...+a(m-2) b+a(m-1).
+\end{eqnarray}
+Notice that the digits are ordered from the highest to the lowest 
+significant digits. 
+Let $a(m),a(m+1),...,a(m+r-1) \in \{0,1,...,b-1\}$ be the 
+$r$ digits of the base-b decomposition of $k$ in base $b$:
+\begin{eqnarray}
+k=a(m+r-1)b^{r-1}+...+a(m+1)b+a(m). \label{vdc-01netdefk}
+\end{eqnarray}
+Notice that the digits are ordered from the lowest to the highest 
+significant digits.
+Let us introduce:
+\begin{eqnarray}
+t&=&\frac{a}{b^m} \\
+ &=&\frac{a(0)}{b}+\frac{a(1)}{b^2}+...+\frac{a(m-1)}{b^m} \\
+\end{eqnarray}
+and
+\begin{eqnarray}
+x&=&\frac{a(m)}{b}+\frac{a(m+1)}{b^2}+...+\frac{a(m+r-1)}{b^r}.
+\end{eqnarray}
+Notice that $t$ is uniquely defined from the digits arising from the 
+base-b decomposition of $a$ while $x$ is uniquely defined from the digits 
+arising from the base-b decomposition of $k$. 
+Consider the number 
+\begin{eqnarray}
+y&=&t+\frac{x}{b^m} \\
+ &=&\frac{a(0)}{b}+\frac{a(1)}{b^2}+...+\frac{a(m-1)}{b^m} \nonumber \\
+  &&+\frac{a(m)}{b^{m+1}}+\frac{a(m+1)}{b^{m+2}}+...+\frac{a(m+r-1)}{b^{m+r}}
+  \label{vdc-01netdefy}
+\end{eqnarray}
+Obviously $x\geq 0$. 
+Moreover, 
+\begin{eqnarray}
+x &\leq& \frac{b-1}{b}+\frac{b-1}{b^2}+...+\frac{b-1}{b^r} \\
+  &   <& 1.
+\end{eqnarray}
+Indeed, this is a geometric series:
+\begin{eqnarray}
+\frac{b-1}{b}+\frac{b-1}{b^2}+...+\frac{b-1}{b^r}
+&=& \frac{b-1}{b}(1+\frac{1}{b}+\frac{1}{b^2}+...+\frac{1}{b^{r-1}} \\
+&=& \frac{b-1}{b} \frac{1-\frac{1}{b^r}}{1-\frac{1}{b}} \\
+&=& \frac{b-1}{b} \frac{1-\frac{1}{b^r}}{\frac{b-1}{b}} \\
+&=& 1-\frac{1}{b^r} \\
+&<& 1.
+\end{eqnarray}
+Therefore, $x \in [0,1)$. 
+Hence, $a+x \in [a,a+1)$ so that $a/b^m+x/b^m \in I$. 
+But $t=\frac{a}{b^m}$, which implies $t+x/b^m=y \in I$. 
+In order to conclude the proof, we recognize that $y$ 
+is the i-th element of the Van Der Corput sequence in base b, 
+for a particular value of $i$. 
+To see this value of $i$, we just reverse the digits 
+of the definition of $y$ from the equation \ref{vdc-01netdefy}. 
+This leads to 
+\begin{eqnarray}
+i &=& a(m+r-1) b^{m+r-1}+...+a(m+1) b^{m+1}+a(m) b^m \nonumber \\
+  & & a(m-1)b^{m-1}+...+a(1)b+a(0) \\
+  &=& \left( a(m+r-1) b^{r-1}+...+a(m+1) b+a(m)\right) b^m \nonumber \\
+  & & a(m-1)b^{m-1}+...+a(1)b+a(0) \\
+  &=& kb^m+a(m-1)b^{m-1}+...+a(1)b+a(0),
+\end{eqnarray}
+where the last equality is implied by the equation \ref{vdc-01netdefk}.
+Moreover, 
+$$
+a(m-1) b^{m-1}+...+a(1) b+a(0) \in \{0,...,b^m-1\}. 
+$$
+Hence 
+$$
+i \in \{b^m,...,b^m+b^m-1\}=\{b^m,...,(k+1)b^m-1\}.
+$$
+We have computed the unique i such that 
+$y=\phi(i)$ is in I, which concludes the proof
+\end{proof}
