@@ -51,8 +51,8 @@
     <para>
       In the following example, we consider the projection of dimensions (28,29)
       as in "On the optimal Halton sequence",
-      Chi, Mascagnib, Warnock
-      Mathematics and Computers in Simulation 70 (2005) 9?21
+      Chi, Mascagni, Warnock
+      Mathematics and Computers in Simulation 70 (2005) 9-21
       The paper contains an error : the faulty projection is
       (28,29) (primes 107,109) and not (27,28) (primes 103,107).
     </para>
@@ -373,7 +373,7 @@ lowdisc_proj2d ( u , [39 40] );
       <inlinemediaobject>
         <imageobject>
           <imagedata
-          fileref ="../figures/faure-n300-proj39-40.png"
+          fileref ="../figures/faure-n68921-proj39-40.png"
           align ="center"
           valign ="middle"
 			/>

@@ -30,9 +30,7 @@
 
     
       In the following example, we consider the projection of dimensions (28,29)
-      as in "On the optimal Halton sequence",
-      Chi, Mascagnib, Warnock
-      Mathematics and Computers in Simulation 70 (2005) 9?21
+      as in \cite{Chi:2005:OHS:1744084.1744136}. 
       The paper contains an error : the faulty projection is
       (28,29) (primes 107,109) and not (27,28) (primes 103,107).
     
@@ -250,7 +248,7 @@ The previous script produces the figure \ref{fig-faure-proj21-20}.
       Consider elementary intervals from 41 subdivisions
       in dimension i, 41 subdivisions in dimension j, and 
       1 subdivision in the other dimensions.
-      There are 41*41=1681 intervals, each with volume 1/1681. 
+      There are $41^2=1681$ intervals, each with volume 1/1681. 
       Hence, if we consider a set of 1681 points, each such constructed 
       elementary interval has one point. 
       Since the previous figure has 2000>1681 points, all 2D projections 
@@ -280,16 +278,11 @@ The previous script produce the figure \ref{fig-faure-proj39-40}.
 \caption{The Faure sequence - 300 points in 40 dimensions. Projection (39,40).}
 \label{fig-faure-proj39-40}
 \end{figure}
-    
 
-    
-      Since the number of points is 300 which is much smaller than 41*41=1681, 
-      the Faure sequence cannot evenly distribute the points in the space. 
-    
+Since the number of points is 300 which is much smaller than $41^2=1681$, 
+the Faure sequence cannot evenly distribute the points in the space. 
 
-    
-      We check what is the behavior with more favorable parameters. 
-    
+We check what is the behavior with more favorable parameters. 
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
