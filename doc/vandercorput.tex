@@ -6,6 +6,8 @@
 
     \chapter{The Van Der Corput sequence}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Introduction}
 
       Let $k\geq 0$ be an integer and let b be a prime number.
@@ -56,13 +58,15 @@ $$
         \psi_b(0)=0.
 $$
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Van Der Corput sequence in base 2}
 
-      The Van Der Corput sequence in base 2 is just the first component
-      of the Halton sequence.
-      The following script considers the numbers k from
-      zero to 9, decompose them in base 2 and compute the
-      k-th element of the Van Der Corput sequence in base 2.
+The Van Der Corput sequence in base 2 is just the first component
+of the Halton sequence.
+The following script considers the numbers k from
+zero to 9, decompose them in base 2 and compute the
+k-th element of the Van Der Corput sequence in base 2.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -141,7 +145,9 @@ k=16=(10000)_2, r=(0.00001)_2=0.031250
       Therefore, when we use a point set which is a power of two, 
 	  we have a regular discretization of the [0,1] interval. 
 
-	  <title>Van Der Corput sequence in base 3</title>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Van Der Corput sequence in base 3}
 
       To get the Van Der Corput sequence in base 3, we just use
       the second dimension of the Halton sequence in two dimensions.
@@ -247,6 +253,8 @@ k=27=(1000)_3, r=(0.0001)_3=0.012346
       to go from 0 to b-1.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Properties}
 
 	  The Van Der Corput sequence is a (0,1)-sequence.    
@@ -340,6 +348,8 @@ xtitle(st,"X","Block Index")
 \label{fig-vandercorput-b2-n16}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Example}
 
 In this section, we present an exemple which shows how particular 
@@ -422,6 +432,8 @@ $1/2+1/2^6+1/2^8+1/2^9$.
 We see that the 4 low order bits are $(1,0,1,1)$, 
 which are the reverse bits of the decomposition of $k$. 
 The bits from 2 to 6 are all the possible bits in the set $\{0,1\}$. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Property}
 

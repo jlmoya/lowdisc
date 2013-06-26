@@ -6,8 +6,10 @@
 
     \chapter{Nets}
 
-\section{Definitions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Definitions}
+\label{sec-tmsnets-definitions}
     
       Definition: Elementary interval in one dimension.
       Let b be the base, with $b\geq 2$.
@@ -103,6 +105,8 @@ x_{kb^m},x_{kb^m+1},...,x_{(k+1)b^m-1},
 $$  
       which has $b^m$ points, is a (t,m,s)-net in base b.
     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Theorems}
 
 In this section, we present the main properties of low discrepancy 
@@ -133,9 +137,10 @@ sequences in terms of (t,m,s)-nets.
 
     
       The following table presents the quality parameters t of binary (t,s)-sequences.
-      For Sobol sequence, this is the table in section 3.4 of [6], 
+      For Sobol sequence, this is the table in section 3.4 of \cite{rBRA88c}, 
 	  extended with personal computations.
-      We consider here the Niederreiter sequence in base 2 (see table II in [5]).
+      We consider here the Niederreiter sequence in base 2 
+	  (see table II in \cite{Niederreiter1988}).
     
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -160,6 +165,8 @@ sequences in terms of (t,m,s)-nets.
       s                  31  32  33  34  35  36  37  38  39  40
       Sobol             137 143 149 155 161 167 173 180 187 194
 \end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Discrepancy}
     
@@ -198,6 +205,8 @@ $$
 $$
         D^\star_n(x)=\sup_{P\in I^\star} \left| \frac{1}{n}A(P,x(n)) - \lambda(P) \right|.
 $$    
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Estimate of the mean by a low discrepancy sequence}
 
@@ -242,7 +251,8 @@ $$
     
       The following table presents the constant C(b,s,t) for several
       sequences.
-      This is the table 4.2 in [1].
+      This is the table 4.2 in \cite{Thiemard2000} (Section 4.6 "Les (t,s)-suites 
+	  et les (t,m,s)-reseaux. and Fig 4.7).
     
 
 \lstset{language=scilabscript}
@@ -254,7 +264,18 @@ Faure    0.26  0.13  0.099  0.025  0.019  0.0041  0.0089  2.1x10-3  4.2x10-4
 Nieder.  0.26  0.13  0.086  0.025  0.019  0.0041  0.0030  6.1x10-4  4.2x10-4
 \end{lstlisting}
 	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Halton sequence}
+
+In this section, we show how the Halton sequence fill elementary intervals 
+for which the $i$-th side has length equal to $1/b_i$, where 
+$b_i$ is the prime number associated with the $i$-th coordinate. 
+
+In the following script, we consider the first $2^2\times 3=12$ points of the 
+Halton sequence in two dimensions. 
+Then we consider elementary intervals of area $1/12$, where 
+the sides of the intervals have length equal to $1/2^2$ and $1/3$. 
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -278,31 +299,34 @@ h = gca();
 h.isoview="off";
    \end{lstlisting}
     
-      <inlinemediaobject>
-        <imageobject>
-          <imagedata
-          fileref ="../figures/halton-n12.png"
-          align ="center"
-          valign ="middle"
-			/>
-        </imageobject>
-      </inlinemediaobject>
-    
+The previous script produces the figure \ref{fig-halton-n12}.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=15cm]{figures/halton-n12.png}
+\end{center}
+\caption{The Halton sequence : 12 points with elementary intervals of volume 1/6.}
+\label{fig-halton-n12}
+\end{figure}
+
+We see that there are exactly $6/12=2$ points in each interval. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Faure sequence}
-    
-      In dimension s=2, the Faure sequence uses the base 2. 
-      Moreover, the Faure sequence is a (0,2)-sequence in base 2 
-      (i.e. the quality parameter t is zero). 
-      We choose m=4, and check that Faure is a (0,4,2)-net in base 2. 
-      Hence, we have to consider $b^m=2^4=16$ points and check that 
-      there are $b^t=1$ points for any elementary interval of volume 
-      $1/b^m=1/16$.
-    
-    
-      Plot $2^4=16$ Faure points (insert zero) and
-      plot elementary intervals with volume $1/2^4=1/16$
-      there is 1 point by box.
-    
+\label{sec-tmsnetfaure}
+
+In dimension s=2, the Faure sequence uses the base 2. 
+Moreover, the Faure sequence is a (0,2)-sequence in base 2 
+(i.e. the quality parameter t is zero). 
+We choose m=4, and check that Faure is a (0,4,2)-net in base 2. 
+Hence, we have to consider $b^m=2^4=16$ points and check that 
+there are $b^t=1$ points for any elementary interval of area 
+$1/b^m=1/16$.
+
+This is why in the following script, we consider $2^4=16$ 
+Faure points and plot elementary intervals with area $1/2^4=1/16$. 
+We want to check that there is 1 point by elementary interval.    
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -324,10 +348,9 @@ The previous script produces the figure \ref{fig-faure-n16-v16}.
     
 
     
-      Plot $2^4=16$ Faure points (insert zero) and
-      plot elementary intervals with volume $1/2^3=1/8$:
-      there are 2 points by box.
-    
+In the following script, we consider $2^4=16$ Faure points in two dimensions 
+and plot elementary intervals with area $1/2^3=1/8$:
+there are 2 points by box.   
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -349,11 +372,10 @@ lowdisc_plotbmbox(2,3,u);
     
 
     
-      Plot 16 Faure points and plot elementary intervals
-      with volume $1/8$ : there are two points by interval.
-      Moreover, the first 8 points fill all intervals (1 point by interval),
-      while the points from 9 to 16 again fill the intervals. 
-    
+In the following script, we consider 16 Faure points in two dimensions 
+and plot elementary intervals with volume $1/8$ : there are two points by interval.
+Moreover, the first 8 points fill all intervals (1 point by interval),
+while the points from 9 to 16 again fill the intervals. 
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -410,14 +432,15 @@ h.isoview="off";
 \end{figure}
     
     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \section{Niederreiter base 2 sequence}
 
-    
-      Plot elementary intervals with Niederreiter (base 2) points (insert zero)
-      Plot elementary intervals with volume $2^4$:
-      2 points by elementary interval.
-      Niederreiter is a (0,5,2)-net in base 2
+In the following script, we consider $2^5=32$ Niederreiter (base 2) points 
+in two dimensions and plot elementary intervals with area $2^4$:
+there are 2 points by elementary interval. 
+Indeed, Niederreiter is a (0,5,2)-net in base 2
     
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -427,23 +450,22 @@ scf();
 lowdisc_plotbmbox(2,4,u);
     \end{lstlisting}
     
-    
-      <inlinemediaobject>
-        <imageobject>
-          <imagedata
-          fileref ="../figures/nieder-n32-v16.png"
-          align ="center"
-          valign ="middle"
-			/>
-        </imageobject>
-      </inlinemediaobject>
-    
+The previous script produces the figure \ref{fig-nieder-n32-v16}.
 
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=15cm]{figures/nieder-n32-v16.png}
+\end{center}
+\caption{The Niederreiter sequence : 32 points in 2 dimensions, with 
+elementary intervals of area $1/16$.}
+\label{fig-nieder-n32-v16}
+\end{figure}
     
-      Plot elementary intervals with Niederreiter (base 2) points (insert zero)
-      Plot elementary intervals with volume $2^3$:
-      4 points by elementary interval.
-      Niederreiter is a (0,5,2)-net in base 2
+    
+In the following script, we consider $2^5=32$ Niederreiter (base 2) points in 
+two dimensions and plot elementary intervals with area $2^3=8$:
+there are 4 points by elementary interval.
+Indeed, Niederreiter is a (0,5,2)-net in base 2
     
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -453,28 +475,30 @@ scf();
 lowdisc_plotbmbox(2,3,u);
 \end{lstlisting}
 
+The previous script produces the figure \ref{fig-nieder-n32-v8}.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=15cm]{figures/nieder-n32-v8.png}
+\end{center}
+\caption{The Niederreiter sequence : 32 points in 2 dimensions, with 
+elementary intervals of area $1/8$.}
+\label{fig-nieder-n32-v8}
+\end{figure}
 
   
-    <inlinemediaobject>
-      <imageobject>
-        <imagedata
-        fileref ="../figures/nieder-n32-v8.png"
-        align ="center"
-        valign ="middle"
-			/>
-      </imageobject>
-    </inlinemediaobject>
-  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \section{Sobol sequence}
 
     
-      Sobol is a (0,4,2)-net in base 2.
-      Get $2^4=16$ points (insert zero).
-      Plot boxes with volume $2^4$.
-      There is 1 point by elementary interval.
-      Use $2^2$ subdivisions for X1,
-      $2^2$ subdivisions for X2.
+Sobol is a (0,4,2)-net in base 2. 
+To check this, we consider $2^4=16$ Sobol points in two dimensions, 
+and plot elementary intervals with area $1/16$: 
+there is 1 point by elementary interval.
+To plot the elementary intervals, we use $2^2$ subdivisions for $X_1$,
+and $2^2$ subdivisions for $X_2$.
     
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -485,24 +509,23 @@ lowdisc_plotbmbox(2,4,u);
     \end{lstlisting}
 
     
-      <inlinemediaobject>
-        <imageobject>
-          <imagedata
-          fileref ="../figures/sobol-n16-v16.png"
-          align ="center"
-          valign ="middle"
-			/>
-        </imageobject>
-      </inlinemediaobject>
-    
+The previous script produces the figure \ref{fig-sobol-n16-v16}.
 
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=15cm]{figures/sobol-n16-v16.png}
+\end{center}
+\caption{The Sobol sequence : 16 points in 2 dimensions, with 
+elementary intervals of area $1/16$.}
+\label{fig-sobol-n16-v16}
+\end{figure}
     
-      Sobol is a (0,5,2)-net in base 2.
-      Get $2^6$ points (insert zero)
-      Plot boxes with volume $2^5$.
-      There are two points by elementary interval.
-      Use $2^3$ subdivisions for X1,
-      $2^2$ subdivisions for X2.
+Sobol is a (0,5,2)-net in base 2.
+In order to check this, we consider $2^6=64$ Sobol points in two dimensions 
+and plot elementary intervals with area $1/32$:
+there are two points by elementary interval. 
+The elementary intervals tse $2^3$ subdivisions for $X_1$ 
+and $2^2$ subdivisions for $X_2$.
     
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -516,27 +539,30 @@ lowdisc_plotelembox(2,[3 2]);
 xtitle("Sobol, Volume=1/32, 64 Points");
     \end{lstlisting}
 
-    
-      <inlinemediaobject>
-        <imageobject>
-          <imagedata
-          fileref ="../figures/sobol-n64-v32.png"
-          align ="center"
-          valign ="middle"
-			/>
-        </imageobject>
-      </inlinemediaobject>
-    
+The previous script produces the figure \ref{fig-sobol-n64-v32}.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=15cm]{figures/sobol-n64-v32.png}
+\end{center}
+\caption{The Sobol sequence : 64 points in 2 dimensions, with 
+elementary intervals of area $1/32$.}
+\label{fig-sobol-n64-v32}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 \section{Leaped sequences and (t,m,s)-nets}
     
-      A common practice is to use a leaped sequence to 
-      improve the correlations in high dimensions. 
-      However, we may notice that a leaped sequence 
-      may lead to a set which is not a (t,m,s)-net anymore.
-    
-    
-      For example, let's see the first 12 points of a leaped
-      Halton sequence. 
+A common practice is to use a leaped sequence to 
+improve the correlations in high dimensions. 
+However, we may notice that a leaped sequence 
+may lead to a set which is not a (t,m,s)-net anymore.
+
+For example, let's see the first 12 points of a leaped
+Halton sequence in two dimensions, and consider elementary intervals with area 
+$1/12$. 
     
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -560,27 +586,25 @@ h.isoview="off";
     \end{lstlisting}
 
     
-      Although the unleaped Halton sequence had exactly 1 point
-      by elementary interval, the leaped Halton sequence is not
-      as regular : some intervals are empty (the top left on the left
-      figure), some intervals have more points than expected 
-      (the bottom left on the left figure).
-    
+The previous script produces the figure \ref{fig-halton-leaped-s2}.
+Although the unleaped Halton sequence had exactly 1 point
+by elementary interval, the leaped Halton sequence is not
+as regular : some intervals are empty (the top left on the left
+figure), some intervals have more points than expected 
+(the bottom left on the left figure).
+
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=15cm]{figures/halton-leaped-s2.png}
+\end{center}
+\caption{The leaped Halton sequence : 12 points in 2 dimensions, 
+with elementary intervals of area $1/6$.}
+\label{fig-halton-leaped-s2}
+\end{figure}
 
     
-      <inlinemediaobject>
-        <imageobject>
-          <imagedata
-          fileref ="../figures/halton-leaped-s2.png"
-          align ="center"
-          valign ="middle"
-			/>
-        </imageobject>
-      </inlinemediaobject>
-    
-
-    
-      The same phenomenon may happen with a leaped Faure sequence. 
+The same phenomenon may happen with a leaped Faure sequence. 
     
 
 \lstset{language=scilabscript}
@@ -596,14 +620,25 @@ scf();
 lowdisc_plotbmbox(2,4,u);
     \end{lstlisting}
     
-    
-      <inlinemediaobject>
-        <imageobject>
-          <imagedata
-          fileref ="../figures/faure-leaped-s2.png"
-          align ="center"
-          valign ="middle"
-			/>
-        </imageobject>
-      </inlinemediaobject>
-    
+The previous script produces the figure \ref{fig-faure-leaped-s2}.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=15cm]{figures/faure-leaped-s2.png}
+\end{center}
+\caption{The leaped Faure sequence : $2^4=16$ points in 2 dimensions, 
+with elementary intervals of area $1/16$.}
+\label{fig-faure-leaped-s2}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Notes and references}
+
+Most of the content of the section  \ref{sec-tmsnets-definitions} is 
+based on Niederreiter's \cite{Niederreiter1992}. 
+This is also partly based on Glasserman's \cite{Glasserman2003}, 
+especially section 5.1.4 "Nets and sequences", and Fig. 5.3, page 292.
+Some of the pictures in the section \ref{sec-tmsnetfaure} can be seen 
+in \cite{Seng1997}.
+
