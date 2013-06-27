@@ -42,7 +42,6 @@ scf();
 lowdisc_proj2d ( u , [28 29] );
 // Compute the correlation coefficient for dimensions (28,29)
 corrcoef ( [u(:,28) u(:,29)] )
-
 \end{lstlisting}
 
     
@@ -93,7 +92,7 @@ lowdisc_proj2d ( u , [28 29] );
     
       In the following example, we consider the projection of Halton
       sequence in dimensions (39,40)
-      as suggested by Kocis and Whiten \cite{Kocis:1997:CIL:264029.264064}.
+      as suggested by Kocis and Whiten \cite{Kocis1997}.
     
 
 \lstset{language=scilabscript}
@@ -108,8 +107,7 @@ corrcoef ( [u(:,39) u(:,40)] )
     
       The previous script produces the following output.
     
-
-    <screen>
+\lstset{language=scilabscript}
 \begin{lstlisting}
 -->corrcoef ( [u(:,39) u(:,40)] )
  ans  =
@@ -182,7 +180,6 @@ c(k(1),k(2))
 // Print this projection
 scf();
 lowdisc_proj2d ( u , k );
-
 \end{lstlisting}
 
 The previous script produces the figure \ref{fig-halton-proj35-36}.
@@ -226,7 +223,6 @@ c(k(1),k(2))
 // Print this projection
 scf();
 lowdisc_proj2d ( u , k );
-
 \end{lstlisting}
 
 The previous script produces the figure \ref{fig-faure-proj21-20}.
@@ -258,7 +254,7 @@ The previous script produces the figure \ref{fig-faure-proj21-20}.
     
       In the following example, we consider 300 points of the Faure
       sequence in dimension 40, and consider the projection (39,40)
-      as suggested by Kocis and Whiten \cite{Kocis:1997:CIL:264029.264064}.
+      as suggested by Kocis and Whiten \cite{Kocis1997}.
     
 
 \lstset{language=scilabscript}
@@ -266,7 +262,6 @@ The previous script produces the figure \ref{fig-faure-proj21-20}.
 u=lowdisc_ldgen ( 300 , 40 , "faure" );
 scf();
 lowdisc_proj2d ( u , [39 40] );
-
 \end{lstlisting}
 
 The previous script produce the figure \ref{fig-faure-proj39-40}.
@@ -299,20 +294,17 @@ lds = lowdisc_startup (lds);
 lds = lowdisc_destroy(lds);
 scf();
 lowdisc_proj2d ( u , [39 40] );
-
   \end{lstlisting}
 
     
       We see that the number of experiments has increased from 300
       to 68921, which is significantly more. 
     
-
-    <screen>
+\lstset{language=scilabscript}
 \begin{lstlisting}
 -->size(u)
  ans  =
     68921.    40.  
-
   \end{lstlisting}
 
     
@@ -337,7 +329,7 @@ lowdisc_proj2d ( u , [39 40] );
     
       In order to keep the number of experiments constant, we might be 
       interested in using the \scivar{leap} option.
-      Following Kocis and Whithen \cite{Kocis:1997:CIL:264029.264064}, 
+      Following Kocis and Whithen \cite{Kocis1997}, 
       we may try a leaped Faure sequence. 
       We try the leap L=5.
     
@@ -390,7 +382,6 @@ u=lowdisc_ldgen(1000,30,"sobol");
 scf();
 lowdisc_proj2d(u,[16 23])
 xtitle("Sobol : 1000 points","X16","X23")
-
 \end{lstlisting}
 
 The previous script produces the figure \ref{fig-sobol-s23-proj16-23}.
@@ -414,7 +405,6 @@ u=lowdisc_ldgen(1000,36,"sobol");
 scf();
 lowdisc_proj2d(u,[11 36])
 xtitle("Sobol : 1000 points","X11","X36")
-
 \end{lstlisting}
 
 The previous script produces the figure \ref{fig-sobol-s36-proj11-36}.
@@ -469,7 +459,6 @@ h.children(1).isoview="off";
 h.children(2).isoview="off";
 h.children(1).children($).children.mark_size=2;
 h.children(2).children($).children.mark_size=2;
-
 \end{lstlisting}
 
 The previous script produces the figure \ref{fig-sobol-s22-proj5-22}.
@@ -543,7 +532,6 @@ function m=worstCorrelation(n,smax,seqname)
         m(s-1) = max(abs(c-eye(c)));
     end
 endfunction
-
   \end{lstlisting}
 
     
@@ -570,7 +558,6 @@ a=gca();
 a.children(1).legend_location="in_upper_left";
 xtitle("1000 Points","Number of dimensions",..
 "Maximum Correlation Coefficient")
-
   \end{lstlisting}
   
     

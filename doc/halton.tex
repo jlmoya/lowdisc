@@ -1,0 +1,243 @@
+% Copyright (C) 2013 - Michael Baudin
+%
+% This file must be used under the terms of the 
+% Creative Commons Attribution-ShareAlike 3.0 Unported License :
+% http://creativecommons.org/licenses/by-sa/3.0/
+
+\chapter{The Halton sequence}
+
+\section{Introduction}
+
+    
+      The Hammersley sequence (1960) uses the Van Der Corput sequence
+      in order to create a low discrepancy point set \cite{Hammersley1960}.
+      However, the number of points in the Hammersley sequence must be know
+      in advance, which is sometimes an issue.
+      The Halton sequence (1964) uses the Van Der Corput sequence without
+      this limitation \cite{Halton1964}, and this is why it is used more often.
+    
+
+    
+      The Halton sequence in s dimensions uses s
+      different bases which must be relatively primes.
+      We usually use the s first prime numbers: 2, 3, 5, 7, 11, etc...
+    
+      Denote by $p(i)$ the i-th prime number.
+      The dimension i of the Halton sequence is
+      the Van Der Corput in base $p(i)$.
+      Hence, the k-th element of the Halton sequence is
+      $$
+        x_k=(\psi_{p_1}(k),\psi_{p_2}(k),...,\psi_{p_s}(k))
+      $$
+      for $k\geq 0$.
+    
+
+    
+      The following script produces 10 points of the Halton sequence
+      in 4 dimensions.
+      The prime number used here are: 2, 3, 5, 7.
+    
+
+\lstset{language=scilabscript}
+\begin{lstlisting}
+-->u=lowdisc_ldgen(9,4,"halton")
+ u  =
+    0.5       0.3333333    0.2     0.1428571  
+    0.25      0.6666667    0.4     0.2857143  
+    0.75      0.1111111    0.6     0.4285714  
+    0.125     0.4444444    0.8     0.5714286  
+    0.625     0.7777778    0.04    0.7142857  
+    0.375     0.2222222    0.24    0.8571429  
+    0.875     0.5555556    0.44    0.0204082  
+    0.0625    0.8888889    0.64    0.1632653  
+    0.5625    0.0370370    0.84    0.3061224  
+\end{lstlisting}
+
+    
+      The lowest components of the Halton sequence 
+	  make use of smaller primes while higher components 
+	  make use of the larger primes. 
+	  Moreover, we know that the size of the cycle which 
+	  allows the sequence to fill the space depends 
+	  on the value of the corresponding prime. 
+	  Hence, if the user of a Halton sequence orders the 
+	  variables so that the most important variables come 
+	  first, then the Halton sequence can potentially lead 
+	  to better results. 
+    
+\section{Scrambled Halton Sequence}
+
+    
+      In high dimensions, the Halton sequence poorly
+      fills the space, as can be seen in low dimensionnal projections.
+      In order to improve this, Braaten and Weller (1979) suggest to scramble
+      the digits in the Halton sequence, in order to break correlations\cite{braaten1979}.
+    
+
+    
+      The permuted radical inverse function is
+      $$
+        \psi_b(k)=\sum_{i=0}^{r-1} \frac{\sigma(a_{i}(k))}{b^{i+1}}.
+      $$
+      where $\sigma$ is a given permutation.
+    
+
+    
+      For a given base b, the permutation does not change the values
+      of the points in the sequence:
+      only the ordering of the points changes.
+      However, since each dimension has a specific base b, the
+      multidimensionnal point set of a scrambled sequence is, in general,
+      different from the unscrambled point set.
+    
+
+    
+      The following function computes the scrambled Van Der Corput
+      radical inverse function.
+    
+
+\lstset{language=scilabscript}
+\begin{lstlisting}
+function r = scrambleVDC(index,b,sigma)
+    current = index
+    ib = 1.0 / b
+    r = 0.0
+    while (current>0)
+        digit = modulo ( current , b )
+        digit=sigma(digit+1)
+        current = int ( current / b )
+        r = r + digit * ib
+        ib = ib / b
+    end
+endfunction
+\end{lstlisting}
+
+    
+      For example, the base-3 Van Der Corput sequence can be associated
+      with the permutation [0,2,1].
+      The following script computes the first ten points of
+      this scrambled sequence.
+    
+
+\lstset{language=scilabscript}
+\begin{lstlisting}
+sigma=[0,2,1];
+b=3;
+for index=1:10
+    r = scrambleVDC(index,b,sigma);
+    mprintf("index=%d, r=%f\n",index,r)
+end
+\end{lstlisting}
+
+    
+      The previous script produces the following output.
+    
+
+\lstset{language=scilabscript}
+\begin{lstlisting}
+index=1, r=0.666667
+index=2, r=0.333333
+index=3, r=0.222222
+index=4, r=0.888889
+index=5, r=0.555556
+index=6, r=0.111111
+index=7, r=0.777778
+index=8, r=0.444444
+index=9, r=0.074074
+index=10, r=0.740741
+\end{lstlisting}
+
+    
+      In their paper, Braaten and Weller provide the permutations
+      for dimensions up to 16.
+    
+
+\lstset{language=scilabscript}
+\begin{lstlisting}
+2 (0 1)
+3 (0 2 1)
+5 (0 3 1 4 2)
+7 (0 4 2 6 1 5 3)
+11 (0 5 8 2 10 3 6 1 9 7 4)
+13 (0 6 10 2 8 4 12 1 9 5 11 3 7)
+etc...
+\end{lstlisting}
+
+    
+      The issue here is that the limited size of the
+      table provided by Braaten and Weller limit the practical use of the
+      algorithm.
+      Tuffin (1996) provides improved algorithms to expand this tables
+      (and to improve the permutations as well), but this works has
+      two issues.
+      First, the permutations are computed by taking all dimensions
+      into account, and not dimension-by-dimension as in
+      Braaten and Weller.
+      This has the advantage of improving the permutations, but has
+      the drawback of making the tables larger.
+      Secondly, Tuffin published the algorithm, but not the permutations.
+    
+
+    
+      Kocis and Whiten (1979) provide a simple algorithm to generate
+      permutations for the Halton sequence \cite{Kocis1997}.
+      Their RR2 algorithm uses the Van Der Corput sequence in base 2 and
+      reverses the digits, removing the integers that are too large.
+      A more detailed description is presented in Lemieux \cite{Lemieux2009}.
+      This algorithm has no strong theoretical basis, but works
+      efficiently.
+    
+
+    
+      The following function computes the RR2 scrambling
+      for the i-th dimension of a point set with \scifun{s} dimensions,
+      using the bases in the matrix \scifun{b}.
+    
+
+\lstset{language=scilabscript}
+\begin{lstlisting}
+function sigma=RR2Scrambling(s, i, b)
+    ns=ceil(log(b(s))/log(2))
+    sigma=[];
+    u=lowdisc_ldgen(2^ns,1,"halton")
+    u=[0;u]
+    for k=1:2^ns
+        sigmak=u(k)*2^ns
+        if (sigmak<b(i)) then
+            sigma($+1)=sigmak;
+        end
+    end
+endfunction
+\end{lstlisting}
+
+    
+      The following script prints the RR2 scrambling
+      used for a point set in 3 dimensions.
+    
+
+\lstset{language=scilabscript}
+\begin{lstlisting}
+s=3;
+primemat=number_primes100();
+b=primemat(1:s);
+for i=1:s
+    sigma=RR2Scrambling(s,i,b);
+    sigmastr=strcat(string(sigma),",");
+    mprintf("i=%d, [%s]\n",i,sigmastr);
+end
+\end{lstlisting}
+
+    
+      The previous script produces the following output.
+    
+
+\lstset{language=scilabscript}
+\begin{lstlisting}
+i=1, [0,1]
+i=2, [0,2,1]
+i=3, [0,4,2,1,3]
+\end{lstlisting}
+
+    
+      This feature is provided by the "-scrambling" option of the
+      \scifun{lowdisc\_configure} function.
