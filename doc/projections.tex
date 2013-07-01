@@ -8,14 +8,6 @@
 	
       The goal of this page is to gather experiments showing bad 2D projections
       for low disrepancy sequences. 
-	  These tests suggest that the Sobol sequence is better 
-	  for small dimensions ($s<25$), the Faure sequence 
-	  is better for large dimensions ($s>25$) and that the scrambled 
-	  Halton sequence is generally better than a classical Halton 
-	  sequence.
-    
-
-  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -476,6 +468,7 @@ The previous script produces the figure \ref{fig-sobol-s22-proj5-22}.
 
 
 \section{Niederreiter (base 2) Sequence}
+\label{sec-projnieder}
 
     
       In this section, we consider 1000 points of the 
@@ -514,7 +507,9 @@ The previous script produce the figure \ref{fig-niederreiter-s26-n1000}.
 	  the largest correlation coefficient.
     
 
-    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Numerical experiments}
+
       The following function test for low discrepancy sequences for 
 	  dimensions s from 2 to smax. 
 	  It generates a low discrepancy point set for n points and computes 
@@ -635,3 +630,18 @@ discrepancy sequences.}
 \label{fig-badcorr2}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Conclusions}
+
+These tests suggest that the Sobol sequence is better 
+for small dimensions ($s<25$) and the Faure sequence 
+is better for large dimensions ($s>25$). 
+Weirdly, the Niederreiter sequence performs poorly in this test. 
+However, this confirms the poor projections we have presented in the 
+section \ref{sec-projnieder}.
+
+We do not see any practical difference between the Reverse Halton 
+sequence and the Halton sequence in terms of 2D projections. 
+the scrambled 
+On the other hand, the scrambled Halton sequence is generally better than a classical Halton 
+sequence.
