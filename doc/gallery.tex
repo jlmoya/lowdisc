@@ -8,6 +8,8 @@
 
 The goal of this section is to gather experiments showing 
 	  2D pictures of low disrepancy sequences.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Van Der Corput Sequence}
 
       The Van Der Corput base 2 sequence is just the first dimension of 
@@ -178,6 +180,7 @@ xtitle("Van Der Corput Sequence (base 2)",..
 	  two consecutive points in the sequence always have x=0.5 in-between.
     
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Halton Sequence}
 
 \lstset{language=scilabscript}
@@ -199,6 +202,7 @@ xtitle("Halton: 1000 points","X1","X2")
 \label{fig-haltons2n1000}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Scrambled (RR2) Halton Sequence}
 
 	
@@ -225,11 +229,13 @@ xtitle("Scrambled Halton: 1000 points","X1","X2")
 \label{fig-halton-RR2-s2-n1000}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Leaped Halton Sequence}
 
 	
       The following script produces a leaped Halton sequence. 
-	  The leap is computed by \scifun{lowdisc\_haltonsuggest}. 
+	  The leap parameter is automatically computed by the \scifun{lowdisc\_haltonsuggest} 
+	  function. 
     
 
 \lstset{language=scilabscript}
@@ -253,6 +259,7 @@ xtitle("Leaped Halton: 1000 points","X1","X2")
 
 
     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Reverse-Halton Sequence}
 
 \lstset{language=scilabscript}
@@ -276,6 +283,7 @@ xtitle("Reverse-Halton: 1000 points","X1","X2")
 
 
     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Sobol Sequence}
 
 \lstset{language=scilabscript}
@@ -298,6 +306,7 @@ xtitle("Sobol: 1000 points","X1","X2")
 \end{figure}
 
     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Faure Sequence}
 
 \lstset{language=scilabscript}
@@ -320,6 +329,7 @@ xtitle("Faure: 1000 points","X1","X2")
 \end{figure}
 
     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Niederreiter Sequence}
 
 \lstset{language=scilabscript}
@@ -343,6 +353,7 @@ xtitle("Niederreiter: 1000 points","X1","X2")
 
 
     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Scrambled Sobol Sequence}
 
 \lstset{language=scilabscript}
@@ -412,6 +423,7 @@ xtitle("Owen-Faure-Tezuka Scrambled Sobol","X1","X2");
 \end{figure}
 
     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Note on 2D plots}
 	
 	  As we have seen, in 2D the Sobol, Niederreiter (base 2) and 
@@ -459,6 +471,7 @@ disp([i,u1,u2,u3])
 	  For example, the point n=15 in Sobol sequence 
 	  is the same as point n=8 in Niederreiter (base 2) sequence.
 	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{In 3D}
 
 	

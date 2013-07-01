@@ -211,6 +211,7 @@ Fast Niederreiter:
  * _lowdisc_niedfisstart: returns 1 if the sequence is started up, 0 if not
 
 History of the source code
+--------------------------
 
 The source code provided here is the result of the cumulated
 work of several authors at different times.
