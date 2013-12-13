@@ -10,50 +10,49 @@
 
 \section{Introduction}
 
-      Let $k\geq 0$ be an integer and let b be a prime number.
-      We decompose k into base b:
+Let $k\geq 0$ be an integer and let b be a prime number.
+We decompose k into base b:
 $$
         k=a_{r-1}(k) b^{r-1} + ...+ a_2(k) b^2 + a_1(k) b + a_0(k)
 $$
-      where r is the number of digits required in the decomposition.
+where r is the number of digits required in the decomposition.
 
-      We can also write this decomposition as the sum:
-
+We can also write this decomposition as the sum:
 $$
         k=\sum_{i=0}^{r-1} a_i(k) b^i.
 $$
 
-      In order to write the decomposition of an 
-	  integer in base b, some authors write:
+In order to write the decomposition of an 
+integer in base b, some authors write:
 $$
         k=(a_{r-1}...a_2 a_1 a_0)_b
 $$
 
-      The radical inverse function is
+The radical inverse function is
 $$
         \psi_b(k)=\sum_{i=0}^{r-1} a_{i}(k)b^{-i-1}.
 $$
 
-      This can be expanded in:
+This can be expanded in:
 $$
         \psi_b(k)=a_0(k)b^{-1} + a_1(k)b^{-2} + .. + a_{r-1}(k)b^{-r}.
 $$
 
-      This can also be written:
+This can also be written:
 $$
         k=(0.a_0 a_1 a_2 ... a_{r-1})_b
 $$
 
-      In this function, the least significant digits of k (with small values of i)
-      are in the most significant digits of the radical inverse
-      (with small values of powers of 1/b).
+In this function, the least significant digits of k (with small values of i)
+are in the most significant digits of the radical inverse
+(with small values of powers of 1/b).
 
-      The base-b Van Der Corput sequence\cite{vdc1935} is 
+The base-b Van Der Corput sequence\cite{vdc1935} is 
 $$
         x_i=\psi_b(i), \qquad i \geq 0.
 $$
 
-      Notice that
+Notice that
 $$
         \psi_b(0)=0.
 $$
@@ -106,16 +105,13 @@ k=15=(1111)_2, r=(0.1111)_2=0.937500
 k=16=(10000)_2, r=(0.00001)_2=0.031250
    \end{lstlisting}
 
+For example, the integer k=6 decomposes as 110 in base 2, because
+$2^2+2^1=4+2=6$.
+Its radical inverse is 0.011 in base 2, which is associated to
+the radical inverse value $0/2+1/4+1/8=0.375$.
 
-      For example, the integer k=6 decomposes as 110 in base 2, because
-      $2^2+2^1=4+2=6$.
-      Its radical inverse is 0.011 in base 2, which is associated to
-      the radical inverse value $0/2+1/4+1/8=0.375$.
-
-
-
-      The figure \ref{fig-vdc-base2} plots the points of the Van Der Corput 
-	  sequence in base 2.
+The figure \ref{fig-vdc-base2} plots the points of the Van Der Corput 
+sequence in base 2.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -125,33 +121,30 @@ k=16=(10000)_2, r=(0.00001)_2=0.031250
 \label{fig-vdc-base2}
 \end{figure}
 
-      In base 2, the lowest order digits are alternatively 0, 1, 0, etc... 
-	  The most significant digit of the radical inverse function is alternatively 
-	  0, 1, 0, etc...
-      Hence, the radical inverse in base 2 is alternatively lower 
-      and greater than 1/2. 
-	  This can be seen in the plot, where the even points are on the 
-	  left of the figure, while the odd points are on the right of the 
-	  figure.
+In base 2, the lowest order digits are alternatively 0, 1, 0, etc... 
+The most significant digit of the radical inverse function is alternatively 
+0, 1, 0, etc...
+Hence, the radical inverse in base 2 is alternatively lower 
+and greater than 1/2. 
+This can be seen in the plot, where the even points are on the 
+left of the figure, while the odd points are on the right of the 
+figure.
 
-
-
-      Another property which is made clear from the figure is that the 
-	  interval [0,1] is progressively filled block-by-block, where 
-	  each block of points has an increasing size which is a power of 2. 
-	  Indeed, the first block has size 1 (the point 1), the second block has 
-	  size 2 (the points 2 and 3), the third block has size 4 (the points 
-	  4 to 7), and so on. 
-      Therefore, when we use a point set which is a power of two, 
-	  we have a regular discretization of the [0,1] interval. 
+Another property which is made clear from the figure is that the 
+interval [0,1] is progressively filled block-by-block, where 
+each block of points has an increasing size which is a power of 2. 
+Indeed, the first block has size 1 (the point 1), the second block has 
+size 2 (the points 2 and 3), the third block has size 4 (the points 
+4 to 7), and so on. 
+Therefore, when we use a point set which is a power of two, 
+we have a regular discretization of the [0,1] interval. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Van Der Corput sequence in base 3}
 
-      To get the Van Der Corput sequence in base 3, we just use
-      the second dimension of the Halton sequence in two dimensions.
-
+To get the Van Der Corput sequence in base 3, we just use
+the second dimension of the Halton sequence in two dimensions.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -167,9 +160,7 @@ k=16=(10000)_2, r=(0.00001)_2=0.031250
     end
    \end{lstlisting}
 
-
-      The previous script produces the following output.
-
+The previous script produces the following output.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -202,15 +193,12 @@ k=26=(222)_3, r=(0.222)_3=0.962963
 k=27=(1000)_3, r=(0.0001)_3=0.012346
    \end{lstlisting}
 
+For example, the integer k=6 decomposes as 20 in base 3.
+Its radical inverse is 0.02 in base 3, which is associated to
+the radical inverse value 2/9=0.2222...
 
-      For example, the integer k=6 decomposes as 20 in base 3.
-      Its radical inverse is 0.02 in base 3, which is associated to
-      the radical inverse value 2/9=0.2222...
-
-
-
-      The figure \ref{fig-vdc-base3} plots the points of the Van Der Corput 
-	  sequence in base 3.
+The figure \ref{fig-vdc-base3} plots the points of the Van Der Corput 
+sequence in base 3.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -220,17 +208,15 @@ k=27=(1000)_3, r=(0.0001)_3=0.012346
 \label{fig-vdc-base3}
 \end{figure}
 
-      We see that the [0,1] interval is regularily discretized when 
-	  we consider a number of points which is either 3-1=2, 9-1=8 
-	  or 27-1=26 points. 
-	  In other words, when the number of points is a power of the 
-	  base (which is here equal to 3), then the interval is filled 
-	  more regularly.
+We see that the [0,1] interval is regularily discretized when 
+we consider a number of points which is either 3-1=2, 9-1=8 
+or 27-1=26 points. 
+In other words, when the number of points is a power of the 
+base (which is here equal to 3), then the interval is filled 
+more regularly.
 
-	
-
-      The figure \ref{fig-vdc-base5} plots the points of the Van Der Corput 
-	  sequence in base 5.
+The figure \ref{fig-vdc-base5} plots the points of the Van Der Corput 
+sequence in base 5.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -240,39 +226,37 @@ k=27=(1000)_3, r=(0.0001)_3=0.012346
 \label{fig-vdc-base5}
 \end{figure}
 
-      When the base increases, the number of points before the
-      [0,1] interval is regularly filled increases rapidly (as a power of b). 
+When the base increases, the number of points before the
+[0,1] interval is regularly filled increases rapidly (as a power of b). 
 
-
-      Moreover, consider the points 5 to 9, then 10 to 14 : they
-      progressively go from left to right, taking b=5 iterations
-      to make a partial circle.
-      More generally, the subsequences take more iterations to go from lower values (near 0)
-      to larger values (near 1).
-      This is because it takes b iterations for the the least significant digits
-      to go from 0 to b-1.
+Moreover, consider the points 5 to 9, then 10 to 14 : they
+progressively go from left to right, taking b=5 iterations
+to make a partial circle.
+More generally, the subsequences take more iterations to go from lower values (near 0)
+to larger values (near 1).
+This is because it takes b iterations for the the least significant digits
+to go from 0 to b-1.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Properties}
 
-	  The Van Der Corput sequence is a (0,1)-sequence.    
-	  Hence, for any $m \geq 0$, consider the point set with 
-	  indices $kb^m,...,(k+1)b^m-1$, 
-	  for k=0,1,...,b-1. 
-      Then, any elementary interval of length $1/b^m$ contains 
-	  exactly one point. 
-	  For m=0, this just implies that the points are in the [0,1] interval. 
+The Van Der Corput sequence is a (0,1)-sequence.    
+Hence, for any $m \geq 0$, consider the point set with 
+indices $kb^m,...,(k+1)b^m-1$, 
+for k=0,1,...,b-1. 
+Then, any elementary interval of length $1/b^m$ contains 
+exactly one point. 
+For m=0, this just implies that the points are in the [0,1] interval. 
 
-	  In the following script, we consider the Van Der Corput point sets for the 
-	  base b=5. 
-	  This is just the third dimension of the Halton sequence. 
-	  For m=1, we consider the previously defined point sets and plot the 
-	  limits of the intervals of length $1/b^m$. 
-	  Then we plot the point sets, for k=0,1,...,b-1. 
+In the following script, we consider the Van Der Corput point sets for the 
+base b=5. 
+This is just the third dimension of the Halton sequence. 
+For m=1, we consider the previously defined point sets and plot the 
+limits of the intervals of length $1/b^m$. 
+Then we plot the point sets, for k=0,1,...,b-1. 
 
-	
 \lstset{language=scilabscript}
 \begin{lstlisting}
 s=3;
@@ -302,12 +286,11 @@ a.isoview="off";
 st=msprintf("Van Der Corput Sequence, Base %d, %d Points",b,b^(m+1));
 xtitle(st,"X","Block Index")
    \end{lstlisting}
-	
 
-	  The previous script produces the figure \ref{fig-vandercorput-b5-n25}. 
-	  We check that each point set has exactly one point in each 
-	  elementary interval, with the convention that the intervals 
-	  are closed on the left and open on the right.
+The previous script produces the figure \ref{fig-vandercorput-b5-n25}. 
+We check that each point set has exactly one point in each 
+elementary interval, with the convention that the intervals 
+are closed on the left and open on the right.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -317,12 +300,10 @@ xtitle(st,"X","Block Index")
 \label{fig-vandercorput-b5-n25}
 \end{figure}
 
-
-
-	  When we set $s=1$ and $b=2$, 
-	  we get the Van Der Corput sequence in base b=2, 
-	  which is presented in the figures \ref{fig-vandercorput-b2-n4}, 
-	  \ref{fig-vandercorput-b2-n8} and \ref{fig-vandercorput-b2-n16}.
+When we set $s=1$ and $b=2$, 
+we get the Van Der Corput sequence in base b=2, 
+which is presented in the figures \ref{fig-vandercorput-b2-n4}, 
+\ref{fig-vandercorput-b2-n8} and \ref{fig-vandercorput-b2-n16}.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -492,7 +473,7 @@ x &\leq& \frac{b-1}{b}+\frac{b-1}{b^2}+...+\frac{b-1}{b^r} \\
 Indeed, this is a geometric series:
 \begin{eqnarray}
 \frac{b-1}{b}+\frac{b-1}{b^2}+...+\frac{b-1}{b^r}
-&=& \frac{b-1}{b}(1+\frac{1}{b}+\frac{1}{b^2}+...+\frac{1}{b^{r-1}} \\
+&=& \frac{b-1}{b}\left(1+\frac{1}{b}+\frac{1}{b^2}+...+\frac{1}{b^{r-1}}\right) \\
 &=& \frac{b-1}{b} \frac{1-\frac{1}{b^r}}{1-\frac{1}{b}} \\
 &=& \frac{b-1}{b} \frac{1-\frac{1}{b^r}}{\frac{b-1}{b}} \\
 &=& 1-\frac{1}{b^r} \\
