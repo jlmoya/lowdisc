@@ -49,7 +49,7 @@ for dimension=[2 3 5];
     lds=lowdisc_new("sobol");
     lds=lowdisc_configure(lds,"-dimension",dimension);
     lds=lowdisc_configure(lds,"-scrambling","Owen");
-    lds = lowdisc_startup (lds);
+
     [lds,computed] = lowdisc_next (lds,50);
     lds=lowdisc_destroy(lds);
     assert_checkalmostequal(expected,computed,[],1.e-5);
@@ -66,7 +66,7 @@ for dimension=[2 3 5];
     lds=lowdisc_new("sobol");
     lds=lowdisc_configure(lds,"-dimension",dimension);
     lds=lowdisc_configure(lds,"-scrambling","Faure-Tezuka");
-    lds = lowdisc_startup (lds);
+
     [lds,computed] = lowdisc_next (lds,50);
     lds=lowdisc_destroy(lds);
     assert_checkalmostequal(expected,computed,[],1.e-5);
@@ -83,7 +83,7 @@ for dimension=[2 3 5];
     lds=lowdisc_new("sobol");
     lds=lowdisc_configure(lds,"-dimension",dimension);
     lds=lowdisc_configure(lds,"-scrambling","Owen-Faure-Tezuka");
-    lds = lowdisc_startup (lds);
+
     [lds,computed] = lowdisc_next (lds,50);
     lds=lowdisc_destroy(lds);
     assert_checkalmostequal(expected,computed,[],1.e-5);
@@ -96,7 +96,7 @@ end
 lds=lowdisc_new("sobol");
 lds=lowdisc_configure(lds,"-scrambling","Owen");
 lds=lowdisc_configure(lds,"-dimension",3);
-lds=lowdisc_startup(lds);
+
 [lds,withoutseeds] = lowdisc_next (lds,50);
 lds=lowdisc_destroy(lds);
 // 2. Configure the seeds (row vector)
@@ -111,7 +111,7 @@ lds=lowdisc_new("sobol");
 lds=lowdisc_configure(lds,"-scrambling","Owen");
 lds=lowdisc_configure(lds,"-dimension",3);
 lds=lowdisc_configure(lds,"-seeds",seeds);
-lds=lowdisc_startup(lds);
+
 [lds,computed] = lowdisc_next (lds,50);
 lds=lowdisc_destroy(lds);
 // Check the sequence
@@ -126,7 +126,7 @@ lds=lowdisc_new("sobol");
 lds=lowdisc_configure(lds,"-scrambling","Owen");
 lds=lowdisc_configure(lds,"-dimension",3);
 lds=lowdisc_configure(lds,"-seeds",seeds);
-lds=lowdisc_startup(lds);
+
 [lds,computed] = lowdisc_next (lds,50);
 lds=lowdisc_destroy(lds);
 // Check the sequence

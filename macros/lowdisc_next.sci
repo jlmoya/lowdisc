@@ -40,7 +40,6 @@ function [this,next] = lowdisc_next ( varargin )
     //
     // Examples
     //   lds = lowdisc_new("halton");
-    //   lds = lowdisc_startup (lds);
     //   // Term #1
     //   [lds,computed] = lowdisc_next (lds);
     //   disp(computed)
@@ -55,7 +54,6 @@ function [this,next] = lowdisc_next ( varargin )
     //
     //   // See the imax parameter in action
     //   lds = lowdisc_new("halton");
-    //   lds = lowdisc_startup (lds);
     //   // Term #1 to 100
     //   [lds,computed] = lowdisc_next (lds,100);
     //   // Term #101 to 201
@@ -66,7 +64,6 @@ function [this,next] = lowdisc_next ( varargin )
     //   // See the -leap option in action
     //   lds = lowdisc_new("halton");
     //   lds = lowdisc_configure(lds,"-leap",10);
-    //   lds = lowdisc_startup (lds);
     //   // Term #1
     //   [lds,computed] = lowdisc_next (lds);
     //   // Term #11
@@ -80,10 +77,9 @@ function [this,next] = lowdisc_next ( varargin )
     //   lds = lowdisc_new("faure");
     //   lds = lowdisc_configure(lds,"-dimension",4);
     //   // Skip qs^4 - 1 terms, as in TOMS implementation
-    //   qs = lowdisc_get ( lds , "-faurefprime" );
+    //   qs = lowdisc_get ( lds , "-faureprime" );
     //   lds = lowdisc_configure(lds,"-skip", qs^4 - 2);
     //   lds
-    //   lds = lowdisc_startup (lds);
     //   [lds,computed]=lowdisc_next(lds);
     //   // Terms #1 to #100
     //   [lds,computed]=lowdisc_next(lds,100);
@@ -95,12 +91,10 @@ function [this,next] = lowdisc_next ( varargin )
     //
     //   // Configure a list of primes and use it
     //   lds = lowdisc_new("halton");
-    //   // The primes come row-by-row
-    //   prarray = number_primes1000 ( )
-    //   // Create a column vector containing all primes.
-    //   primtable = prarray';
-    //   primtable = primtable(:);
-    //   lds = lowdisc_configure(lds,"-primeslist",primtable);
+    //   // Get a table of primes
+    //   prarray = number_primes1000 ( );
+    //   // Configure the primes list of the sequence
+    //   lds = lowdisc_configure(lds,"-primeslist",prarray);
     //   lds = lowdisc_configure(lds,"-dimension",150);
     //   lds = lowdisc_startup (lds);
     //   [lds,next] = lowdisc_next ( lds , 10 );
@@ -129,8 +123,8 @@ function [this,next] = lowdisc_next ( varargin )
     // Check that the object is started up
     startedup=lowdisc_get(this , "-startedup" )
     if ( ~startedup ) then
-        errmsg = msprintf(gettext("%s: The sequence is not started up. Call ldfauref_startup first."), "ldfauref_next");
-        error(errmsg)
+        // The sequence is not startedup : auto-startup
+        this = lowdisc_startup (this);
     end
     //
     select this.method

@@ -31,7 +31,7 @@ mfprintf(fd,"BASE = 2\n")
 mfprintf(fd,"====================================================================\n")
 rng = lowdisc_new("niederreiter");
 rng = lowdisc_configure(rng,"-dimension",DIMEN);
-rng = lowdisc_startup (rng);
+
 [rng,computed]=lowdisc_next(rng);
 // Terms #1 to #100
 [rng,computed]=lowdisc_next(rng,100);

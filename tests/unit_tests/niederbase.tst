@@ -40,7 +40,7 @@ base = lowdisc_niederbase ( dim );
 lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",dim);
 lds = lowdisc_configure(lds,"-base",base);
-lds = lowdisc_startup (lds);
+
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 

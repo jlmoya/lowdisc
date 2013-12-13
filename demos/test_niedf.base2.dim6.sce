@@ -29,7 +29,7 @@ mfprintf (fd,"BASE = 2\n")
 mfprintf(fd,"====================================================================\n")
 rng = lowdisc_new("niederreiter");
 rng = lowdisc_configure(rng,"-dimension",DIMEN);
-rng = lowdisc_startup (rng);
+
 [rng,computed]=lowdisc_next(rng);
 mfprintf (fd,"%8d %14.6f %14.6f %14.6f %14.6f %14.6f %14.6f\n", ..
      0 , computed(1) , computed(2) , computed(3) , computed(4) , computed(5) , computed(6) )

@@ -23,7 +23,7 @@ for sequencename = sequencearray'
   disp(string(lds))
   disp(lds)
   //
-  lds = lowdisc_startup(lds);
+
   // Test printing system (after startup)
   disp(string(lds))
   disp(lds)

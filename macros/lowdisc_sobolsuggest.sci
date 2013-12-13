@@ -97,7 +97,6 @@ function [nsim,skip,leap] = lowdisc_sobolsuggest ( varargin )
     // lds = lowdisc_configure(lds,"-dimension",dim);
     // lds = lowdisc_configure(lds,"-skip",skip);
     // lds = lowdisc_configure(lds,"-leap",leap);
-    // lds = lowdisc_startup (lds);
     // [lds,experiments]=lowdisc_next(lds,nsim);
     // lds = lowdisc_destroy(lds);
     // disp(computed)
@@ -107,7 +106,7 @@ function [nsim,skip,leap] = lowdisc_sobolsuggest ( varargin )
     // // It grows extremely fast.
     // mprintf("%-10s %-10s %-10s %-10s\n", ..
     //   "dim", "nsim", "skip", "leap");
-    // for dim = 1:14; 
+    // for dim = 1:13 
     //   [nsim,skip,leap] = lowdisc_sobolsuggest ( dim , [] , 1 );
     //   mprintf("%-10s %-10s %-10s %-10s\n", ..
     //     string(dim), string(nsim), string(skip), string(leap));
@@ -177,7 +176,6 @@ function [nsim,skip,leap] = lowdisc_sobolsuggest ( varargin )
         // tau = lowdisc_soboltau ( dim )
         // skip = 2^(tau + dim - 1);
         // lds = lowdisc_configure(lds,"-skip", skip);
-        // lds = lowdisc_startup (lds);
         // [lds,computed]=lowdisc_next(lds,10);
         // lds = lowdisc_destroy(lds);
         //

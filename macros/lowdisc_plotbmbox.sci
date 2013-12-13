@@ -85,7 +85,7 @@ function lowdisc_plotbmbox(varargin)
         apifun_checklhs ( "lowdisc_subplotdecompose" , lhs , 2:2 )
         //
         p = varargin(1)
-        f = apifun_argindefault ( varargin , 2 , 4./3. )
+        f = apifun_argindefault ( varargin , 2 , 4/3 )
         //
         // Check Type
         apifun_checktype ( "lowdisc_subplotdecompose" , p , "p" , 1 , "constant" )

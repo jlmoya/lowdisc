@@ -76,7 +76,6 @@ function value = lowdisc_get (this,key)
     //   qs = lowdisc_get ( lds , "-faureprime" );
     //   lds = lowdisc_configure(lds,"-skip", qs^4 - 2);
     //   lds
-    //   lds = lowdisc_startup (lds);
     //   [lds,computed]=lowdisc_next(lds);
     //   // Terms #1 to #100
     //   [lds,computed]=lowdisc_next(lds,100);

@@ -10,12 +10,12 @@
 //
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",2);
-lds = lowdisc_startup (lds);
 index = lowdisc_get(lds,"-index");
 assert_checkalmostequal ( index, 0);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
 expected = [0.5 1./3.];
+Warning: "1./ ..." is interpreted as "1.0/ ...". Use "1 ./ ..." for element wise operation 
 index = lowdisc_get(lds,"-index");
 assert_checkalmostequal ( index, 1);
 assert_checkalmostequal ( computed, expected, 10 * %eps );
@@ -23,10 +23,20 @@ assert_checkalmostequal ( computed, expected, 10 * %eps );
 [lds,computed]=lowdisc_next(lds,5);
 expected= [
     1./4. 2./3. 
+Warning: "1./ ..." is interpreted as "1.0/ ...". Use "1 ./ ..." for element wise operation 
+Warning: "2./ ..." is interpreted as "2.0/ ...". Use "2 ./ ..." for element wise operation 
     3./4. 1./9.    
+Warning: "3./ ..." is interpreted as "3.0/ ...". Use "3 ./ ..." for element wise operation 
+Warning: "1./ ..." is interpreted as "1.0/ ...". Use "1 ./ ..." for element wise operation 
     1./8. 4./9. 
+Warning: "1./ ..." is interpreted as "1.0/ ...". Use "1 ./ ..." for element wise operation 
+Warning: "4./ ..." is interpreted as "4.0/ ...". Use "4 ./ ..." for element wise operation 
     5./8. 7./9. 
+Warning: "5./ ..." is interpreted as "5.0/ ...". Use "5 ./ ..." for element wise operation 
+Warning: "7./ ..." is interpreted as "7.0/ ...". Use "7 ./ ..." for element wise operation 
     3./8. 2./9. 
+Warning: "3./ ..." is interpreted as "3.0/ ...". Use "3 ./ ..." for element wise operation 
+Warning: "2./ ..." is interpreted as "2.0/ ...". Use "2 ./ ..." for element wise operation 
 ];
 assert_checkalmostequal ( computed, expected, 10 * %eps );
 index = lowdisc_get(lds,"-index");
@@ -39,7 +49,6 @@ lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
 // Skip 1 term, as in the TOMS implementation
 lds = lowdisc_configure(lds,"-skip",1);
-lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,100);
 expected = [
 0.250000      0.666667      0.400000      0.285714
@@ -150,7 +159,6 @@ lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",1229);
 prarray = number_primes10000 ( );
 lds = lowdisc_configure(lds,"-primeslist",prarray);
-lds = lowdisc_startup (lds);
 for i=0:30
   [lds,computed] = lowdisc_next (lds);
 end
@@ -163,7 +171,6 @@ lds = lowdisc_destroy(lds);
 // 0.125 0.444444*/
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",2);
-lds = lowdisc_startup (lds);
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
@@ -174,7 +181,6 @@ lds = lowdisc_destroy(lds);
 // test in dimension 3 */
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",3);
-lds = lowdisc_startup (lds);
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
@@ -188,9 +194,6 @@ lds = lowdisc_destroy(lds);
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip",10);
-lds = lowdisc_startup (lds);
-index = lowdisc_get ( lds , "-index" );
-assert_checkequal ( index , 10 );
 [lds,computed]=lowdisc_next(lds,10);
 expected = [
   0.812500      0.703704      0.280000      0.591837
@@ -214,7 +217,6 @@ lds = lowdisc_destroy(lds);
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap",1);
-lds = lowdisc_startup (lds);
 index = lowdisc_get ( lds , "-index" );
 assert_checkequal ( index , 0 );
 [lds,computed]=lowdisc_next(lds,10);
@@ -239,7 +241,6 @@ t1 = timer();
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip", 1.e7);
-lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();
@@ -249,7 +250,6 @@ t1 = timer();
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap", 1.e7);
-lds = lowdisc_startup (lds);
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();

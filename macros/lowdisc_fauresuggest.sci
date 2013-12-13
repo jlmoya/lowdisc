@@ -90,7 +90,6 @@ function [nsim,skip,leap] = lowdisc_fauresuggest ( varargin )
   // [nsim,skip,leap] = lowdisc_fauresuggest ( dim , base , nsimmin );
   // lds = lowdisc_configure(lds,"-skip",skip);
   // lds = lowdisc_configure(lds,"-leap",leap);
-  // lds = lowdisc_startup (lds);
   // [lds,experiments]=lowdisc_next(lds,nsim);
   // lds = lowdisc_destroy(lds);
   // 

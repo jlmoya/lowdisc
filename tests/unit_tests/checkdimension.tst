@@ -33,7 +33,6 @@ for seqname = seqmat'
     mprintf("Sequence=%s, Dimension=%d/%d\n",seqname,dimension,dimmax)
     lds = lowdisc_new(seqname);
     lds = lowdisc_configure(lds,"-dimension",dimension);
-    lds = lowdisc_startup (lds);
     [lds,computed] = lowdisc_next (lds,20);
     lds = lowdisc_destroy(lds);
   end
@@ -61,7 +60,7 @@ for k = 1 : 2
   dimension = dimmax + 1;
   mprintf("Sequence=%s, Dimension=%d/%d\n",seqname,dimension,dimmax)
   lds = lowdisc_configure(lds,"-dimension",dimension);
-  cmd = "lds = lowdisc_startup (lds);";
+  cmd = "[lds,computed] = lowdisc_next (lds);";
   ierr = execstr(cmd,"errcatch");
   assert_checkequal ( or(ierr==[10000 999]) , %t );
   errmsg = lasterror();
@@ -78,7 +77,7 @@ end
 lds=lowdisc_new("sobol");
 lds=lowdisc_configure(lds,"-dimension",50);
 lds=lowdisc_configure(lds,"-scrambling","Owen");
-instr="lds=lowdisc_startup(lds)";
+instr="[lds,computed] = lowdisc_next (lds);";
 expectedmsg="ssobol_next : wrong dimension : 50 (must be in [1,40]).";
 assert_checkerror ( instr , expectedmsg );
 lds=lowdisc_destroy(lds);

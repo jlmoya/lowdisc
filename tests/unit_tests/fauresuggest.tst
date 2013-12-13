@@ -38,7 +38,7 @@ base = lowdisc_get(lds,"-faureprime");
 assert_checkequal ( [nsim,skip,leap] , [125 623 0] );
 lds = lowdisc_configure(lds,"-skip",skip);
 lds = lowdisc_configure(lds,"-leap",leap);
-lds = lowdisc_startup (lds);
+
 [lds,experiments]=lowdisc_next(lds,nsim);
 lds = lowdisc_destroy(lds);
 
@@ -53,6 +53,6 @@ base = lowdisc_get(lds,"-faureprime");
 assert_checkequal ( [nsim,skip,leap] , [3125 623 0] );
 lds = lowdisc_configure(lds,"-skip",skip);
 lds = lowdisc_configure(lds,"-leap",leap);
-lds = lowdisc_startup (lds);
+
 [lds,experiments]=lowdisc_next(lds,nsim);
 lds = lowdisc_destroy(lds);

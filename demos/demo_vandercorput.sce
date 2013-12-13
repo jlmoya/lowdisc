@@ -46,7 +46,7 @@ function lowdisc_demosvdc()
     scf();
     lds = lowdisc_new("halton");
     lds = lowdisc_configure(lds,"-dimension",1);
-    lds = lowdisc_startup (lds);
+
     k=1;
     base=2;
     imax=5;
@@ -72,7 +72,7 @@ function lowdisc_demosvdc()
     base=3;
     lds = lowdisc_new("halton");
     lds = lowdisc_configure(lds,"-dimension",2);
-    lds = lowdisc_startup (lds);
+
     k=1;
     imax=3;
     for i=1:imax
@@ -97,7 +97,7 @@ function lowdisc_demosvdc()
     scf();
     lds = lowdisc_new("halton");
     lds = lowdisc_configure(lds,"-dimension",3);
-    lds = lowdisc_startup (lds);
+
     k=1;
     imax=2;
     for i=1:imax

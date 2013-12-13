@@ -14,7 +14,6 @@ function u=lowdisc_ldgen( varargin )
     //   callf : a 1-by-1 matrix of floating point integers, the number of calls to the function.
     //   n: a 1-by-1 matrix of floating point integers, the spatial dimension.
     //   ldseq : a 1-by-1 matrix of strings, the name of the sequence (default <literal>ldseq = "sobol"</literal>). The name can be equal to : <literal>"halton"</literal>, <literal>"halton-leaped"</literal>, <literal>"halton-scrambled"</literal>, <literal>"halton-reverse"</literal>, <literal>"faure"</literal>, <literal>"sobol"</literal>, <literal>"niederreiter"</literal>. See below for details.
-    //   strict : a 1-by-1 matrix of boolean, set to %f to use potentially favorable parameters (default = %t).
     //   u : a callf-by-n matrix of doubles, the uniform random numbers in <literal>[0,1]^n</literal>.
     //
     // Description
@@ -81,10 +80,6 @@ function u=lowdisc_ldgen( varargin )
     // // Generate 20 points from 
     // // the fast Faure sequence in dimension 4.
     // u=lowdisc_ldgen(20,4,"faure")
-    //
-    // // Generate more than 20 points with potentially 
-    // // favorable parameters
-    // u=lowdisc_ldgen(20,4,"faure",%f)
     //
     // // See all projections of a 4D sequence.
     // u = lowdisc_ldgen ( 100 , 4 );
@@ -155,7 +150,6 @@ function u=lowdisc_ldgen( varargin )
         error ( msg )
     end
     lds = lowdisc_configure(lds,"-dimension",n);
-    lds = lowdisc_startup (lds);
     [lds,u]=lowdisc_next(lds,callf);
     lds = lowdisc_destroy(lds);
 endfunction

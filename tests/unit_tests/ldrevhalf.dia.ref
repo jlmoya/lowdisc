@@ -13,19 +13,29 @@
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",2);
 lds = lowdisc_configure(lds,"-scrambling","Reverse");
-lds = lowdisc_startup (lds);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
 expected = [0.5 2./3.];
+Warning: "2./ ..." is interpreted as "2.0/ ...". Use "2 ./ ..." for element wise operation 
 assert_checkalmostequal ( computed, expected , 10 * %eps );
 // Terms #2 to #6
 [lds,computed]=lowdisc_next(lds,5);
 expected= [...
     1./4. 1./3. 
+Warning: "1./ ..." is interpreted as "1.0/ ...". Use "1 ./ ..." for element wise operation 
+Warning: "1./ ..." is interpreted as "1.0/ ...". Use "1 ./ ..." for element wise operation 
     3./4. 2./9.    
+Warning: "3./ ..." is interpreted as "3.0/ ...". Use "3 ./ ..." for element wise operation 
+Warning: "2./ ..." is interpreted as "2.0/ ...". Use "2 ./ ..." for element wise operation 
     1./8. 8./9. 
+Warning: "1./ ..." is interpreted as "1.0/ ...". Use "1 ./ ..." for element wise operation 
+Warning: "8./ ..." is interpreted as "8.0/ ...". Use "8 ./ ..." for element wise operation 
     5./8. 5./9. 
+Warning: "5./ ..." is interpreted as "5.0/ ...". Use "5 ./ ..." for element wise operation 
+Warning: "5./ ..." is interpreted as "5.0/ ...". Use "5 ./ ..." for element wise operation 
     3./8. 1./9. 
+Warning: "3./ ..." is interpreted as "3.0/ ...". Use "3 ./ ..." for element wise operation 
+Warning: "1./ ..." is interpreted as "1.0/ ...". Use "1 ./ ..." for element wise operation 
 ];
 assert_checkalmostequal ( computed, expected , 10 * %eps );
 lds = lowdisc_destroy(lds);

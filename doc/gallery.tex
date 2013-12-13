@@ -86,7 +86,6 @@ endfunction
 \begin{lstlisting}
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",1);
-lds = lowdisc_startup (lds);
 [lds,u]=lowdisc_next(lds,1);
 printVDC(u,1)
 [lds,u]=lowdisc_next(lds,2);
@@ -140,7 +139,6 @@ u=0.937500, n= 15, binary=0.1111
 scf();
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",1);
-lds = lowdisc_startup (lds);
 k=1;
 imax=5;
 for i=1:5
@@ -361,7 +359,6 @@ xtitle("Niederreiter: 1000 points","X1","X2")
 //
 lds=lowdisc_new("sobol");
 lds=lowdisc_configure(lds,"-dimension",2);
-lds = lowdisc_startup (lds);
 [lds,u] = lowdisc_next (lds,100);
 lds=lowdisc_destroy(lds);
 //
@@ -370,7 +367,6 @@ lds=lowdisc_destroy(lds);
 lds=lowdisc_new("sobol");
 lds=lowdisc_configure(lds,"-dimension",2);
 lds=lowdisc_configure(lds,"-scrambling","Owen");
-lds = lowdisc_startup (lds);
 [lds,uO] = lowdisc_next (lds,100);
 lds=lowdisc_destroy(lds);
 //
@@ -379,7 +375,6 @@ lds=lowdisc_destroy(lds);
 lds=lowdisc_new("sobol");
 lds=lowdisc_configure(lds,"-dimension",2);
 lds=lowdisc_configure(lds,"-scrambling","Faure-Tezuka");
-lds = lowdisc_startup (lds);
 [lds,uFT] = lowdisc_next (lds,100);
 lds=lowdisc_destroy(lds);
 //
@@ -388,7 +383,6 @@ lds=lowdisc_destroy(lds);
 lds=lowdisc_new("sobol");
 lds=lowdisc_configure(lds,"-dimension",2);
 lds=lowdisc_configure(lds,"-scrambling","Owen-Faure-Tezuka");
-lds = lowdisc_startup (lds);
 [lds,uOFT] = lowdisc_next (lds,100);
 lds=lowdisc_destroy(lds);
 //

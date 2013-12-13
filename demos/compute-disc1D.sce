@@ -221,7 +221,7 @@ c=1/(3*log(b));
 plot(n,(c*log(n))./n,"g-")
 h.children.log_flags="lln";
 lds = lowdisc_new("halton");
-lds = lowdisc_startup (lds);
+
 for n=logspace(1,nmax,10)
     n=int(n)
     for i=1:20

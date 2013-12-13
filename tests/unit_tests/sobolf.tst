@@ -13,7 +13,7 @@
 //
 lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",2);
-lds = lowdisc_startup (lds);
+
 // Term #1
 [lds,computed] = lowdisc_next (lds);
 expected = [0.5 0.5];
@@ -34,7 +34,7 @@ lds = lowdisc_destroy(lds);
 // test Fast Sobol in dimension 2 
 lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",2);
-lds = lowdisc_startup (lds);
+
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
@@ -49,7 +49,7 @@ lds = lowdisc_destroy(lds);
 // test in dimension 3
 lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",3);
-lds = lowdisc_startup (lds);
+
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
@@ -65,7 +65,7 @@ lds = lowdisc_destroy(lds);
 //
 lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",4);
-lds = lowdisc_startup (lds);
+
 [lds,computed]=lowdisc_next(lds,100);
 expected = [
 0.500000      0.500000      0.500000      0.500000
@@ -177,9 +177,6 @@ lds = lowdisc_destroy(lds);
 lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip",10);
-lds = lowdisc_startup (lds);
-index = lowdisc_get ( lds , "-index" );
-assert_checkequal ( index , 10 );
 [lds,computed]=lowdisc_next(lds,10);
 expected = [
     0.4375     0.5625     0.0625     0.4375   
@@ -194,6 +191,8 @@ expected = [
     0.46875    0.09375    0.46875    0.28125  
 ];
 assert_checkalmostequal ( computed , expected , [], 1.e-5 );
+index = lowdisc_get ( lds , "-index" );
+assert_checkequal ( index , 20 );
 lds = lowdisc_destroy(lds);
 
 
@@ -201,7 +200,7 @@ lds = lowdisc_destroy(lds);
 lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap",1);
-lds = lowdisc_startup (lds);
+
 index = lowdisc_get ( lds , "-index" );
 assert_checkequal ( index , 0 );
 [lds,computed]=lowdisc_next(lds,10);
@@ -228,7 +227,7 @@ t1 = timer();
 lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip", 1.e5);
-lds = lowdisc_startup (lds);
+
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();
@@ -240,7 +239,7 @@ t1 = timer();
 lds = lowdisc_new("sobol");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap", 1.e5);
-lds = lowdisc_startup (lds);
+
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();

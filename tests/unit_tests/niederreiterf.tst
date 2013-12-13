@@ -28,7 +28,7 @@
 //
 lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",4);
-lds = lowdisc_startup (lds);
+
 // Term #1
 [lds,computed] = lowdisc_next (lds);
 expected = [0.500000      0.500000      0.750000      0.875000];
@@ -57,7 +57,7 @@ lds = lowdisc_configure(lds,"-dimension",6);
 lds = lowdisc_configure(lds,"-base",7);
 base = lowdisc_cget(lds,"-base");
 assert_checkequal ( base , 7 );
-lds = lowdisc_startup (lds);
+
 // Terms #1 to #9
 [lds,computed]=lowdisc_next(lds,9);
 expected= [...
@@ -80,9 +80,6 @@ lds = lowdisc_destroy(lds);
 lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip",10);
-lds = lowdisc_startup (lds);
-index = lowdisc_get ( lds , "-index" );
-assert_checkequal ( index , 10 );
 [lds,computed]=lowdisc_next(lds,10);
 expected= [
     0.8125     0.6875     0.640625    0.09375    
@@ -107,7 +104,7 @@ lds = lowdisc_destroy(lds);
 lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap",1);
-lds = lowdisc_startup (lds);
+
 index = lowdisc_get ( lds , "-index" );
 assert_checkequal ( index , 0 );
 [lds,computed]=lowdisc_next(lds,10);
@@ -135,7 +132,7 @@ t1 = timer();
 lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip", 1.e2);
-lds = lowdisc_startup (lds);
+
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();
@@ -147,7 +144,7 @@ t1 = timer();
 lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap", 1.e2);
-lds = lowdisc_startup (lds);
+
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();

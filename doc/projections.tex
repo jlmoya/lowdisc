@@ -255,7 +255,6 @@ base = lowdisc_get(lds,"-faureprime");
 [nsim,skip,leap] = lowdisc_fauresuggest ( dim , base , nsimmin );
 lds = lowdisc_configure(lds,"-skip",skip);
 lds = lowdisc_configure(lds,"-leap",leap);
-lds = lowdisc_startup (lds);
 [lds,u]=lowdisc_next(lds,nsim);
 lds = lowdisc_destroy(lds);
 scf();
@@ -297,7 +296,6 @@ We try the leap L=5.
 lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",40);
 lds = lowdisc_configure(lds,"-leap",5);
-lds = lowdisc_startup (lds);
 [lds,u] = lowdisc_next (lds,300);
 lds = lowdisc_destroy(lds);
 scf();

@@ -141,33 +141,33 @@
   <refsection>
     <title>Implementation notes : Reverse Halton sequence</title>
     <para>
-      The Reverse Halton sequence is just a specialized scrambling of the 
-	  Halton sequence. 
+      The Reverse Halton sequence is just a specialized deterministic scrambling of the 
+      Halton sequence. 
     </para>
     <para>
-	  Each dimension is associated with a given permutation, 
-	  which changes the order of the points in the sequence. 
-	  The scrambling is based on the permutation:
+      Each dimension is associated with a given permutation, 
+      which changes the order of the points in the sequence. 
+      The scrambling is based on the permutation:
     </para>
-	<screen>
-	sigma(digit)=0, if digit==0,
-	sigma(digit)=base-digit, otherwise,
-	</screen>
+    <screen>
+    sigma(digit)=0, if digit==0,
+    sigma(digit)=base-digit, otherwise,
+    </screen>
     <para>
-	  where base is the base (a prime number) associated 
-	  with the dimension. 
-	  This produces the following permutations:
+      where base is the base (a prime number) associated 
+      with the dimension. 
+      This produces the following permutations:
     </para>
-	<screen>
+    <screen>
 0 1
 0 2 1
 0 5 4 3 2 1
 0 7 6 5 4 3 2 1
 etc...
-	</screen>
+    </screen>
     <para>
       This fast algorithm is based on the same C++ source code as the 
-	  Halton sequence.
+      Halton sequence.
     </para>
     <para>
       Reference : "Good permutations for deterministic scrambled

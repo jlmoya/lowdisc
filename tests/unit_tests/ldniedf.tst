@@ -16,7 +16,6 @@
 //
 lds = lowdisc_new("niederreiter");
 lds = lowdisc_configure(lds,"-dimension",4);
-lds = lowdisc_startup (lds);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
 expected = [0.500000      0.500000      0.750000      0.875000];

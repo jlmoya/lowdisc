@@ -40,7 +40,7 @@ function this = lowdisc_configure (this,key,value)
     //     <para>
     //     <literal>"-skip"</literal> : a positive floating point integer, 
     //     the number of terms to skip at startup. 
-    //     When the sequence is started up with the lowdisc_startup method,
+    //     When the sequence is started up at the first call to lowdisc_next,
     //     then skip elements are ignored in the sequence, so that the 
     //     next point will be generated at index <literal>skip+1</literal>.
     //     For example, Fox recommends to skip the <literal>qs^4 - 2</literal> first terms in the 
@@ -210,7 +210,6 @@ function this = lowdisc_configure (this,key,value)
     // lds = lowdisc_new("halton");
     // lds = lowdisc_configure(lds,"-dimension",44);
     // lds = lowdisc_configure(lds,"-scrambling","RR2");
-    // lds = lowdisc_startup (lds);
     // [lds,u] = lowdisc_next (lds,500);
     // lds = lowdisc_destroy(lds);
     // scf();

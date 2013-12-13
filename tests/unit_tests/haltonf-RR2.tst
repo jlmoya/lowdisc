@@ -17,7 +17,7 @@ lds = lowdisc_configure(lds,"-dimension",1);
 lds = lowdisc_configure(lds,"-scrambling","RR2");
 scrambling = lowdisc_cget(lds,"-scrambling");
 assert_checkequal(scrambling,"RR2");
-lds = lowdisc_startup (lds);
+
 [lds,computed]=lowdisc_next(lds,10);
 expected= [
     0.5   
@@ -40,7 +40,7 @@ lds = lowdisc_destroy(lds);
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",2);
 lds = lowdisc_configure(lds,"-scrambling","RR2");
-lds = lowdisc_startup (lds);
+
 [lds,computed]=lowdisc_next(lds,10);
 expected= [
     0.5       0.6666667
@@ -64,7 +64,7 @@ lds = lowdisc_destroy(lds);
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",3);
 lds = lowdisc_configure(lds,"-scrambling","RR2");
-lds = lowdisc_startup (lds);
+
 [lds,computed]=lowdisc_next(lds,10);
 expected= [
     0.5       0.6666667    0.8   

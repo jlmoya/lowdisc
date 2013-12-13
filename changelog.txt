@@ -26,6 +26,27 @@ with
 
 plotmatrix ( u )
 
+ * Fixed bug #1161.
+   The sequence is now automatically started up 
+   at the first call to the lowdisc_next function.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1161/
+   To update your code, please remove calls to the 
+   lowdisc_startup function. In other words, please replace :
+
+lds = lowdisc_new("halton");
+lds = lowdisc_startup (lds);
+[lds,computed] = lowdisc_next (lds);
+lds = lowdisc_destroy(lds);
+
+with
+
+lds = lowdisc_new("halton");
+[lds,computed] = lowdisc_next (lds);
+lds = lowdisc_destroy(lds);
+
+ * Fixed several typos in the examples of the help pages.
+ * Fixed a bug in lowdisc_stopall, which made it fail.
+ 
 lowdisc (v0.5 - May 2013)
  * Fixed bug #1112:
    The Halton leaped sequence in dimension 2 had a huge flaw.

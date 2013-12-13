@@ -15,7 +15,6 @@
 //
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",2);
-lds = lowdisc_startup (lds);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
 expected = [0.5 1./3.];

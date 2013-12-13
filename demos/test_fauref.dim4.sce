@@ -25,7 +25,7 @@ nrows = size(str,"r");
 for irow = 1 : nrows
   mfprintf ( fd , "%s\n" , str(irow) )
 end
-rng = lowdisc_startup (rng);
+
 mfprintf ( fd , "====================================================================\n" )
 [rng,computed]=lowdisc_next(rng,100);
 for i = 1:100

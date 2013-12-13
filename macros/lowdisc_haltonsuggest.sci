@@ -69,7 +69,6 @@ function [nsim,skip,leap] = lowdisc_haltonsuggest ( varargin )
     // lds = lowdisc_configure(lds,"-dimension",dim);
     // lds = lowdisc_configure(lds,"-skip",skip);
     // lds = lowdisc_configure(lds,"-leap",leap);
-    // lds = lowdisc_startup (lds);
     // [lds,computed]=lowdisc_next(lds,nsim);
     // lds = lowdisc_destroy(lds);
     // 

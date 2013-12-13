@@ -662,7 +662,6 @@ We use the leap parameter $L=5$.
 lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",2);
 lds = lowdisc_configure(lds,"-leap",5);
-lds = lowdisc_startup (lds);
 [lds,u] = lowdisc_next (lds,2^4-1);
 lds = lowdisc_destroy(lds);
 u = [0,0;u];

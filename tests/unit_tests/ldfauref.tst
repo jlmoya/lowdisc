@@ -15,7 +15,6 @@
 //
 lds = lowdisc_new("faure");
 lds = lowdisc_configure(lds,"-dimension",3);
-lds = lowdisc_startup (lds);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
 expected = [1/3 1/3 1/3];

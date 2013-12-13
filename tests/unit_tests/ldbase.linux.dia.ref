@@ -41,17 +41,15 @@ for m=lowdisc_methods()'
     assert_checkequal ( leap , 10 );
     ldb = lowdisc_configure ( ldb , "-leap" , 0 );
     //
-    ldb = lowdisc_startup ( ldb );
-    //
-    startedup = lowdisc_get ( ldb , "-startedup" );
-    assert_checkequal ( startedup , %t );
-    //
     sequenceindex = lowdisc_get ( ldb , "-index" );
     assert_checkequal ( sequenceindex , 0 );
     //
     [ldb,next] = lowdisc_next ( ldb );
     sequenceindex = lowdisc_get ( ldb , "-index" );
     assert_checkequal ( sequenceindex , 1 );
+    //
+    startedup = lowdisc_get ( ldb , "-startedup" );
+    assert_checkequal ( startedup , %t );
     //
     [ldb,next] = lowdisc_next ( ldb , 9 );
     sequenceindex = lowdisc_get ( ldb , "-index" );

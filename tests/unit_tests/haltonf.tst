@@ -12,7 +12,7 @@
 //
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",2);
-lds = lowdisc_startup (lds);
+
 index = lowdisc_get(lds,"-index");
 assert_checkalmostequal ( index, 0);
 // Term #1
@@ -43,7 +43,7 @@ lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
 // Skip 1 term, as in the TOMS implementation
 lds = lowdisc_configure(lds,"-skip",1);
-lds = lowdisc_startup (lds);
+
 [lds,computed]=lowdisc_next(lds,100);
 expected = [
 0.250000      0.666667      0.400000      0.285714
@@ -156,7 +156,7 @@ lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",1229);
 prarray = number_primes10000 ( );
 lds = lowdisc_configure(lds,"-primeslist",prarray);
-lds = lowdisc_startup (lds);
+
 for i=0:30
   [lds,computed] = lowdisc_next (lds);
 end
@@ -170,7 +170,7 @@ lds = lowdisc_destroy(lds);
 // 0.125 0.444444*/
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",2);
-lds = lowdisc_startup (lds);
+
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
@@ -182,7 +182,7 @@ lds = lowdisc_destroy(lds);
 // test in dimension 3 */
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",3);
-lds = lowdisc_startup (lds);
+
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
 [lds,computed] = lowdisc_next (lds);
@@ -197,9 +197,6 @@ lds = lowdisc_destroy(lds);
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip",10);
-lds = lowdisc_startup (lds);
-index = lowdisc_get ( lds , "-index" );
-assert_checkequal ( index , 10 );
 [lds,computed]=lowdisc_next(lds,10);
 expected = [
   0.812500      0.703704      0.280000      0.591837
@@ -224,7 +221,7 @@ lds = lowdisc_destroy(lds);
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap",1);
-lds = lowdisc_startup (lds);
+
 index = lowdisc_get ( lds , "-index" );
 assert_checkequal ( index , 0 );
 [lds,computed]=lowdisc_next(lds,10);
@@ -250,7 +247,7 @@ t1 = timer();
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-skip", 1.e7);
-lds = lowdisc_startup (lds);
+
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();
@@ -261,7 +258,7 @@ t1 = timer();
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",4);
 lds = lowdisc_configure(lds,"-leap", 1.e7);
-lds = lowdisc_startup (lds);
+
 [lds,computed]=lowdisc_next(lds,10);
 lds = lowdisc_destroy(lds);
 t2 = timer();

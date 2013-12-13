@@ -20,10 +20,10 @@ function lowdisc_stopall ( )
     //   // Example of what can go wrong...
     //   // We create a Niederreiter sequence.
     //   lds = lowdisc_new("niederreiter");
-    //   lds = lowdisc_startup (lds);
+    //   [lds,computed] = lowdisc_next (lds);
     //   // We create a Niederreiter sequence again.
     //   lds = lowdisc_new("niederreiter");
-    //   lds = lowdisc_startup (lds);
+    //   [lds,computed] = lowdisc_next (lds);
     //   // This creates the error message : 
     //   // "Low Discrepancy Module Error ! Startup is already done."
     //   // It would suffice to call lowdisc_destroy(lds). 
@@ -31,7 +31,7 @@ function lowdisc_stopall ( )
     //   lowdisc_stopall ( );
     //   // Now it works again.
     //   lds = lowdisc_new("niederreiter");
-    //   lds = lowdisc_startup (lds);
+    //   [lds,computed] = lowdisc_next (lds);
     //   lds = lowdisc_destroy(lds);
     //
     // Authors
@@ -41,7 +41,7 @@ function lowdisc_stopall ( )
     //
     // Faure
     //
-    start = _lowdisc_faureftokens();
+    seqmat = _lowdisc_faureftokens();
     for seq=seqmat
         _lowdisc_faurefdestroy(seq)
     end
