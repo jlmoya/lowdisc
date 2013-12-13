@@ -30,7 +30,7 @@ function lowdisc_plotbmbox(varargin)
     //
     // // Plot elementary intervals with volume 1/2^3, 
     // // and add Sobol points (insert zero).
-    // [ u , evalf ] = lowdisc_ldgen ( 2^4-1 , 2 );
+    // u = lowdisc_ldgen ( 2^4-1 , 2 );
     // u = [0,0;u];
     // scf();
     // lowdisc_plotbmbox(2,3,u);

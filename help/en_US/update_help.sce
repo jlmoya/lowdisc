@@ -65,7 +65,6 @@ helptbx_helpupdate ( funmat , helpdir , macrosdir , demosdir , modulename , %t )
 // Generate the support functions help
 helpdir = fullfile(cwd,"supportfunctions");
 funmat = [
-  "lowdisc_proj2d"
   "lowdisc_plotelembox"
   "lowdisc_plotbmbox"
   "lowdisc_getpath"

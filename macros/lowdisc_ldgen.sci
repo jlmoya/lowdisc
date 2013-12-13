@@ -84,7 +84,12 @@ function u=lowdisc_ldgen( varargin )
     //
     // // Generate more than 20 points with potentially 
     // // favorable parameters
-    // [u,evalf]=lowdisc_ldgen(20,4,"faure",%f)
+    // u=lowdisc_ldgen(20,4,"faure",%f)
+    //
+    // // See all projections of a 4D sequence.
+    // u = lowdisc_ldgen ( 100 , 4 );
+    // scf();
+    // plotmatrix ( u )
     //
     // Authors
     // Copyright (C) 2013 - Michael Baudin

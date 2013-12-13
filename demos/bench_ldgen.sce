@@ -18,7 +18,8 @@ function lowdisc_benchldgen()
     for ldseq = lowdisc_methods()'
         k = k + 1;
         t1 = tic();
-        [ u , evalf ] = lowdisc_ldgen ( 100*callf , n , ldseq );
+        u = lowdisc_ldgen ( 100*callf , n , ldseq );
+        evalf = size(u,"r")
         perf(k) = toc() + %eps;
         bynb(k) = (n * evalf) / perf(k);
         mprintf("%-20s %10d %10.3f %10d\n",ldseq,evalf,perf(k),bynb(k))

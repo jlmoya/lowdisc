@@ -4,28 +4,26 @@
 % Creative Commons Attribution-ShareAlike 3.0 Unported License :
 % http://creativecommons.org/licenses/by-sa/3.0/
 
-    \chapter{Projections}
-	
-      The goal of this page is to gather experiments showing bad 2D projections
-      for low disrepancy sequences. 
+\chapter{Projections}
+
+The goal of this page is to gather experiments showing bad 2D projections
+for low disrepancy sequences. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
   
 \section{Halton Sequence}
 
-    
-      In this section, we present some bad 2D projections of the Halton sequence.
-      The Halton sequence is known for having bad 2D projections and
-      several examples are presented in the bibliography.
-    
+In this section, we present some bad 2D projections of the Halton sequence.
+The Halton sequence is known for having bad 2D projections and
+several examples are presented in the bibliography.
 
-    
-      In the following example, we consider the projection of dimensions (28,29)
-      as in \cite{Chi:2005:OHS:1744084.1744136}. 
-      The paper contains an error : the faulty projection is
-      (28,29) (primes 107,109) and not (27,28) (primes 103,107).
-    
+In the following example, we consider the projection of dimensions (28,29)
+as in \cite{Chi:2005:OHS:1744084.1744136}. 
+The paper contains an error : the faulty projection is
+(28,29) (primes 107,109) and not (27,28) (primes 103,107). 
+We use the \scifun{corrcoef} function from the Stixbox module, 
+which computes the correlation coefficient between two samples.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -36,9 +34,7 @@ lowdisc_proj2d ( u , [28 29] );
 corrcoef ( [u(:,28) u(:,29)] )
 \end{lstlisting}
 
-    
-      The previous script produces the following output.
-    
+The previous script produces the following output.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -48,9 +44,8 @@ corrcoef ( [u(:,28) u(:,29)] )
   - 0.1210675    1.         
 \end{lstlisting}
 
-    
-      The previous script also produces the figure \ref{fig-halton-proj28-29}.
-    
+The previous script also produces the figure \ref{fig-halton-proj28-29}.
+
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=15cm]{figures/halton-proj28-29.png}
@@ -59,11 +54,8 @@ corrcoef ( [u(:,28) u(:,29)] )
 \label{fig-halton-proj28-29}
 \end{figure}
 
-
-    
-      The figure \ref{fig-halton-proj28-29-leaped} presents the leaped - Halton sequence. 
-      There is no obvious problem anymore.
-    
+The figure \ref{fig-halton-proj28-29-leaped} presents the leaped - Halton sequence. 
+There is no obvious problem anymore.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -79,13 +71,10 @@ lowdisc_proj2d ( u , [28 29] );
 \caption{The leaped Halton sequence - 4096 points in 29 dimensions. Projection (28,29).}
 \label{fig-halton-proj28-29-leaped}
 \end{figure}
-    
 
-    
-      In the following example, we consider the projection of Halton
-      sequence in dimensions (39,40)
-      as suggested by Kocis and Whiten \cite{Kocis1997}.
-    
+In the following example, we consider the projection of Halton
+sequence in dimensions (39,40)
+as suggested by Kocis and Whiten \cite{Kocis1997}.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -96,9 +85,8 @@ lowdisc_proj2d ( u , [39 40] );
 corrcoef ( [u(:,39) u(:,40)] )
 \end{lstlisting}
 
-    
-      The previous script produces the following output.
-    
+The previous script produces the following output.
+
 \lstset{language=scilabscript}
 \begin{lstlisting}
 -->corrcoef ( [u(:,39) u(:,40)] )
@@ -107,9 +95,9 @@ corrcoef ( [u(:,39) u(:,40)] )
     0.1048947    1.         
 \end{lstlisting}
 
-    
-      The previous script also produces the figure \ref{fig-halton-proj39-40}.
-    
+
+The previous script also produces the figure \ref{fig-halton-proj39-40}.
+
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=15cm]{figures/halton-proj39-40.png}
@@ -118,11 +106,8 @@ corrcoef ( [u(:,39) u(:,40)] )
 \label{fig-halton-proj39-40}
 \end{figure}
 
-
-    
-      The following script performs the same experiment with the 
-      leaped-Halton.
-    
+The following script performs the same experiment with the 
+leaped-Halton.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -146,16 +131,13 @@ On the other hand, we emphasize that a leaped Faure sequence is
 not a (0,s)-sequence anymore. 
 Therefore, there is no guarantee that the leaped Faure sequence is 
 a low discrepancy sequence.
-  
 
-    
-      In the following example, we search the worst Halton projection
-      for 2000 points in dimensions 40.
-      In order to evaluate the projection, we compute the
-      correlation coefficients.
-      The projections which have the largest non-diagonal
-      correlation coefficients are the worst.
-    
+In the following example, we search the worst Halton projection
+for 2000 points in dimensions 40.
+In order to evaluate the projection, we compute the
+correlation coefficients.
+The projections which have the largest non-diagonal
+correlation coefficients are the worst.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -189,16 +171,12 @@ The previous script produces the figure \ref{fig-halton-proj35-36}.
 
 \section{Faure Sequence}
 
-    
-      In this section, we present some bad 2D projections of the Faure sequence.
-    
+In this section, we present some bad 2D projections of the Faure sequence.
 
-    
-      In the following example, we search for the worst
-      projection of 2000 points of the Faure sequence in dimension 40.
-      The worst projection is relatively good, which
-      indicates how Faure's sequence is much better than Halton's sequence.
-    
+In the following example, we search for the worst
+projection of 2000 points of the Faure sequence in dimension 40.
+The worst projection is relatively good, which
+indicates how Faure's sequence is much better than Halton's sequence.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -226,28 +204,24 @@ The previous script produces the figure \ref{fig-faure-proj21-20}.
 \caption{The Faure sequence - 2000 points in 40 dimensions. Projection (20,21).}
 \label{fig-faure-proj21-20}
 \end{figure}
- 
-    
-      This is consistent with the fact that, in s=40 dimensions,
-      the Faure sequence uses the prime number b=41 as the base.
-      Moreover, the Faure sequence in dimension s=40 is
-      a (0,40)-sequence in base b=41.
-      Consider now the projection (i,j), for i different from j. 
-      Consider elementary intervals from 41 subdivisions
-      in dimension i, 41 subdivisions in dimension j, and 
-      1 subdivision in the other dimensions.
-      There are $41^2=1681$ intervals, each with volume 1/1681. 
-      Hence, if we consider a set of 1681 points, each such constructed 
-      elementary interval has one point. 
-      Since the previous figure has 2000>1681 points, all 2D projections 
-      of the Faure sequence in dimension s=40 are quite well distributed.
-    
 
-    
-      In the following example, we consider 300 points of the Faure
-      sequence in dimension 40, and consider the projection (39,40)
-      as suggested by Kocis and Whiten \cite{Kocis1997}.
-    
+This is consistent with the fact that, in s=40 dimensions,
+the Faure sequence uses the prime number b=41 as the base.
+Moreover, the Faure sequence in dimension s=40 is
+a (0,40)-sequence in base b=41.
+Consider now the projection (i,j), for i different from j. 
+Consider elementary intervals from 41 subdivisions
+in dimension i, 41 subdivisions in dimension j, and 
+1 subdivision in the other dimensions.
+There are $41^2=1681$ intervals, each with volume 1/1681. 
+Hence, if we consider a set of 1681 points, each such constructed 
+elementary interval has one point. 
+Since the previous figure has 2000>1681 points, all 2D projections 
+of the Faure sequence in dimension s=40 are quite well distributed.
+
+In the following example, we consider 300 points of the Faure
+sequence in dimension 40, and consider the projection (39,40)
+as suggested by Kocis and Whiten \cite{Kocis1997}.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -286,12 +260,11 @@ lds = lowdisc_startup (lds);
 lds = lowdisc_destroy(lds);
 scf();
 lowdisc_proj2d ( u , [39 40] );
-  \end{lstlisting}
+\end{lstlisting}
 
-    
-      We see that the number of experiments has increased from 300
-      to 68921, which is significantly more. 
-    
+We see that the number of experiments has increased from 300
+to 68921, which is significantly more. 
+
 \lstset{language=scilabscript}
 \begin{lstlisting}
 -->size(u)
@@ -299,11 +272,9 @@ lowdisc_proj2d ( u , [39 40] );
     68921.    40.  
   \end{lstlisting}
 
-    
-      The figure \ref{fig-faure-n68921-proj39-40} shows that there the correlation problem 
-	  is greatly reduced, although the points seems to be located 
-	  on lines.
-    
+The figure \ref{fig-faure-n68921-proj39-40} shows that there the correlation problem 
+is greatly reduced, although the points seems to be located 
+on lines.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -312,19 +283,14 @@ lowdisc_proj2d ( u , [39 40] );
 \caption{The Faure sequence - 68921 points in 40 dimensions. Projection (39,40).}
 \label{fig-faure-n68921-proj39-40}
 \end{figure}
-    
 
-    
-      The number of points $68921=41^3$, which guarantees good 3D projections. 
-    
+The number of points $68921=41^3$, which guarantees good 3D projections. 
 
-    
-      In order to keep the number of experiments constant, we might be 
-      interested in using the \scivar{leap} option.
-      Following Kocis and Whithen \cite{Kocis1997}, 
-      we may try a leaped Faure sequence. 
-      We try the leap L=5.
-    
+In order to keep the number of experiments constant, we might be 
+interested in using the \scivar{leap} option.
+Following Kocis and Whithen \cite{Kocis1997}, 
+we may try a leaped Faure sequence. 
+We try the leap L=5.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -355,18 +321,13 @@ a low discrepancy sequence.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \section{Sobol Sequence}
 
-    
-      In this section, we present some bad 2D projections of the Sobol sequence.
-    
+In this section, we present some bad 2D projections of the Sobol sequence.
 
-    
-      In the following example, we consider 1000 points of the  
-	  Sobol sequence in 23 dimensions and check the 
-	  projection (16,23).
-    
+In the following example, we consider 1000 points of the  
+Sobol sequence in 23 dimensions and check the 
+projection (16,23).
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -385,11 +346,10 @@ The previous script produces the figure \ref{fig-sobol-s23-proj16-23}.
 \caption{The Sobol sequence - 1000 points in 30 dimensions. Projection (16,23).}
 \label{fig-sobol-s23-proj16-23}
 \end{figure}
-    
-      In the following example, we consider 
-	  1000 points of the Sobol sequence in 36 dimensions and 
-	  check the projection (11,36).
-    
+
+In the following example, we consider 
+1000 points of the Sobol sequence in 36 dimensions and 
+check the projection (11,36).
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -408,20 +368,18 @@ The previous script produces the figure \ref{fig-sobol-s36-proj11-36}.
 \caption{The Sobol sequence - 1000 points in 36 dimensions. Projection (11,36).}
 \label{fig-sobol-s36-proj11-36}
 \end{figure}
-    
-    
-      In the following example, we plot the projection 
-	  (5,22) of $2^{12}$ and $2^{13}$ 
-	  points of the Sobol sequence in s=22 dimensions. 
-	  This example is presented in \cite{Joe:2008:CSS:1405171.1405191}. 
-	  We consider $2^{m-t}=2^4 \times 2^2=2^6$ elementary intervals, 
-	  with $2^4$ divisions in the dimension $x_5$ 
-	  and $2^2$ divisions in the dimension $x_{22}$. 
-	  For this projection, the quality parameter t is 7. 
-	  Hence, we need $2^m=2^{6+7}=2^{13}$ points 
-	  to make so that each elementary interval contain 
-	  $2^t=2^7$ points.
-    
+
+In the following example, we plot the projection 
+(5,22) of $2^{12}$ and $2^{13}$ 
+points of the Sobol sequence in s=22 dimensions. 
+This example is presented in \cite{Joe:2008:CSS:1405171.1405191}. 
+We consider $2^{m-t}=2^4 \times 2^2=2^6$ elementary intervals, 
+with $2^4$ divisions in the dimension $x_5$ 
+and $2^2$ divisions in the dimension $x_{22}$. 
+For this projection, the quality parameter t is 7. 
+Hence, we need $2^m=2^{6+7}=2^{13}$ points 
+to make so that each elementary interval contain 
+$2^t=2^7$ points.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -462,19 +420,15 @@ The previous script produces the figure \ref{fig-sobol-s22-proj5-22}.
 \caption{The Sobol sequence - $2^{12}$ (top) and $2^{13}$ (bottom) points in 22 dimensions. Projection (5,22).}
 \label{fig-sobol-s22-proj5-22}
 \end{figure}
-    
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 \section{Niederreiter (base 2) Sequence}
 \label{sec-projnieder}
 
-    
-      In this section, we consider 1000 points of the 
-	  Niederreiter (base 2) sequence in 26 dimensions, 
-	  and consider the projection (25,26).
-    
+In this section, we consider 1000 points of the 
+Niederreiter (base 2) sequence in 26 dimensions, 
+and consider the projection (25,26).
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -495,28 +449,25 @@ The previous script produce the figure \ref{fig-niederreiter-s26-n1000}.
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \section{Two-dimensional correlations with increasing dimensions}
 
-    
-      In this section, we present how the linear correlation 
-	  coefficient between dimensions of the sequence deteriorates 
-	  when the number of dimensions increases. 
-	  Given a number of dimensions and 1000 points, we are 
-	  interested in the worst 2D projection, as defined by 
-	  the largest correlation coefficient.
-    
+In this section, we present how the linear correlation 
+coefficient between dimensions of the sequence deteriorates 
+when the number of dimensions increases. 
+Given a number of dimensions and 1000 points, we are 
+interested in the worst 2D projection, as defined by 
+the largest correlation coefficient.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Numerical experiments}
 
-      The following function test for low discrepancy sequences for 
-	  dimensions s from 2 to smax. 
-	  It generates a low discrepancy point set for n points and computes 
-	  the correlation coefficient between columns of the matrix. 
-	  Then the diagonal terms are set to zero and the largest entry is computed. 
-	  We assume here that this identifies the worst 2D projection. 
-    
+The following function test for low discrepancy sequences for 
+dimensions s from 2 to smax. 
+It generates a low discrepancy point set for n points and computes 
+the correlation coefficient between columns of the matrix. 
+Then the diagonal terms are set to zero and the largest entry is computed. 
+We assume here that this identifies the worst 2D projection. 
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -527,12 +478,10 @@ function m=worstCorrelation(n,smax,seqname)
         m(s-1) = max(abs(c-eye(c)));
     end
 endfunction
-  \end{lstlisting}
+\end{lstlisting}
 
-    
-      The following script tests the Halton, Sobol, Faure and Niederreiter (optimal base) 
-      sequences.	  
-    
+The following script tests the Halton, Sobol, Faure and Niederreiter (optimal base) 
+sequences.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -554,23 +503,21 @@ a.children(1).legend_location="in_upper_left";
 xtitle("1000 Points","Number of dimensions",..
 "Maximum Correlation Coefficient")
   \end{lstlisting}
-  
-    
-      The previous script produces figure \ref{fig-badcorr1}.
-      This shows that, according to this test, the Niederreiter 
-	  sequence in base 2 performs well for $s<15$, but 
-	  rapidely deteriorates for $s\geq15$. 
-	  Notice that that optimal base of Niederreiter sequence is known 
-	  by our implementation only for $s<13$. 
-	  As expected, the Halton sequence has poor 2D projections, 
-	  especially for $s\geq 20$ where the correlation coefficient 
-	  becomes larger than 0.1. 
-	  The Sobol sequence is better than Halton, but can have poor 2D projections, 
-	  especially for $s\geq 35$. 
-	  However, the projections for $s<25$ are the best of this test. 
-	  The Faure sequence appears to be the most robust sequence in this 
-	  test for high dimensions.
-    
+
+The previous script produces figure \ref{fig-badcorr1}.
+This shows that, according to this test, the Niederreiter 
+sequence in base 2 performs well for $s<15$, but 
+rapidely deteriorates for $s\geq15$. 
+Notice that that optimal base of Niederreiter sequence is known 
+by our implementation only for $s<13$. 
+As expected, the Halton sequence has poor 2D projections, 
+especially for $s\geq 20$ where the correlation coefficient 
+becomes larger than 0.1. 
+The Sobol sequence is better than Halton, but can have poor 2D projections, 
+especially for $s\geq 35$. 
+However, the projections for $s<25$ are the best of this test. 
+The Faure sequence appears to be the most robust sequence in this 
+test for high dimensions.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -580,11 +527,9 @@ xtitle("1000 Points","Number of dimensions",..
 discrepancy sequences.}
 \label{fig-badcorr1}
 \end{figure}
-    
-    
-      The following script tests various Halton 
-      sequences.	  
-    
+
+The following script tests various Halton 
+sequences.
 
 \lstset{language=scilabscript}
 \begin{lstlisting}
@@ -606,8 +551,7 @@ a.children(1).legend_location="in_upper_left";
 xtitle("1000 Points","Number of dimensions",..
 "Maximum Correlation Coefficient")
   \end{lstlisting}
-  
-    
+
 The previous script produces figure \ref{fig-badcorr2}.
 This shows that, according to this test, the reverse Halton 
 sequence has almost the same poor 2D projections as the Halton 
@@ -619,8 +563,7 @@ sequence in this test, at the exception of s=25, for which
 the correlation is slightly larger. 
 These graphics suggest that the scrambled Halton sequence is the best of 
 this set of tests.
-    
-  
+
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=15cm]{figures/badcorr2.png}

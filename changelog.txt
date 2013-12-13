@@ -14,6 +14,17 @@ lowdisc (not released yet)
  * Fixed bug #1193
    The -seeds's help was unclear.
    http://forge.scilab.org/index.php/p/lowdisc/issues/1193/
+ * Fixed bug #1120
+   Removed function lowdisc_proj2d, which was a duplicate 
+   for Stixbox's plotmatrix.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1120/
+   To update your code, please replace :
+
+lowdisc_proj2d ( u )
+
+with
+
+plotmatrix ( u )
 
 lowdisc (v0.5 - May 2013)
  * Fixed bug #1112:
