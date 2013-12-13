@@ -384,6 +384,7 @@ $2^t=2^7$ points.
 h=scf();
 subplot(2,1,1);
 //
+b=2;
 s=22;
 m=12;
 r = [4 2];
@@ -392,7 +393,8 @@ u=lowdisc_ldgen(N-1,s,"sobol");
 u=[zeros(1,s);u];
 plot(u(:,5),u(:,22),"b.")
 lowdisc_plotelembox([b b],r)
-xtitle(msprintf("Volume=1/2^%d, %d Points",m,N),"X5","X22")
+xtitle(msprintf("Volume=1/%d, %d Points",..
+  b^sum(r),N),"X5","X22")
 //
 subplot(2,1,2);
 m=13;
@@ -401,7 +403,8 @@ u=lowdisc_ldgen(N-1,s,"sobol");
 u=[zeros(1,s);u];
 plot(u(:,5),u(:,22),"b.")
 lowdisc_plotelembox([b b],r)
-xtitle(msprintf("Volume=1/2^%d, %d Points",m,N),"X5","X22")
+xtitle(msprintf("Volume=1/%d, %d Points",..
+  b^sum(r),N),"X5","X22")
 //
 h.children(1).isoview="off";
 h.children(2).isoview="off";
