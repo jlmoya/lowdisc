@@ -13,7 +13,7 @@ function this = lowdisc_new ( varargin )
     //
     // Parameters
     //   this: the current object
-    //   method: a 1-by-1 matrix of strings, the low discrepancy sequence (default = "sobolf"). The method can be equal to : "halton", "faure", "sobol", "niederreiter". See below for details. 
+    //   method: a 1-by-1 matrix of strings, the low discrepancy sequence (default = "sobol"). The method can be equal to : "halton", "faure", "sobol", "niederreiter". See below for details. 
     //
     // Description
     //   This function creates a new low discrepancy object.
@@ -82,7 +82,7 @@ function this = lowdisc_new ( varargin )
     apifun_checkrhs ( "lowdisc_new" , rhs , 0:1 )
     apifun_checklhs ( "lowdisc_new" , lhs , 1 )
     //
-    method = apifun_argindefault ( varargin , 1 , "sobolf" )
+    method = apifun_argindefault ( varargin , 1 , "sobol" )
     //
     apifun_checktype ( "lowdisc_new" , method , "method" , 1 , "string" )
     apifun_checkscalar ( "lowdisc_new" , method , "method" , 1 )

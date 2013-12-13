@@ -6,6 +6,11 @@ lowdisc (not released yet)
    http://forge.scilab.org/index.php/p/lowdisc/issues/1176/
  * Added demo to compute t parameter of Sobol sequence.
    http://forge.scilab.org/index.php/p/lowdisc/issues/1177/
+ * Removed the tutorial help pages and created a new 
+   document "Low Discrepancy Toolbox Manual".
+ * Fixed #1297
+   The lowdisc_new() call fails.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1297/
 
 lowdisc (v0.5 - May 2013)
  * Fixed bug #1112:

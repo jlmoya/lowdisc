@@ -10,6 +10,10 @@
 // <-- JVM NOT MANDATORY -->
 // <-- ENGLISH IMPOSED -->
 
+// See http://forge.scilab.org/index.php/p/lowdisc/issues/1297/
+lds = lowdisc_new ( );
+lds = lowdisc_destroy(lds);
+
 //
 // Check the configure/cget methods.
 //
