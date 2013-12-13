@@ -19,5 +19,6 @@ subdemolist = [
 "Nied. base 2.dim. 6", "test_niedf.base2.dim6.sce"; ..
 "Nied. base 7.dim. 6", "test_niedf.base7.dim6.sce"; ..
 "Sobol dim. 4", "test_sobolf.dim4.sce"; ..
+"Discrepancy in 1D", "compute-disc1D.sce"; ..
 ];
 subdemolist(:,2) = demopath + subdemolist(:,2)
