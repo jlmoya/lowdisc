@@ -117,7 +117,8 @@ function this = lowdisc_configure (this,key,value)
     //     or "Reverse" for the scrambling of Vandewoestyne and Cools [2]. 
     //     The default is "" (no scrambling). 
     //     The scrambling can improve the correlation in high dimensions, 
-    //     leading to better low-dimensionnal projections.
+    //     leading to better low-dimensionnal projections. 
+    //     These are deterministic scramblings. 
     //     </para>
     //  </listitem>
     //  </itemizedlist>
@@ -155,6 +156,7 @@ function this = lowdisc_configure (this,key,value)
     //     <screen>
     //     seeds=distfun_unifrnd(0,1,1,24)
     //     </screen>
+    //     The "-seeds" option only acts on the "sobol" sequence.
     //     </para>
     //  </listitem>
     //  </itemizedlist>

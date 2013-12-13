@@ -11,6 +11,9 @@ lowdisc (not released yet)
  * Fixed #1297
    The lowdisc_new() call fails.
    http://forge.scilab.org/index.php/p/lowdisc/issues/1297/
+ * Fixed bug #1193
+   The -seeds's help was unclear.
+   http://forge.scilab.org/index.php/p/lowdisc/issues/1193/
 
 lowdisc (v0.5 - May 2013)
  * Fixed bug #1112:

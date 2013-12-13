@@ -45,7 +45,7 @@
 <refsection>
    <title>Description</title>
    <para>
-Plot the elementary interval with volume prod(b.^d).
+Plot the elementary interval with volume 1/prod(b.^d).
 This interval has b(1)^d(1) divisions in direction 1 and
 b(2)^d(2) divisions in direction 2.
    </para>
@@ -65,7 +65,7 @@ If the point set u is provided, we plot it.
 <refsection>
    <title>Examples</title>
    <programlisting role="example"><![CDATA[
-// Plot an elementary interval with volume 2^3
+// Plot an elementary interval with volume 1/2^3
 lowdisc_plotelembox(2,[2 1])
 
 // Use a different basis for each direction.
@@ -73,7 +73,7 @@ lowdisc_plotelembox(2,[2 1])
 scf();
 lowdisc_plotelembox([2 3],[2 1])
 
-// Plot all elementary intervals with volume b^m=2^3
+// Plot all elementary intervals with volume 1/b^m=1/2^3
 b = 2;
 m = 3;
 C = [
@@ -88,6 +88,11 @@ scf();
 lowdisc_plotelembox(b,C(i,:));
 end
 
+// Plot the Halton sequence in 2 dimensions
+scf();
+u=lowdisc_ldgen(2*3^2,2,"halton");
+lowdisc_plotelembox([2 3],[1 2],u)
+
    ]]></programlisting>
 </refsection>
 
@@ -99,7 +104,7 @@ end
 <refsection>
    <title>Authors</title>
    <simplelist type="vert">
-   <member>Copyright (C) 2012 - Michael Baudin</member>
+   <member>Copyright (C) 2012-2013 - Michael Baudin</member>
    </simplelist>
 </refsection>
 </refentry>

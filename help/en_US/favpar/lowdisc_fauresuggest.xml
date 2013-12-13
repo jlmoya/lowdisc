@@ -84,6 +84,8 @@ powers of qs, starting at N = qs^3."
 We return skip = b^4 - 2.
 We compute k = max( 3 , ceil(log(nsimmin)/log(b)) ) so that the
 number of simulations is greater than nsimmin.
+This ensures good equidistribution of at least the three dimensionnal projections
+of the sequence.
 We compute nsim = b^k.
 We return leap = 0.
    </para>

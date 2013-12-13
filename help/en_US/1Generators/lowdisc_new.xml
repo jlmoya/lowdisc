@@ -36,7 +36,7 @@
    <varlistentry><term>this:</term>
       <listitem><para> the current object</para></listitem></varlistentry>
    <varlistentry><term>method:</term>
-      <listitem><para> a 1-by-1 matrix of strings, the low discrepancy sequence (default = "sobolf"). The method can be equal to : "halton", "faure", "sobol", "niederreiter". See below for details.</para></listitem></varlistentry>
+      <listitem><para> a 1-by-1 matrix of strings, the low discrepancy sequence (default = "sobol"). The method can be equal to : "halton", "faure", "sobol", "niederreiter". See below for details.</para></listitem></varlistentry>
    </variablelist>
 </refsection>
 
