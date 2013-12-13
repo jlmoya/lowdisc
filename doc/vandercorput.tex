@@ -431,39 +431,40 @@ Let $k \geq 0$ be an integer.
 Let us prove that there is a unique $i$ in the set $\{kb^m,...,(k+1)b^m-1\}$  
 such that $\phi(i) \in I$, where $\phi(i)$ is the i-th element 
 of the Van Der Corput sequence in base $b$.
-Let $a(0),a(1),...,a(m-1) \in \{0,1,...,b-1\}$ be the $m$ digits 
+Let 
+$$
+a_0,a_1,...,a_{m-1} \in \{0,1,...,b-1\}
+$$
+be the $m$ digits 
 of the base-b decomposition of a:
 \begin{eqnarray}
-a=a(0) b^{m-1}+...+a(m-2) b+a(m-1).
+a=a_0 b^{m-1}+...+a_{m-2} b+a_{m-1}.
 \end{eqnarray}
 Notice that the digits are ordered from the highest to the lowest 
 significant digits. 
-Let $a(m),a(m+1),...,a(m+r-1) \in \{0,1,...,b-1\}$ be the 
-$r$ digits of the base-b decomposition of $k$ in base $b$:
+Let 
+$$
+a_m,a_{m+1},...,a_{m+r-1} \in \{0,1,...,b-1\}
+$$
+be the $r$ digits of the base-b decomposition of $k$ in base $b$:
 \begin{eqnarray}
-k=a(m+r-1)b^{r-1}+...+a(m+1)b+a(m). \label{vdc-01netdefk}
+k=a_{m+r-1}b^{r-1}+...+a_{m+1}b+a_m. \label{vdc-01netdefk}
 \end{eqnarray}
 Notice that the digits are ordered from the lowest to the highest 
 significant digits.
 Let us introduce:
 \begin{eqnarray}
 t&=&\frac{a}{b^m} \\
- &=&\frac{a(0)}{b}+\frac{a(1)}{b^2}+...+\frac{a(m-1)}{b^m} \\
+ &=&\frac{a_0}{b}+\frac{a_1}{b^2}+...+\frac{a_{m-1}}{b^m} \\
 \end{eqnarray}
 and
 \begin{eqnarray}
-x&=&\frac{a(m)}{b}+\frac{a(m+1)}{b^2}+...+\frac{a(m+r-1)}{b^r}.
+x&=&\frac{a_m}{b}+\frac{a_{m+1}}{b^2}+...+\frac{a_{m+r-1}}{b^r}.
 \end{eqnarray}
 Notice that $t$ is uniquely defined from the digits arising from the 
 base-b decomposition of $a$ while $x$ is uniquely defined from the digits 
 arising from the base-b decomposition of $k$. 
-Consider the number 
-\begin{eqnarray}
-y&=&t+\frac{x}{b^m} \\
- &=&\frac{a(0)}{b}+\frac{a(1)}{b^2}+...+\frac{a(m-1)}{b^m} \nonumber \\
-  &&+\frac{a(m)}{b^{m+1}}+\frac{a(m+1)}{b^{m+2}}+...+\frac{a(m+r-1)}{b^{m+r}}
-  \label{vdc-01netdefy}
-\end{eqnarray}
+
 Obviously $x\geq 0$. 
 Moreover, 
 \begin{eqnarray}
@@ -481,7 +482,16 @@ Indeed, this is a geometric series:
 \end{eqnarray}
 Therefore, $x \in [0,1)$. 
 Hence, $a+x \in [a,a+1)$ so that $a/b^m+x/b^m \in I$. 
-But $t=\frac{a}{b^m}$, which implies $t+x/b^m=y \in I$. 
+
+Now, consider the number 
+\begin{eqnarray}
+y&=&t+\frac{x}{b^m} \\
+ &=&\frac{a_0}{b}+\frac{a_1}{b^2}+...+\frac{a_{m-1}}{b^m} \nonumber \\
+  &&+\frac{a_m}{b^{m+1}}+\frac{a_{m+1}}{b^{m+2}}+...+\frac{a_{m+r-1}}{b^{m+r}}
+  \label{vdc-01netdefy}
+\end{eqnarray}
+
+We have $t=\frac{a}{b^m}$, which implies $t+x/b^m=y \in I$. 
 In order to conclude the proof, we recognize that $y$ 
 is the i-th element of the Van Der Corput sequence in base b, 
 for a particular value of $i$. 
@@ -489,16 +499,16 @@ To see this value of $i$, we just reverse the digits
 of the definition of $y$ from the equation \ref{vdc-01netdefy}. 
 This leads to 
 \begin{eqnarray}
-i &=& a(m+r-1) b^{m+r-1}+...+a(m+1) b^{m+1}+a(m) b^m \nonumber \\
-  & & a(m-1)b^{m-1}+...+a(1)b+a(0) \\
-  &=& \left( a(m+r-1) b^{r-1}+...+a(m+1) b+a(m)\right) b^m \nonumber \\
-  & & a(m-1)b^{m-1}+...+a(1)b+a(0) \\
-  &=& kb^m+a(m-1)b^{m-1}+...+a(1)b+a(0),
+i &=& a_{m+r-1} b^{m+r-1}+...+a_{m+1} b^{m+1}+a_m b^m \nonumber \\
+  & & a_{m-1}b^{m-1}+...+a_1b+a_0 \\
+  &=& \left( a_{m+r-1} b^{r-1}+...+a_{m+1} b+a_m\right) b^m \nonumber \\
+  & & a_{m-1}b^{m-1}+...+a_1b+a_0 \\
+  &=& kb^m+a_{m-1}b^{m-1}+...+a_1b+a_0,
 \end{eqnarray}
 where the last equality is implied by the equation \ref{vdc-01netdefk}.
 Moreover, 
 $$
-0\leq a(m-1) b^{m-1}+...+a(1) b+a(0) \leq b^m-1. 
+0\leq a_{m-1} b^{m-1}+...+a_1 b+a_0 \leq b^m-1. 
 $$
 Hence 
 $$
