@@ -60,6 +60,11 @@ function u=lowdisc_ldgen( varargin )
     //   </listitem>
     //   <listitem>
     //     <para>
+    //        "sobol": the Sobol sequence.
+    //     </para>
+    //   </listitem>
+    //   <listitem>
+    //     <para>
     //        "niederreiter": the Niederreiter sequence with optimal base.
     //     </para>
     //   </listitem>

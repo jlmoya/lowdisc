@@ -1,5 +1,8 @@
 changelog of the Low Discrepancy Toolbox
 
+lowdisc (not released yet)
+ * Removed lowdisc_startup, which is now unnecessary.
+
 lowdisc (v0.6 - December 2013)
  * Fixed details in the Tutorial "Choosing the number of points".
  * Added a demo of a Gray Code.
