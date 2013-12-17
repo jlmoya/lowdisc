@@ -7,6 +7,7 @@
 demopath = get_absolute_file_path("lowdisc.dem.gateway.sce");
 subdemolist = [
 "Macros Generators", fullfile("ld-macros","ld-macros.dem.gateway.sce"); ..
+"Scrambled Sequences", fullfile("rqmc","rqmc.dem.gateway.sce"); ..
 "Van Der Corput", "demo_vandercorput.sce"; ..
 "Gray Code", "gray-code.sce"; ..
 "Sobol t", "sobol-t.sce"; ..
