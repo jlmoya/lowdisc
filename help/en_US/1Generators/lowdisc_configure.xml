@@ -170,6 +170,8 @@ the empty string "" (no scrambling),
 The default is "" (no scrambling).
 The scrambling can improve the correlation in high dimensions,
 leading to better low-dimensionnal projections.
+For "Owen" and "Owen-Faure-Tezuka" scramblings, the 
+number of scrambled digits is 30. 
 </para>
 </listitem>
 <listitem>

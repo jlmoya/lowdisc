@@ -196,7 +196,7 @@ etc...
       The unscrambled implementation is a modification of the C source
       code by John Burkardt.
       The scrambled implementation is a C++ port of the original Fortran
-      source code.
+      source code in Algo. 823.
     </para>
     <para>
       Reference for Unscrambled Sobol : http://www.netlib.org/toms/647
