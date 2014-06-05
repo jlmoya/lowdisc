@@ -95,7 +95,14 @@ int sci_lowdisc_haltonfnext (char *fname) {
 		return 0;
 	}
 	dim = seq->dim_num_get();
-	next = (double *)malloc(dim*sizeof(double));
+	if (coordinate)
+	{
+		next = (double *)malloc(sizeof(double));
+	}
+	else
+	{
+		next = (double *)malloc(dim*sizeof(double));
+	}
 	if (next==NULL)
 	{
 		Scierror(112, "%s: No more memory.\n",fname);
@@ -112,10 +119,10 @@ int sci_lowdisc_haltonfnext (char *fname) {
 	}
 	for ( k = 0; k < imax; k++ )
 	{
-		seq->next ( index , next );
+		seq->next ( index , coordinate, next );
 		if (coordinate)
 		{
-			*(quasi + k) = next[dim-1];
+			*(quasi + k) = next[0];
 		}
 		else
 		{

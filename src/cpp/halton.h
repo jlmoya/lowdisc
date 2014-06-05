@@ -89,8 +89,18 @@ public:
 	//      Default: index = 0.
 	//      Required: 0 <= index.
 	//
-	//    * Output, double r[0,1,...,dim_num-1], the next element of the leaped Halton
+	//    * coordinate (default coordinate=0).
+	//      If coordinate==0, then r has size dim_num and r contains 
+	//      all coordinates 1,2,...,dim_num of the index-th element.
+	//      If coordinate==1, then r has size 1 and r contains 
+	//      the dim_num-th coordinate of the index-th element : 
+	//      the coordinates 1,2,...,dim_num-1 are "ignored".
+	//      This is convenient for discrete event simulation.
+	//
+	//    * Output, double r, the next element of the leaped Halton
 	//    subsequence.
+	//    If coordinate==0, then the size is r[0,1,...,dim_num-1].
+	//    If coordinate==1, then the size is r[0].
 	//
 	//  Discussion:
 	//
@@ -136,7 +146,7 @@ public:
 	//  8:   0.0625    0.4444444    0.36  
 	//  9:   0.5625    0.0740741    0.76  
 	// 10:   0.3125    0.7407407    0.08
-	void next ( int index , double r[] );
+	void next ( int index , int coordinate, double r[] );
 
 	// dim_num_get --
 	// gets the spatial dimension for a leaped Halton subsequence.
@@ -299,6 +309,8 @@ private:
 	// 
 	double scrambledVDC(int index, int base, int * sigma);
 
+	// Checks current scrambling
+	void Halton::checkscrambling();
 };
 
 __END_DECLS

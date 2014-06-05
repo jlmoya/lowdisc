@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2013 - Michael Baudin
+﻿// Copyright (C) 2013-2014 - Michael Baudin
 // Copyright (C) 2005-2007 - John Burkardt
 // Copyright (C) 2009-2010 - Digiteo - Michael Baudin
 //
@@ -40,43 +40,57 @@ using namespace std;
 //    Volume 23, Number 2, 1997, pages 266-294.
 //
 
-
-void Halton::next ( int index , double r[] )
+void Halton::checkscrambling()
 {
-	int i;
-	int seed2;
-
-	if ( halton_scrambling==HALTON_SCRAMBLINGZERO )
-	{
-		for ( i = 0; i < halton_dim_num; i++ )
-		{
-			seed2 = halton_seed[i] + index * halton_leap[i];
-			r[i] = vandercorput(seed2, halton_base[i]);
-		}
-	} 
-	else if ( halton_scrambling==HALTON_SCRAMBLINGRR2 )
-	{
-		for ( i = 0; i < halton_dim_num; i++ )
-		{
-			seed2 = halton_seed[i] + index * halton_leap[i];
-			r[i] = scrambledVDC(index, halton_base[i], halton_sigma[i]);
-		}
-	}
-	else if ( halton_scrambling==HALTON_SCRAMBLINGREVERSE )
-	{
-		for ( i = 0; i < halton_dim_num; i++ )
-		{
-			seed2 = halton_seed[i] + index * halton_leap[i];
-			r[i] = scrambledVDC(index, halton_base[i], halton_sigma[i]);
-		}
-	}
-	else
+	if ( ( halton_scrambling!=HALTON_SCRAMBLINGZERO ) & \
+		( halton_scrambling!=HALTON_SCRAMBLINGRR2 ) & \
+		( halton_scrambling!=HALTON_SCRAMBLINGREVERSE ) )
 	{
 		ostringstream msg;
 		msg << "halton - halton_next - Error!\n";
 		msg << "  Unknown scrambling "<<halton_scrambling<<"\n";
 		lowdisc_error(msg.str());
 		return;
+	}
+	return;
+}
+
+void Halton::next ( int index , int coordinate, double r[] )
+{
+	int i;
+	int seed2;
+
+	checkscrambling();
+
+	if (coordinate)
+	{
+		i=halton_dim_num-1;
+		seed2 = halton_seed[i] + index * halton_leap[i];
+		if ( halton_scrambling==HALTON_SCRAMBLINGZERO )
+		{
+			r[0] = vandercorput(seed2, halton_base[i]);
+		}
+		else if ( ( halton_scrambling==HALTON_SCRAMBLINGRR2 ) | \
+			( halton_scrambling==HALTON_SCRAMBLINGREVERSE ) )
+		{
+			r[0] = scrambledVDC(index, halton_base[i], halton_sigma[i]);
+		}
+	}
+	else
+	{
+		for ( i = 0; i < halton_dim_num; i++ )
+		{
+			seed2 = halton_seed[i] + index * halton_leap[i];
+			if ( halton_scrambling==HALTON_SCRAMBLINGZERO )
+			{
+				r[i] = vandercorput(seed2, halton_base[i]);
+			}
+			else if ( ( halton_scrambling==HALTON_SCRAMBLINGRR2 ) | \
+				(halton_scrambling==HALTON_SCRAMBLINGREVERSE ) )
+			{
+				r[i] = scrambledVDC(index, halton_base[i], halton_sigma[i]);
+			}
+		}
 	}
 	return;
 }

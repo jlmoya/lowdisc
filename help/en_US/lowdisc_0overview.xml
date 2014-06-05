@@ -120,6 +120,15 @@
           <para>object oriented programming, if necessary.</para>
         </listitem>
 
+        <listitem>
+          <para>get directly the dimension-th coordinate, without generating 
+                the coordinates 1,2,...,dimension-1.
+                This is a convenient feature for discrete event simulation 
+                (piecewise deterministic Markov processes), where the 
+                number of jumps is not known in advance for all chains.
+          </para>
+        </listitem>
+
       </itemizedlist>
     </para>
 

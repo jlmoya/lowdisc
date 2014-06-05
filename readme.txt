@@ -17,8 +17,11 @@ The current prototype has the following features :
  * fast sequences based on compiled source code,
  * suggest optimal settings to use the best of the sequences,
  * object oriented programming.
+ * get directly the dimension-th coordinate, without generating 
+   the coordinates 1,2,...,dimension-1.
 
 Overview of sequences
+
  * The Halton sequence (classic, leaped, reverse or scrambled),
  * The Sobol sequence (classic or scrambled),
  * The Faure sequence,

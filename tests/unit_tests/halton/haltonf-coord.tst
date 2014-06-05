@@ -23,8 +23,26 @@ lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",12);
 [lds,expected] = lowdisc_next (lds,10);
 lds = lowdisc_destroy(lds);
-expected=expected(:,12)
-//
+expected=expected(:,12);
 // Tests
 assert_checkequal(computed1,expected(1:5));
 assert_checkequal(computed2,expected(6:10));
+
+//
+// Performance test.
+// This test requires too much time if the 
+// dimension is not directly computed.
+N=10000;
+tic();
+for i=1:13
+    dimension=2^i;
+    lds = lowdisc_new("halton");
+    prarray = number_primes10000 ( );
+    lds = lowdisc_configure(lds,"-primeslist",prarray);
+    lds = lowdisc_configure(lds,"-dimension",dimension);
+    lds = lowdisc_configure(lds,"-coordinate",%t);
+    [lds,computed1] = lowdisc_next (lds,N);
+    lds = lowdisc_destroy(lds);
+end
+t=toc()
+assert_checktrue(t<10);
