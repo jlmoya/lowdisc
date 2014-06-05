@@ -24,7 +24,10 @@ int lowdisc_Double2IntegerArgument ( char * fname , int ivar , double dvalue , i
 void lowdisc_CreateLhsInteger ( int ivar , int value );
 void lowdisc_CreateLhsDouble ( int ivar , double value );
 void lowdisc_CreateLhsMatrix ( int ivar , int nRows , int nCols , double ** matrix );
+int lowdisc_GetOneBooleanArgument ( char * fname , int ivar , int * value );
 
+#define LOWDISC_GWSUPPORT_OK 1
+#define LOWDISC_GWSUPPORT_ERROR 0
 
 /* ==================================================================== */
 

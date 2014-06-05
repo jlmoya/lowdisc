@@ -11,6 +11,7 @@ extern "C" {
 #include "stack-c.h" 
 #include "Scierror.h"
 #include "localization.h"
+#include "api_scilab.h"
 }
 
 #include "gw_lowdisc_support.h" 
@@ -31,9 +32,9 @@ int lowdisc_AssertNumberOfRows ( char * fname , int ivar , int expected_nrows , 
 	if ( expected_nrows != actual_nrows )
 	{
 		Scierror(999,_("%s: Wrong number of columns in argument #%d: found %d rows but %d rows expected.\n"),fname,ivar , actual_nrows , expected_nrows );
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	} else {
-		return 1;
+		return LOWDISC_GWSUPPORT_OK;
 	}
 }
 
@@ -53,9 +54,9 @@ int lowdisc_AssertNumberOfColumns ( char * fname , int ivar , int expected_ncols
 	if ( expected_ncols != actual_ncols )
 	{
 		Scierror(999,_("%s: Wrong number of columns in argument #%d: found %d columns but %d columns expected.\n"),fname,ivar , actual_ncols , expected_ncols );
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	} else {
-		return 1;
+		return LOWDISC_GWSUPPORT_OK;
 	}
 }
 
@@ -110,9 +111,9 @@ int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type )
 		} else {
 			Scierror(204,_("%s: Wrong type for input argument #%d: <Unknown data type> expected.\n"),fname,ivar);
 		}
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	} else {
-		return 1;
+		return LOWDISC_GWSUPPORT_OK;
 	}
 }
 
@@ -131,19 +132,19 @@ int lowdisc_GetOneDoubleArgument ( char * fname , int ivar , double * value )
 	double * mydata = NULL;
 	if ( lowdisc_AssertVariableType(fname , ivar , sci_matrix) == 0 )
 	{
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	GetRhsVarMatrixDouble(ivar, &nRows, &nCols, &mydata);
 	if ( lowdisc_AssertNumberOfRows(fname , ivar , 1 , nRows) == 0 )
 	{ 
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	if ( lowdisc_AssertNumberOfColumns(fname , ivar , 1 , nCols) == 0 )
 	{
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	*value = mydata[0];
-	return 1;
+	return LOWDISC_GWSUPPORT_OK;
 }
 
 // 
@@ -161,21 +162,21 @@ int lowdisc_GetOneIntegerArgument ( char * fname , int ivar , int * value )
 	double * mydata = NULL;
 	if ( lowdisc_AssertVariableType(fname , ivar , sci_matrix) == 0 )
 	{
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	GetRhsVarMatrixDouble(ivar, &nRows, &nCols, &mydata);
 	if ( lowdisc_AssertNumberOfRows(fname , ivar , 1 , nRows) == 0 )
 	{ 
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	if ( lowdisc_AssertNumberOfColumns(fname , ivar , 1 , nCols) == 0 )
 	{
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	if ( lowdisc_Double2IntegerArgument ( fname , ivar , mydata[0] , value ) == 0 ) {
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
-	return 1;
+	return LOWDISC_GWSUPPORT_OK;
 }
 
 // 
@@ -193,19 +194,19 @@ int lowdisc_GetOneCharArgument ( char * fname , int ivar , char ** value )
 	char ** mydata = NULL;
 	if ( lowdisc_AssertVariableType(fname , ivar , sci_strings) == 0 )
 	{
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	GetRhsVar( ivar, MATRIX_OF_STRING_DATATYPE, &nRows,   &nCols,   &mydata);
 	if ( lowdisc_AssertNumberOfRows(fname , ivar , 1 , nRows) == 0 )
 	{ 
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	if ( lowdisc_AssertNumberOfColumns(fname , ivar , 1 , nCols) == 0 )
 	{
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	*value = mydata[0];
-	return 1;
+	return LOWDISC_GWSUPPORT_OK;
 }
 
 // 
@@ -221,20 +222,20 @@ int lowdisc_Double2IntegerArgument ( char * fname , int ivar , double dvalue , i
 {
 	if ( dvalue > INT_MAX ) {
 		Scierror(999,_("%s: Too large integer value in argument #%d: found %e while maximum value is %d.\n"),fname,ivar , dvalue , INT_MAX );
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	if ( dvalue < INT_MIN ) {
 		Scierror(999,_("%s: Too large integer value in argument #%d: found %e while minimum value is %d.\n"),fname,ivar , dvalue , INT_MIN );
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	*ivalue = (int)dvalue;
 	// Now check that the double was really an integer
 	if ( (double)*ivalue != dvalue ) {
 		Scierror(999,_("%s: Wrong integer in argument #%d: found %e which is different from the closest integer %d.\n"),fname,ivar , dvalue , *ivalue );
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	
-	return 1;
+	return LOWDISC_GWSUPPORT_OK;
 }
 
 // 
@@ -288,4 +289,33 @@ void lowdisc_CreateLhsMatrix ( int ivar , int nRows , int nCols , double ** matr
 {
 	iAllocMatrixOfDouble ( Rhs + ivar , nRows , nCols , matrix );
 	LhsVar(ivar) = Rhs+ivar;
+}
+
+// 
+// lowdisc_GetOneBooleanArgument --
+//   Gets one boolean number from the argument #ivar in the function fname.
+//   Returns 0 if an error is detected, returns 1 if not error occurs.
+// Arguments
+//   fname : the name of the Scilab function
+//   ivar : the index of the input variable
+//   value : the value to get
+//
+int lowdisc_GetOneBooleanArgument ( char * fname , int ivar , int * value )
+{
+	int* piAddr = NULL;
+	SciErr sciErr;
+	int ierr;
+
+	sciErr = getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
+    if(sciErr.iErr)
+    {
+        printError(&sciErr, 0);
+        return LOWDISC_GWSUPPORT_ERROR;
+    }
+	ierr = getScalarBoolean(pvApiCtx, piAddr, value);
+	if(ierr)
+	{
+		return LOWDISC_GWSUPPORT_ERROR;
+	}
+	return LOWDISC_GWSUPPORT_OK;
 }

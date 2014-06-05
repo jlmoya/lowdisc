@@ -40,18 +40,18 @@ int sci_lowdisc_ssobolnew (char *fname) {
 	CheckLhs(0,1);
 	// Arg #1 : dimen
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dimen );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #2 : iflag
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &iflag );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get Arg #2: base
 	ierr = lowdisc_AssertVariableType(fname , 2 , sci_matrix );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	if ( Rhs == 2 ) 
@@ -67,18 +67,18 @@ int sci_lowdisc_ssobolnew (char *fname) {
 		if (nRows==24)
 		{
 			ierr = lowdisc_AssertNumberOfColumns ( fname , 3 , 1 , nCols );
-			if ( ierr==0 ) {
+			if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 				return 0;
 			}
 		}
 		else
 		{
 			ierr = lowdisc_AssertNumberOfRows ( fname , 3 , 1 , nRows );
-			if ( ierr==0 ) {
+			if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 				return 0;
 			}
 			ierr = lowdisc_AssertNumberOfColumns ( fname , 3 , 24 , nCols );
-			if ( ierr==0 ) {
+			if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 				return 0;
 			}
 		}

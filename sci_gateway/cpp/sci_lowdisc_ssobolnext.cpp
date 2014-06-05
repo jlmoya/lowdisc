@@ -1,4 +1,4 @@
-// Copyright (C) 2013 - Michael Baudin
+// Copyright (C) 2013 - 2014 - Michael Baudin
 //
 // This file must be used under the terms of the 
 // GNU Lesser General Public License license :
@@ -30,6 +30,9 @@ extern "C" {
 //       The number of elements to generate
 // leap: a 1-by-1 matrix of doubles, integer value
 //       The number of elements to ignore, between two consecutive elements.
+// coordinate: a 1-by-1 matrix of boolean, 
+//       If false, we must generate all coordinates.
+//       If true, we must generate only the dimension-th coordinate.
 // quasi: a imax-by-d matrix of doubles
 //        The elements in the sequence.
 //   quasi(i,:) is the i-th element, for i= 1, 2, ..., imax
@@ -59,40 +62,61 @@ int sci_lowdisc_ssobolnext (char *fname) {
 	int token;
 	Ssobol * seq;
 	int iflag;
+	int coordinate;
 
-	CheckRhs(3,3) ;
+	CheckRhs(4,4) ;
 	CheckLhs(0,1) ;
 	// Arg #1: token
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #2: imax
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &imax );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #3: leap
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &leap );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
+		return 0;
+	}
+	//
+	// Get Arg #4: coordinate (coordinate=1 if false).
+	ierr = lowdisc_GetOneBooleanArgument ( fname , 4, &coordinate);
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Proceed...
 
 	iflag=lowdisc_token2Ssobol(fname, 1, token, &seq);
-	if (iflag==0)
+	if (iflag==LOWDISC_GWSUPPORT_ERROR)
 	{
 		return 0;
 	}
 	dim = seq->dim_num_get ( );
 	next = (double *)malloc(dim*sizeof(double));
-	lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi );
+	if (coordinate)
+	{
+		lowdisc_CreateLhsMatrix ( 1 , imax , 1, &quasi );
+	}
+	else 
+	{
+		lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi );
+	}
 	for ( k = 0; k < imax; k++ )
 	{
 		seq->next ( next );
-		for(i=0; i<dim; i++) 
+		if (coordinate)
 		{
-			*(quasi + i * imax + k) = next[i];
+			*(quasi + k) = next[dim-1];
+		}
+		else
+		{
+			for(i=0; i<dim; i++) 
+			{
+				*(quasi + i * imax + k) = next[i];
+			}
 		}
 		if ( leap > 0 ) 
 		{

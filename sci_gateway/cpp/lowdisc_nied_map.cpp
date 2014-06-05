@@ -21,6 +21,7 @@ extern "C" {
 #include "niederreiter.h"
 
 #include "lowdisc_nied_map.hxx"
+#include "gw_lowdisc_support.h" 
 
 using namespace std;
 typedef map<int , Niederreiter *> lowdisc_nied_map_type;
@@ -78,7 +79,7 @@ int lowdisc_token2Niederreiter( char * fname, int ivar , int token, Niederreiter
 	*seq = lowdisc_nied_map_getobject ( token );
 	if (*seq==NULL) {
 		Scierror(999,_("%s: Wrong nied object %d in argument #%d.\n"),fname,token,ivar);
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
-	return 1;
+	return LOWDISC_GWSUPPORT_OK;
 }

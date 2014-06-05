@@ -51,50 +51,50 @@ int sci_lowdisc_niedfnew (char *fname) {
 	//
 	// Get dim
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get base
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &base );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get skip
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &skip );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get gfaritfile
 	ierr = lowdisc_AssertVariableType(fname , 4 , sci_strings );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	GetRhsVar( 4, MATRIX_OF_STRING_DATATYPE, &nRows,   &nCols,   &gfaritdata);
 	ierr = lowdisc_AssertNumberOfRows ( fname , 4 , nRows , 1 );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	ierr = lowdisc_AssertNumberOfColumns ( fname , 4 , nCols , 1 );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	gfaritfile = gfaritdata[0];
 	//
 	// Get gfplysfile
 	ierr = lowdisc_AssertVariableType(fname , 5 , sci_strings );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	GetRhsVar( 5, MATRIX_OF_STRING_DATATYPE, &nRows,   &nCols,   &gfplysdata);
 	ierr = lowdisc_AssertNumberOfRows ( fname , 5 , nRows , 1 );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	ierr = lowdisc_AssertNumberOfColumns ( fname , 5 , nCols , 1 );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	gfplysfile = gfplysdata[0];

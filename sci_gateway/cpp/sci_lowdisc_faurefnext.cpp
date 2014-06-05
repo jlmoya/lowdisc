@@ -1,4 +1,4 @@
-
+// Copyright (C) 2013 - 2014 - Michael Baudin
 // Copyright (C) 2008 - INRIA - Michael Baudin
 // Copyright (C) 2009-2011 - Digiteo - Michael Baudin
 //
@@ -31,6 +31,9 @@ extern "C" {
 //       The number of elements to generate
 // leap: a 1-by-1 matrix of doubles, integer value
 //       The number of elements to ignore, between two consecutive elements.
+// coordinate: a 1-by-1 matrix of boolean, 
+//       If false, we must generate all coordinates.
+//       If true, we must generate only the dimension-th coordinate.
 // quasi: a imax-by-d matrix of doubles
 //        The elements in the sequence.
 //   quasi(i,:) is the i-th element, for i= 1, 2, ..., imax
@@ -55,32 +58,39 @@ int sci_lowdisc_faurefnext (char *fname) {
 	double * next = NULL;
 	int token;
 	Faure * seq;
+	int coordinate;
 	//
-	CheckRhs(4,4) ;
+	CheckRhs(5,5) ;
 	CheckLhs(0,1) ;
 	// Arg #1: token
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #2: seed
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &seed );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #3: imax
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &imax );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #4: leap
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 4 , &leap );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
+		return 0;
+	}
+	//
+	// Get Arg #5: coordinate (coordinate=1 if false).
+	ierr = lowdisc_GetOneBooleanArgument ( fname , 5, &coordinate);
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Proceed...
 	ierr=lowdisc_token2Faure(fname, 1, token, &seq);
-	if (ierr==0)
+	if (ierr==LOWDISC_GWSUPPORT_ERROR)
 	{
 		return 0;
 	}
@@ -91,14 +101,28 @@ int sci_lowdisc_faurefnext (char *fname) {
 		Scierror(112, "%s: No more memory.\n",fname);
 		return 0;
 	}
-	lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi );
+	if (coordinate)
+	{
+		lowdisc_CreateLhsMatrix ( 1 , imax , 1, &quasi );
+	}
+	else 
+	{
+		lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi );
+	}
 	// Call the Faure sequence
 	for ( k = 0; k < imax; k++ )
 	{
 		seq->next ( &seed, next );
-		for(i=0; i<dim; i++) 
+		if (coordinate)
 		{
-			*(quasi + i * imax + k) = next[i];
+			*(quasi + k) = next[dim-1];
+		}
+		else
+		{
+			for(i=0; i<dim; i++) 
+			{
+				*(quasi + i * imax + k) = next[i];
+			}
 		}
 		if ( leap > 0 ) 
 		{

@@ -21,6 +21,7 @@ extern "C" {
 #include "halton.h"
 
 #include "lowdisc_halton_map.hxx"
+#include "gw_lowdisc_support.h" 
 
 using namespace std;
 typedef map<int , Halton *> lowdisc_halton_map_type;
@@ -78,7 +79,7 @@ int lowdisc_token2halton( char * fname, int ivar , int token, Halton ** seq)
 	*seq = lowdisc_halton_map_getobject ( token );
 	if (*seq==NULL) {
 		Scierror(999,_("%s: Wrong halton object %d in argument #%d.\n"),fname,token,ivar);
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
-	return 1;
+	return LOWDISC_GWSUPPORT_OK;
 }

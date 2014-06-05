@@ -1,4 +1,4 @@
-// Copyright (C) 2013 - Michael Baudin
+// Copyright (C) 2013 - 2014 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
@@ -27,7 +27,7 @@ function this = lowdisc_configure (this,key,value)
     //   </screen>
     //
     //  The following keys are available: <literal>"-dimension"</literal>, 
-    // <literal>"-skip"</literal>, <literal>"-leap"</literal>, <literal>"-verbose"</literal>.
+    // <literal>"-skip"</literal>, <literal>"-leap"</literal>, <literal>"-verbose"</literal>, <literal>"-coordinate"</literal>.
     //  <itemizedlist>
     //   <listitem>
     //     <para>
@@ -63,6 +63,22 @@ function this = lowdisc_configure (this,key,value)
     //    <listitem>
     //      <para>
     //      <literal>"-verbose"</literal> : a boolean, the verbose mode (default : %f).
+    //      </para>
+    //    </listitem>
+    //    <listitem>
+    //      <para>
+    //      <literal>"-coordinate"</literal> : a boolean (default : %f). 
+    //        By default, coordinate is false, meaning that all coordinates 
+    //        1,2,...,dimension are computed, as usual.
+    //        If coordinate is true, only one single coordinate is computed 
+    //        and returned by lowdisc_next(), which then returns 
+    //        a vector instead of a matrix. 
+    //        The indice of this coordinate is specified by the 
+    //        "-dimension" option. 
+    //        This allows to directly get the dimension-th coordinate of the 
+    //        sequence, without generating the dimensions 1,2,...,dimension-1.
+    //        This can be useful in cases where the number of dimensions is 
+    //        not known in advance, e.g. in dynamic simulations.
     //      </para>
     //    </listitem>
     //  </itemizedlist>
@@ -146,9 +162,10 @@ function this = lowdisc_configure (this,key,value)
     //     The default is 
     //     <screen>
     //     seeds= [.8804418,.2694365,.0367681,.4068699,..
-    //     .4554052,.2880635,.1463408,.2390333,.6407298,.1755283,.713294,..
-    //     .4913043,.2979918,.1396858,.3589528,.5254809,.9857749,.4612127,..
-    //     .2196441,.7848351,.40961,.9807353,.2689915,.5140357]
+    //     .4554052,.2880635,.1463408,.2390333,.6407298,..
+    //     .1755283,.713294,.4913043,.2979918,.1396858,..
+    //     .3589528,.5254809,.9857749,.4612127,.2196441,..
+    //     .7848351,.40961,.9807353,.2689915,.5140357]
     //     </screen>
     //     This option can be used in order to generate 
     //     a scrambled Sobol sequences different from the default.
@@ -216,7 +233,7 @@ function this = lowdisc_configure (this,key,value)
     // plot(u(:,43),u(:,44),"b.");
     //
     // Authors
-    //   Copyright (C) 2013 - Michael Baudin
+    //   Copyright (C) 2013 - 2014 - Michael Baudin
     //   Copyright (C) 2008 - 2009 - INRIA - Michael Baudin
     //   Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
     //
@@ -354,6 +371,10 @@ function this = ldbase_configure (this,key,value)
         apifun_checkscalar ( "ldbase_configure" , value , "value" , 3 )
         apifun_checkgreq ( "ldbase_configure" , value , "value" , 3 , 0 )
         this.leap = value;
+    case "-coordinate" then
+        apifun_checktype ( "ldbase_configure" , value , "value" , 3 , "boolean" )
+        apifun_checkscalar ( "ldbase_configure" , value , "value" , 3 )
+        this.coordinate = value
     else
         errmsg = msprintf ( gettext ( "%s: Unknown key %s" ) , "ldbase_configure" , key)
         error(errmsg)

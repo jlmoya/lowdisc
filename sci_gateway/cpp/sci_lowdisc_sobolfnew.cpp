@@ -33,7 +33,7 @@ int sci_lowdisc_sobolfnew (char *fname) {
 	CheckRhs(1,1);
 	CheckLhs(0,1);
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	seq = new Sobol ( dim );

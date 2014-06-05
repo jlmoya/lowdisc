@@ -21,6 +21,7 @@ extern "C" {
 #include "ssobol.h"
 
 #include "lowdisc_ssobol_map.hxx"
+#include "gw_lowdisc_support.h" 
 
 using namespace std;
 typedef map<int , Ssobol *> lowdisc_ssobol_map_type;
@@ -78,7 +79,7 @@ int lowdisc_token2Ssobol( char * fname, int ivar , int token, Ssobol ** seq)
 	*seq = lowdisc_ssobol_map_getobject ( token );
 	if (*seq==NULL) {
 		Scierror(999,_("%s: Wrong ssobol object %d in argument #%d.\n"),fname,token,ivar);
-		return 0;
+		return LOWDISC_GWSUPPORT_ERROR;
 	}
-	return 1;
+	return LOWDISC_GWSUPPORT_OK;
 }

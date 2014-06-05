@@ -40,13 +40,13 @@ int sci_lowdisc_faurefnew (char *fname) {
 	//
 	// Get Arg #1: dim
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get Arg #2: basis
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &basis );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//

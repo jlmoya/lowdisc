@@ -1,4 +1,4 @@
-// Copyright (C) 2013 - Michael Baudin
+// Copyright (C) 2013 - 2014 - Michael Baudin
 // Copyright (C) 2010 - DIGITEO - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 //
@@ -37,6 +37,14 @@ function [this,next] = lowdisc_next ( varargin )
     //  <listitem> <literal>lowdisc_sobolsuggest</literal> : provides settings for the Sobol sequence,</listitem>
     //  <listitem> <literal>lowdisc_niedersuggest</literal> : provides settings for the Niederreiter sequence.</listitem>
     //  </itemizedlist>
+    //
+    //   This function is sensitive to the <literal>"-coordinate"</literal> option. 
+    //   If "-coordinate" is false (the default), then next is a imax-by-s 
+    //   matrix of doubles.
+    //   If "-coordinate" is false (the default), then next is a imax-by-1 
+    //   matrix of doubles. 
+    //   In this case it contains the dimension-th coordinate of the sequence.
+    //   See lowdisc_configure for more details on this feature.
     //
     // Examples
     //   lds = lowdisc_new("halton");
@@ -100,9 +108,23 @@ function [this,next] = lowdisc_next ( varargin )
     //   [lds,next] = lowdisc_next ( lds , 10 );
     //   assert_checkequal ( size(next) , [10 150] );
     //   lds = lowdisc_destroy(lds);
+    //
+    //   // See the -coordinate option in action. 
+    //   // Show how to get the 12-th coordinate of the 
+    //   // Halton sequence.
+    //   lds = lowdisc_new("halton");
+    //   lds = lowdisc_configure(lds,"-dimension",12);
+    //   lds = lowdisc_configure(lds,"-coordinate",%t);
+    //   // Elements #1,...,#5, coordinate index = 12.
+    //   [lds,computed] = lowdisc_next (lds,5);
+    //   disp(computed)
+    //   // Elements #6,...,#10, coordinate index = 12.
+    //   [lds,computed] = lowdisc_next (lds,5);
+    //   disp(computed)
+    //   lds = lowdisc_destroy(lds);
     //   
     // Authors
-    // Copyright (C) 2013 - Michael Baudin
+    // Copyright (C) 2013 - 2014 - Michael Baudin
     // Copyright (C) 2010 - DIGITEO - Michael Baudin
     // Copyright (C) 2008-2009 - INRIA - Michael Baudin
     //
@@ -145,7 +167,8 @@ endfunction
 function [this,next] = ldfauref_next ( this , imax )
     leap = lowdisc_cget(this , "-leap" )
     index = lowdisc_get(this , "-index" )
-    next = _lowdisc_faurefnext ( this.sequence.token, index + 1 , imax, leap);
+    coordinate = lowdisc_cget(this , "-coordinate" )
+    next = _lowdisc_faurefnext ( this.sequence.token, index + 1 , imax, leap, coordinate);
     // Leap over (i.e. ignore) as many elements as required
     // Directly set the index.
     index = index + imax*(leap+1)
@@ -155,7 +178,8 @@ endfunction
 function [this,next] = ldhaltonf_next ( this , imax )
     leap = lowdisc_cget(this , "-leap" )
     index = lowdisc_get(this , "-index" )
-    next = _lowdisc_haltonfnext ( this.sequence.token, index + 1,imax , leap )
+    coordinate = lowdisc_cget(this , "-coordinate" )
+    next = _lowdisc_haltonfnext ( this.sequence.token, index + 1,imax , leap, coordinate )
     // Leap over (i.e. ignore) as many elements as required
     // Directly set the index.
     index = index + imax*(leap+1)
@@ -166,10 +190,11 @@ function [this,next] = ldsobolf_next ( this , imax )
     leap = lowdisc_cget ( this , "-leap" )
     scrambling = lowdisc_cget ( this , "-scrambling" )
     index = lowdisc_get ( this , "-index" )
+    coordinate = lowdisc_cget(this , "-coordinate" )
     if (scrambling=="") then
-        next = _lowdisc_sobolfnext ( this.sequence.token, index + 1 , imax , leap )
+        next = _lowdisc_sobolfnext ( this.sequence.token, index + 1 , imax , leap , coordinate )
     else
-        next = _lowdisc_ssobolnext ( this.sequence.token, imax , leap )
+        next = _lowdisc_ssobolnext ( this.sequence.token, imax , leap , coordinate )
     end
     // Leap over (i.e. ignore) as many elements as required
     // Directly set the index.
@@ -179,9 +204,8 @@ endfunction
 
 function [this,next] = ldniedf_next ( this , imax )
     leap = lowdisc_cget(this , "-leap" )
-    //
-    // Initialize the vector
-    next = _lowdisc_niedfnext ( this.sequence.token, imax , leap );
+    coordinate = lowdisc_cget(this , "-coordinate" )
+    next = _lowdisc_niedfnext(this.sequence.token, imax, leap, coordinate);
     // Leap over (i.e. ignore) as many elements as required
     // Directly set the index.
     index = lowdisc_get(this , "-index" )

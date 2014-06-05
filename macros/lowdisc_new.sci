@@ -1,4 +1,4 @@
-// Copyright (C) 2013 - Michael Baudin
+// Copyright (C) 2013 - 2014 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010-2011 - DIGITEO - Michael Baudin
 //
@@ -74,7 +74,7 @@ function this = lowdisc_new ( varargin )
     //   lds = lowdisc_destroy(lds);
     //
     // Authors
-    // Copyright (C) 2013 - Michael Baudin
+    // Copyright (C) 2013 - 2014 - Michael Baudin
     // Copyright (C) 2008-2009 - INRIA - Michael Baudin
     // Copyright (C) 2010-2011 - DIGITEO - Michael Baudin
 
@@ -214,6 +214,7 @@ function this = ldbase_new ( speed )
     "skip"
     "leap"
     "speed"
+    "coordinate"
     ])
     //
     // Configurable options
@@ -224,6 +225,7 @@ function this = ldbase_new ( speed )
     this.leap = 0
     this.startedup = %f
     this.speed = speed
+    this.coordinate=%f
 endfunction
 
 

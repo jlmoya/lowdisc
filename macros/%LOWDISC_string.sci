@@ -147,4 +147,6 @@ function str = ldbase_string ( this )
     k = k + 1
     str(k) = msprintf("Speed: %s\n", _tostring(this.speed))
     k = k + 1
+    str(k) = msprintf("Coordinate: %s\n", _tostring(this.coordinate))
+    k = k + 1
 endfunction

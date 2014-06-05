@@ -1,4 +1,4 @@
-// Copyright (C) 2013 - Michael Baudin
+// Copyright (C) 2013 - 2014 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
 //
@@ -29,7 +29,7 @@ function value = lowdisc_cget (this,key)
     //   lds = lowdisc_destroy(lds);
     //
     // Authors
-    // Copyright (C) 2013 - Michael Baudin
+    // Copyright (C) 2013 - 2014 - Michael Baudin
     // Copyright (C) 2010 - 2011 - DIGITEO - Michael Baudin
     // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 
@@ -128,6 +128,8 @@ function value = ldbase_cget (this,key)
         value = this.skip;
     case "-leap" then
         value = this.leap;
+    case "-coordinate" then
+        value = this.coordinate;
     else
         errmsg = msprintf(gettext("%s: Unknown key %s"),"ldbase_cget",key);
         error(errmsg);

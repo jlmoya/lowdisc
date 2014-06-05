@@ -37,12 +37,12 @@ int sci_lowdisc_sobolfdestroy (char *fname)
 
 	// Arg #1: token
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	iflag=lowdisc_token2Sobol(fname, 1, token, &seq);
-	if (iflag==0)
+	if (iflag==LOWDISC_GWSUPPORT_ERROR)
 	{
 		return 0;
 	}

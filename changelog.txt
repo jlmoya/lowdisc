@@ -2,6 +2,13 @@ changelog of the Low Discrepancy Toolbox
 
 lowdisc (not released yet)
  * Removed lowdisc_startup, which is now unnecessary.
+ * Added the "-coordinate" option.
+   This allows to get the dimension-th coordinate of 
+   a sequence, without generating the coordinates 
+   1,2, ..., dimension-1.
+   This is a convenient feature for discrete event simulation 
+   (piecewise deterministic Markov processes), where the 
+   number of jumps is not known in advance for all chains.
 
 lowdisc (v0.6 - December 2013)
  * Fixed details in the Tutorial "Choosing the number of points".
@@ -129,19 +136,19 @@ lowdisc (v0.5 - May 2013)
    * demos/ld-macros/macros-niederreiter2.sce : Niederreiter Base 2 sequence
    * demos/ld-macros/macros-reversehalton.sce : Reverse Halton sequence
    The following functions were removed:
-   * lowdisc_haltonnext — Returns the next element of the Halton sequence.
-   * lowdisc_sobolnext — Generates a new quasirandom Sobol vector.
-   * lowdisc_sobolskip — Skip elements in the Sobol sequence.
-   * lowdisc_sobolstart — Initialize the Sobol sequence.
-   * lowdisc_vandercorput — Returns the i-th term of the Van Der Corput sequence.
-   * lowdisc_bitand — Bitwise AND.
-   * lowdisc_bithi1 — Returns the position of the high one bit base 2 in an integer.
-   * lowdisc_bitlo0 — Returns the position of the low zero bit base 2 in an integer.
-   * lowdisc_bitor — bitwise OR
-   * lowdisc_bitxor — Bitwise logical XOR operator.
-   * lowdisc_dec2bin — Convert a decimal floating point integer into binary.
-   * lowdisc_combinesum — Search 2D combinations with given sum.
-   * lowdisc_subplotdecompose — Compute the rows and columns of a matrix of subplots
+   * lowdisc_haltonnext â€” Returns the next element of the Halton sequence.
+   * lowdisc_sobolnext â€” Generates a new quasirandom Sobol vector.
+   * lowdisc_sobolskip â€” Skip elements in the Sobol sequence.
+   * lowdisc_sobolstart â€” Initialize the Sobol sequence.
+   * lowdisc_vandercorput â€” Returns the i-th term of the Van Der Corput sequence.
+   * lowdisc_bitand â€” Bitwise AND.
+   * lowdisc_bithi1 â€” Returns the position of the high one bit base 2 in an integer.
+   * lowdisc_bitlo0 â€” Returns the position of the low zero bit base 2 in an integer.
+   * lowdisc_bitor â€” bitwise OR
+   * lowdisc_bitxor â€” Bitwise logical XOR operator.
+   * lowdisc_dec2bin â€” Convert a decimal floating point integer into binary.
+   * lowdisc_combinesum â€” Search 2D combinations with given sum.
+   * lowdisc_subplotdecompose â€” Compute the rows and columns of a matrix of subplots
    To update your code, please use the following suggestions:
    * In general, do not use the "slow" sequences, since the "fast" sequences 
      provide the same point sets.

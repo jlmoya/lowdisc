@@ -56,45 +56,45 @@ int sci_lowdisc_haltonfnew (char *fname) {
 	//
 	// Get Arg #1: dim
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get Arg #2: base
 	ierr = lowdisc_AssertVariableType(fname , 2 , sci_matrix );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	GetRhsVarMatrixDouble ( 2 , &nRows, &nCols, &dbase);
 	ierr = lowdisc_AssertNumberOfRows ( fname , 2 , 1 , nRows );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	ierr = lowdisc_AssertNumberOfColumns ( fname , 2 , dim , nCols );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Transfer the double array into an array of integers
 	base = ivector ( dim );
 	for(int k = 0; k < dim; k++) {
 		ierr = lowdisc_Double2IntegerArgument ( fname , 2 , dbase[k] , base+k );
-		if ( ierr==0 ) {
+		if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 			return 0;
 		}
 	}
 	//
 	// Get Arg #3: seed
 	ierr = lowdisc_AssertVariableType ( fname , 3 , sci_matrix );
-	if ( ierr == 0 ) {
+	if ( ierr == LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	GetRhsVarMatrixDouble ( 3 , &nRows, &nCols, &dseed);
 	ierr = lowdisc_AssertNumberOfRows ( fname , 3 , 1 , nRows );
-	if ( ierr == 0 ) {
+	if ( ierr == LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	ierr = lowdisc_AssertNumberOfColumns ( fname , 3 , dim , nCols );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Transfer the double array into an array of integers
@@ -108,7 +108,7 @@ int sci_lowdisc_haltonfnew (char *fname) {
 	//
 	// Get Arg #4: scrambling
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 4 , &scrambling );
-	if ( ierr==0 ) {
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Createthe leap vector
