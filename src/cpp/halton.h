@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2013 - Michael Baudin
+﻿// Copyright (C) 2013 - 2014 - Michael Baudin
 // Copyright (C) 2005-2007 - John Burkardt
 // Copyright (C) 2009-2010 - Digiteo - Michael Baudin
 //
@@ -71,7 +71,15 @@ public:
 	//    * scrambling, the scrambling method
 	//      halton_scramblingZero (i.e. no scrambling) or halton_scramblingRR2
 	//
-	Halton ( int dim_num , int base[] , int seed[] , int leap[] , int scrambling);
+	//    * coordinate (default coordinate=0).
+	//      If coordinate==0, then quasi has size dim_num and contains 
+	//      all coordinates 1,2,...,dim_num of the index-th element.
+	//      If coordinate==1, then quasi has size 1 and contains 
+	//      the dim_num-th coordinate of the index-th element : 
+	//      the coordinates 1,2,...,dim_num-1 are "ignored".
+	//      This is convenient for discrete event simulation.
+	//
+	Halton ( int dim_num , int base[] , int seed[] , int leap[] , int scrambling, int coordinate);
 
 	// halton_stop --
 	// shutdown the sequence.
@@ -88,14 +96,6 @@ public:
 	//    * index, the subsequence index.
 	//      Default: index = 0.
 	//      Required: 0 <= index.
-	//
-	//    * coordinate (default coordinate=0).
-	//      If coordinate==0, then r has size dim_num and r contains 
-	//      all coordinates 1,2,...,dim_num of the index-th element.
-	//      If coordinate==1, then r has size 1 and r contains 
-	//      the dim_num-th coordinate of the index-th element : 
-	//      the coordinates 1,2,...,dim_num-1 are "ignored".
-	//      This is convenient for discrete event simulation.
 	//
 	//    * Output, double r, the next element of the leaped Halton
 	//    subsequence.
@@ -146,14 +146,21 @@ public:
 	//  8:   0.0625    0.4444444    0.36  
 	//  9:   0.5625    0.0740741    0.76  
 	// 10:   0.3125    0.7407407    0.08
-	void next ( int index , int coordinate, double r[] );
+	void next ( int index , double r[] );
 
 	// dim_num_get --
 	// gets the spatial dimension for a leaped Halton subsequence.
 	//
 	//  Parameters:
-	//    Output, int HALTON_DIM_NUM_GET, the spatial dimension.
+	//    Output, int dim_num, the spatial dimension.
 	int dim_num_get ( void );
+
+	// coordinate_get --
+	// gets the coordinate option.
+	//
+	//  Parameters:
+	//    Output, int coordinate, the spatial dimension.
+	int coordinate_get ( void );
 
 	// base_get --
 	// gets the base vector for a leaped Halton subsequence.
@@ -208,6 +215,9 @@ private:
 
 	// The permutation used in the scrambling
 	int ** halton_sigma;
+
+	// The coordinate option
+	int halton_coordinate;
 private:
 	//
 	// Private methods

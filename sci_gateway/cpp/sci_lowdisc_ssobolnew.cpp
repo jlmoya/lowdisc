@@ -20,9 +20,12 @@ extern "C" {
 #include "lowdisc_ssobol_map.hxx" 
 
 
-// token = _lowdisc_ssobolnew ( dim , iflag )
-// token = _lowdisc_ssobolnew ( dim , iflag , seeds )
+// token = _lowdisc_ssobolnew ( dim , iflag, coordinate)
+// token = _lowdisc_ssobolnew ( dim , iflag, coordinate, seeds )
 //   Start the Scrambed Sobol sequence.
+// coordinate: a 1-by-1 matrix of boolean, 
+//       If false, we must generate all coordinates.
+//       If true, we must generate only the dimension-th coordinate.
 int sci_lowdisc_ssobolnew (char *fname) {
 	int dimen;
 	int ierr;
@@ -35,8 +38,9 @@ int sci_lowdisc_ssobolnew (char *fname) {
 	int nCols;
 	double *seeds = NULL;
 	int isok;
+	int coordinate;
 
-	CheckRhs(2,3);
+	CheckRhs(3,4);
 	CheckLhs(0,1);
 	// Arg #1 : dimen
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dimen );
@@ -54,35 +58,41 @@ int sci_lowdisc_ssobolnew (char *fname) {
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	if ( Rhs == 2 ) 
+	//
+	// Get Arg #3: coordinate (coordinate=1 if false).
+	ierr = lowdisc_GetOneBooleanArgument ( fname , 3, &coordinate);
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
+		return 0;
+	}
+	if ( Rhs == 3 ) 
 	{
 		// token = _lowdisc_ssobolnew ( dim , iflag )
-		seq = new Ssobol(dimen, atmost, iflag, maxd,&isok);
+		seq = new Ssobol(dimen, atmost, iflag, maxd, coordinate, &isok);
 	}
 	else
 	{
 		// token = _lowdisc_ssobolnew ( dim , iflag , seeds )
-		// Arg #3 : seeds
-		GetRhsVarMatrixDouble ( 3 , &nRows, &nCols, &seeds);
+		// Arg #4 : seeds
+		GetRhsVarMatrixDouble ( 4 , &nRows, &nCols, &seeds);
 		if (nRows==24)
 		{
-			ierr = lowdisc_AssertNumberOfColumns ( fname , 3 , 1 , nCols );
+			ierr = lowdisc_AssertNumberOfColumns ( fname , 4 , 1 , nCols );
 			if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 				return 0;
 			}
 		}
 		else
 		{
-			ierr = lowdisc_AssertNumberOfRows ( fname , 3 , 1 , nRows );
+			ierr = lowdisc_AssertNumberOfRows ( fname , 4 , 1 , nRows );
 			if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 				return 0;
 			}
-			ierr = lowdisc_AssertNumberOfColumns ( fname , 3 , 24 , nCols );
+			ierr = lowdisc_AssertNumberOfColumns ( fname , 4 , 24 , nCols );
 			if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 				return 0;
 			}
 		}
-		seq = new Ssobol(dimen, atmost, iflag, maxd, seeds,&isok);
+		seq = new Ssobol(dimen, atmost, iflag, maxd, coordinate, seeds, &isok);
 	}
 	// Add the token
 	if (isok==1)

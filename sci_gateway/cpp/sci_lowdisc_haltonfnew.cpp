@@ -22,17 +22,25 @@ extern "C" {
 #include "lowdisc_halton_map.hxx" 
 
 
-// token=_lowdisc_haltonfnew ( dim , base , seed , scrambling )
+// token=_lowdisc_haltonfnew(dim, base, seed, scrambling, coordinate)
 //   Start the Halton sequence.
+//
 // Parameters
 //   dim : the number of dimensions (e.g. 1)
-//   base : a 1 x dim matrix of doubles, a list of successive prime numbers (e.g. (0,0,0,0) for automatic setup or (2,3,5,7) for user-defined setup)
-//   seed : a 1 x dim matrix of doubles, the Halton sequence element corresponding to index = 0 (e.g. (0,0,0,0) for default setup)
-//   scrambling : a 1x1 matrix of doubles, the scrambling. scrambling=1 for no scrambling, scrambling=2 for RR2 (Kocis-Whiten) scrambling, scrambling=3 for Reverse (Vandewoestyne and Cools) scrambling
-//
+//   base : a 1 x dim matrix of doubles, 
+//      a list of successive prime numbers (e.g. (0,0,0,0) for automatic 
+//      setup or (2,3,5,7) for user-defined setup)
 //      If base(i) = 0 then the prime number #i is automatically set.
 //	    If base(i) > 1 then the base is directly used.
 //	    If base(i) <0 or base(i) = 1, this is an error.
+//   seed : a 1 x dim matrix of doubles, the Halton sequence element corresponding 
+//      to index = 0 (e.g. (0,0,0,0) for default setup)
+//   scrambling : a 1x1 matrix of doubles, the scrambling. scrambling=1 for no scrambling, 
+//      scrambling=2 for RR2 (Kocis-Whiten) scrambling,
+//      scrambling=3 for Reverse (Vandewoestyne and Cools) scrambling
+//   coordinate: a 1-by-1 matrix of boolean, 
+//      If false, we must generate all coordinates.
+//      If true, we must generate only the dimension-th coordinate.
 //
 // Description
 // Internally uses leap = (1,1, ..., 1) for the halton C library.
@@ -50,8 +58,9 @@ int sci_lowdisc_haltonfnew (char *fname) {
 	int scrambling = NULL;
 	Halton * seq;
 	int token;
+	int coordinate;
 	
-	CheckRhs(4,4) ;
+	CheckRhs(5,5) ;
 	CheckLhs(0,1) ;
 	//
 	// Get Arg #1: dim
@@ -111,14 +120,20 @@ int sci_lowdisc_haltonfnew (char *fname) {
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	// Createthe leap vector
+	//
+	// Get Arg #5: coordinate (coordinate=1 if false).
+	ierr = lowdisc_GetOneBooleanArgument ( fname , 5, &coordinate);
+	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
+		return 0;
+	}
+	// Create the leap vector
 	leap = ivector ( dim );
 	for(int k = 0; k < dim; k++) {
 		leap[k]=1;
 	}
 	//
 	// Start the Halton sequence
-	seq = new Halton ( dim , base , seed, leap , scrambling);
+	seq = new Halton ( dim , base , seed, leap , scrambling, coordinate);
 	token = lowdisc_halton_map_add(seq);
 	//
 	// Free the vectors

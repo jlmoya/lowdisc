@@ -22,7 +22,7 @@ extern "C" {
 #include "lowdisc_sobol_map.hxx" 
 
 
-// quasi = _lowdisc_sobolfnext ( token, seed , imax , leap )
+// quasi=_lowdisc_sobolfnext(token, seed, imax, leap, coordinate )
 //
 // Arguments
 // token : a 1-by-1 matrix of doubles, integer value, token>=0, the current object.
@@ -32,9 +32,6 @@ extern "C" {
 //       The number of elements to generate
 // leap: a 1-by-1 matrix of doubles, integer value
 //       The number of elements to ignore, between two consecutive elements.
-// coordinate: a 1-by-1 matrix of boolean, 
-//       If false, we must generate all coordinates.
-//       If true, we must generate only the dimension-th coordinate.
 // quasi: a imax-by-d matrix of doubles
 //        The elements in the sequence.
 //   quasi(i,:) is the i-th element, for i= 1, 2, ..., imax
@@ -66,7 +63,7 @@ int sci_lowdisc_sobolfnext (char *fname) {
 	int iflag;
 	int coordinate;
 
-	CheckRhs(5,5) ;
+	CheckRhs(4,4) ;
 	CheckLhs(0,1) ;
 
 	// Arg #1: token
@@ -89,12 +86,6 @@ int sci_lowdisc_sobolfnext (char *fname) {
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	//
-	// Get Arg #5: coordinate (coordinate=1 if false).
-	ierr = lowdisc_GetOneBooleanArgument ( fname , 5, &coordinate);
-	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
-		return 0;
-	}
 	// Proceed...
 	iflag=lowdisc_token2Sobol(fname, 1, token, &seq);
 	if (iflag==LOWDISC_GWSUPPORT_ERROR)
@@ -102,7 +93,15 @@ int sci_lowdisc_sobolfnext (char *fname) {
 		return 0;
 	}
 	dim = seq->dimget ( );
-	next = (double *)malloc(dim*sizeof(double));
+	coordinate = seq->coordinateget ( );
+	if (coordinate)
+	{
+		next = (double *)malloc(sizeof(double));
+	}
+	else
+	{
+		next = (double *)malloc(dim*sizeof(double));
+	}
 	longseed = (long long int) seed;
 	if (coordinate)
 	{
@@ -115,10 +114,10 @@ int sci_lowdisc_sobolfnext (char *fname) {
 	for ( k = 0; k < imax; k++ )
 	{
 		// Call Sobol sequence
-		seq->next ( & longseed , next );
+		seq->next ( & longseed, next );
 		if (coordinate)
 		{
-			*(quasi + k) = next[dim-1];
+			*(quasi + k) = next[0];
 		}
 		else
 		{

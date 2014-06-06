@@ -1,4 +1,4 @@
-// Copyright (C) 2013 - Michael Baudin
+// Copyright (C) 2013 - 2014 - Michael Baudin
 //
 // This file must be used under the terms of the 
 // GNU Lesser General Public License license
@@ -33,20 +33,20 @@ using namespace std;
 #include "lowdisc_shared.h"
 
 
-Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, int *isok)
+Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, int coordinate, int *isok)
 {
 	// Setup the random number generator
 	seedreset();
 	// Fill the object
-	init(dimen, atmost, iflag, maxd, isok);
+	init(dimen, atmost, iflag, maxd, coordinate, isok);
 }
 
-Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, double seeds[24], int *isok)
+Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, int coordinate, double seeds[24], int *isok)
 {
 	// Set the seed
 	seedset(seeds);
 	// Fill the object
-	init(dimen, atmost, iflag, maxd, isok);
+	init(dimen, atmost, iflag, maxd, coordinate, isok);
 }
 
 // Note 1 :
@@ -61,7 +61,7 @@ Ssobol::Ssobol(int dimen, int atmost, int iflag, int maxd, double seeds[24], int
 // We could set the maxcol variable as a constant, given that 
 // the maximum value of atmost is 2^30-1=1073741823. 
 // Hence, the maximum possible value of maxcol is 30.
-void Ssobol::init(int dimen, int atmost, int iflag, int maxd, int *isok)
+void Ssobol::init(int dimen, int atmost, int iflag, int maxd, int coordinate, int *isok)
 {
 	/* THE ARRAY POLY GIVES SUCCESSIVE PRIMITIVE */
 	/* POLYNOMIALS CODED IN BINARY, E.G. */
@@ -120,18 +120,18 @@ void Ssobol::init(int dimen, int atmost, int iflag, int maxd, int *isok)
 	}
 
 	/*     CHECK PARAMETERS */
-	ssobol_s = dimen;
-	if (ssobol_s < 1 || ssobol_s > 40) 
+	ssobol_dim = dimen;
+	if (ssobol_dim < 1 || ssobol_dim > 40) 
 	{
 		ostringstream msg;
-		msg << "ssobol_next : wrong dimension : "<<ssobol_s<<" (must be in [1,40]).\n";
+		msg << "ssobol - init : wrong dimension : "<<ssobol_dim<<" (must be in [1,40]).\n";
 		lowdisc_error(msg.str());
 		return;
 	}
 	if (atmost <= 0 || atmost >= 1073741824) 
 	{
 		ostringstream msg;
-		msg << "ssobol_next : wrong number of calls : "<<atmost<<" (must be in [1,1073741823])\n";
+		msg << "ssobol - init : wrong number of calls : "<<atmost<<" (must be in [1,1073741823])\n";
 		lowdisc_error(msg.str());
 		return;
 	}
@@ -165,7 +165,7 @@ L10:
 
 	/*     INITIALIZE REMAINING ROWS OF V */
 
-	for (i = 2; i <= ssobol_s; ++i) {
+	for (i = 2; i <= ssobol_dim; ++i) {
 
 		/*     THE BIT PATTERN OF POLYNOMIAL I GIVES ITS FORM */
 		/*     (SEE COMMENTS TO "BDSOBL") */
@@ -222,7 +222,7 @@ L30:
 	l = 1;
 	for (j = ssobol_maxcol - 1; j >= 1; --j) {
 		l <<= 1;
-		for (i = 1; i <= ssobol_s; ++i) {
+		for (i = 1; i <= ssobol_dim; ++i) {
 			v[i-1][j-1] *= l;
 		}
 	}
@@ -231,7 +231,7 @@ L30:
 	// Compute ssobol_sv, shift, ll
 	if (iflag == 0) {
 	// No scrambling
-		for (i = 1; i <= ssobol_s; ++i) {
+		for (i = 1; i <= ssobol_dim; ++i) {
 			for (j = 1; j <= ssobol_maxcol; ++j) {
 				ssobol_sv[i-1][j-1] = v[i-1][j-1];
 			}
@@ -242,7 +242,7 @@ L30:
 		if (iflag == 1 || iflag == 3) {
 		// Owen or Owen-Faure-Tezuka scrambling
 			genscrml(maxd, lsm, shift);
-			for (i = 1; i <= ssobol_s; ++i) {
+			for (i = 1; i <= ssobol_dim; ++i) {
 				for (j = 1; j <= ssobol_maxcol; ++j) {
 					l = 1;
 					temp2 = 0;
@@ -268,7 +268,7 @@ L30:
 			} else {
 				maxx = maxd;
 			}
-			for (i = 1; i <= ssobol_s; ++i) {
+			for (i = 1; i <= ssobol_dim; ++i) {
 				for (j = 1; j <= ssobol_maxcol; ++j) {
 					p = maxx;
 					for (k = 1; k <= maxx; ++k) {
@@ -322,8 +322,25 @@ L30:
 	/*     SET UP FIRST VECTOR AND VALUES FOR "GOSOBL" */
 
 	ssobol_count = -1;
-	for (i = 1; i <= ssobol_s; ++i) {
+	for (i = 1; i <= ssobol_dim; ++i) {
 		ssobol_lastq[i - 1] = shift[i - 1];
+	}
+
+	// The coordinate option
+	ssobol_coordinate = -1;
+
+	// Store the coordinate option
+	if ( (coordinate==0) | (coordinate==1) )
+	{
+		ssobol_coordinate=coordinate;
+	}
+	else
+	{
+		ostringstream msg;
+		msg << "ssobol - init - Error" << endl;
+		msg << "  Unknown coordinate = " << coordinate << endl;
+		lowdisc_error(msg.str());
+		return;
 	}
 
 	// Everything is OK.
@@ -334,9 +351,9 @@ L30:
 int Ssobol::gettaus()
 {
 	int taus;
-	if (ssobol_s <= 13) 
+	if (ssobol_dim <= 13) 
 	{
-		taus = ssobol_tau[ssobol_s - 1];
+		taus = ssobol_tau[ssobol_dim - 1];
 	} 
 	else 
 	{
@@ -352,7 +369,7 @@ int Ssobol::genscrml(int maxd, int lsm[][31], int *shift)
 	int i, j, l, p, ll;
 	int temp, stemp;
 
-	for (p = 1; p <= ssobol_s; ++p) {
+	for (p = 1; p <= ssobol_dim; ++p) {
 		shift[p-1] = 0;
 		l = 1;
 		for (i = maxd; i >= 1; --i) {
@@ -421,7 +438,6 @@ double Ssobol::unirnd(void)
 
 void Ssobol::seedreset()
 {
-	int i;
 	static double seeds[24] = { .8804418,.2694365,.0367681,.4068699,
 		.4554052,.2880635,.1463408,.2390333,.6407298,.1755283,.713294,
 		.4913043,.2979918,.1396858,.3589528,.5254809,.9857749,.4612127,
@@ -478,8 +494,16 @@ void Ssobol::next(double *quasi)
 	if (ssobol_count==-1)
 	{
 		// This is the first one
-		for (i = 1; i <= ssobol_s; ++i) {
-			quasi[i-1] = ssobol_lastq[i - 1] * ssobol_recipd;
+		if (ssobol_coordinate)
+		{
+			i=ssobol_dim;
+			quasi[0] = ssobol_lastq[i - 1] * ssobol_recipd;
+		}
+		else
+		{
+			for (i = 1; i <= ssobol_dim; ++i) {
+				quasi[i-1] = ssobol_lastq[i - 1] * ssobol_recipd;
+			}
 		}
 		ssobol_count=0;
 		return;
@@ -507,10 +531,19 @@ L1:
 	/*     CALCULATE THE NEW COMPONENTS OF QUASI, */
 	/*     FIRST THE NUMERATORS, THEN NORMALIZED */
 
-	for (i = 1; i <= ssobol_s; ++i) 
+	if (ssobol_coordinate)
 	{
+		i=ssobol_dim;
 		ssobol_lastq[i - 1] = exor(&ssobol_lastq[i - 1], &ssobol_sv[i-1][l-1]);
-		quasi[i-1] = ssobol_lastq[i - 1] * ssobol_recipd;
+		quasi[0] = ssobol_lastq[i - 1] * ssobol_recipd;
+	}
+	else
+	{
+		for (i = 1; i <= ssobol_dim; ++i) 
+		{
+			ssobol_lastq[i - 1] = exor(&ssobol_lastq[i - 1], &ssobol_sv[i-1][l-1]);
+			quasi[i-1] = ssobol_lastq[i - 1] * ssobol_recipd;
+		}
 	}
 
 	++ssobol_count;
@@ -570,5 +603,10 @@ Ssobol::~Ssobol()
 
 int Ssobol::dim_num_get ( void )
 {
-	return ssobol_s;
+	return ssobol_dim;
+}
+
+int Ssobol::coordinate_get ( void )
+{
+	return ssobol_coordinate;
 }

@@ -109,8 +109,8 @@ function [this,next] = lowdisc_next ( varargin )
     //   assert_checkequal ( size(next) , [10 150] );
     //   lds = lowdisc_destroy(lds);
     //
-    //   // See the -coordinate option in action. 
-    //   // Show how to get the 12-th coordinate of the 
+    //   // See the -coordinate option :
+    //   // show how to get the 12-th coordinate of the 
     //   // Halton sequence.
     //   lds = lowdisc_new("halton");
     //   lds = lowdisc_configure(lds,"-dimension",12);
@@ -178,8 +178,7 @@ endfunction
 function [this,next] = ldhaltonf_next ( this , imax )
     leap = lowdisc_cget(this , "-leap" )
     index = lowdisc_get(this , "-index" )
-    coordinate = lowdisc_cget(this , "-coordinate" )
-    next = _lowdisc_haltonfnext ( this.sequence.token, index + 1,imax , leap, coordinate )
+    next = _lowdisc_haltonfnext ( this.sequence.token, index + 1, imax , leap)
     // Leap over (i.e. ignore) as many elements as required
     // Directly set the index.
     index = index + imax*(leap+1)
@@ -190,11 +189,10 @@ function [this,next] = ldsobolf_next ( this , imax )
     leap = lowdisc_cget ( this , "-leap" )
     scrambling = lowdisc_cget ( this , "-scrambling" )
     index = lowdisc_get ( this , "-index" )
-    coordinate = lowdisc_cget(this , "-coordinate" )
     if (scrambling=="") then
-        next = _lowdisc_sobolfnext ( this.sequence.token, index + 1 , imax , leap , coordinate )
+        next = _lowdisc_sobolfnext ( this.sequence.token, index + 1 , imax , leap )
     else
-        next = _lowdisc_ssobolnext ( this.sequence.token, imax , leap , coordinate )
+        next = _lowdisc_ssobolnext ( this.sequence.token, imax , leap)
     end
     // Leap over (i.e. ignore) as many elements as required
     // Directly set the index.
@@ -322,8 +320,9 @@ function this = ldhaltonf_startup (this)
     elseif (scrambling=="Reverse") then
         scrambling= 3
     end
+    coordinate = lowdisc_cget(this , "-coordinate" )
     this.sequence.token = _lowdisc_haltonfnew(dimension , ..
-    base , seed , scrambling)
+    base , seed , scrambling, coordinate)
     //
     skip = lowdisc_cget(this , "-skip" )
     if ( skip > 0 ) then
@@ -358,8 +357,9 @@ function this = ldsobolf_startup (this)
     this.sequence.baseobj = ldbase_startup ( this.sequence.baseobj )
     scrambling = lowdisc_cget ( this , "-scrambling" )
     dimension = lowdisc_cget ( this , "-dimension" )
+    coordinate = lowdisc_cget(this , "-coordinate" )
     if (scrambling=="") then
-        this.sequence.token = _lowdisc_sobolfnew(dimension)
+        this.sequence.token = _lowdisc_sobolfnew(dimension, coordinate)
         skip = lowdisc_cget ( this , "-skip" )
         if ( skip > 0 ) then
             // Skip (i.e. ignore) as many elements as required
@@ -376,10 +376,11 @@ function this = ldsobolf_startup (this)
             iflag=3
         end
         seeds=lowdisc_cget(this,"-seeds")
+        coordinate = lowdisc_cget(this , "-coordinate" )
         if (seeds==[]) then
-            this.sequence.token = _lowdisc_ssobolnew(dimension,iflag)
+            this.sequence.token = _lowdisc_ssobolnew(dimension,iflag,coordinate)
         else
-            this.sequence.token = _lowdisc_ssobolnew(dimension,iflag,seeds)
+            this.sequence.token = _lowdisc_ssobolnew(dimension,iflag,coordinate,seeds)
         end
     end
 endfunction

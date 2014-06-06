@@ -1,5 +1,6 @@
-// Copyright (C) 2005-2009 - John Burkardt
+// Copyright (C) 2014 - Michael Baudin
 // Copyright (C) 2009-2010 - Digiteo - Michael Baudin
+// Copyright (C) 2005-2009 - John Burkardt
 //
 // This file must be used under the terms of the GNU Lesser General Public License license
 // http://www.gnu.org/copyleft/lesser.html
@@ -79,7 +80,17 @@ public:
 
 	//
 	// Startup the Sobol sequence.
-	Sobol ( int dim_num );
+	//    Input, int DIM_NUM, the number of spatial dimensions.
+	//    DIM_NUM must satisfy 1 <= DIM_NUM <= 1111.
+	//
+	//    Input, int coordinate (default coordinate=0).
+	//    If coordinate==0, then quasi has size dim_num and contains 
+	//    all coordinates 1,2,...,dim_num of the index-th element.
+	//    If coordinate==1, then quasi has size 1 and contains 
+	//    the dim_num-th coordinate of the index-th element : 
+	//    the coordinates 1,2,...,dim_num-1 are "ignored".
+	//    This is convenient for discrete event simulation.
+	Sobol(int dim_num, int coordinate);
 
 	// Destructor
 	~Sobol();
@@ -91,7 +102,6 @@ public:
 	//    experiments in dimension 1111.
 	//
 	//  Discussion:
-	//
 	//    The routine adapts the ideas of Antonov and Saleev.
 	//
 	//    This routine uses LONG LONG INT for integers and DOUBLE for real values.
@@ -104,18 +114,13 @@ public:
 	//    values of DIM_NUM should start at 1, not 2!  17 February 2009.
 	//
 	//  Modified:
-	//
 	//    17 February 2009
 	//
-	//  Author:
-	//
+	//  History:
 	//    FORTRAN77 original version by Bennett Fox.
 	//    C++ version by John Burkardt
 	//
 	//  Parameters:
-	//
-	//    Input, int DIM_NUM, the number of spatial dimensions.
-	//    DIM_NUM must satisfy 1 <= DIM_NUM <= 1111.
 	//
 	//    Input/output, long long int *SEED, the "seed" for the sequence.
 	//    This is essentially the index in the sequence of the quasirandom
@@ -134,6 +139,13 @@ public:
 	//    dim, output : an integer, the dimension of the sequence
 	int dimget ( );
 
+	// coordinateget --
+	// Returns the coordinate.
+	//
+	//  Parameters:
+	//    coordinate, output : an integer, the coordinate option
+	int coordinateget ( );
+
 private:
 	//
 	// Fields
@@ -148,6 +160,9 @@ private:
 	double i8sobol_recipd;
 	long long int i8sobol_seed_save;
 	long long int i8sobol_v[I8SOBOL_DIM_MAX2][I8SOBOL_LOG_MAX];
+
+	// The coordinate option
+	int i8sobol_coordinate;
 };
 
 __END_DECLS

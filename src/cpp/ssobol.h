@@ -1,4 +1,4 @@
-// Copyright (C) 2013 - Michael Baudin
+// Copyright (C) 2013 - 2014 - Michael Baudin
 //
 // This file must be used under the terms of the 
 // GNU Lesser General Public License license
@@ -47,6 +47,14 @@ public:
 	iflag = 1 : Owen type Scrambling
 	iflag = 2 : Faure-Tezuka type Scrambling
 	iflag = 3 : Owen + Faure-Tezuka type Scrambling
+	
+	coordinate (default coordinate=0).
+	If coordinate==0, then quasi has size dim_num and quasi contains 
+	all coordinates 1,2,...,dim_num of the index-th element.
+	If coordinate==1, then quasi has size 1 and contains 
+	the dim_num-th coordinate of the index-th element : 
+	the coordinates 1,2,...,dim_num-1 are "ignored".
+	This is convenient for discrete event simulation.
 
 	OUTPUTS:
 	isok = 1 if the parameters are OK.
@@ -89,7 +97,7 @@ public:
 
 	*/
 	// This constructor calls seedreset.
-	Ssobol(int dimen, int atmost, int iflag, int maxd, int *isok);
+	Ssobol(int dimen, int atmost, int iflag, int maxd, int coordinate, int *isok);
 
 	//
 	// Sets the seed of the random number generator. 
@@ -98,7 +106,7 @@ public:
 	// This method allows to get different scramblings. 
 	// newseed : an array of doubles (input), in the interval [0,1].
 	// This constructor calls seedset.
-	Ssobol(int dimen, int atmost, int iflag, int maxd, double seeds[24], int *isok);
+	Ssobol(int dimen, int atmost, int iflag, int maxd, int coordinate, double seeds[24], int *isok);
 
 	// Destructor (free the allocated memory)
 	~Ssobol();
@@ -112,6 +120,10 @@ public:
 	// dim_num_get -- 
 	// gets the spatial dimension for a leaped Halton subsequence.
 	int dim_num_get ();
+
+	// coordinate_get -- 
+	// gets the coordinate option.
+	int coordinate_get ();
 
 	// gettaus --
 	// taus : to determine favorable number of calls
@@ -130,10 +142,12 @@ private:
 	int ssobol_lastq[40];
 	int ssobol_maxcol;
 	int ssobol_count;
-	int ssobol_s;
+	int ssobol_dim;
 	int ssobol_sv[40][31];
 	int ssobol_tau[13];
 	unsigned int ssobol_unifseed;
+	// The coordinate option
+	int ssobol_coordinate;
 
 	// Variables for the random number generator.
 	int ssobol_seedi;
@@ -147,14 +161,14 @@ private:
 
 	// genscrml --
 	/* GENERATING LOWER TRIANULAR SCRAMBLING MATRICES AND SHIFT VECTORS. */
-	/* INPUTS : ssobol_s, ssobol_maxcol, maxd */
+	/* INPUTS : ssobol_dim, ssobol_maxcol, maxd */
 	/* OUTPUTS : LSM, SHIFT */
 	int genscrml(int maxd, int lsm[][31], int *shift);
 	
 	// genscrmu --
 	/* GENERATING UPPER TRIANGULAR SCRAMBLING MATRICES AND */
 	/* SHIFT VECTORS. */
-	/* INPUTS : ssobol_s, ssobol_maxcol,  */
+	/* INPUTS : ssobol_dim, ssobol_maxcol,  */
 	/* OUTPUTS : USM, USHIFT */
 	int genscrmu(int usm[][31], int *ushift);
 
@@ -172,7 +186,7 @@ private:
 	// init --
 	// Initialize the current object. 
 	// This method is used in the constructor.
-	void init(int dimen, int atmost, int iflag, int maxd, int *isok);
+	void init(int dimen, int atmost, int iflag, int maxd, int coordinate, int *isok);
 
 	// seedset --
 	// Set the seed of the random number generator.

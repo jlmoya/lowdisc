@@ -1,4 +1,4 @@
-// Copyright (C) 2013 - Michael Baudin
+// Copyright (C) 2013 - 2014 - Michael Baudin
 // Copyright (C) 2005-2009 - John Burkardt
 // Copyright (C) 2009-2010 - Digiteo - Michael Baudin
 //
@@ -32,7 +32,7 @@ using namespace std;
 
 //****************************************************************************80
 
-Sobol::Sobol ( int dim_num )
+Sobol::Sobol ( int dim_num, int coordinate)
 {
 	long long int i;
 	bool includ[I8SOBOL_LOG_MAX];
@@ -293,6 +293,22 @@ Sobol::Sobol ( int dim_num )
 	{
 		i8sobol_lastq[i] = 0;
 	}
+	// The coordinate option
+	i8sobol_coordinate = -1;
+
+	// Store the coordinate option
+	if ( (coordinate==0) | (coordinate==1) )
+	{
+		i8sobol_coordinate=coordinate;
+	}
+	else
+	{
+		ostringstream msg;
+		msg << "sobol - i8_sobol - Error" << endl;
+		msg << "  Unknown coordinate = " << coordinate << endl;
+		lowdisc_error(msg.str());
+		return;
+	}
 	return;
 }
 //****************************************************************************80
@@ -316,7 +332,7 @@ void Sobol::next ( long long int *seed, double quasi[ ] )
 	//  may be able to get around this difficulty.
 	//  JVB, 24 January 2006.
 	//
-	//static long long int atmost = 4611686018427387903;
+	// static long long int atmost = 4611686018427387903;
 	//
 	long long int i;
 	long long int l;
@@ -396,13 +412,20 @@ void Sobol::next ( long long int *seed, double quasi[ ] )
 	//  Calculate the new components of QUASI.
 	//  The caret indicates the bitwise exclusive OR.
 	//
-	for ( i = 0; i < i8sobol_dim_num; i++ )
+	if (i8sobol_coordinate)
 	{
-		quasi[i] = ( ( double ) i8sobol_lastq[i] ) * i8sobol_recipd;
-
+		i = i8sobol_dim_num - 1;
+		quasi[0] = ( ( double ) i8sobol_lastq[i] ) * i8sobol_recipd;
 		i8sobol_lastq[i] = ( i8sobol_lastq[i] ^ i8sobol_v[i][l-1] );
 	}
-
+	else
+	{
+		for ( i = 0; i < i8sobol_dim_num; i++ )
+		{
+			quasi[i] = ( ( double ) i8sobol_lastq[i] ) * i8sobol_recipd;
+			i8sobol_lastq[i] = ( i8sobol_lastq[i] ^ i8sobol_v[i][l-1] );
+		}
+	}
 	i8sobol_seed_save = *seed;
 	*seed = *seed + 1;
 
@@ -411,4 +434,8 @@ void Sobol::next ( long long int *seed, double quasi[ ] )
 int Sobol::dimget ( )
 {
 	return i8sobol_dim_num;
+}
+int Sobol::coordinateget ( )
+{
+	return i8sobol_coordinate;
 }

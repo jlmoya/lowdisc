@@ -28,6 +28,8 @@ expected=expected(:,12)
 // Tests
 assert_checkequal(computed1,expected(1:5));
 assert_checkequal(computed2,expected(6:10));
+
+//////////////////////////////////////////
 //
 // Scrambled Sobol sequence.
 lds = lowdisc_new("sobol");
@@ -51,3 +53,34 @@ expected=expected(:,12)
 // Tests
 assert_checkequal(computed1,expected(1:5));
 assert_checkequal(computed2,expected(6:10));
+
+////////////////////////////////////////////
+//
+// Performance test
+N=10000;
+tic();
+for i=1:10
+    dimension=2^i;
+    lds = lowdisc_new("sobol");
+    lds = lowdisc_configure(lds,"-dimension",dimension);
+    lds = lowdisc_configure(lds,"-coordinate",%t);
+    [lds,computed1] = lowdisc_next (lds,N);
+    lds = lowdisc_destroy(lds);
+end
+t=toc();
+assert_checktrue(t<10);
+////////////////////////////////////////////
+//
+// Performance test
+N=10000;
+tic();
+for dimension=1:4:40
+    lds = lowdisc_new("sobol");
+    lds = lowdisc_configure(lds,"-dimension",dimension);
+    lds = lowdisc_configure(lds,"-scrambling","Owen");
+    lds = lowdisc_configure(lds,"-coordinate",%t);
+    [lds,computed1] = lowdisc_next (lds,N);
+    lds = lowdisc_destroy(lds);
+end
+t=toc();
+assert_checktrue(t<10);

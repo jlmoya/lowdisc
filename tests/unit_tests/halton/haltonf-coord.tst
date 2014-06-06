@@ -44,5 +44,5 @@ for i=1:13
     [lds,computed1] = lowdisc_next (lds,N);
     lds = lowdisc_destroy(lds);
 end
-t=toc()
+t=toc();
 assert_checktrue(t<10);

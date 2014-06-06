@@ -21,7 +21,7 @@ extern "C" {
 #include "lowdisc_ssobol_map.hxx" 
 
 
-// quasi = _lowdisc_ssobolnext ( token, imax , leap )
+// quasi=_lowdisc_ssobolnext(token, imax, leap)
 //
 // Arguments
 // token : a 1-by-1 matrix of doubles, integer value, 
@@ -30,9 +30,6 @@ extern "C" {
 //       The number of elements to generate
 // leap: a 1-by-1 matrix of doubles, integer value
 //       The number of elements to ignore, between two consecutive elements.
-// coordinate: a 1-by-1 matrix of boolean, 
-//       If false, we must generate all coordinates.
-//       If true, we must generate only the dimension-th coordinate.
 // quasi: a imax-by-d matrix of doubles
 //        The elements in the sequence.
 //   quasi(i,:) is the i-th element, for i= 1, 2, ..., imax
@@ -64,7 +61,7 @@ int sci_lowdisc_ssobolnext (char *fname) {
 	int iflag;
 	int coordinate;
 
-	CheckRhs(4,4) ;
+	CheckRhs(3,3) ;
 	CheckLhs(0,1) ;
 	// Arg #1: token
 	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
@@ -81,12 +78,6 @@ int sci_lowdisc_ssobolnext (char *fname) {
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	//
-	// Get Arg #4: coordinate (coordinate=1 if false).
-	ierr = lowdisc_GetOneBooleanArgument ( fname , 4, &coordinate);
-	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
-		return 0;
-	}
 	// Proceed...
 
 	iflag=lowdisc_token2Ssobol(fname, 1, token, &seq);
@@ -95,7 +86,15 @@ int sci_lowdisc_ssobolnext (char *fname) {
 		return 0;
 	}
 	dim = seq->dim_num_get ( );
-	next = (double *)malloc(dim*sizeof(double));
+	coordinate = seq->coordinate_get ( );
+	if (coordinate)
+	{
+		next = (double *)malloc(sizeof(double));
+	}
+	else
+	{
+		next = (double *)malloc(dim*sizeof(double));
+	}
 	if (coordinate)
 	{
 		lowdisc_CreateLhsMatrix ( 1 , imax , 1, &quasi );
@@ -109,7 +108,7 @@ int sci_lowdisc_ssobolnext (char *fname) {
 		seq->next ( next );
 		if (coordinate)
 		{
-			*(quasi + k) = next[dim-1];
+			*(quasi + k) = next[0];
 		}
 		else
 		{

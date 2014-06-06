@@ -55,14 +55,14 @@ void Halton::checkscrambling()
 	return;
 }
 
-void Halton::next ( int index , int coordinate, double r[] )
+void Halton::next ( int index , double r[] )
 {
 	int i;
 	int seed2;
 
 	checkscrambling();
 
-	if (coordinate)
+	if (halton_coordinate)
 	{
 		i=halton_dim_num-1;
 		seed2 = halton_seed[i] + index * halton_leap[i];
@@ -119,6 +119,11 @@ int Halton::dim_num_get ( void )
 	return halton_dim_num;
 }
 
+int Halton::coordinate_get ( void )
+{
+	return halton_coordinate;
+}
+
 void Halton::base_get ( int base[] )
 {
 	int i;
@@ -148,7 +153,7 @@ void Halton::seed_get ( int seed[] )
 	return;
 }
 
-Halton::Halton ( int dim_num , int base[] , int seed[] , int leap[] , int scrambling)
+Halton::Halton ( int dim_num , int base[] , int seed[] , int leap[] , int scrambling, int coordinate)
 {
 	int i;
 	int j;
@@ -171,7 +176,22 @@ Halton::Halton ( int dim_num , int base[] , int seed[] , int leap[] , int scramb
 	halton_scrambling = HALTON_SCRAMBLINGZERO;
 	// The permutation used in the scrambling
 	halton_sigma = NULL;
+	// The coordinate option
+	halton_coordinate = -1;
 
+	// Store the coordinate option
+	if ( (coordinate==0) | (coordinate==1) )
+	{
+		halton_coordinate=coordinate;
+	}
+	else
+	{
+		ostringstream msg;
+		msg << "halton - halton_start - Error" << endl;
+		msg << "  Unknown coordinate = " << coordinate << endl;
+		lowdisc_error(msg.str());
+		return;
+	}
 	//
 	// Store the dimension
 	//
