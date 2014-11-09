@@ -17,18 +17,18 @@ index = lowdisc_get(lds,"-index");
 assert_checkalmostequal ( index, 0);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
-expected = [0.5 1/3];
+expected = [0.5 1.0/3.0];
 index = lowdisc_get(lds,"-index");
 assert_checkalmostequal ( index, 1);
 assert_checkalmostequal ( computed, expected, 10 * %eps );
 // Terms #2 to #6
 [lds,computed]=lowdisc_next(lds,5);
 expected= [
-    1/4 2/3 
-    3/4 1/9    
-    1/8 4/9 
-    5/8 7/9 
-    3/8 2/9 
+    1.0/4.0 2.0/3.0 
+    3.0/4.0 1.0/9.0    
+    1.0/8.0 4.0/9.0 
+    5.0/8.0 7.0/9.0 
+    3.0/8.0 2.0/9.0 
 ];
 assert_checkalmostequal ( computed, expected, 10 * %eps );
 index = lowdisc_get(lds,"-index");

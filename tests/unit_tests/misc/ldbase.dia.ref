@@ -72,6 +72,7 @@ Skip: 0
 Leap: 0
 Started Up: F
 Speed: fast
+Coordinate: F
 Starting up the sequence. 
 Low Discrepancy Sequence:
 =========================
@@ -86,6 +87,7 @@ Skip: 0
 Leap: 0
 Started Up: F
 Speed: fast
+Coordinate: F
 Starting up the sequence. 
 Low Discrepancy Sequence:
 =========================
@@ -102,6 +104,7 @@ Skip: 0
 Leap: 0
 Started Up: F
 Speed: fast
+Coordinate: F
 Starting up the sequence. 
 Low Discrepancy Sequence:
 =========================
@@ -119,3 +122,4 @@ Skip: 0
 Leap: 0
 Started Up: F
 Speed: fast
+Coordinate: F

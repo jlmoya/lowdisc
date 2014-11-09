@@ -168,6 +168,6 @@ lds=lowdisc_new("sobol");
 lds=lowdisc_configure(lds,"-dimension",50);
 lds=lowdisc_configure(lds,"-scrambling","Owen");
 instr="[lds,computed] = lowdisc_next (lds);";
-expectedmsg="ssobol_next : wrong dimension : 50 (must be in [1,40]).";
+expectedmsg=["Lowdisc: Error at the library level:";"ssobol - init : wrong dimension : 50 (must be in [1,40])."];
 assert_checkerror ( instr , expectedmsg );
 Low Discrepancy Module Error !lds=lowdisc_destroy(lds);
