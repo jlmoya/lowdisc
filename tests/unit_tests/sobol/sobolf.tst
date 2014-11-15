@@ -21,11 +21,11 @@ assert_checkalmostequal ( computed, expected, 10*%eps );
 // Terms #2 to #6
 [lds,computed]=lowdisc_next(lds,5);
 expected= [
-    3./4. 1./4. 
-    1./4. 3./4.    
-    3./8. 3./8. 
-    7./8. 7./8. 
-    5./8. 1./8. 
+    3.0/4. 1.0/4. 
+    1.0/4. 3.0/4.    
+    3.0/8. 3.0/8. 
+    7.0/8. 7.0/8. 
+    5.0/8. 1.0/8. 
 ];
 assert_checkalmostequal ( computed, expected, 10*%eps );
 lds = lowdisc_destroy(lds);

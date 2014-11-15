@@ -567,11 +567,11 @@ function lowdisc_demosnied2()
     end
     expected= [
     0.    0. 
-    1./2. 1./2. 
-    3./4. 1./4. 
-    1./4. 3./4. 
-    3./8. 3./8. 
-    7./8. 7./8. 
+    1.0/2. 1.0/2. 
+    3.0/4. 1.0/4. 
+    1.0/4. 3.0/4. 
+    3.0/8. 3.0/8. 
+    7.0/8. 7.0/8. 
     ];
     printExpected(expected);
 
@@ -651,12 +651,9 @@ function lowdisc_demosnied2()
     //
     // Load this script into the editor
     //
-    m = messagebox(_("View Code?"), "Question", "question", [_("Yes") _("No")], "modal")
-    if(m == 1)
         filename = 'macros-niederreiter2.sce';
         dname = get_absolute_file_path(filename);
         editor ( dname + filename, "readonly" );
-    end
 endfunction
 
 lowdisc_demosnied2();

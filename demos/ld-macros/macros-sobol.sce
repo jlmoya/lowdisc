@@ -326,11 +326,11 @@ function lowdisc_demossobol()
     expected= [
     0.  0.
     0.5 0.5
-    3./4. 1./4. 
-    1./4. 3./4. 
-    3./8. 3./8. 
-    7./8. 7./8. 
-    5./8. 1./8. 
+    3.0/4. 1.0/4. 
+    1.0/4. 3.0/4. 
+    3.0/8. 3.0/8. 
+    7.0/8. 7.0/8. 
+    5.0/8. 1.0/8. 
     ];
     printExpected(expected);
 
@@ -375,12 +375,9 @@ function lowdisc_demossobol()
     //
     // Load this script into the editor
     //
-    m = messagebox(_("View Code?"), "Question", "question", [_("Yes") _("No")], "modal")
-    if(m == 1)
         filename = 'macros-sobol.sce';
         dname = get_absolute_file_path(filename);
         editor ( dname + filename, "readonly" );
-    end
 endfunction 
 lowdisc_demossobol();
 clear lowdisc_demossobol;

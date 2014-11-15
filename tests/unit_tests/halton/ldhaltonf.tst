@@ -1,4 +1,4 @@
-// Copyright (C) 2013 - Michael Baudin
+// Copyright (C) 2013 - 2014 - Michael Baudin
 // Copyright (C) 2008-2009 - INRIA - Michael Baudin
 // Copyright (C) 2009-2011 - DIGITEO - Michael Baudin
 
@@ -17,16 +17,16 @@ lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",2);
 // Term #1
 [lds,computed] = lowdisc_next (lds);
-expected = [0.5 1./3.];
+expected = [0.5 1.0/3.];
 assert_checkalmostequal ( computed, expected, 10 * %eps );
 // Terms #2 to #6
 [lds,computed]=lowdisc_next(lds,5);
 expected= [
-    1./4. 2./3. 
-    3./4. 1./9.    
-    1./8. 4./9. 
-    5./8. 7./9. 
-    3./8. 2./9. 
+    1.0/4. 2.0/3. 
+    3.0/4. 1.0/9.    
+    1.0/8. 4.0/9. 
+    5.0/8. 7.0/9. 
+    3.0/8. 2.0/9. 
 ];
 assert_checkalmostequal ( computed, expected, 10 * %eps );
 lds = lowdisc_destroy(lds);

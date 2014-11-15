@@ -53,12 +53,9 @@ function lowdisc_demosobolt()
     //
     // Load this script into the editor
     //
-    m = messagebox(_("View Code?"), "Question", "question", [_("Yes") _("No")], "modal")
-    if(m == 1)
         filename = 'sobol-t.sce';
         dname = get_absolute_file_path(filename);
         editor ( dname + filename, "readonly" );
-    end
 endfunction 
 lowdisc_demosobolt();
 clear lowdisc_demosobolt;

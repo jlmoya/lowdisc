@@ -174,10 +174,11 @@ function lowdisc_demosfaure()
 
     //
     // Plot the point set
-    nbpoints=2^7;
+    nbpoints=(2**2)*(3**1);
     dimension=2;
     k=find(primeslist>= dimension,1);
     basis=primeslist(k);
+    next=[]
     for index = 0 : nbpoints
         quasi=faurenext(dimension,index,basis);
         next(index+1,1:dimension) = quasi';
@@ -186,15 +187,13 @@ function lowdisc_demosfaure()
     plot ( next(:,1) , next(:,2) , "bo" )
     strtitle=msprintf("Faure : %d points",nbpoints)
     xtitle(strtitle,"X1","X2");
+    lowdisc_plotelembox([2,3],[2,1])
     //
     // Load this script into the editor
     //
-    m = messagebox(_("View Code?"), "Question", "question", [_("Yes") _("No")], "modal")
-    if(m == 1)
         filename = 'macros-faure.sce';
         dname = get_absolute_file_path(filename);
         editor ( dname + filename, "readonly" );
-    end
 
 endfunction 
 lowdisc_demosfaure();

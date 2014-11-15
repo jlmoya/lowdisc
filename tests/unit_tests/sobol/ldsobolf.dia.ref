@@ -19,21 +19,11 @@ assert_checkalmostequal ( computed, expected, 10*%eps );
 // Terms #2 to #6
 [lds,computed]=lowdisc_next(lds,5);
 expected= [
-    3./4. 1./4. 
-Warning: "3./ ..." is interpreted as "3.0/ ...". Use "3 ./ ..." for element wise operation 
-Warning: "1./ ..." is interpreted as "1.0/ ...". Use "1 ./ ..." for element wise operation 
-    1./4. 3./4.    
-Warning: "1./ ..." is interpreted as "1.0/ ...". Use "1 ./ ..." for element wise operation 
-Warning: "3./ ..." is interpreted as "3.0/ ...". Use "3 ./ ..." for element wise operation 
-    3./8. 3./8. 
-Warning: "3./ ..." is interpreted as "3.0/ ...". Use "3 ./ ..." for element wise operation 
-Warning: "3./ ..." is interpreted as "3.0/ ...". Use "3 ./ ..." for element wise operation 
-    7./8. 7./8. 
-Warning: "7./ ..." is interpreted as "7.0/ ...". Use "7 ./ ..." for element wise operation 
-Warning: "7./ ..." is interpreted as "7.0/ ...". Use "7 ./ ..." for element wise operation 
-    5./8. 1./8. 
-Warning: "5./ ..." is interpreted as "5.0/ ...". Use "5 ./ ..." for element wise operation 
-Warning: "1./ ..." is interpreted as "1.0/ ...". Use "1 ./ ..." for element wise operation 
+    3.0/4. 1.0/4. 
+    1.0/4. 3.0/4.    
+    3.0/8. 3.0/8. 
+    7.0/8. 7.0/8. 
+    5.0/8. 1.0/8. 
 ];
 assert_checkalmostequal ( computed, expected, 10*%eps );
 lds = lowdisc_destroy(lds);

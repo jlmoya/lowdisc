@@ -293,11 +293,11 @@ function plotStarDiscr1D(x)
     //
     d=starDiscr1D(x)
     h=scf();
-    plot(x,0.,"bx")
+    plot(x,zeros(x),"bx")
     h.children.data_bounds(:,1)=[0;1];
     n=size(x,"*")
     u=starDiscr1DSet(n)
-    plot(u,0.,"ro")
+    plot(u,zeros(u),"ro")
     legend(["Point Set","Optimal Point Set"])
     str=msprintf("Star Discrepancy:%f, N=%d points",d,n)
     xtitle(str,"X")
@@ -355,7 +355,7 @@ lds = lowdisc_new("halton");
 
 for n=logspace(1,nmax,10)
     n=int(n)
-    for i=1:20
+    for i=1:5
         //
         // Plot discrepancy of Van Der Corput sequence of N points
         [lds,x] = lowdisc_next (lds,n);

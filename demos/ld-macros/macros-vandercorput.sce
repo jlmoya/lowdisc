@@ -159,12 +159,9 @@ function lowdisc_demosvdc()
     //
     // Load this script into the editor
     //
-    m = messagebox(_("View Code?"), "Question", "question", [_("Yes") _("No")], "modal")
-    if(m == 1)
         filename = 'macros-vandercorput.sce';
         dname = get_absolute_file_path(filename);
         editor ( dname + filename, "readonly" );
-    end
 endfunction 
 lowdisc_demosvdc();
 clear lowdisc_demosvdc;

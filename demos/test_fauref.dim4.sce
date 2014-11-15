@@ -39,5 +39,5 @@ mclose(fd)
 //
 filename = "test_fauref.dim4.sce";
 dname = get_absolute_file_path(filename);
-editor ( dname + filename );
+editor ( dname + filename, "readonly" );
 

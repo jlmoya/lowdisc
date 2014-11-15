@@ -156,12 +156,9 @@ function lowdisc_haltonRR2()
     //
     // Load this script into the editor
     //
-    m = messagebox(_("View Code?"), "Question", "question", [_("Yes") _("No")], "modal")
-    if(m == 1)
         filename = 'macros-halton-RR2.sce';
         dname = get_absolute_file_path(filename);
         editor ( dname + filename, "readonly" );
-    end
 endfunction 
 lowdisc_haltonRR2();
 clear lowdisc_haltonRR2;

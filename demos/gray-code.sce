@@ -40,12 +40,9 @@ function lowdisc_demograycode()
     //
     // Load this script into the editor
     //
-    m = messagebox(_("View Code?"), "Question", "question", [_("Yes") _("No")], "modal")
-    if(m == 1)
-        filename = 'gray-code.sce';
-        dname = get_absolute_file_path(filename);
-        editor ( dname + filename, "readonly" );
-    end
+    filename = 'gray-code.sce';
+    dname = get_absolute_file_path(filename);
+    editor ( dname + filename, "readonly" );
 endfunction 
 lowdisc_demograycode();
 clear lowdisc_demograycode;

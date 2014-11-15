@@ -79,13 +79,13 @@ function lowdisc_demosrevhalton()
         mprintf("#%d = [%s]\n",index,strcat(string(next)," "))
     end
     expected= [
-    0.    0. 
-    0.5   2./3.
-    1./4. 1./3. 
-    3./4. 2./9. 
-    1./8. 8./9. 
-    5./8. 5./9.
-    3./8. 1./9. 
+    0.     0. 
+    0.5    2.0/3.
+    1.0/4. 1.0/3. 
+    3.0/4. 2.0/9. 
+    1.0/8. 8.0/9. 
+    5.0/8. 5.0/9.
+    3.0/8. 1.0/9. 
     ];
     printExpected(expected);
 
@@ -99,12 +99,12 @@ function lowdisc_demosrevhalton()
     end
     expected= [
     0.    0.    0.
-    0.5   2./3. 0.8
-    1./4. 1./3. 0.6
-    3./4. 2./9. 0.4
-    1./8. 8./9. 0.2
-    5./8. 5./9. 0.16
-    3./8. 1./9. 0.96
+    0.5   2.0/3. 0.8
+    1.0/4. 1.0/3. 0.6
+    3.0/4. 2.0/9. 0.4
+    1.0/8. 8.0/9. 0.2
+    5.0/8. 5.0/9. 0.16
+    3.0/8. 1.0/9. 0.96
     ];
     printExpected(expected);
 
@@ -140,12 +140,9 @@ function lowdisc_demosrevhalton()
     //
     // Load this script into the editor
     //
-    m = messagebox(_("View Code?"), "Question", "question", [_("Yes") _("No")], "modal")
-    if(m == 1)
         filename = 'macros-reversehalton.sce';
         dname = get_absolute_file_path(filename);
         editor ( dname + filename, "readonly" );
-    end
 
 endfunction
 lowdisc_demosrevhalton();

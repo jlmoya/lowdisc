@@ -40,7 +40,7 @@ function lowdisc_benchldgen()
     //
     filename = "bench_ldgen.sce";
     dname = get_absolute_file_path(filename);
-    editor ( dname + filename );
+    editor ( dname + filename, "readonly" );
 
 endfunction 
 lowdisc_benchldgen();
