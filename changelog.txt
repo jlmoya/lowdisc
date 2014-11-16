@@ -2,6 +2,8 @@ changelog of the Low Discrepancy Toolbox
 
 lowdisc (not released yet)
  * Improved testing of demos.
+   In several demos (e.g. compute-disc1D) : 
+   fixed called to "plot" for Scilab 5.5.0.
  * Removed the help page of lowdisc_startup.
 
 lowdisc (v0.7)
