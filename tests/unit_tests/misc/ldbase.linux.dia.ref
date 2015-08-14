@@ -57,7 +57,6 @@ for m=lowdisc_methods()'
     //
     ldb = lowdisc_destroy ( ldb );
 end
- 
 Low Discrepancy Sequence:
 =========================
 method: halton
@@ -73,7 +72,7 @@ Leap: 0
 Started Up: F
 Speed: fast
 Coordinate: F
-Starting up the sequence. 
+Starting up the sequence.
 Low Discrepancy Sequence:
 =========================
 method: faure
@@ -88,7 +87,7 @@ Leap: 0
 Started Up: F
 Speed: fast
 Coordinate: F
-Starting up the sequence. 
+Starting up the sequence.
 Low Discrepancy Sequence:
 =========================
 method: sobol
@@ -105,7 +104,7 @@ Leap: 0
 Started Up: F
 Speed: fast
 Coordinate: F
-Starting up the sequence. 
+Starting up the sequence.
 Low Discrepancy Sequence:
 =========================
 method: niederreiter
@@ -123,3 +122,4 @@ Leap: 0
 Started Up: F
 Speed: fast
 Coordinate: F
+Starting up the sequence.

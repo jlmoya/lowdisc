@@ -7,10 +7,10 @@
 // http://www.gnu.org/copyleft/lesser.html
 
 extern "C" {
-#include "stack-c.h" 
 #include "Scierror.h"
 #include "localization.h"
-#include "gw_lowdisc.h"
+#include "liblowdiscgateway.h"
+#include "api_scilab.h"
 }
 
 /* ==================================================================== */
@@ -27,7 +27,7 @@ extern "C" {
 //       If false, we must generate all coordinates.
 //       If true, we must generate only the dimension-th coordinate.
 //   Create a new Sobol sequence.
-int sci_lowdisc_sobolfnew (char *fname) {
+int sci_lowdisc_sobolfnew (char *fname, void *pvApiCtx) {
 	int dim;
 	int ierr;
 	Sobol * seq;
@@ -38,19 +38,19 @@ int sci_lowdisc_sobolfnew (char *fname) {
 	CheckLhs(0,1);
 	//
 	// Get Arg #1 : dim
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim,pvApiCtx);
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get Arg #2: coordinate (coordinate=1 if false).
-	ierr = lowdisc_GetOneBooleanArgument ( fname , 2, &coordinate);
+	ierr = lowdisc_GetOneBooleanArgument ( fname , 2, &coordinate, pvApiCtx);
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Create the sequence
 	seq = new Sobol ( dim, coordinate );
 	token = lowdisc_sobol_map_add(seq);
-	lowdisc_CreateLhsInteger ( 1 , token );
+	lowdisc_CreateLhsInteger ( 1 , token, pvApiCtx);
 	return 0;
 }

@@ -6,11 +6,11 @@
 // http://www.gnu.org/copyleft/lesser.html
 
 extern "C" {
-#include "stdlib.h"
-#include "stack-c.h" 
+#include "stdlib.h" 
 #include "Scierror.h"
 #include "localization.h"
-#include "gw_lowdisc.h"
+#include "liblowdiscgateway.h"
+#include "api_scilab.h"
 }
 
 /* ==================================================================== */
@@ -47,7 +47,7 @@ extern "C" {
 // If leap = 1, then get the elements 
 //   seed, seed+2, seed+4, etc...
 //
-int sci_lowdisc_niedfnext (char *fname) {
+int sci_lowdisc_niedfnext (char *fname, void* pvApiCtx) {
 	int dim;
 	double * quasi = NULL;
 	int ierr;
@@ -65,24 +65,24 @@ int sci_lowdisc_niedfnext (char *fname) {
 	//
 	//
 	// Get Arg #1: token
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get Arg #2: imax
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &imax );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &imax, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #3: leap
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &leap );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &leap, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get Arg #4: coordinate (coordinate=1 if false).
-	ierr = lowdisc_GetOneBooleanArgument ( fname , 4, &coordinate);
+	ierr = lowdisc_GetOneBooleanArgument ( fname , 4, &coordinate, pvApiCtx);
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
@@ -101,11 +101,11 @@ int sci_lowdisc_niedfnext (char *fname) {
 	}
 	if (coordinate)
 	{
-		lowdisc_CreateLhsMatrix ( 1 , imax , 1, &quasi );
+		lowdisc_CreateLhsMatrix ( 1 , imax , 1, &quasi, pvApiCtx);
 	}
 	else 
 	{
-		lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi );
+		lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi, pvApiCtx);
 	}
 
 	for ( k = 0; k < imax; k++ )

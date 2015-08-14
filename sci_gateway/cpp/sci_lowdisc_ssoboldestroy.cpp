@@ -5,10 +5,12 @@
 // http://www.gnu.org/copyleft/lesser.html
 
 extern "C" {
-#include "stack-c.h" 
+//#include "stack-c.h" 
 #include "Scierror.h"
 #include "localization.h"
-#include "gw_lowdisc.h"
+//#include "gw_lowdisc.h"
+#include "liblowdiscgateway.h"
+#include "api_scilab.h"
 }
 
 /* ==================================================================== */
@@ -22,7 +24,7 @@ extern "C" {
 
 // _lowdisc_ssoboldestroy (token)
 //   Stop the Scrambed Sobol sequence.
-int sci_lowdisc_ssoboldestroy(char *fname) 
+int sci_lowdisc_ssoboldestroy(char *fname, void* pvApiCtx) 
 {
 
 	int token;
@@ -34,7 +36,7 @@ int sci_lowdisc_ssoboldestroy(char *fname)
 	CheckLhs(0,1) ;
 
 	// Arg #1: token
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
@@ -45,6 +47,6 @@ int sci_lowdisc_ssoboldestroy(char *fname)
 	}
 	delete seq;
 	lowdisc_ssobol_map_remove(token);
-	lowdisc_CreateLhsInteger ( 1 , token );
+	lowdisc_CreateLhsInteger ( 1 , token, pvApiCtx);
 	return 0;
 }

@@ -1,4 +1,3 @@
-
 // Copyright (C) 2008 - INRIA - Michael Baudin
 // Copyright (C) 2009 - Digiteo - Michael Baudin
 //
@@ -8,10 +7,10 @@
 #include <limits.h>
 
 extern "C" {
-#include "stack-c.h" 
 #include "Scierror.h"
 #include "localization.h"
 #include "api_scilab.h"
+
 }
 
 #include "gw_lowdisc_support.h" 
@@ -70,9 +69,13 @@ int lowdisc_AssertNumberOfColumns ( char * fname , int ivar , int expected_ncols
 //   ivar : the index of the input variable
 //   expected_type : the expected number of columns
 //
-int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type )
-{
-	if ( GetType(ivar) != expected_type )
+int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type , void * pvApiCtx )
+{	SciErr sciErr;
+	int *piAddr;
+	int piType;
+	sciErr= getVarAddressFromPosition(pvApiCtx, ivar,&piAddr);
+	sciErr=getVarType(pvApiCtx, piAddr, &piType);
+	if ( piType != expected_type )
 	{
 		if ( expected_type == sci_strings ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: String expected.\n"),fname,ivar);
@@ -126,15 +129,21 @@ int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type )
 //   ivar : the index of the input variable
 //   value : the value to get
 //
-int lowdisc_GetOneDoubleArgument ( char * fname , int ivar , double * value )
+int lowdisc_GetOneDoubleArgument ( char * fname , int ivar , double * value,void* pvApiCtx)
 {
 	int nRows, nCols;
 	double * mydata = NULL;
-	if ( lowdisc_AssertVariableType(fname , ivar , sci_matrix) == 0 )
+	if ( lowdisc_AssertVariableType(fname , ivar , sci_matrix, pvApiCtx) == 0 )
 	{
 		return LOWDISC_GWSUPPORT_ERROR;
 	}
-	GetRhsVarMatrixDouble(ivar, &nRows, &nCols, &mydata);
+	SciErr sciErr;
+	int *piAddr;
+	int piType;
+	sciErr= getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
+
+	//GetRhsVarMatrixDouble(ivar, &nRows, &nCols, &mydata);
+	getMatrixOfDouble(pvApiCtx,piAddr, &nRows, &nCols, &mydata);
 	if ( lowdisc_AssertNumberOfRows(fname , ivar , 1 , nRows) == 0 )
 	{ 
 		return LOWDISC_GWSUPPORT_ERROR;
@@ -156,15 +165,19 @@ int lowdisc_GetOneDoubleArgument ( char * fname , int ivar , double * value )
 //   ivar : the index of the input variable
 //   value : the value to get
 //
-int lowdisc_GetOneIntegerArgument ( char * fname , int ivar , int * value )
+int lowdisc_GetOneIntegerArgument ( char * fname , int ivar , int * value, void * pvApiCtx)
 {
 	int nRows, nCols;
 	double * mydata = NULL;
-	if ( lowdisc_AssertVariableType(fname , ivar , sci_matrix) == 0 )
+	if ( lowdisc_AssertVariableType(fname , ivar , sci_matrix, pvApiCtx) == 0 )
 	{
 		return LOWDISC_GWSUPPORT_ERROR;
 	}
-	GetRhsVarMatrixDouble(ivar, &nRows, &nCols, &mydata);
+        	SciErr sciErr;
+	int *piAddr;
+	int piType;
+	sciErr= getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
+	getMatrixOfDouble(pvApiCtx,piAddr, &nRows, &nCols, &mydata);
 	if ( lowdisc_AssertNumberOfRows(fname , ivar , 1 , nRows) == 0 )
 	{ 
 		return LOWDISC_GWSUPPORT_ERROR;
@@ -188,15 +201,19 @@ int lowdisc_GetOneIntegerArgument ( char * fname , int ivar , int * value )
 //   ivar : the index of the input variable
 //   value : the value to get
 //
-int lowdisc_GetOneCharArgument ( char * fname , int ivar , char ** value )
+int lowdisc_GetOneCharArgument ( char * fname , int ivar , char ** value, void* pvApiCtx )
 {
 	int nRows, nCols;
 	char ** mydata = NULL;
-	if ( lowdisc_AssertVariableType(fname , ivar , sci_strings) == 0 )
+	if ( lowdisc_AssertVariableType(fname , ivar , sci_strings,pvApiCtx) == 0 )
 	{
 		return LOWDISC_GWSUPPORT_ERROR;
 	}
-	GetRhsVar( ivar, MATRIX_OF_STRING_DATATYPE, &nRows,   &nCols,   &mydata);
+	SciErr sciErr;	
+	int *piAddr;
+	int piType;
+	sciErr= getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
+	ivar= getRhsFromAddress(pvApiCtx , piAddr);
 	if ( lowdisc_AssertNumberOfRows(fname , ivar , 1 , nRows) == 0 )
 	{ 
 		return LOWDISC_GWSUPPORT_ERROR;
@@ -246,13 +263,21 @@ int lowdisc_Double2IntegerArgument ( char * fname , int ivar , double dvalue , i
 //   ivar : the index of the input variable
 //   value : the value to create
 //
-void lowdisc_CreateLhsInteger ( int ivar , int value )
+void lowdisc_CreateLhsInteger ( int ivar , int value, void * pvApiCtx)
 {
 	int nRows, nCols;
 	double *pdblFinalVar = NULL;
 	nRows=1;
 	nCols=1;
-	iAllocMatrixOfDouble(Rhs+ivar, nRows, nCols, &pdblFinalVar);
+        //SciErr sciErr;	
+	//int *piAddr;
+	//int piType;
+
+	//int Rhs2;
+	//sciErr= getVarAddressFromPosition(Ctx, ivar, &piAddr);
+		
+	//Rhs=getRhsFromAddress(Ctx , piAddr);
+	allocMatrixOfDouble(pvApiCtx,Rhs+ivar, nRows, nCols, &pdblFinalVar);
 	pdblFinalVar[0] = value;
 	LhsVar(ivar) = Rhs+ivar;
 }
@@ -265,13 +290,19 @@ void lowdisc_CreateLhsInteger ( int ivar , int value )
 //   ivar : the index of the input variable
 //   value : the value to create
 //
-void lowdisc_CreateLhsDouble ( int ivar , double value )
+void lowdisc_CreateLhsDouble ( int ivar , double value, void * pvApiCtx )
 {
 	int nRows, nCols;
 	double *pdblFinalVar = NULL;
+	//SciErr sciErr;	
+	//int *piAddr;
+	//int piType;
+	//int Rhs2;
+	//sciErr= getVarAddressFromPosition(pVApiCtx, ivar, &piAddr);
+	//Rhs2=getRhsFromAddress(pvApiCtx , piAddr);
 	nRows=1;
 	nCols=1;
-	iAllocMatrixOfDouble ( Rhs + ivar , nRows , nCols , &pdblFinalVar );
+	allocMatrixOfDouble (pvApiCtx, Rhs + ivar , nRows , nCols , &pdblFinalVar );
 	pdblFinalVar[0] = value;
 	LhsVar(ivar) = Rhs+ivar;
 }
@@ -285,9 +316,9 @@ void lowdisc_CreateLhsDouble ( int ivar , double value )
 //   nCols : the number of columns
 //   value : the value to create
 //
-void lowdisc_CreateLhsMatrix ( int ivar , int nRows , int nCols , double ** matrix )
+void lowdisc_CreateLhsMatrix ( int ivar , int nRows , int nCols , double ** matrix, void* pvApiCtx)
 {
-	iAllocMatrixOfDouble ( Rhs + ivar , nRows , nCols , matrix );
+	allocMatrixOfDouble (pvApiCtx, Rhs + ivar , nRows , nCols , matrix );
 	LhsVar(ivar) = Rhs+ivar;
 }
 
@@ -300,7 +331,7 @@ void lowdisc_CreateLhsMatrix ( int ivar , int nRows , int nCols , double ** matr
 //   ivar : the index of the input variable
 //   value : the value to get
 //
-int lowdisc_GetOneBooleanArgument ( char * fname , int ivar , int * value )
+int lowdisc_GetOneBooleanArgument ( char * fname , int ivar , int * value, void * pvApiCtx )
 {
 	int* piAddr = NULL;
 	SciErr sciErr;

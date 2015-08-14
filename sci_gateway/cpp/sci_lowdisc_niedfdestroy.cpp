@@ -6,10 +6,11 @@
 // http://www.gnu.org/copyleft/lesser.html
 
 extern "C" {
-#include "stack-c.h" 
+//#include "stack-c.h" 
 #include "Scierror.h"
 #include "localization.h"
-#include "gw_lowdisc.h"
+#include "liblowdiscgateway.h"
+#include "api_scilab.h"
 }
 
 /* ==================================================================== */
@@ -22,7 +23,7 @@ extern "C" {
 
 // _lowdisc_niedfdestroy (token)
 //   Stop the Niederreiter sequence.
-int sci_lowdisc_niedfdestroy (char *fname) 
+int sci_lowdisc_niedfdestroy (char *fname, void * pvApiCtx) 
 {
 	Niederreiter * seq;
 	int token;
@@ -34,7 +35,7 @@ int sci_lowdisc_niedfdestroy (char *fname)
 	CheckLhs(0,1) ;
 	//
 	// Arg #1: token
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
@@ -45,6 +46,6 @@ int sci_lowdisc_niedfdestroy (char *fname)
 	}
 	delete seq;
 	lowdisc_nied_map_remove(token);
-	lowdisc_CreateLhsInteger ( 1 , token );
+	lowdisc_CreateLhsInteger ( 1 , token, pvApiCtx);
 	return 0;
 }

@@ -7,14 +7,14 @@
 // http://www.gnu.org/copyleft/lesser.html
 
 extern "C" {
-#include "stack-c.h" 
+//#include "stack-c.h" 
 #include "Scierror.h"
 #include "localization.h"
-#include "gw_lowdisc.h"
+#include "liblowdiscgateway.h"
+#include "api_scilab.h"
 }
 
 /* ==================================================================== */
-
 
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
@@ -45,7 +45,7 @@ extern "C" {
 // Description
 // Internally uses leap = (1,1, ..., 1) for the halton C library.
 
-int sci_lowdisc_haltonfnew (char *fname) {
+int sci_lowdisc_haltonfnew (char *fname, void* pvApiCtx) {
 	int dim;
 	int nRows;
 	int nCols;
@@ -64,17 +64,24 @@ int sci_lowdisc_haltonfnew (char *fname) {
 	CheckLhs(0,1) ;
 	//
 	// Get Arg #1: dim
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get Arg #2: base
-	ierr = lowdisc_AssertVariableType(fname , 2 , sci_matrix );
+	ierr = lowdisc_AssertVariableType(fname , 2 , sci_matrix, pvApiCtx);
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	GetRhsVarMatrixDouble ( 2 , &nRows, &nCols, &dbase);
+	//SciError sciError;	
+	int *piAddr;
+		
+	getVarAddressFromPosition(pvApiCtx , 2, &piAddr);
+	getMatrixOfDouble(pvApiCtx,piAddr,&nRows,&nCols, &dbase);
+	
+	//GetRhsVarMatrixDouble(pvApiCtx , 2 , &nRows,&nCols, &dbase);
+
 	ierr = lowdisc_AssertNumberOfRows ( fname , 2 , 1 , nRows );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
@@ -93,11 +100,15 @@ int sci_lowdisc_haltonfnew (char *fname) {
 	}
 	//
 	// Get Arg #3: seed
-	ierr = lowdisc_AssertVariableType ( fname , 3 , sci_matrix );
+	ierr = lowdisc_AssertVariableType ( fname , 3 , sci_matrix, pvApiCtx );
 	if ( ierr == LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	GetRhsVarMatrixDouble ( 3 , &nRows, &nCols, &dseed);
+	//int * &piAddr2;
+	getVarAddressFromPosition(pvApiCtx , 3, &piAddr);
+	getMatrixOfDouble(pvApiCtx,piAddr,&nRows,&nCols, &dseed);
+
+	//GetRhsVarMatrixDouble ( 3 , &nRows, &nCols, &dseed);
 	ierr = lowdisc_AssertNumberOfRows ( fname , 3 , 1 , nRows );
 	if ( ierr == LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
@@ -116,13 +127,13 @@ int sci_lowdisc_haltonfnew (char *fname) {
 	}
 	//
 	// Get Arg #4: scrambling
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 4 , &scrambling );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 4 , &scrambling, pvApiCtx);
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get Arg #5: coordinate (coordinate=1 if false).
-	ierr = lowdisc_GetOneBooleanArgument ( fname , 5, &coordinate);
+	ierr = lowdisc_GetOneBooleanArgument ( fname , 5, &coordinate,pvApiCtx);
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
@@ -141,6 +152,6 @@ int sci_lowdisc_haltonfnew (char *fname) {
 	free_ivector ( seed );
 	free_ivector ( leap );
 	//
-	lowdisc_CreateLhsInteger ( 1 , token );
+	lowdisc_CreateLhsInteger ( 1 , token, pvApiCtx );
 	return 0;
 }

@@ -6,10 +6,11 @@
 // http://www.gnu.org/copyleft/lesser.html
 
 extern "C" {
-#include "stack-c.h" 
+//#include "stack-c.h" 
 #include "Scierror.h"
 #include "localization.h"
-#include "gw_lowdisc.h"
+#include "liblowdiscgateway.h"
+#include "api_scilab.h"
 }
 
 /* ==================================================================== */
@@ -32,7 +33,7 @@ extern "C" {
 //   If the two files already exist on disk (maybe from a previous sequence),
 //   there is no need to generate them again. In this case, init should be set to 0.
 //
-int sci_lowdisc_niedfnew (char *fname) {
+int sci_lowdisc_niedfnew (char *fname, void * pvApiCtx) {
 	int dim;
 	int base;
 	int skip;
@@ -50,29 +51,33 @@ int sci_lowdisc_niedfnew (char *fname) {
 	CheckLhs(0,1) ;
 	//
 	// Get dim
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get base
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &base );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &base, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get skip
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &skip );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &skip, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get gfaritfile
-	ierr = lowdisc_AssertVariableType(fname , 4 , sci_strings );
+	ierr = lowdisc_AssertVariableType(fname , 4 , sci_strings, pvApiCtx);
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	GetRhsVar( 4, MATRIX_OF_STRING_DATATYPE, &nRows,   &nCols,   &gfaritdata);
+	int *piAddr;
+		
+	getVarAddressFromPosition(pvApiCtx , 4, &piAddr);
+	getAllocatedMatrixOfString(pvApiCtx,piAddr,&nRows,&nCols,&gfaritdata);	
+	//GetRhsVar( 4, MATRIX_OF_STRING_DATATYPE, &nRows,   &nCols,   &gfaritdata);
 	ierr = lowdisc_AssertNumberOfRows ( fname , 4 , nRows , 1 );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
@@ -81,14 +86,16 @@ int sci_lowdisc_niedfnew (char *fname) {
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	gfaritfile = gfaritdata[0];
+	gfaritfile = gfaritdata[0];	
 	//
 	// Get gfplysfile
-	ierr = lowdisc_AssertVariableType(fname , 5 , sci_strings );
+	ierr = lowdisc_AssertVariableType(fname , 5 , sci_strings, pvApiCtx);
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	GetRhsVar( 5, MATRIX_OF_STRING_DATATYPE, &nRows,   &nCols,   &gfplysdata);
+	getVarAddressFromPosition(pvApiCtx , 5, &piAddr);
+	getAllocatedMatrixOfString(pvApiCtx,piAddr,&nRows,&nCols,&gfplysdata);
+	//GetRhsVar( 5, MATRIX_OF_STRING_DATATYPE, &nRows,   &nCols,   &gfplysdata);
 	ierr = lowdisc_AssertNumberOfRows ( fname , 5 , nRows , 1 );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
@@ -103,6 +110,6 @@ int sci_lowdisc_niedfnew (char *fname) {
 	seq = new Niederreiter ( dim, base, skip , gfaritfile , gfplysfile );
 	token = lowdisc_nied_map_add(seq);
 	//
-	lowdisc_CreateLhsInteger ( 1 , token );
+	lowdisc_CreateLhsInteger ( 1 , token, pvApiCtx );
 	return 0;
 }

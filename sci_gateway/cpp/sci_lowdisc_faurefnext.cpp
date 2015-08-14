@@ -7,10 +7,12 @@
 
 extern "C" {
 #include "stdlib.h"
-#include "stack-c.h" 
+//#include "stack-c.h" 
 #include "Scierror.h"
+#include "api_scilab.h"
 #include "localization.h"
-#include "gw_lowdisc.h"
+//#include "gw_lowdisc.h"
+#include "liblowdiscgateway.h"
 }
 
 /* ==================================================================== */
@@ -19,7 +21,7 @@ extern "C" {
 #include "gw_lowdisc_support.h" 
 #include "lowdisc_math.h" 
 #include "faure.h" 
-#include "lowdisc_faure_map.hxx" 
+#include "lowdisc_faure_map.hxx"
 
 
 // quasi = _lowdisc_faurefnext ( token,seed , imax , leap )
@@ -47,7 +49,7 @@ extern "C" {
 // If leap = 1, then get the elements 
 //   seed, seed+2, seed+4, etc...
 //
-int sci_lowdisc_faurefnext (char *fname) {
+int sci_lowdisc_faurefnext (char *fname, void* pvApiCtx) {
 	int dim;
 	int seed = 0;
 	double * quasi = NULL;
@@ -63,28 +65,28 @@ int sci_lowdisc_faurefnext (char *fname) {
 	CheckRhs(5,5) ;
 	CheckLhs(0,1) ;
 	// Arg #1: token
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #2: seed
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &seed );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &seed, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #3: imax
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &imax );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &imax, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #4: leap
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 4 , &leap );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 4 , &leap, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get Arg #5: coordinate (coordinate=1 if false).
-	ierr = lowdisc_GetOneBooleanArgument ( fname , 5, &coordinate);
+	ierr = lowdisc_GetOneBooleanArgument ( fname , 5, &coordinate, pvApiCtx);
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
@@ -103,11 +105,11 @@ int sci_lowdisc_faurefnext (char *fname) {
 	}
 	if (coordinate)
 	{
-		lowdisc_CreateLhsMatrix ( 1 , imax , 1, &quasi );
+		lowdisc_CreateLhsMatrix ( 1 , imax , 1, &quasi, pvApiCtx);
 	}
 	else 
 	{
-		lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi );
+		lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi, pvApiCtx);
 	}
 	// Call the Faure sequence
 	for ( k = 0; k < imax; k++ )

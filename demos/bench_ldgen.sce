@@ -17,7 +17,7 @@ function lowdisc_benchldgen()
     // Test sequences
     for ldseq = lowdisc_methods()'
         k = k + 1;
-        t1 = tic();
+        tic();
         u = lowdisc_ldgen ( 100*callf , n , ldseq );
         evalf = size(u,"r")
         perf(k) = toc() + %eps;
@@ -28,7 +28,7 @@ function lowdisc_benchldgen()
     for rngen = [ "mt", "kiss", "clcg2", "clcg4", "urand", "fsultra" ]
         k = k + 1;
         grand ( "setgen" , rngen );
-        t1 = tic();
+        tic();
         u = grand ( 1000*callf , n , "def" );
         perf(k) = toc() + %eps;
         bynb(k) = (n * 100*callf) / perf(k);

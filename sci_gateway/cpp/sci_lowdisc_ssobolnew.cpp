@@ -5,10 +5,12 @@
 // http://www.gnu.org/copyleft/lesser.html
 
 extern "C" {
-#include "stack-c.h" 
+//#include "stack-c.h" 
 #include "Scierror.h"
 #include "localization.h"
-#include "gw_lowdisc.h"
+//#include "gw_lowdisc.h"
+#include "liblowdiscgateway.h"
+#include "api_scilab.h"
 }
 
 /* ==================================================================== */
@@ -26,7 +28,7 @@ extern "C" {
 // coordinate: a 1-by-1 matrix of boolean, 
 //       If false, we must generate all coordinates.
 //       If true, we must generate only the dimension-th coordinate.
-int sci_lowdisc_ssobolnew (char *fname) {
+int sci_lowdisc_ssobolnew (char *fname, void *pvApiCtx) {
 	int dimen;
 	int ierr;
 	int maxd=30;
@@ -43,24 +45,24 @@ int sci_lowdisc_ssobolnew (char *fname) {
 	CheckRhs(3,4);
 	CheckLhs(0,1);
 	// Arg #1 : dimen
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dimen );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dimen, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #2 : iflag
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &iflag );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &iflag, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get Arg #2: base
-	ierr = lowdisc_AssertVariableType(fname , 2 , sci_matrix );
+	ierr = lowdisc_AssertVariableType(fname , 2 , sci_matrix, pvApiCtx );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get Arg #3: coordinate (coordinate=1 if false).
-	ierr = lowdisc_GetOneBooleanArgument ( fname , 3, &coordinate);
+	ierr = lowdisc_GetOneBooleanArgument ( fname , 3, &coordinate,pvApiCtx);
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
@@ -73,7 +75,11 @@ int sci_lowdisc_ssobolnew (char *fname) {
 	{
 		// token = _lowdisc_ssobolnew ( dim , iflag , seeds )
 		// Arg #4 : seeds
-		GetRhsVarMatrixDouble ( 4 , &nRows, &nCols, &seeds);
+	        int *piAddr;
+		
+		getVarAddressFromPosition(pvApiCtx , 4, &piAddr);
+		getMatrixOfDouble(pvApiCtx,piAddr,&nRows,&nCols,&seeds);	
+		//GetRhsVarMatrixDouble ( 4 , &nRows, &nCols, &seeds);
 		if (nRows==24)
 		{
 			ierr = lowdisc_AssertNumberOfColumns ( fname , 4 , 1 , nCols );
@@ -98,11 +104,11 @@ int sci_lowdisc_ssobolnew (char *fname) {
 	if (isok==1)
 	{
 		token= lowdisc_ssobol_map_add ( seq );
-		lowdisc_CreateLhsInteger ( 1 , token );
+		lowdisc_CreateLhsInteger ( 1 , token, pvApiCtx );
 	}
 	else
 	{
-		lowdisc_CreateLhsInteger ( 1 , -1 );
+		lowdisc_CreateLhsInteger ( 1 , -1, pvApiCtx );
 	}
 	return 0;
 }
