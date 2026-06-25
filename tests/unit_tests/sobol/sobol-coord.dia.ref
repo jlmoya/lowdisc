@@ -22,17 +22,18 @@ lds = lowdisc_configure(lds,"-dimension",12);
 [lds,expected] = lowdisc_next (lds,10);
 lds = lowdisc_destroy(lds);
 expected=expected(:,12)
-expected  = 
-    0.5
-    0.75
-    0.25
-    0.625
-    0.125
-    0.375
-    0.875
-    0.8125
-    0.3125
-    0.0625
+ expected  =
+ 
+    0.5     
+    0.75    
+    0.25    
+    0.625   
+    0.125   
+    0.375   
+    0.875   
+    0.8125  
+    0.3125  
+    0.0625  
 //
 // Tests
 assert_checkequal(computed1,expected(1:5));
@@ -57,17 +58,18 @@ lds = lowdisc_configure(lds,"-scrambling","Owen");
 [lds,expected] = lowdisc_next (lds,10);
 lds = lowdisc_destroy(lds);
 expected=expected(:,12)
-expected  = 
-    0.079142
-    0.7650172
-    0.6640723
-    0.4906337
-    0.9709188
-    0.1839093
-    0.2765522
-    0.5677289
-    0.7167606
-    0.3785258
+ expected  =
+ 
+    0.0791420  
+    0.7650172  
+    0.6640723  
+    0.4906337  
+    0.9709188  
+    0.1839093  
+    0.2765522  
+    0.5677289  
+    0.7167606  
+    0.3785258  
 //
 // Tests
 assert_checkequal(computed1,expected(1:5));

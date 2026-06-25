@@ -12,19 +12,23 @@
 #ifndef __SCI_LOWDISC_GWSUPPORT_H__
 #define __SCI_LOWDISC_GWSUPPORT_H__
 
-
+// Scilab 6+ removed the global api context that Scilab 5 supplied implicitly.
+// The support functions still use it; each gateway sets it from its pvApiCtx
+// argument before calling any of them.
+extern void * pvApiCtx;
 
 int lowdisc_AssertNumberOfRows ( char * fname , int ivar , int expected_nrows , int actual_nrows );
 int lowdisc_AssertNumberOfColumns ( char * fname , int ivar , int expected_ncols , int actual_ncols );
-int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type ,void * pvApiCtx);
+int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type );
 int lowdisc_GetOneDoubleArgument ( char * fname , int ivar , double * value );
-int lowdisc_GetOneIntegerArgument ( char * fname , int ivar , int * value, void* pvApiCtx);
+int lowdisc_GetOneIntegerArgument ( char * fname , int ivar , int * value );
 int lowdisc_GetOneCharArgument ( char * fname , int ivar , char ** value );
+int lowdisc_GetMatrixOfDoubleArgument ( char * fname , int ivar , int * nRows , int * nCols , double ** value );
 int lowdisc_Double2IntegerArgument ( char * fname , int ivar , double dvalue , int * ivalue );
-void lowdisc_CreateLhsInteger ( int ivar , int value, void* pvApiCtx);
+void lowdisc_CreateLhsInteger ( int ivar , int value );
 void lowdisc_CreateLhsDouble ( int ivar , double value );
-void lowdisc_CreateLhsMatrix ( int ivar , int nRows , int nCols , double ** matrix,void * pvApiCtx);
-int lowdisc_GetOneBooleanArgument ( char * fname , int ivar , int * value, void* pvApiCtx);
+void lowdisc_CreateLhsMatrix ( int ivar , int nRows , int nCols , double ** matrix );
+int lowdisc_GetOneBooleanArgument ( char * fname , int ivar , int * value );
 
 #define LOWDISC_GWSUPPORT_OK 1
 #define LOWDISC_GWSUPPORT_ERROR 0

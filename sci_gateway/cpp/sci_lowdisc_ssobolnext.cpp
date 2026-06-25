@@ -6,12 +6,10 @@
 
 extern "C" {
 #include "stdlib.h"
-//#include "stack-c.h" 
+#include "api_scilab.h" 
 #include "Scierror.h"
 #include "localization.h"
-#include "liblowdiscgateway.h"
-//#include "gw_lowdisc.h"
-#include "api_scilab.h"
+#include "gw_lowdisc.h"
 }
 
 /* ==================================================================== */
@@ -45,7 +43,8 @@ extern "C" {
 // If leap = 1, then get the elements 
 //   seed, seed+2, seed+4, etc...
 //
-int sci_lowdisc_ssobolnext (char *fname, void * pvApiCtx) {
+int sci_lowdisc_ssobolnext (char *fname, void *pvApiCtx_) {
+	pvApiCtx = pvApiCtx_;
 	int dim;
 	// next : an array [0,1,...,dim-1]
 	double * next = NULL;
@@ -66,17 +65,17 @@ int sci_lowdisc_ssobolnext (char *fname, void * pvApiCtx) {
 	CheckRhs(3,3) ;
 	CheckLhs(0,1) ;
 	// Arg #1: token
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token, pvApiCtx );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &token );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #2: imax
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &imax, pvApiCtx );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &imax );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	// Arg #3: leap
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &leap, pvApiCtx );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &leap );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
@@ -99,11 +98,11 @@ int sci_lowdisc_ssobolnext (char *fname, void * pvApiCtx) {
 	}
 	if (coordinate)
 	{
-		lowdisc_CreateLhsMatrix ( 1 , imax , 1, &quasi, pvApiCtx );
+		lowdisc_CreateLhsMatrix ( 1 , imax , 1, &quasi );
 	}
 	else 
 	{
-		lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi, pvApiCtx );
+		lowdisc_CreateLhsMatrix ( 1 , imax , dim , &quasi );
 	}
 	for ( k = 0; k < imax; k++ )
 	{

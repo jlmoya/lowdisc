@@ -106,13 +106,13 @@ function lowdisc_demoshalton()
         mprintf("#%d = [%s]\n",i,strcat(string(quasi)," "))
     end
     expected= [
-    0.    0.
-    0.5   1.0/3.
-    1.0/4 2.0/3 
-    3.0/4 1.0/9    
-    1.0/8 4.0/9 
-    5.0/8 7.0/9 
-    3.0/8 2.0/9 
+    0.  0.
+    0.5 1./3.
+    1/4 2/3 
+    3/4 1/9    
+    1/8 4/9 
+    5/8 7/9 
+    3/8 2/9 
     ];
     printExpected(expected);
 
@@ -130,9 +130,12 @@ function lowdisc_demoshalton()
     //
     // Load this script into the editor
     //
+    m = messagebox(_("View Code?"), "Question", "question", [_("Yes") _("No")], "modal")
+    if(m == 1)
         filename = 'macros-halton.sce';
         dname = get_absolute_file_path(filename);
         editor ( dname + filename, "readonly" );
+    end
 endfunction 
 lowdisc_demoshalton();
 clear lowdisc_demoshalton;

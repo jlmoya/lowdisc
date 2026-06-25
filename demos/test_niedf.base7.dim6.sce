@@ -44,5 +44,5 @@ mclose(fd);
 //
 filename = "test_niedf.base7.dim6.sce";
 dname = get_absolute_file_path(filename);
-editor ( dname + filename, "readonly" );
+editor ( dname + filename );
 

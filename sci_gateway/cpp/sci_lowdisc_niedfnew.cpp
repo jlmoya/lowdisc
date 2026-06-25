@@ -6,11 +6,10 @@
 // http://www.gnu.org/copyleft/lesser.html
 
 extern "C" {
-//#include "stack-c.h" 
+#include "api_scilab.h" 
 #include "Scierror.h"
 #include "localization.h"
-#include "liblowdiscgateway.h"
-#include "api_scilab.h"
+#include "gw_lowdisc.h"
 }
 
 /* ==================================================================== */
@@ -33,17 +32,14 @@ extern "C" {
 //   If the two files already exist on disk (maybe from a previous sequence),
 //   there is no need to generate them again. In this case, init should be set to 0.
 //
-int sci_lowdisc_niedfnew (char *fname, void * pvApiCtx) {
+int sci_lowdisc_niedfnew (char *fname, void *pvApiCtx_) {
+	pvApiCtx = pvApiCtx_;
 	int dim;
 	int base;
 	int skip;
 	int ierr;
-	char ** gfaritdata = NULL;
 	char * gfaritfile;
-	char ** gfplysdata = NULL;
 	char * gfplysfile;
-	int nCols;
-	int nRows;
 	Niederreiter * seq;
 	int token;
 	
@@ -51,65 +47,47 @@ int sci_lowdisc_niedfnew (char *fname, void * pvApiCtx) {
 	CheckLhs(0,1) ;
 	//
 	// Get dim
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim, pvApiCtx );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 1 , &dim );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get base
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &base, pvApiCtx );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 2 , &base );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get skip
-	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &skip, pvApiCtx );
+	ierr = lowdisc_GetOneIntegerArgument ( fname , 3 , &skip );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
 	//
 	// Get gfaritfile
-	ierr = lowdisc_AssertVariableType(fname , 4 , sci_strings, pvApiCtx);
+	ierr = lowdisc_AssertVariableType(fname , 4 , sci_strings );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	int *piAddr;
-		
-	getVarAddressFromPosition(pvApiCtx , 4, &piAddr);
-	getAllocatedMatrixOfString(pvApiCtx,piAddr,&nRows,&nCols,&gfaritdata);	
-	//GetRhsVar( 4, MATRIX_OF_STRING_DATATYPE, &nRows,   &nCols,   &gfaritdata);
-	ierr = lowdisc_AssertNumberOfRows ( fname , 4 , nRows , 1 );
+	ierr = lowdisc_GetOneCharArgument ( fname , 4 , &gfaritfile );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	ierr = lowdisc_AssertNumberOfColumns ( fname , 4 , nCols , 1 );
-	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
-		return 0;
-	}
-	gfaritfile = gfaritdata[0];	
 	//
 	// Get gfplysfile
-	ierr = lowdisc_AssertVariableType(fname , 5 , sci_strings, pvApiCtx);
+	ierr = lowdisc_AssertVariableType(fname , 5 , sci_strings );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	getVarAddressFromPosition(pvApiCtx , 5, &piAddr);
-	getAllocatedMatrixOfString(pvApiCtx,piAddr,&nRows,&nCols,&gfplysdata);
-	//GetRhsVar( 5, MATRIX_OF_STRING_DATATYPE, &nRows,   &nCols,   &gfplysdata);
-	ierr = lowdisc_AssertNumberOfRows ( fname , 5 , nRows , 1 );
+	ierr = lowdisc_GetOneCharArgument ( fname , 5 , &gfplysfile );
 	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
 		return 0;
 	}
-	ierr = lowdisc_AssertNumberOfColumns ( fname , 5 , nCols , 1 );
-	if ( ierr==LOWDISC_GWSUPPORT_ERROR ) {
-		return 0;
-	}
-	gfplysfile = gfplysdata[0];
 	//
 	// Start the sequence
 	seq = new Niederreiter ( dim, base, skip , gfaritfile , gfplysfile );
 	token = lowdisc_nied_map_add(seq);
 	//
-	lowdisc_CreateLhsInteger ( 1 , token, pvApiCtx );
+	lowdisc_CreateLhsInteger ( 1 , token );
 	return 0;
 }

@@ -5,12 +5,14 @@
 // http://www.gnu.org/copyleft/lesser.html
 
 extern "C" {
+#include "api_scilab.h" 
 #include "Scierror.h"
 #include "localization.h"
 #include "sciprint.h"
-#include "liblowdiscgateway.h"
-#include "api_scilab.h"
+#include "gw_lowdisc.h"
 }
+
+#include "gw_lowdisc_support.h"
 
 #include "sci_lowdisc_startup.hxx" 
 
@@ -18,7 +20,8 @@ extern "C" {
 
 // lowdisc_shutdown ( )
 //   shutdown the Low Discrepancy library
-int sci_lowdisc_shutdown (char *fname, void* pvApiCtx) {
+int sci_lowdisc_shutdown (char *fname, void *pvApiCtx_) {
+	pvApiCtx = pvApiCtx_;
 
 	CheckRhs(0,0) ;
 	CheckLhs(0,1) ;

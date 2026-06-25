@@ -78,7 +78,7 @@ lds=lowdisc_new("sobol");
 lds=lowdisc_configure(lds,"-dimension",50);
 lds=lowdisc_configure(lds,"-scrambling","Owen");
 instr="[lds,computed] = lowdisc_next (lds);";
-expectedmsg=["Lowdisc: Error at the library level:";"ssobol - init : wrong dimension : 50 (must be in [1,40])."];
+expectedmsg="ssobol_next : wrong dimension : 50 (must be in [1,40]).";
 assert_checkerror ( instr , expectedmsg );
 lds=lowdisc_destroy(lds);
 

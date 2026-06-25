@@ -36,5 +36,5 @@ mclose(fd);
 //
 filename = "test_sobolf.dim4.sce";
 dname = get_absolute_file_path(filename);
-editor ( dname + filename, "readonly" );
+editor ( dname + filename );
 

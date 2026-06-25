@@ -1,5 +1,7 @@
+
 // Copyright (C) 2008 - INRIA - Michael Baudin
 // Copyright (C) 2009 - Digiteo - Michael Baudin
+// Copyright (C) 2026 - Scilab 2026 / api_scilab port
 //
 // This file must be used under the terms of the GNU Lesser General Public License license :
 // http://www.gnu.org/copyleft/lesser.html
@@ -7,24 +9,21 @@
 #include <limits.h>
 
 extern "C" {
+#include "api_scilab.h"
 #include "Scierror.h"
 #include "localization.h"
-#include "api_scilab.h"
-
 }
 
-#include "gw_lowdisc_support.h" 
+#include "gw_lowdisc_support.h"
 
-// 
+// Scilab 6+ removed the global api context that Scilab 5 provided. The gateways
+// set this global from their pvApiCtx argument before calling any support
+// function (see gw_lowdisc.h / the sci_lowdisc_* gateways).
+void * pvApiCtx = NULL;
+
+//
 // lowdisc_AssertNumberOfRows --
-//   Reports a wrong number of rows error in Scilab if the actual number of rows 
-//   is not equal to the expected number of rows.
-//   Returns 0 if an error is detected, returns 1 if not error occurs.
-// Arguments
-//   fname : the name of the Scilab function generating this error
-//   ivar : the index of the input variable
-//   expected_nrows : the expected number of rows
-//   actual_nrows : the actual number of rows
+//   Reports a wrong number of rows error if actual != expected.
 //
 int lowdisc_AssertNumberOfRows ( char * fname , int ivar , int expected_nrows , int actual_nrows )
 {
@@ -37,16 +36,9 @@ int lowdisc_AssertNumberOfRows ( char * fname , int ivar , int expected_nrows , 
 	}
 }
 
-// 
+//
 // lowdisc_AssertNumberOfColumns --
-//   Reports a wrong number of columns error in Scilab if the actual number of rows 
-//   is not equal to the expected number of rows.
-//   Returns 0 if an error is detected, returns 1 if not error occurs.
-// Arguments
-//   fname : the name of the Scilab function generating this error
-//   ivar : the index of the input variable
-//   expected_ncols : the expected number of columns
-//   actual_ncols : the actual number of columns
+//   Reports a wrong number of columns error if actual != expected.
 //
 int lowdisc_AssertNumberOfColumns ( char * fname , int ivar , int expected_ncols , int actual_ncols )
 {
@@ -59,23 +51,22 @@ int lowdisc_AssertNumberOfColumns ( char * fname , int ivar , int expected_ncols
 	}
 }
 
-// 
-// lowdisc_AssertVartype --
-//   Reports a wrong type error in Scilab if the actual variable type does not 
-//   match the expected variable type.
-//   Returns 0 if an error is detected, returns 1 if not error occurs.
-// Arguments
-//   fname : the name of the Scilab function generating this error
-//   ivar : the index of the input variable
-//   expected_type : the expected number of columns
 //
-int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type , void * pvApiCtx )
-{	SciErr sciErr;
-	int *piAddr;
-	int piType;
-	sciErr= getVarAddressFromPosition(pvApiCtx, ivar,&piAddr);
-	sciErr=getVarType(pvApiCtx, piAddr, &piType);
-	if ( piType != expected_type )
+// lowdisc_AssertVariableType --
+//   Reports a wrong type error if the actual type != expected type.
+//
+int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type )
+{
+	int iType = 0;
+	int * piAddr = NULL;
+	SciErr sciErr;
+
+	sciErr = getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
+	if (sciErr.iErr) { printError(&sciErr, 0); return LOWDISC_GWSUPPORT_ERROR; }
+	sciErr = getVarType(pvApiCtx, piAddr, &iType);
+	if (sciErr.iErr) { printError(&sciErr, 0); return LOWDISC_GWSUPPORT_ERROR; }
+
+	if ( iType != expected_type )
 	{
 		if ( expected_type == sci_strings ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: String expected.\n"),fname,ivar);
@@ -87,8 +78,6 @@ int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type , v
 			Scierror(204,_("%s: Wrong type for input argument #%d: Boolean expected.\n"),fname,ivar);
 		} else if ( expected_type == sci_sparse ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: Sparse expected.\n"),fname,ivar);
-		} else if ( expected_type == sci_matlab_sparse ) {
-			Scierror(204,_("%s: Wrong type for input argument #%d: Matlab Sparse expected.\n"),fname,ivar);
 		} else if ( expected_type == sci_ints ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: Integer expected.\n"),fname,ivar);
 		} else if ( expected_type == sci_handles ) {
@@ -107,10 +96,6 @@ int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type , v
 			Scierror(204,_("%s: Wrong type for input argument #%d: MList expected.\n"),fname,ivar);
 		} else if ( expected_type == sci_lufact_pointer ) {
 			Scierror(204,_("%s: Wrong type for input argument #%d: LUFACT expected.\n"),fname,ivar);
-		//} else if ( expected_type == sci_implicit_poly ) {
-			//Scierror(204,_("%s: Wrong type for input argument #%d: Implicit polynomial expected.\n"),fname,ivar);
-		//} else if ( expected_type == sci_intrinsic_function ) {
-			//Scierror(204,_("%s: Wrong type for input argument #%d: Intrinsic function expected.\n"),fname,ivar);
 		} else {
 			Scierror(204,_("%s: Wrong type for input argument #%d: <Unknown data type> expected.\n"),fname,ivar);
 		}
@@ -120,32 +105,26 @@ int lowdisc_AssertVariableType ( char * fname , int ivar , int expected_type , v
 	}
 }
 
-// 
-// lowdisc_GetOneDoubleArgument --
-//   Gets one double precision number from the argument #ivar in the function fname.
-//   Returns 0 if an error is detected, returns 1 if not error occurs.
-// Arguments
-//   fname : the name of the Scilab function generating this error
-//   ivar : the index of the input variable
-//   value : the value to get
 //
-int lowdisc_GetOneDoubleArgument ( char * fname , int ivar , double * value,void* pvApiCtx)
+// lowdisc_GetOneDoubleArgument --
+//   Gets one double precision number from argument #ivar.
+//
+int lowdisc_GetOneDoubleArgument ( char * fname , int ivar , double * value )
 {
 	int nRows, nCols;
 	double * mydata = NULL;
-	if ( lowdisc_AssertVariableType(fname , ivar , sci_matrix, pvApiCtx) == 0 )
+	int * piAddr = NULL;
+	SciErr sciErr;
+	if ( lowdisc_AssertVariableType(fname , ivar , sci_matrix) == 0 )
 	{
 		return LOWDISC_GWSUPPORT_ERROR;
 	}
-	SciErr sciErr;
-	int *piAddr;
-	int piType;
-	sciErr= getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
-
-	//GetRhsVarMatrixDouble(ivar, &nRows, &nCols, &mydata);
-	getMatrixOfDouble(pvApiCtx,piAddr, &nRows, &nCols, &mydata);
+	sciErr = getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
+	if (sciErr.iErr) { printError(&sciErr, 0); return LOWDISC_GWSUPPORT_ERROR; }
+	sciErr = getMatrixOfDouble(pvApiCtx, piAddr, &nRows, &nCols, &mydata);
+	if (sciErr.iErr) { printError(&sciErr, 0); return LOWDISC_GWSUPPORT_ERROR; }
 	if ( lowdisc_AssertNumberOfRows(fname , ivar , 1 , nRows) == 0 )
-	{ 
+	{
 		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	if ( lowdisc_AssertNumberOfColumns(fname , ivar , 1 , nCols) == 0 )
@@ -156,30 +135,26 @@ int lowdisc_GetOneDoubleArgument ( char * fname , int ivar , double * value,void
 	return LOWDISC_GWSUPPORT_OK;
 }
 
-// 
-// lowdisc_GetOneIntegerArgument --
-//   Gets one integer number from the argument #ivar in the function fname.
-//   Returns 0 if an error is detected, returns 1 if not error occurs.
-// Arguments
-//   fname : the name of the Scilab function generating this error
-//   ivar : the index of the input variable
-//   value : the value to get
 //
-int lowdisc_GetOneIntegerArgument ( char * fname , int ivar , int * value, void * pvApiCtx)
+// lowdisc_GetOneIntegerArgument --
+//   Gets one integer number from argument #ivar.
+//
+int lowdisc_GetOneIntegerArgument ( char * fname , int ivar , int * value )
 {
 	int nRows, nCols;
 	double * mydata = NULL;
-	if ( lowdisc_AssertVariableType(fname , ivar , sci_matrix, pvApiCtx) == 0 )
+	int * piAddr = NULL;
+	SciErr sciErr;
+	if ( lowdisc_AssertVariableType(fname , ivar , sci_matrix) == 0 )
 	{
 		return LOWDISC_GWSUPPORT_ERROR;
 	}
-        	SciErr sciErr;
-	int *piAddr;
-	int piType;
-	sciErr= getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
-	getMatrixOfDouble(pvApiCtx,piAddr, &nRows, &nCols, &mydata);
+	sciErr = getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
+	if (sciErr.iErr) { printError(&sciErr, 0); return LOWDISC_GWSUPPORT_ERROR; }
+	sciErr = getMatrixOfDouble(pvApiCtx, piAddr, &nRows, &nCols, &mydata);
+	if (sciErr.iErr) { printError(&sciErr, 0); return LOWDISC_GWSUPPORT_ERROR; }
 	if ( lowdisc_AssertNumberOfRows(fname , ivar , 1 , nRows) == 0 )
-	{ 
+	{
 		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	if ( lowdisc_AssertNumberOfColumns(fname , ivar , 1 , nCols) == 0 )
@@ -192,48 +167,48 @@ int lowdisc_GetOneIntegerArgument ( char * fname , int ivar , int * value, void 
 	return LOWDISC_GWSUPPORT_OK;
 }
 
-// 
-// lowdisc_GetOneCharArgument --
-//   Gets one string from the argument #ivar in the function fname.
-//   Returns 0 if an error is detected, returns 1 if not error occurs.
-// Arguments
-//   fname : the name of the Scilab function generating this error
-//   ivar : the index of the input variable
-//   value : the value to get
 //
-int lowdisc_GetOneCharArgument ( char * fname , int ivar , char ** value, void* pvApiCtx )
+// lowdisc_GetOneCharArgument --
+//   Gets one string from argument #ivar.
+//
+int lowdisc_GetOneCharArgument ( char * fname , int ivar , char ** value )
 {
-	int nRows, nCols;
-	char ** mydata = NULL;
-	if ( lowdisc_AssertVariableType(fname , ivar , sci_strings,pvApiCtx) == 0 )
+	int * piAddr = NULL;
+	char * str = NULL;
+	SciErr sciErr;
+	if ( lowdisc_AssertVariableType(fname , ivar , sci_strings) == 0 )
 	{
 		return LOWDISC_GWSUPPORT_ERROR;
 	}
-	SciErr sciErr;	
-	int *piAddr;
-	int piType;
-	sciErr= getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
-	ivar= getRhsFromAddress(pvApiCtx , piAddr);
-	if ( lowdisc_AssertNumberOfRows(fname , ivar , 1 , nRows) == 0 )
-	{ 
+	sciErr = getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
+	if (sciErr.iErr) { printError(&sciErr, 0); return LOWDISC_GWSUPPORT_ERROR; }
+	if ( getAllocatedSingleString(pvApiCtx, piAddr, &str) != 0 ) {
+		Scierror(999, _("%s: Can not read input argument #%d.\n"), fname, ivar);
 		return LOWDISC_GWSUPPORT_ERROR;
 	}
-	if ( lowdisc_AssertNumberOfColumns(fname , ivar , 1 , nCols) == 0 )
-	{
-		return LOWDISC_GWSUPPORT_ERROR;
-	}
-	*value = mydata[0];
+	*value = str;
 	return LOWDISC_GWSUPPORT_OK;
 }
 
-// 
+//
+// lowdisc_GetMatrixOfDoubleArgument --
+//   Gets the dimensions and the data pointer of a matrix of doubles
+//   from argument #ivar. Replaces the Scilab 5 GetRhsVarMatrixDouble macro.
+//
+int lowdisc_GetMatrixOfDoubleArgument ( char * fname , int ivar , int * nRows , int * nCols , double ** value )
+{
+	int * piAddr = NULL;
+	SciErr sciErr;
+	sciErr = getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
+	if (sciErr.iErr) { printError(&sciErr, 0); return LOWDISC_GWSUPPORT_ERROR; }
+	sciErr = getMatrixOfDouble(pvApiCtx, piAddr, nRows, nCols, value);
+	if (sciErr.iErr) { printError(&sciErr, 0); return LOWDISC_GWSUPPORT_ERROR; }
+	return LOWDISC_GWSUPPORT_OK;
+}
+
+//
 // lowdisc_Double2IntegerArgument --
-//   Compute if the given double is storable as an integer.
-//   Returns 0 if an error is detected, returns 1 if not error occurs.
-// Arguments
-//   fname : the name of the Scilab function generating this error
-//   ivar : the index of the input variable
-//   value : the value to get
+//   Checks the given double is storable as an int and converts it.
 //
 int lowdisc_Double2IntegerArgument ( char * fname , int ivar , double dvalue , int * ivalue )
 {
@@ -246,103 +221,69 @@ int lowdisc_Double2IntegerArgument ( char * fname , int ivar , double dvalue , i
 		return LOWDISC_GWSUPPORT_ERROR;
 	}
 	*ivalue = (int)dvalue;
-	// Now check that the double was really an integer
 	if ( (double)*ivalue != dvalue ) {
 		Scierror(999,_("%s: Wrong integer in argument #%d: found %e which is different from the closest integer %d.\n"),fname,ivar , dvalue , *ivalue );
 		return LOWDISC_GWSUPPORT_ERROR;
 	}
-	
 	return LOWDISC_GWSUPPORT_OK;
 }
 
-// 
+//
 // lowdisc_CreateLhsInteger --
-//   Creates an integer variable on the Left Hand Side at location ivar.
-// Arguments
-//   fname : the name of the Scilab function generating this error
-//   ivar : the index of the input variable
-//   value : the value to create
+//   Creates an integer (1x1 double) variable on the LHS at location ivar.
 //
-void lowdisc_CreateLhsInteger ( int ivar , int value, void * pvApiCtx)
+void lowdisc_CreateLhsInteger ( int ivar , int value )
 {
-	int nRows, nCols;
-	double *pdblFinalVar = NULL;
-	nRows=1;
-	nCols=1;
-        //SciErr sciErr;	
-	//int *piAddr;
-	//int piType;
-
-	//int Rhs2;
-	//sciErr= getVarAddressFromPosition(Ctx, ivar, &piAddr);
-		
-	//Rhs=getRhsFromAddress(Ctx , piAddr);
-	allocMatrixOfDouble(pvApiCtx,Rhs+ivar, nRows, nCols, &pdblFinalVar);
+	double * pdblFinalVar = NULL;
+	SciErr sciErr;
+	sciErr = allocMatrixOfDouble(pvApiCtx, Rhs + ivar, 1, 1, &pdblFinalVar);
+	if (sciErr.iErr) { printError(&sciErr, 0); return; }
 	pdblFinalVar[0] = value;
-	LhsVar(ivar) = Rhs+ivar;
+	LhsVar(ivar) = Rhs + ivar;
 }
 
-// 
+//
 // lowdisc_CreateLhsDouble --
-//   Creates a double variable on the Left Hand Side at location ivar.
-// Arguments
-//   fname : the name of the Scilab function generating this error
-//   ivar : the index of the input variable
-//   value : the value to create
+//   Creates a double (1x1) variable on the LHS at location ivar.
 //
-void lowdisc_CreateLhsDouble ( int ivar , double value, void * pvApiCtx )
+void lowdisc_CreateLhsDouble ( int ivar , double value )
 {
-	int nRows, nCols;
-	double *pdblFinalVar = NULL;
-	//SciErr sciErr;	
-	//int *piAddr;
-	//int piType;
-	//int Rhs2;
-	//sciErr= getVarAddressFromPosition(pVApiCtx, ivar, &piAddr);
-	//Rhs2=getRhsFromAddress(pvApiCtx , piAddr);
-	nRows=1;
-	nCols=1;
-	allocMatrixOfDouble (pvApiCtx, Rhs + ivar , nRows , nCols , &pdblFinalVar );
+	double * pdblFinalVar = NULL;
+	SciErr sciErr;
+	sciErr = allocMatrixOfDouble(pvApiCtx, Rhs + ivar, 1, 1, &pdblFinalVar);
+	if (sciErr.iErr) { printError(&sciErr, 0); return; }
 	pdblFinalVar[0] = value;
-	LhsVar(ivar) = Rhs+ivar;
-}
-// 
-// lowdisc_CreateLhsMatrix --
-//   Creates a double matrix variable on the Left Hand Side at location ivar.
-// Arguments
-//   fname : the name of the Scilab function generating this error
-//   ivar : the index of the input variable
-//   nRows : the number of rows
-//   nCols : the number of columns
-//   value : the value to create
-//
-void lowdisc_CreateLhsMatrix ( int ivar , int nRows , int nCols , double ** matrix, void* pvApiCtx)
-{
-	allocMatrixOfDouble (pvApiCtx, Rhs + ivar , nRows , nCols , matrix );
-	LhsVar(ivar) = Rhs+ivar;
+	LhsVar(ivar) = Rhs + ivar;
 }
 
-// 
-// lowdisc_GetOneBooleanArgument --
-//   Gets one boolean number from the argument #ivar in the function fname.
-//   Returns 0 if an error is detected, returns 1 if not error occurs.
-// Arguments
-//   fname : the name of the Scilab function
-//   ivar : the index of the input variable
-//   value : the value to get
 //
-int lowdisc_GetOneBooleanArgument ( char * fname , int ivar , int * value, void * pvApiCtx )
+// lowdisc_CreateLhsMatrix --
+//   Creates a double matrix variable on the LHS at location ivar.
+//
+void lowdisc_CreateLhsMatrix ( int ivar , int nRows , int nCols , double ** matrix )
+{
+	SciErr sciErr;
+	sciErr = allocMatrixOfDouble(pvApiCtx, Rhs + ivar, nRows, nCols, matrix);
+	if (sciErr.iErr) { printError(&sciErr, 0); return; }
+	LhsVar(ivar) = Rhs + ivar;
+}
+
+//
+// lowdisc_GetOneBooleanArgument --
+//   Gets one boolean from argument #ivar.
+//
+int lowdisc_GetOneBooleanArgument ( char * fname , int ivar , int * value )
 {
 	int* piAddr = NULL;
 	SciErr sciErr;
 	int ierr;
 
 	sciErr = getVarAddressFromPosition(pvApiCtx, ivar, &piAddr);
-    if(sciErr.iErr)
-    {
-        printError(&sciErr, 0);
-        return LOWDISC_GWSUPPORT_ERROR;
-    }
+	if(sciErr.iErr)
+	{
+		printError(&sciErr, 0);
+		return LOWDISC_GWSUPPORT_ERROR;
+	}
 	ierr = getScalarBoolean(pvApiCtx, piAddr, value);
 	if(ierr)
 	{

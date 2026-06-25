@@ -146,8 +146,8 @@ lds = lowdisc_startup (lds);
 assert_checkequal ( size(next) , [10 150] );
 lds = lowdisc_destroy(lds);
 
-// See the -coordinate option :
-// show how to get the 12-th coordinate of the
+// See the -coordinate option in action.
+// Show how to get the 12-th coordinate of the
 // Halton sequence.
 lds = lowdisc_new("halton");
 lds = lowdisc_configure(lds,"-dimension",12);

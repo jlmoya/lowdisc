@@ -30,6 +30,7 @@ funmat = [
   "lowdisc_destroy"
   "lowdisc_new"
   "lowdisc_next"
+  "lowdisc_startup"
   ];
 macrosdir = cwd +"../../macros";
 demosdir = [];

@@ -320,8 +320,7 @@ private:
 	double scrambledVDC(int index, int base, int * sigma);
 
 	// Checks current scrambling
-	//void Halton::
-       void checkscrambling();
+	void checkscrambling();
 };
 
 __END_DECLS

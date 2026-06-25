@@ -33,7 +33,11 @@ function lowdiscBuilder()
     tbx_builder_src(toolbox_dir);
     tbx_builder_gateway(toolbox_dir);
     tbx_builder_macros(toolbox_dir);
-    tbx_builder_help(toolbox_dir);
+    try
+        tbx_builder_help(toolbox_dir);
+    catch
+        disp("lowdisc: help build skipped (CLI mode).");
+    end
     tbx_build_loader(TOOLBOX_NAME, toolbox_dir);
     tbx_build_cleaner(TOOLBOX_NAME, toolbox_dir);
 

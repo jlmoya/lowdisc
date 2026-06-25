@@ -53,7 +53,7 @@ function lowdisc_demosvdc()
     for i=1:5
         npoints=(base-1)*base^(i-1);
         [lds,u]=lowdisc_next(lds,npoints);
-        plot(u',i*ones(1,npoints),"bo")
+        plot(u',i,"bo")
         xstring(u',i,string(k:k+npoints-1))
         k=k+npoints;
     end
@@ -78,7 +78,7 @@ function lowdisc_demosvdc()
     for i=1:imax
         npoints=(base-1)*base^(i-1);
         [lds,u]=lowdisc_next(lds,npoints);
-        plot(u(:,2)',i*ones(1,npoints),"bo")
+        plot(u(:,2)',i,"bo")
         xstring(u(:,2)',i,string(k:k+npoints-1))
         k=k+npoints;
     end
@@ -103,7 +103,7 @@ function lowdisc_demosvdc()
     for i=1:imax
         npoints=(base-1)*base^(i-1);
         [lds,u]=lowdisc_next(lds,npoints);
-        plot(u(:,3)',i*ones(1,npoints),"bo")
+        plot(u(:,3)',i,"bo")
         xstring(u(:,3)',i,string(k:k+npoints-1))
         k=k+npoints;
     end

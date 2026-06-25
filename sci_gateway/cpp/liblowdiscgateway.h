@@ -1,0 +1,29 @@
+#ifndef __LIBLOWDISCGATEWAY_GW_H__
+#define __LIBLOWDISCGATEWAY_GW_H__
+
+#include "c_gateway_prototype.h"
+
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_faurefdestroy);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_faurefnew);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_faurefnext);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_faureftokens);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_haltonfdestroy);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_haltonfnew);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_haltonfnext);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_haltonftokens);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_niedfdestroy);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_niedfnew);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_niedfnext);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_niedftokens);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_shutdown);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_sobolfdestroy);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_sobolfnew);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_sobolfnext);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_sobolftokens);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_ssoboldestroy);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_ssobolnew);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_ssobolnext);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_ssoboltokens);
+STACK_GATEWAY_PROTOTYPE(sci_lowdisc_startup);
+
+#endif /* __LIBLOWDISCGATEWAY_GW_H__ */

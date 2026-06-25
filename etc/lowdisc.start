@@ -11,7 +11,6 @@ function lowdisclib = lowdisc_load()
 
     TOOLBOX_NAME = "lowdisc"
     TOOLBOX_TITLE = "Lowdisc"
-    verbose_at_startup=%f
 
     mprintf("Start %s\n",TOOLBOX_TITLE);
 
@@ -20,54 +19,56 @@ function lowdisclib = lowdisc_load()
     root_tlbx = strncpy( etc_tlbx, length(etc_tlbx)-length("\etc\") );
 
     //Load  functions library
-    if (verbose_at_startup) then
-        mprintf("\tLoad macros\n");
-    end
+    // =============================================================================
+
+    mprintf("\tLoad macros\n");
     pathmacros = pathconvert( root_tlbx ) + "macros" + filesep();
     lowdisclib  = lib(pathmacros);
     clear pathmacros;
 
     // load gateways
+    // =============================================================================
+
     if ( %t ) then
-        if (verbose_at_startup) then
-            mprintf("\tLoad gateways\n");
-        end
+        mprintf("\tLoad gateways\n");
         ilib_verbose(0);
         exec( pathconvert(root_tlbx+"/sci_gateway/loader_gateway.sce",%f));
     end
 
     // Load and add help chapter
+    // =============================================================================
+
     if ( %t ) then
         if or(getscilabmode() == ["NW";"STD"]) then
-            if (verbose_at_startup) then
-                mprintf("\tLoad help\n");
-            end
+            mprintf("\tLoad help\n");
             path_addchapter = pathconvert(root_tlbx+"/jar");
-            if ( isdir(path_addchapter) <> [] ) then
+            if isdir(path_addchapter) then
                 add_help_chapter(TOOLBOX_TITLE, path_addchapter, %F);
             end
         end
     end
 
     // add demos
+    // =============================================================================
+
     if ( %t ) then
         if or(getscilabmode() == ["NW";"STD"]) then
-            if (verbose_at_startup) then
-                mprintf("\tLoad demos\n");
-            end
+            mprintf("\tLoad demos\n");
             demoscript = TOOLBOX_NAME + ".dem.gateway.sce"
             pathdemos = pathconvert(fullfile(root_tlbx,"demos",demoscript),%f,%t);
             add_demo(TOOLBOX_TITLE,pathdemos);
         end
     end
 
-    _lowdisc_startup()
+    // ====================================================================
 
+    _lowdisc_startup()
+	
+    // ====================================================================
     // A Welcome message.
-    if (verbose_at_startup) then
-        mprintf("\tType ""help lowdisc_overview"" for quick start.\n");
-        mprintf("\tType ""demo_gui()"" and search for ""%s"" for Demonstrations.\n",TOOLBOX_TITLE);
-    end
+
+    mprintf("\tType ""help lowdisc_overview"" for quick start.\n");
+    mprintf("\tType ""demo_gui()"" and search for ""%s"" for Demonstrations.\n",TOOLBOX_TITLE);
 
 endfunction 
 

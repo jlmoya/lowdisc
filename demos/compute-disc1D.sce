@@ -126,7 +126,7 @@ function d=l2StarDiscr(x)
     d=3**(-s) - d1/(n*2**(s-1)) + d2/n**2
     d=sqrt(d)
     // This function has not been tested yet.
-    //ERROR !
+    ERROR !
 endfunction 
 
 function mu=l2StarDiscrAverage(n,s)
@@ -158,7 +158,7 @@ function mu=l2StarDiscrAverage(n,s)
     apifun_checkscalar("l2StarDiscrAverage",s,"s",2)
     mu=((2**(-s)+3**(-s))/n)**0.5
     // This function has not been tested yet.
-    //ERROR !
+    ERROR !
 endfunction 
 
 function mu=l2DiscrAverage(n,s)
@@ -190,7 +190,7 @@ function mu=l2DiscrAverage(n,s)
     apifun_checkscalar("l2DiscrAverage",s,"s",2)
     mu=(6**(-s)*(1-2**(-s))/n)**0.5
     // This function has not been tested yet.
-    //ERROR !
+    ERROR !
 endfunction 
 
 function d=l2Discr(x)
@@ -234,7 +234,7 @@ function d=l2Discr(x)
     d=12**(-s) - d1/(n*2**(s-1)) + d2/n**2
     d=sqrt(d)
     // This function has not been tested yet.
-    //ERROR !
+    ERROR !
 endfunction 
 
 function x=starDiscr1DSet(n)
@@ -293,11 +293,11 @@ function plotStarDiscr1D(x)
     //
     d=starDiscr1D(x)
     h=scf();
-    plot(x,zeros(x),"bx")
+    plot(x,0.,"bx")
     h.children.data_bounds(:,1)=[0;1];
     n=size(x,"*")
     u=starDiscr1DSet(n)
-    plot(u,zeros(u),"ro")
+    plot(u,0.,"ro")
     legend(["Point Set","Optimal Point Set"])
     str=msprintf("Star Discrepancy:%f, N=%d points",d,n)
     xtitle(str,"X")
@@ -355,7 +355,7 @@ lds = lowdisc_new("halton");
 
 for n=logspace(1,nmax,10)
     n=int(n)
-    for i=1:5
+    for i=1:20
         //
         // Plot discrepancy of Van Der Corput sequence of N points
         [lds,x] = lowdisc_next (lds,n);

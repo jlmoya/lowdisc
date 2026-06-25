@@ -115,7 +115,7 @@ name2error = [
 "faure"                "ldfauref_startup: Faure Fast sequence : the dimension 542 is larger than any prime in the table. Configure the -primeslist option to increase the prime table."
 "sobol"                "Lowdisc: Error at the library level:sobol - i8_sobol - Error  The spatial dimension DIM_NUM should satisfy    1 <= DIM_NUM <= 1111  But this input value is DIM_NUM = 1112"
 "niederreiter"         "Lowdisc: Error at the library level:niederreiter - INLO - Error!  Bad spatial dimension."
-];
+];        
 seqmat = lowdisc_methods ();
 for seqname = seqmat'
 for k = 1 : 2
@@ -168,7 +168,6 @@ lds=lowdisc_new("sobol");
 lds=lowdisc_configure(lds,"-dimension",50);
 lds=lowdisc_configure(lds,"-scrambling","Owen");
 instr="[lds,computed] = lowdisc_next (lds);";
-expectedmsg=["Lowdisc: Error at the library level:";"ssobol - init : wrong dimension : 50 (must be in [1,40])."];
+expectedmsg="ssobol_next : wrong dimension : 50 (must be in [1,40]).";
 assert_checkerror ( instr , expectedmsg );
-Low Discrepancy Module Error !
-lds=lowdisc_destroy(lds);
+Low Discrepancy Module Error !lds=lowdisc_destroy(lds);

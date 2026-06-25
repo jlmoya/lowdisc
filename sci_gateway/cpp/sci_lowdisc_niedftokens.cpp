@@ -6,12 +6,12 @@
 // GNU Lesser General Public License license :
 // http://www.gnu.org/copyleft/lesser.html
 
-extern "C" { 
+extern "C" {
+#include "api_scilab.h" 
 #include "Scierror.h"
 #include "localization.h"
 #include "stdlib.h"
-#include "liblowdiscgateway.h"
-#include "api_scilab.h"
+#include "gw_lowdisc.h"
 }
 
 /* ==================================================================== */
@@ -26,8 +26,9 @@ extern "C" {
 // tokens = sci_lowdisc_niedftokens () 
 //   returns the list of objects currently in use
 //
-int sci_lowdisc_niedftokens (char *fname, void *pvApiCtx)
+int sci_lowdisc_niedftokens (char *fname, void *pvApiCtx_)
 {
+	pvApiCtx = pvApiCtx_;
 	int size;
 	int * tokens = NULL;
 	double * doubletokens = NULL;
@@ -41,7 +42,7 @@ int sci_lowdisc_niedftokens (char *fname, void *pvApiCtx)
 	}
 	lowdisc_nied_map_tokens (tokens);
 	// Returns the matrix of tokens as the result
-	lowdisc_CreateLhsMatrix ( 1 , 1 , size , &doubletokens, pvApiCtx);
+	lowdisc_CreateLhsMatrix ( 1 , 1 , size , &doubletokens );
 	for(int i = 0; i < size; i++) {
 		doubletokens[i] = (double)tokens[i];
 	}

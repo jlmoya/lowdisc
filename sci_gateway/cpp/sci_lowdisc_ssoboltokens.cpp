@@ -6,12 +6,10 @@
 
 extern "C" {
 #include "stdlib.h"
-//#include "stack-c.h" 
+#include "api_scilab.h" 
 #include "Scierror.h"
 #include "localization.h"
-//#include "gw_lowdisc.h"
-#include "liblowdiscgateway.h"
-#include "api_scilab.h"
+#include "gw_lowdisc.h"
 }
 
 /* ==================================================================== */
@@ -26,8 +24,9 @@ extern "C" {
 // tokens = sci_lowdisc_ssoboltokens () 
 //   returns the list of objects currently in use
 //
-int sci_lowdisc_ssoboltokens (char *fname, void * pvApiCtx)
+int sci_lowdisc_ssoboltokens (char *fname, void *pvApiCtx_)
 {
+	pvApiCtx = pvApiCtx_;
 	int size;
 	int * tokens = NULL;
 	double * doubletokens = NULL;
@@ -41,7 +40,7 @@ int sci_lowdisc_ssoboltokens (char *fname, void * pvApiCtx)
 	}
 	lowdisc_ssobol_map_tokens (tokens);
 	// Returns the matrix of tokens as the result
-	lowdisc_CreateLhsMatrix ( 1 , 1 , size , &doubletokens, pvApiCtx);
+	lowdisc_CreateLhsMatrix ( 1 , 1 , size , &doubletokens );
 	for(int i = 0; i < size; i++) {
 		doubletokens[i] = (double)tokens[i];
 	}

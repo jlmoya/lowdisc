@@ -31,5 +31,5 @@ end
 //
 filename = "test_faure.glasserman.sce";
 dname = get_absolute_file_path(filename);
-editor ( dname + filename, "readonly" );
+editor ( dname + filename );
 

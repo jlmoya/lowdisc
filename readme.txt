@@ -74,7 +74,7 @@ Support Functions:
 Dependencies
 ------------
 
- * This module depends on Scilab (>=v5.5.).
+ * This module depends on Scilab (>=v5.4).
  * This module depends on the helptbx module.
  * This module depends on the Stixbox module (v>=2.2).
  * This module depends on the apifun module (v>=0.3).
